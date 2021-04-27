@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+<body>
+<div style="width: 35.3333333333px;height: 35.3333333333px;overflow: hidden;position:'absolute';"><img  src="player.png" alt="">
+</div>
+<script>
+var img = document.querySelector('img');
+
+var frame = 10;
+var largura =  35.3333333333;
+var altura = 35.3333333333;
+
+function animar() {
+    frame++;
+    if (frame == 15) frame = 10;
+    var linha = Math.floor(frame / 6) * altura;
+    var coluna = frame % 6 * largura ;
+    img.style.marginTop = -linha + 'px';
+    img.style.marginLeft = -coluna + 'px';
+}
+setInterval(animar, 300);
+
+</script>
+
+</body>
+</html>
+
