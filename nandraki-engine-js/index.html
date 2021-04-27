@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="initial-scale=1.0, width=device-width, user-scalable=yes" />
+<meta charset=”UTF-8” lang=”pt-br” http-equiv="content-type" content="text/html; charset=windows-1252">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="popper.min.js"></script>
+<script src="bootstrap.js"></script>
+<link href="bootstrap.min.css" rel="stylesheet"/>
+<script src="bootstrap.bundle.js"></script>
+<script src="nandraki.js"></script>
+<script src="jquery-3.6.0.js"></script>
+<script src="pixi.min.js"></script>
+<script src="phaser-arcade-physics.min.js"></script>
+
+<style>
+body{
+
+background-color: #f1f1f1;
+color: #000000;
+margin: 0px;
+
+}
+
+.text-area {
+
+margin-top: 5px; 
+margin-bottom: 0px; 
+height: 611px;
+width: 90%;
+cursor: pointer;
+background-color: #444;
+color: white;
+font-size: 14px;
+font-family: monospace;	
+
+}
+.responsive-iframe {
+position: absolute;
+top: 50px;
+left: 0;
+bottom: 0;
+right: 0;
+width: 50%;
+height:50%;
+border: none;
+  
+}
+.fun{
+background-color: #d3d3d3;
+margin-top:20px;	
+}
+img{
+margin-left:40px;
+
+}
+.cont {
+float:left;
+margin-top:5px;		
+}
+.esp{
+ margin-left:10px;	
+}
+.play {
+    cursor: pointer;
+    margin-right: 20px;
+}
+h6{
+
+font-size:15px;
+margin-right:70px;
+
+}
+.display{
+ display: none;
+
+}
+.close{
+margin:0px;
+
+}
+
+h4{
+color: red;
+font-size:15px;
+padding-top:10px;
+}
+label.labelInputinput[type="file"] {
+    position: fixed;
+}
+
+.labelInput {
+    margin-left: 0px;
+    margin-right: 30px;
+	
+}
+
+.labelInput :invalid + span {
+    color: blue;
+}
+.labelInput :valid + span {
+    color: blue;
+}
+
+
+
+
+#editor {
+    width: 400px;
+    height: 100px;
+    padding: 10px;
+    background-color: #444;
+    color: white;
+    font-size: 14px;
+    font-family: monospace;
+}
+.statement {
+    color: orange;
+}
+
+
+</style>
+
+
+</head>
+<body>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script>
+function salvarprojetos() {
+	   
+ 		localStorage.setItem("text1", document.getElementById("texto").value);
+	    	localStorage.setItem("text2", document.getElementById("update").value);
+	   	localStorage.setItem("text3", document.getElementById("inserir").value);
+            
+
+   		
+           		
+    }
+	
+function carregarprojetos(){
+	
+	document.getElementById("texto").innerHTML = localStorage.getItem("text1");
+	document.getElementById("update").innerHTML = localStorage.getItem("text2");
+	document.getElementById("inserir").innerHTML = localStorage.getItem("text3");
+	document.getElementById("iframe").innerHTML = localStorage.getItem("text3");
+	  
+		
+	
+	
+	
+}
+function reload(){
+	document.location.reload(true);
+}
+</script>
+	  <h1> </h1>
+	  <script type="text/javascript" src="FileSaver.min.js"></script>
+	  <button class="btn-primary">?</button>
+	  <button class="btn-primary" onclick="salvarprojetos()">Salvar</button>
+	  <button class="btn-primary btn-click" onclick="carregarprojetos()">Carregar</button>
+	  <button class="btn-primary" onclick="reload()">F5</button>
+	  <button class="btn-primary" onclick="engine()">Engine</button>
+	  <a class="btn btn-primary border " href="https://pag.ae/7X1k-ms4n" >Doar</a>
+	  <h1> </h1>
+   <!-- função ao clicar em salvar -->
+   <script>
+   function salvar() {
+      let texto = document.getElementById("texto").value;
+      let update = document.getElementById("update").value;
+      let inserir = document.getElementById("inserir").value;
+      let titulo = document.getElementById("titulo").value;
+      let engine = document.getElementById("engine").value;	
+
+	var html=`
+	<!DOCTYPE html>
+	<html>
+	<title>Projeto Game</title>
+	<body>
+	${engine}
+        ${texto}	
+	${update}
+	${inserir}
+	</body>
+	</html>
+      `
+      ;	
+    var ancora = document.createElement('a');
+    ancora.href = 'data:application/octet-stream;charset=utf-8,' + html;
+    ancora.download = titulo+".html";
+    ancora.click();
+   }
+   function engine(){	
+    if(document.getElementById("myDIV").style.display == "none"){
+    document.getElementById("myDIV").style.display = "block";	
+ 	
+    }else{
+    document.getElementById("myDIV").style.display = "none";		 
+   }
+	
+   }
+   window.onload = engine;
+
+  function editorSprite(){	
+    if(document.getElementById("dis1").style.display == "none"){
+    document.getElementById("dis1").style.display = "block";	
+		
+    }else{
+    document.getElementById("dis1").style.display = "none";
+  			 
+   }
+	
+   }
+   window.onload = engine;	
+   </script>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="#"><img src="logo.png" alt="Nandraki" width=250 height=50> </a>
+ 
+        <p class="esp">
+      <input class="form-control mr-sm-2"  id="titulo" type="search" placeholder="Nome do jogo" aria->
+      <button class="btn border" onclick="salvar()">Export html</button>
+	 <a class="btn border" href="editorSprite.html" >Editor Sprite</a>
+	
+      	</p>
+     
+  </div>
+
+<label class="labelInput" onclick=" loading()">
+<input  id="myBtn" class=" esp btn-primary play" style="display:none;" type='file' value="selecione o jogo" accept='file/*'onchange='openFile(event)'>
+  <img class="play" src="btn.png" alt="Run" width=50 height=50>
+</input>
+</label>
+
+</nav>
+
+<script>
+ 
+	function init() {
+		var user = document.getElementById("texto");
+		var user1 = document.getElementById("update");
+		var user2 = document.getElementById("inserir");
+	
+	user.onkeyup = function()
+        {
+	 document.getElementById('total_linhas0').innerHTML = user.value.split('\n').length;
+	
+	};
+
+	user1.onkeyup = function(){	 
+         document.getElementById('total_linhas1').innerHTML = user1.value.split('\n').length;
+   
+	};
+
+	user2.onkeyup = function(){	 
+         document.getElementById('total_linhas2').innerHTML = user2.value.split('\n').length;
+  	
+	};
+	}
+	window.onload = init;
+     
+</script>
+
+<div class="container">
+  <div class="row ">
+   <div id="myDIV" class="col-sm border fun display">
+<textarea class="text-area " id="engine" >
+<script>
+class Box {
+    constructor(obj,id) {
+        this.obj = obj;
+        this.id = id;	
+	document.body.innerHTML += '<'+this.obj+' id="'+this.id+'">'+'</'+this.obj+'>';
+	this.obj = document.getElementById(this.id);	
+	return obj;
+    }
+
+     static create(obj,id,width,height,top,left) {
+        obj = document.getElementById(id);
+	obj.style.width = width;
+	obj.style.height = height;
+	obj.style.border = "solid 1.5px";
+	obj.style.borderColor= "green";
+	obj.style.top = top;
+	obj.style.left = left;
+	obj.style.position = 'absolute';
+	
+    }
+}
+velocidade=0;
+gravidade =0;
+lefts = 0;
+pulo = false;
+vida =0;
+esquerda=false;
+direita=false;
+leftAtual =  parseInt(player.style.left, 10);
+topAtual = parseInt(player.style.top, 10);
+frame=1;
+tecla="";
+variavel = {};
+game = {
+    moveX : function(nome,left,grav){
+	alert("test");
+    },
+    key_move:function(id,key,key_type,sty,valor){
+	const nome = document.getElementById(id);
+	nome.style.position="absolute";
+	document.addEventListener(key_type, function(event) {
+	  if (event.keyCode == key) {
+	    nome.style.sty = nome.getBoundingClientRect().sty - valor + 'px';
+	    
+	  }
+	});
+    },
+    opacity: function(ob,op){
+      let obj = document.getElementById(ob); 	
+      obj.style.opacity=op;
+
+   },	 
+    camera_2d: function(player){
+
+
+   },	
+   variavel : function(n,v){
+	var nome = n;	
+	variavel[nome] = v;
+
+    },	
+   create_player : function(player,id){
+		
+	document.body.innerHTML += '<'+player+' id="'+id+'"> create'+'</'+player+'>';
+
+    },
+   add_in_obj:function(obj,player){
+	document.getElementById(obj).appendChild(player);	
+    },
+   id_in_player:function(obj,nome){
+	document.querySelector(obj).id +=nome;
+    },		
+    camada:function(player,num){
+	let obj = document.getElementById(player);	
+	obj.style.zIndex=num;
+    }, 	
+    kill_free : function(player){
+	let obj = document.getElementById(player);
+	obj.remove();
+    },
+    calculecolid: function(min0, max0, min1, max1) {
+    return Math.max(min0, max0) >= Math.min(min1, max1) && Math.min(min0, max0) <= Math.max(min1, max1)
+    },
+    
+    colidir : function (r0, r1) {
+    	return game.calculecolid(r0.left, r0.right, r1.left, r1.right) && game.calculecolid(r0.top, r0.bottom, 		r1.top, r1.bottom);
+    },	
+    coord : function(player){
+	return player.getBoundingClientRect();  
+
+    },
+}
+
+
+</script>
+</textarea>
+	<p> 	
+	<label for="textarea" class="font-weight-bold">Engine</label>
+    </div>
+    
+	<div class="col-sm border fun">
+<span class="cont border" id='total_linhas0'>1</span>
+<html>
+<textarea class="text-area" id="texto">
+</textarea>
+	<p> 	
+	<label for="textarea" class="font-weight-bold">Html</label>
+    </div>
+    <div class="col-sm border fun">
+<span class="cont border" id='total_linhas1'>1</span>	
+<textarea class="text-area" id="update"  >
+<script>
+</script>
+</textarea>
+</html>
+	<p> 	
+	<label for="textarea" class="font-weight-bold">Update</label>	
+    </div>
+    <div class="col-sm border fun">
+<span class="cont border"id='total_linhas2'>1</span>
+<textarea class="text-area" id="inserir"  >
+<script>
+</script>
+</textarea>
+	<p> 	
+	<label for="textarea" class="font-weight-bold">Inserir</label> 
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- The Modal -->
+<div id="myModal" class="modal">
+
+  <!-- Modal content -->
+  <div class="modal-content">
+    
+    <span class="close">&times;</span>
+    <iframe id="frame" style="WIDTH: 100%; display: flex; scroll-behavior: smooth; HEIGHT: 650px"  frameborder="no"> </iframe>
+  
+	<script>
+	
+	function loading() {	
+		
+		// Get the modal
+		var modal = document.getElementById("myModal");
+
+		// Get the button that opens the modal
+		var btn = document.getElementById("myBtn");
+
+		// Get the <span> element that closes the modal
+		var span = document.getElementsByClassName("close")[0];
+
+		// When the user clicks the button, open the modal 
+		btn.onclick = function() {
+		  modal.style.display = "block";
+		}
+
+		// When the user clicks on <span> (x), close the modal
+		span.onclick = function() {
+		  modal.style.display = "none";
+		  		
+		 		
+		}
+
+		// When the user clicks anywhere outside of the modal, close it
+		window.onclick = function(event) {
+		  if (event.target == modal) {
+		    modal.style.display = "none";
+		  }
+		}
+	}
+	</script>
+	<style>
+	body {font-family: Arial, Helvetica, sans-serif;}
+
+	/* The Modal (background) */
+	.modal {
+	  display: none; /* Hidden by default */
+	  position: fixed; /* Stay in place */
+	  z-index: 1; /* Sit on top */
+	  padding-top: 0px; /* Location of the box */
+	  left: 0;
+	  top: 0;
+	  width: 100%; /* Full width */
+	  height: 100%; /* Full height */
+	  overflow: auto; /* Enable scroll if needed */
+	  background-color: rgb(0,0,0); /* Fallback color */
+	  background-color: rgba(0,0,0,0.9); /* Black w/ opacity */
+	  
+	}
+
+	/* Modal Content */
+	.modal-content {
+	  background-color: #fefefe;
+	  margin:0px;
+	  padding:0px;
+	  border: 1px solid #888;
+	  width: 100%;
+	}
+
+	/* The Close Button */
+	.close:hover,
+	.close:focus {
+	  color: #000;
+	  text-decoration: none;
+	  cursor: pointer;
+	}
+	</style>
+
+</div>
+<div>
+<script type="application/javascript">
+
+function resizeIFrameToFitContent( iFrame ) {
+
+    iFrame.width  = iFrame.contentWindow.document.body.scrollWidth;
+    iFrame.height = iFrame.contentWindow.document.body.scrollHeight;
+}
+
+window.addEventListener('DOMContentLoaded', function(e) {
+
+    var iFrame = document.getElementById( 'frame' );
+    resizeIFrameToFitContent( iFrame );
+
+    // or, to resize all iframes:
+    var iframes = document.querySelectorAll("frame");
+    for( var i = 0; i < iframes.length; i++) {
+        resizeIFrameToFitContent( iframes[i] );
+    }
+} );
+
+</script>
+
+    <script>
+	
+	
+        var openFile = function(event) {
+            var input = event.target;
+	   
+        
+
+            var reader = new FileReader();
+            reader.onload = function() {
+                var dataURL = reader.result;
+                var output = document.getElementById('frame');
+                output.src = dataURL;
+	
+            };
+            reader.readAsDataURL(input.files[0]);
+	   
+	    document.getElementById('frame').style.display = 'block'; 	
+        };
+	
+    </script>
+
+</div>
+
+
+
+</body>
+
+
+</html>
+
+
+
