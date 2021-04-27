@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<style>
+body{
+  margin:0px;
+}
+canvas { 
+
+border: solid 1px;
+
+}
+</style>
+<h2>Criação da engine nandraki<i></h2>
+<p>utlização de <strong>this</strong> rende canvas e method of person ={}</p>
+
+
+debug:
+<br>
+<canvas id='canvas' width="500" height="500">
+</canvas>
+
+<script>
+canvas = document.getElementById('canvas');
+nandraki = canvas.getContext('2d');
+x = 250;
+y = 100;
+
+game = {
+     text : function(text,font,cor,x,y) {
+	if(font == null || font == " ")
+	{	
+	nandraki.font = '20pt Calibri';
+	}else{
+	nandraki.font = font;
+        }
+        nandraki.fillStyle = cor;
+	nandraki.fillText(text,x,y);
+		
+	},
+     update : function() {
+	nandraki.clearRect(0, 0, canvas.width, canvas.height);	
+	nandraki.beginPath();
+	nandraki.arc(x, y,20, 0, 2 * Math.PI);
+	nandraki.stroke();
+	
+	},
+     start : function() {
+	return setInterval(game.update,10);
+	}, 	
+}
+document.querySelector('body').addEventListener('keydown', function(event) {
+ 
+var tecla = event.keyCode;
+	
+	if(tecla == 13) {
+	 
+	 // tecla ENTER
+		
+	}
+        if(tecla == 27) {
+	 // tecla ESC
+	 
+		
+	}
+	if(tecla == 37) {
+	  if(x == 20){
+	 x = 20;	
+	
+	 }else{
+	 x = x - 5;
+	 }
+	 // seta pra ESQUERDA
+	 	
+	}
+         if(tecla == 38) {
+	
+	 // seta pra CIMA
+         if(y == 20){
+	 y = 20;	
+	
+	 }else{
+	 y = y - 5;
+	 }		
+	} 
+        if(tecla == 39) {
+
+	 if(x == 480){
+	 x = 480 ;
+	 }else{
+	 x = x + 5;
+	 }	
+	} 
+        if(tecla == 40) {
+	
+	 // seta pra BAIXO
+	if(y == 480){
+	 y = 480 ;
+	 }else{
+	 y = y + 5;
+	 }		
+	}
+ 
+	});
+	
+
+game.start();
+
+
+
+
+player = {
+  nome: "player",
+  width: "150px",
+  height: "150px",	
+};
+
+mostro = {
+  nome: "mostro",
+  width: "150px",
+  height: "150px",	
+};
+
+
+
+
+</script>
+
+</body>
+</html>
+
