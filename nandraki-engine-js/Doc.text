@@ -1,0 +1,306 @@
+
+
+// seleciona elemento
+let el = document.getElementById('box');
+// utiliza método
+let elCoordenadas = el.getBoundingClientRect();
+// verificar as propriedades com as coord
+console.log(elCoordenadas);
+_________________________________________
+var div = document.createElement("div");
+div.style.width = "100px";
+div.style.height = "100px";
+div.style.background = "red";
+div.style.color = "white";
+div.innerHTML = "Hello";
+
+document.getElementById("main").appendChild(div); ou document.body.appendChild(div);
+
+<body>
+<div id="main"></div>
+</body>
+
+var div = document.getElementById("player");
+div.style.width = "100px";
+div.style.height = "100px";
+div.style.background = "red";
+div.style.color = "white";
+div.innerHTML = "Hello";
+
+document.getElementById("main").appendChild(div); ou document.body.appendChild(div);
+
+_______________________________________________________________________________________
+var DivA = document.querySelector("#DivA")
+var DivB = document.querySelector("#DivB")
+var Top = 0;//Se o T não for maiusculo não funciona no iframe do codepen
+var left = 0;
+
+//Função de utilidade
+var rangeIntersect = function(min0, max0, min1, max1) {
+    return Math.max(min0, max0) >= Math.min(min1, max1) && Math.min(min0, max0) <= Math.max(min1, max1)
+}
+
+//Função para detectar se 2 BoundingClientRect's estão colidindo
+var rectIntersect = function (r0, r1) {
+    return rangeIntersect(r0.left, r0.right, r1.left, r1.right) && rangeIntersect(r0.top, r0.bottom, r1.top, r1.bottom)
+}
+
+_____________________________________________
+
+document.querySelector('body').addEventListener('keydown', function(event) {
+ 
+	var tecla = event.keyCode;
+	
+	if(tecla == 13) {
+	 
+	 // tecla ENTER
+		
+	} else if(tecla == 27) {
+	 
+	 // tecla ESC
+		
+	} else if(tecla == 37) {
+	 
+	 // seta pra ESQUERDA
+		
+	} else if(tecla == 38) {
+	 
+	 // seta pra CIMA
+		
+	} else if(tecla == 39) {
+	 
+	 // seta pra DIREITA
+		
+	} else if(tecla == 40) {
+	 
+	 // seta pra BAIXO
+		
+	}
+ 
+});
+_____________________________________________________
+
+// seleciona elemento
+let el = document.getElementById('player');
+
+// utiliza método
+let elCoordenadas = el.getBoundingClientRect();
+
+// verificar as propriedades com as coord
+console.log(elCoordenadas
+
+______________________________________________________
+
+<img id="image" src="smiley.gif">
+
+<script>
+document.getElementById("image").src = "pic_mountain.jpg";
+</script>
+_______________________________________________________
+<input type="text" id="myText" value="Hello">
+
+<script>
+document.getElementById("myText").value = "Have a nice day!";
+</script>
+_______________________________________________________
+TOUCH CLICK
+<span ontouchstart="countTouches(event)" ontouchend="countTouches(event)" id="demo">TOCOU AQUI = 0</span>.</p>
+
+
+<script>
+function countTouches(event) {
+  var x = event.targetTouches.length;
+  document.getElementById("demo").innerHTML = "TOCOU AQUI = "+x;
+}
+</script>
+_______________________________________________________
+TOUCH MOVE
+<p ontouchmove="myFunction()">Touch this paragraph, and move the finger to trigger a function that will write "Hello World".</p>
+
+<p><strong>Note:</strong> This example is for touch devices only.</p>
+
+<p id="demo">RF</p>
+
+<script>
+function myFunction() {
+  document.getElementById("demo").innerHTML = "Hello World";
+}
+</script>
+__________________________________________________________
+<script>
+function myFunction(event) {
+var x = document.createEvent("MouseEvent");
+x.initMouseEvent("mouseover", true, true, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
+
+document.getElementById("myDiv").dispatchEvent(x);
+}
+</script>
+
+<h1>The createEvent() Method</h1>
+
+<p>The createEvent() method allows you to simulate any event.</p>
+
+<p>In this example, the red div will get a new star every time you mouse over it:</p>
+
+<div onmouseover="this.innerHTML += '*';" id="myDiv">*</div>
+
+<br>
+<button onclick="myFunction(event)">Simulate Mouse Over</button>
+
+__________________________________________________________
+CRIAR UI
+var h = document.createElement("H1")                // Create a <h1> element
+var t = document.createTextNode("Hello World");     // Create a text node
+h.appendChild(t);                                   // Append the text to <h1>
+
+
+__________________________________________________________
+
+
+function SomenteNumero(v)
+{      
+  return v.replace(/\D/g,"");  
+}
+
+/*
+A função vai pegar o valor do rotateZ, mas somente o número.
+Exemplo:
+    DE: <div id="ID" style="-webkit-transform: rotateZ(320deg);" ></div>
+    PARA: 320
+
+Entendeu?! :D
+*/
+var get_rotate = function()
+{
+    var z = SomenteNumero( document.getElementById(" ID ").style.WebkitTransform );
+    return z;
+}
+
+/*
+A mágica é nesta função milagrosa! rsrs'
+
+window.body_largura = Largura do body em px.
+window.body_altura =  Altura do body em px.
+*/
+var efeito_ir = function( velocidade )
+{   
+    var deg = get_rotate(); //Pega o valor do rotateZ atual
+    var plus = velocidade; //$velocidade: quanto maior é o valor, maior é a distância. Recomendado é de 10 á 100
+
+    var rotation = deg - 270;
+    var dist = Math.sqrt( (window.body_largura * plus)^2 + (window.body_altura * plus)^2);
+    var degtorad = Math.PI/180;
+
+    var x = Math.cos(degtorad * (rotation)) * dist;
+    var y = Math.sin(degtorad * (rotation)) * dist;
+
+    x = Math.round( document.getElementById(" ID ").offsetLeft + (-x) );
+    y = Math.round( document.getElementById(" ID ").offsetTop + (-y) );
+
+    console.log("X: " + (x) );
+    console.log("Y: " + (y) );
+
+    document.getElementById(" ID ").style.top = y + "px";
+    document.getElementById(" ID ").style.left = x + "px";  
+
+}
+
+camera 2d 
+
+var myElement = document.getElementById('element_within_div');
+var topPos = myElement.offsetTop;
+The variable topPos is now set to the distance between the top of the scrolling div and the element you wish to have visible (in pixels).
+
+Now we tell the div to scroll to that position using scrollTop:
+
+document.getElementById('scrolling_div').scrollTop = topPos;
+
+
+
+document.addEventListener('click', evt => {
+  if (evt.path.indexOf(document.querySelector('div.search-results')) < 0) {
+    alert('fora no div!');
+  } else {
+    alert('dentro do div!');
+  }
+}, true);
+
+window.addEventListener("gamepadconnected", function(e) {
+  console.log("Gamepad connected at index %d: %s. %d buttons, %d axes.",
+  e.gamepad.index, e.gamepad.id,
+  e.gamepad.buttons.length, e.gamepad.axes.length);
+});
+
+
+
+window.addEventListener("gamepadconnected", function(e) {
+  console.log("Gamepad connected at index %d: %s. %d buttons, %d axes.",
+  e.gamepad.index, e.gamepad.id,
+  e.gamepad.buttons.length, e.gamepad.axes.length);
+});
+
+
+function gameLoop() {
+  if(navigator.webkitGetGamepads) {
+    var gp = navigator.webkitGetGamepads()[0];
+
+    if(gp.buttons[0] == 1) {
+      b--;
+    } else if(gp.buttons[1] == 1) {
+      a++;
+    } else if(gp.buttons[2] == 1) {
+      b++;
+    } else if(gp.buttons[3] == 1) {
+      a--;
+    }
+  } else {
+    var gp = navigator.getGamepads()[0];
+
+    if(gp.buttons[0].value > 0 || gp.buttons[0].pressed == true) {
+      b--;
+    } else if(gp.buttons[1].value > 0 || gp.buttons[1].pressed == true) {
+      a++;
+    } else if(gp.buttons[2].value > 0 || gp.buttons[2].pressed == true) {
+      b++;
+    } else if(gp.buttons[3].value > 0 || gp.buttons[3].pressed == true) {
+      a--;
+    }
+  }
+
+  ball.style.left = a*2 + "px";
+  ball.style.top = b*2 + "px";
+
+  var start = rAF(gameLoop);
+};
+
+
+
+ 
+
+
+class Ponto {
+    constructor(x, y) {
+        this.x = x;
+        this.y = y;
+    }
+
+    static distancia(a, b) {
+        const dx = a.x - b.x;
+        const dy = a.y - b.y;
+
+        return Math.hypot(dx, dy);
+    }
+}
+//const p1 = new Ponto(1, 1);
+//const p2 = new Ponto(2,2);
+//p1.distancia; //undefined
+//p2.distancia; //undefined
+//console.log(Ponto.distancia(p1, p2));	
+
+
+#map {
+  height: 150vh;
+  width: 70vw;
+  background: linear-gradient(blue, green);
+  touch-action: none;
+}

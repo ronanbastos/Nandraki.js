@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="initial-scale=1.0, width=device-width, user-scalable=yes" />
+<a class="btn border" style="margin:0px;margin-bottom:25px; margin-left:5px;" href="index.html" >X</a>
+<a class="btn border" style="margin:0px;margin-bottom:25px; margin-left:5px;" href="Sprite Cow.html" >Sprite Cow</a>
+<p>
+<script src="popper.min.js"></script>
+<script src="bootstrap.js"></script>
+<link href="bootstrap.min.css" rel="stylesheet"/>
+<script src="bootstrap.bundle.js"></script>
+</script>
+</head>
+<body>
+
+<script>
+function baixar(){
+ let texto = document.getElementById("txtInput").value;	
+
+	var html=`
+	
+________________________________________________________________________________________________________________	
+	
+        
+	${texto}
+________________________________________________________________________________________________________________	
+	
+      `
+      ;	
+    var ancora = document.createElement('a');
+    ancora.href = 'data:application/octet-stream;charset=utf-8,' + html;
+    ancora.download = "SpriteEditor.text";
+    ancora.click();
+
+}
+function myFunction() {
+    document.getElementById("txtInput").select();
+    if (document.selection) {
+    var range = document.body.createTextRange();
+    range.moveToElementText(document.getElementById("txtInput"));
+    range.select().createTextRange();
+    document.execCommand("copy");
+  } else if (window.getSelection) {
+    var range = document.createRange();
+    range.selectNode(document.getElementById("txtInput"));
+    window.getSelection().addRange(range);
+    document.execCommand("copy");
+    document.getElementById("msg").style.display="block";
+    for (var i = 0; i < 10; i++) {
+	if(i==10){
+	 document.getElementById("msg").style.display="none"; 	
+	}
+    }	
+  }
+}
+</script>
+
+<textarea  id="txtInput" class="text border" >Texto para copiar</textarea>
+<button class="btn border" style="margin-bottom:35px;" type="button" onclick="myFunction()">Copy</button>
+<button class="btn border" style="margin-bottom:35px;" type="button" onclick="baixar()">Baixar</button>
+<h6 id="msg" style="display:none;">copy!</h6>
+<p>
+
+<br/>
+<style>
+html, body{
+  zoom: 100%;			
+  background-color: #d3d3d3;			
+}
+.Inputinput[type="file"] {
+    position: fixed;
+}
+#tw-sprite-style{
+  display: inline-block;
+  white-space: pre;
+  background-color:#808080;
+  color: white;
+  margin: 10px auto;
+  padding: 0 15px 15px 15px;
+  vertical-align: middle;
+  min-width: 275px;
+}
+
+.tw-sprite{
+  display: inline-block;
+  background-image: url(player.png);
+  background-repeat: no-repeat;
+  border:solid 1px black;	
+  zoom: 200%;
+}
+
+#main-sprite{
+  margin: 0 auto;
+  border: 1px solid rgba(0,0,0, 0.3);
+  vertical-align: middle;
+}
+
+
+.input-container{
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  grid-gap: 10px 5px;
+  text-align: center;
+}
+
+label.labelInputinput[type="file"] {
+    position: fixed;
+}
+
+.labelInput {
+    margin-left: 0px;
+    margin-right: 30px;
+   	
+	
+}
+.labelInput:hover { background: #d3d3d3; }
+	
+.labelInput :invalid + span {
+    color: blue;
+}
+.labelInput :valid + span {
+    color: blue;
+}
+.text{
+ width: 400px;
+    height: 100px;
+    padding: 10px;
+    background-color: #444;
+    color: white;
+    font-size: 14px;
+    font-family: monospace;
+}
+
+</style>
+<div class="input-container">
+  <input type="range" id="input-range-w" min="-500" max="500" step="10" value="50" >
+  <input type="range" id="input-range-h" min="-500" max="500" step="10" value="50" >
+  <span>Largura</span>
+  <span>Altura</span>
+</div>
+
+
+<div class=input-container >
+  <input type="range" id="input-range-x" min="-500" max="500" step="5" value="0" >
+  <input type="range" id="input-range-y" min="-500" max="500" step="5" value="0" >
+  <span>X</span>
+  <span>Y</span>
+</div>
+
+<style id="tw-sprite-style" >
+
+</style>
+
+<div id="image-area" class="tw-sprite tw-sprite-github " id="main-sprite" ></div>
+
+<script>
+
+const twSpriteStyle = document.querySelector('#tw-sprite-style'),
+	mainSprite = document.querySelector('#main-sprite'),
+	inputRangew = document.querySelector('#input-range-w'),
+  inputRangeh = document.querySelector('#input-range-h'),
+  inputRangex = document.querySelector('#input-range-x'),
+  inputRangey = document.querySelector('#input-range-y');
+
+let height = 50,
+	width = 50,
+  x = 0;
+  y = 0;
+  
+inputRangew.addEventListener('input', (event) => {
+	width = inputRangew.value;
+  setStyle();
+})
+
+inputRangeh.addEventListener('input', (event) => {
+	height = inputRangeh.value;
+  setStyle();
+})
+
+inputRangex.addEventListener('input', (event) => {
+	x = inputRangex.value;
+  setStyle();
+})
+
+inputRangey.addEventListener('input', (event) => {
+	y = inputRangey.value;
+  setStyle();
+})
+
+function setStyle(){
+	twSpriteStyle.innerText = `
+
+.tw-sprite-github{
+	width: ${width}px;
+  	height: ${height}px;
+    	background-position: ${x}px ${y}px;
+}`;
+}
+
+setStyle();
+
+
+
+function onSelectImage(event) {
+
+	if (!event.target.files.length) return;
+
+
+	var selectedFile = event.target.files[0];
+
+	var reader = new FileReader();
+
+	reader.onload = function(event) {
+	document.querySelector('#image-area').style.background = "url('" + event.target.result + "') no-repeat 0 0";     
+	document.querySelector('#txtInput').innerText = event.target.result;
+	};
+	
+	// Informa ao reader para ler a image como base64
+	reader.readAsDataURL(selectedFile);
+}
+
+
+</script>
+<p>
+<label class="labelInput border" style="margin-left:10px" >
+<input type="file" style="display:none;"  id="file_input" onchange="onSelectImage(event)">
+</input>
+Abrir imagem
+</input>
+
+</label>
+</body>
+</html>
+
