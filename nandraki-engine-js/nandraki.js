@@ -30,8 +30,32 @@ class Nandraki {
   	 	
 }
 
-game = {
 
+game = {
+    canvas_start: function(id,width,height){
+	canvas = document.getElementById(id);
+	document.body.innerHTML += "<canvas id='canvas' width="+width+" height="+height+">";
+	return nandraki = canvas.getContext('2d');
+   },
+   canvas_text : function(text,font,cor,x,y) {
+	if(font == null || font == " ")
+	{	
+	nandraki.font = '20pt Calibri';
+	}else{
+	nandraki.font = font;
+        }
+        nandraki.fillStyle = cor;
+	nandraki.fillText(text,x,y);
+		
+    },
+    canvas_arc: function(x,y,font,b,p){
+     
+	nandraki.arc(x, y,font,b,p);
+	
+    },
+    canvas_clear: function(){
+     nandraki.clearRect(0, 0, canvas.width, canvas.height);	
+    },  		
     stop_time : function (myVar){
 
 
@@ -58,7 +82,7 @@ game = {
 	var x=document.getElementById(id).offsetLeft;
 	if(x < a){
                 x= x +step;
-                document.getElementById(id).style.left= x + "px"; 
+                document.getElementById(id).style.left= x + "px"; // horizontal movimento
 	}
 
     },
@@ -68,24 +92,26 @@ game = {
 	var x=document.getElementById(id).offsetLeft;
 	if(x > a){
                 x= x -step;
-                document.getElementById(id).style.left= x + "px"; 
+                document.getElementById(id).style.left= x + "px"; // horizontal movimento
 	}
 
     },
     timeXD: function(valor,id){
  
-    	game.moveXD(valor,id);
-    	var y=document.getElementById(id).offsetTop;
-    	var x=document.getElementById(id).offsetLeft;
-    	timeD=setTimeout('game.timeXD',1000);
+	game.moveXD(valor,id);
+	var y=document.getElementById(id).offsetTop;
+	var x=document.getElementById(id).offsetLeft;
+	document.getElementById("msg").innerHTML="X: " + x + " Y : " + y
+	timeD=setTimeout('game.timeXD',1000);
 
     },
     timeXE: function(valor,id){
  
-    	game.moveXE(valor,id);
-    	var y=document.getElementById(id).offsetTop;
-    	var x=document.getElementById(id).offsetLeft;
-    	timeE=setTimeout('game.timeXE',1000);
+	game.moveXE(valor,id);
+	var y=document.getElementById(id).offsetTop;
+	var x=document.getElementById(id).offsetLeft;
+	document.getElementById("msg").innerHTML="X: " + x + " Y : " + y
+	timeE=setTimeout('game.timeXE',1000);
 
     },
     scaleX:function(id,valor){
@@ -141,10 +167,12 @@ game = {
     },
     click_touch_end:function(id,func){
       
+	
+
     },	
     set_text: function (id,txt){
       let h = document.getElementById(id);
-      h.innerHTML = txt;	
+      return h.innerHTML = txt;	
     },	
     move_touch:function(id){
 	
