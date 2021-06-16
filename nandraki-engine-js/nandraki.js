@@ -33,8 +33,8 @@ class Nandraki {
 
 game = {
     canvas_start: function(id,width,height){
+	document.body.innerHTML += "<canvas id='canvas' width="+width+" height="+height+">";	
 	canvas = document.getElementById(id);
-	document.body.innerHTML += "<canvas id='canvas' width="+width+" height="+height+">";
 	return nandraki = canvas.getContext('2d');
    },
    canvas_text : function(text,font,cor,x,y) {
@@ -55,13 +55,43 @@ game = {
     },
     canvas_clear: function(){
      nandraki.clearRect(0, 0, canvas.width, canvas.height);	
-    },  		
+    }, 
+    reload: function(ative){
+    
+    return document.location.reload(ative);
+     
+    },
+    stop_interval(myVar){
+     clearInterval(myVar);
+    }, 
+    start_interval(myVar,time){
+     setInterval(myVar,time);
+    },			
     stop_time : function (myVar){
 
-
-	return clearTimeout(myVar);
+	clearTimeout(myVar);
 
     },
+    start_time: function (func,time){
+	setTimeout('func',time); 
+    },    
+   animar_left : function (id,mi,ma,time){
+
+	document.getElementById(id).animate([
+	  // keyframes
+	  {animationDirection:"alternate"},
+	  { left: mi+"px" },
+	  { left: ma+"px" },
+	  {animationDirection:"alternate"}
+	], {
+	  // timing options
+	  duration: time,
+	  iterations: Infinity
+	   
+	});
+
+    },
+
      get_left : function (id){
 
 	
@@ -69,16 +99,32 @@ game = {
 	return x;
 
     },
+
     get_top : function (id){
 
 	
 	let y=document.getElementById(id).offsetTop;
 	return y;
 
+    },
+    moveX_rest : function (a,rest,id){
+
+	var step=5;
+	
+	var x=document.getElementById(id).offsetLeft;
+	document.getElementById("msg").innerHTML="X: " + x;
+	if(x > a){
+                x= x - step;
+                document.getElementById(id).style.left= x + "px"; // horizontal movimento
+	}else{
+	  x= x + step + rest;
+          document.getElementById(id).style.left= x + "px";
+	}
+	
     },		
     moveXD : function (a,id){
 
-	var step=1; 
+	var step=5; 
 	var x=document.getElementById(id).offsetLeft;
 	if(x < a){
                 x= x +step;
@@ -88,31 +134,35 @@ game = {
     },
     moveXE : function (a,id){
 
-	var step=1; 
+	var step=5;
+	var y=document.getElementById(id).offsetTop; 
 	var x=document.getElementById(id).offsetLeft;
+	//document.getElementById("msg").innerHTML="X: " + x + " Y : " + y;
 	if(x > a){
-                x= x -step;
+                x= x - step;
                 document.getElementById(id).style.left= x + "px"; // horizontal movimento
 	}
-
+	
     },
     timeXD: function(valor,id){
  
 	game.moveXD(valor,id);
 	var y=document.getElementById(id).offsetTop;
 	var x=document.getElementById(id).offsetLeft;
-	document.getElementById("msg").innerHTML="X: " + x + " Y : " + y
+	//document.getElementById("msg").innerHTML="X: " + x + " Y : " + y;
 	timeD=setTimeout('game.timeXD',1000);
-
+	
     },
     timeXE: function(valor,id){
  
 	game.moveXE(valor,id);
 	var y=document.getElementById(id).offsetTop;
 	var x=document.getElementById(id).offsetLeft;
-	document.getElementById("msg").innerHTML="X: " + x + " Y : " + y
+	//document.getElementById("msg").innerHTML="X: " + x + " Y : " + y;
 	timeE=setTimeout('game.timeXE',1000);
-
+	
+	        
+	
     },
     scaleX:function(id,valor){
 	let obj = document.getElementById(id);
@@ -167,16 +217,39 @@ game = {
     },
     click_touch_end:function(id,func){
       
-	
+	document.getElementById(id).addEventListener("touchend", func, false);
 
-    },	
+    },
+    touch_move:function(id){
+      let element = document.getElementById(id);
+      element.classList.add("dragme");
+      let nodeList = document.getElementsByClassName('dragme');
+
+	for (let i = 0; i < nodeList.length; i++) {
+	  let obj = nodeList[i];
+	  obj.addEventListener('touchmove', function(event) {
+	    let touch = event.targetTouches[0];
+	    event.target.style.left = touch.pageX + 'px';
+	    event.target.style.top = touch.pageY + 'px';
+	    event.preventDefault();
+	  }, false);
+       }
+    },
+	   
+    random_m: function(ma,mi,s){
+    
+       return Math.random() * (ma-mi) + s;
+       
+    },
+    random_mf: function(ma,mi,s){
+    
+       return Math.floor(Math.random() * (ma-mi) + s);
+       
+    },     	
     set_text: function (id,txt){
       let h = document.getElementById(id);
       return h.innerHTML = txt;	
     },	
-    move_touch:function(id){
-	
-    },
     log_key:function(){
 	
 	log = document.getElementById('body');
@@ -194,20 +267,41 @@ game = {
    camera_2d: function(player){
 
 
-   },	
+   },
+   print: function(p){
+	
+     return alert(p);
+	
+   }, 	
    variavel : function(n,v){
 	var nome = n;	
 	variavel[nome] = v;
 
     },	
-   create_obj : function(obj,id){
+   create_objById : function(obj,id){
 		
 	document.body.innerHTML += '<'+obj+' id="'+id+'">'+'</'+obj+'>';
 
-    },	
-   add_in_obj:function(obj,add){
+    },		
+   obj_in_obj:function(obj,add){
 	document.getElementById(obj).appendChild(document.getElementById(add));	
     },
+   remove_class: function(id,c){
+     let element = document.getElementById(id);
+     element.classList.remove(c);	
+   },
+   get_window_W:function(){
+     let w = window.innerWidth;
+     return w;
+   }, 
+   get_window_H:function(){
+     let h = window.innerHeight;
+     return h;
+   },
+   class_in_obj: function(obj,add){
+     let element = document.getElementById(obj);
+     element.classList.add(add);
+   },	
    id_in_obj:function(obj,nome){
 	document.querySelector(obj).id +=" "+nome;
     },		
@@ -219,12 +313,27 @@ game = {
 	let obj = document.getElementById(player);
 	obj.remove();
     },
-    calculecolid: function(min0, max0, min1, max1) {
-    return Math.max(min0, max0) >= Math.min(min1, max1) && Math.min(min0, max0) <= Math.max(min1, max1)
+    radius: function(radius) {
+  	return 2 * Math.PI * radius;
+    },
+    colidir_calQL: function(id1,id2,valor,pulo,check) {
+	    let obj1 = document.getElementById(id1);
+	    let obj2 = document.getElementById(id2); 	
+	    return pulo == false && Math.min(obj2.left*2-valor) <=  Math.min(obj1.left*2) && Math.min(obj2.top) <= Math.min(obj1.top)&& Math.max(obj2.left*2-valor) <=  Math.max(obj1.left*2) && Math.max(obj2.top) <= Math.max(obj1.top+valor) && check==true;		
+	  						
+		
+    },
+    colidir_calQR: function(id1,id2,valor,pulo,check) {
+	    let obj1 = document.getElementById(id1);
+	    let obj2 = document.getElementById(id2); 	
+	    return pulo == false && obj2.right*2-valor <=  obj1.right*2 && obj2.top <= obj1.top && check==true;
+    },		
+    colidir_cal: function(min0, max0, min1, max1) {
+    return Math.max(min0, max0) >= Math.min(min1, max1) && Math.min(min0, max0) <= Math.max(min1, max1);
     },
     
     colidir : function (r0, r1) {
-    	return game.calculecolid(r0.left, r0.right, r1.left, r1.right) && game.calculecolid(r0.top, r0.bottom,r1.top, r1.bottom);
+    	return game.colidir_cal(r0.left, r0.right, r1.left, r1.right) && game.colidir_cal(r0.top, r0.bottom,r1.top, r1.bottom);
     },	
     coord : function(obj){
 	return obj.getBoundingClientRect();  
