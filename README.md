@@ -3,8 +3,8 @@ Engine game</br>
 <img src="https://i.ibb.co/k6pMWgQ/index-html.png" alt="index-html" border="0"></br>
 
 # CDN 
-**CDN**
-<script src="https://tironan.000webhostapp.com/nandraki.js"></script>
+
+# <script src="https://tironan.000webhostapp.com/nandraki.js"></script>
 
 
 [Crie um arquivo chamado index.html dentro do webroot e cole o seguinte código nele]
