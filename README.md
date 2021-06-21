@@ -8,15 +8,16 @@ index.html ttps://github.com/ronanbastos/Nandraki.js/blob/main/nandraki-engine-j
 ***<script src= "https://tironan.000webhostapp.com/nandraki.js" ></script>***
 
 
-[Crie um arquivo chamado index.html dentro do webroot e cole o seguinte código nele]
 
-# **Index**
+
+# **Index**  
+[Crie um arquivo chamado index.html e cole o seguinte código nele]
 
    <!DOCTYPE html>
     <html>
     <head>
 
-        <script src="https://tironan.000webhostapp.com/nandraki.js"></script>
+     <script src="https://tironan.000webhostapp.com/nandraki.js"></script>
     </head>
     <body>
 
