@@ -30,7 +30,6 @@ class Nandraki {
   	 	
 }
 
-
 game = {
     canvas_start: function(id,width,height){
 	document.body.innerHTML += "<canvas id='canvas' width="+width+" height="+height+">";	
@@ -78,13 +77,12 @@ game = {
    animar_left : function (id,mi,ma,time){
 
 	document.getElementById(id).animate([
-	  // keyframes
 	  {animationDirection:"alternate"},
 	  { left: mi+"px" },
 	  { left: ma+"px" },
 	  {animationDirection:"alternate"}
 	], {
-	  // timing options
+	  
 	  duration: time,
 	  iterations: Infinity
 	   
@@ -112,10 +110,11 @@ game = {
 	var step=5;
 	
 	var x=document.getElementById(id).offsetLeft;
-	document.getElementById("msg").innerHTML="X: " + x;
+	//document.getElementById("msg").innerHTML="X: " + x;
+
 	if(x > a){
                 x= x - step;
-                document.getElementById(id).style.left= x + "px"; // horizontal movimento
+                document.getElementById(id).style.left= x + "px"; 
 	}else{
 	  x= x + step + rest;
           document.getElementById(id).style.left= x + "px";
@@ -128,7 +127,7 @@ game = {
 	var x=document.getElementById(id).offsetLeft;
 	if(x < a){
                 x= x +step;
-                document.getElementById(id).style.left= x + "px"; // horizontal movimento
+                document.getElementById(id).style.left= x + "px"; 
 	}
 
     },
@@ -210,12 +209,12 @@ game = {
 	  }
 	}
     },
-    click_touch_start:function(id,func){
+    touch_start:function(id,func){
       
 	document.getElementById(id).addEventListener("touchstart", func, false);
 	
     },
-    click_touch_end:function(id,func){
+    touch_end:function(id,func){
       
 	document.getElementById(id).addEventListener("touchend", func, false);
 
@@ -339,4 +338,9 @@ game = {
 	return obj.getBoundingClientRect();  
 
     },
+    update : function(jogo,fps) {
+		
+		return setInterval(jogo,fps);
+		
+	}, 	
 }
