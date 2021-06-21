@@ -8,7 +8,8 @@ index.html ttps://github.com/ronanbastos/Nandraki.js/blob/main/nandraki-engine-j
 ***<script src= "https://tironan.000webhostapp.com/nandraki.js" ></script>***
 
 
-# 
+
+
 
 # **Index**  
 [Crie um arquivo chamado index.html e cole o seguinte código nele]
