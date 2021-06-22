@@ -11,8 +11,8 @@ Engine game </br>
 
 
 
-# **Index**  
-[Crie um arquivo chamado index.html e cole o seguinte código nele]
+# **Index.html**  
+[Testar o script... Crie um arquivo chamado index.html e cole o seguinte código nele]
 
    <!DOCTYPE html>
     <html>
