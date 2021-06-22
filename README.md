@@ -12,23 +12,23 @@ Engine game </br>
 
 
 # **Index.html**  
-[Testar o script sem base engine html... Crie um arquivo chamado index.html e cole o seguinte código nele]
+[Testar o script sem inteface da engine... Crie um arquivo chamado index.html e cole o seguinte código nele]
 
  <!DOCTYPE html>
  <html>
-   <head>
+ <head>
        <script src="https://tironan.000webhostapp.com/nandraki.js"></script>
-   </head>
-   <body>
-          <script>
-               myjogo = {
-                  start : function(){
+ </head>
+ <body>
+ <script>
+    myjogo = {
+      start : function(){
 
-                    const txt = new Nandraki("h1","text","Ola mundo!");
-                    Nandraki.create_ui(txt.obj,txt.id,"0px","100px","50px","50px");
+       const txt = new Nandraki("h1","text","Ola mundo!");
+       Nandraki.create_ui(txt.obj,txt.id,"0px","100px","50px","50px");
 
-                    const txt2 = new Nandraki("h1","text",1+1);
-                    Nandraki.create_ui(txt2.obj,txt2.id,"0px","100px","50px","100px");
+       const txt2 = new Nandraki("h1","text",1+1);
+       Nandraki.create_ui(txt2.obj,txt2.id,"0px","100px","50px","100px");
 
                   },	
                 }
@@ -36,8 +36,8 @@ Engine game </br>
               fps=60;	
               game.update(myjogo.start(),fps);  
 
-          </script>
-   </body>
+</script>
+</body>
 </html>
 
    
