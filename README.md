@@ -20,7 +20,6 @@ Engine game </br>
        <script src="https://tironan.000webhostapp.com/nandraki.js"></script>
    </head>
    <body>
-
           <script>
                myjogo = {
                   start : function(){
@@ -38,7 +37,6 @@ Engine game </br>
               game.update(myjogo.start(),fps);  
 
           </script>
-
    </body>
 </html>
 
