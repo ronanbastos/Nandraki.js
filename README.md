@@ -16,31 +16,33 @@ Engine game </br>
 
 
 
-<!DOCTYPE html>
-<html>
-<head>
- <script src="https://tironan.000webhostapp.com/nandraki.js"></script>
-</head>
-<body>
-<script>
-      myjogo = {
-         start : function(){
-           
-           const txt = new Nandraki("h1","text","Ola mundo!");
-           Nandraki.create_ui(txt.obj,txt.id,"0px","100px","50px","50px");
-       	  
-	   const txt2 = new Nandraki("h1","text",1+1);
-           Nandraki.create_ui(txt2.obj,txt2.id,"0px","100px","50px","100px");
-	
-         },	
-       }
+	<!DOCTYPE html>
+	<html>
+	<head>
 
-     fps=60;	
-     game.update(myjogo.start(),fps);  
-      
-</script>
-</body>
-</html>
+	 <script src="https://tironan.000webhostapp.com/nandraki.js"></script>
+
+	</head>
+	<body>
+	<script>
+	      myjogo = {
+		 start : function(){
+
+		   const txt = new Nandraki("h1","text","Ola mundo!");
+		   Nandraki.create_ui(txt.obj,txt.id,"0px","100px","50px","50px");
+
+		   const txt2 = new Nandraki("h1","text",1+1);
+		   Nandraki.create_ui(txt2.obj,txt2.id,"0px","100px","50px","100px");
+
+		 },	
+	       }
+
+	     fps=60;	
+	     game.update(myjogo.start(),fps);  
+
+	</script>
+	</body>
+	</html>
   
 # Documentação
 
