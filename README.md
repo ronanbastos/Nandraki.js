@@ -3,7 +3,7 @@ Engine game </br>
 
 <img src="https://i.ibb.co/k6pMWgQ/index-html.png" alt="index-html" border="0"></br>
 
-***Inteface download:*** https://github.com/ronanbastos/Nandraki.js/archive/refs/heads/main.zip
+***Download engine:*** https://github.com/ronanbastos/Nandraki.js/archive/refs/heads/main.zip
 
 ***Demostração test e test2:*** 
 Na pasta da engine tem arquivo test e  que tem todos os codigo de demostração:
