@@ -23,8 +23,18 @@ Engine game </br>
     <body>
 
         <script>
-          const txt = new Nandraki("h6","text","Ola mundo!");
-          Nandraki.create_ui(txt.obj,txt.id,"0px","100px","50px","50px");
+          myJogo = {
+             start : function(){
+               
+               const txt = new Nandraki("h6","text","Ola mundo!");
+               Nandraki.create_ui(txt.obj,txt.id,"0px","100px","50px","50px");
+           
+             },	
+           }
+
+         fps=60;	
+         game.update(myjogo.start,fps);  
+          
         </script>
 
     </body>
