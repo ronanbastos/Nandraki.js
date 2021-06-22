@@ -14,31 +14,34 @@ Engine game </br>
 # **Index.html**  
 [Testar o script... Crie um arquivo chamado index.html e cole o seguinte código nele]
 
-   <!DOCTYPE html>
-    <html>
-    <head>
+ <!DOCTYPE html>
+ <html>
+   <head>
+       <script src="https://tironan.000webhostapp.com/nandraki.js"></script>
+   </head>
+   <body>
 
-     <script src="https://tironan.000webhostapp.com/nandraki.js"></script>
-    </head>
-    <body>
+          <script>
+               myjogo = {
+                  start : function(){
 
-        <script>
-          myJogo = {
-             start : function(){
-               
-               const txt = new Nandraki("h6","text","Ola mundo!");
-               Nandraki.create_ui(txt.obj,txt.id,"0px","100px","50px","50px");
-           
-             },	
-           }
+                    const txt = new Nandraki("h1","text","Ola mundo!");
+                    Nandraki.create_ui(txt.obj,txt.id,"0px","100px","50px","50px");
 
-         fps=60;	
-         game.update(myjogo.start,fps);  
-          
-        </script>
+                    const txt2 = new Nandraki("h1","text",1+1);
+                    Nandraki.create_ui(txt2.obj,txt2.id,"0px","100px","50px","100px");
 
-    </body>
-    </html>
+                  },	
+                }
+
+              fps=60;	
+              game.update(myjogo.start(),fps);  
+
+          </script>
+
+   </body>
+</html>
+
    
 # Documentação
 
