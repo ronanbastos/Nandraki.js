@@ -11,8 +11,8 @@ Engine game </br>
 
 
 
-# **Index.html**  
-[Testar o script sem inteface da engine... Crie um arquivo chamado index.html e cole o seguinte código nele]
+# **Testar o script**  
+[Testar sem inteface da engine... Crie um arquivo chamado index.html e cole o seguinte código nele]
 
 
 
