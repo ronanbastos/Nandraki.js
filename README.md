@@ -15,7 +15,10 @@ Na pasta da engine tem arquivo test e  que tem todos os codigo de demostração:
 <p>
   Playgrand Dom : https://tironan.000webhostapp.com/test2.html
 <p>
-  Playgrand canvas: https://tironan.000webhostapp.com/test.html
+  Playgrand canvas 2D: https://tironan.000webhostapp.com/test.html
+<p>
+  Playgrand canvas 3D: Em andamento!  	
+
 <p>	
 # CDN 
 
