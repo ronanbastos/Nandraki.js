@@ -14,15 +14,15 @@ Engine game </br>
 # **Index.html**  
 [Testar o script sem inteface da engine... Crie um arquivo chamado index.html e cole o seguinte código nele]
 
- <!DOCTYPE html>
+
+
+<!DOCTYPE html>
 <html>
 <head>
-
  <script src="https://tironan.000webhostapp.com/nandraki.js"></script>
 </head>
 <body>
-
-    <script>
+<script>
       myjogo = {
          start : function(){
            
@@ -38,13 +38,10 @@ Engine game </br>
      fps=60;	
      game.update(myjogo.start(),fps);  
       
-    </script>
-
+</script>
 </body>
 </html>
-
-
-   
+  
 # Documentação
 
 https://ronanbastos.github.io/Nandraki.js/
