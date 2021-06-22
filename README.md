@@ -8,9 +8,10 @@ Engine game </br>
 ***Demostração test e test2:*** 
 Na pasta da engine tem arquivo test e  que tem todos os codigo de demostração:
 
-Test1: https://github.com/ronanbastos/Nandraki.js/blob/main/nandraki-engine-js/test2.html
+
+Test1: https://github.com/ronanbastos/Nandraki.js/blob/main/nandraki-engine-js/test.html
 <p>
-Test2: https://github.com/ronanbastos/Nandraki.js/blob/main/nandraki-engine-js/test.html
+Test2: https://github.com/ronanbastos/Nandraki.js/blob/main/nandraki-engine-js/test2.html
 
 
 # CDN 
