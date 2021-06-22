@@ -1,4 +1,4 @@
-# Nandraki.js 1.2
+# Nandraki.js 1.2.0
 Engine game </br>
 
 <img src="https://i.ibb.co/k6pMWgQ/index-html.png" alt="index-html" border="0"></br>
