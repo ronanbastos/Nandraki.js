@@ -43,6 +43,7 @@ Nota:[Na pasta da engine contém arquivo test de demostração]
 
 Projeto esta sendo feito por mim @RonanBasto,caso queria ajudar pode entra conta comigo.<p>
 Email:ronanbatos@hotmail.com	
+<h4> Doar:</h4><a href="https://pagseguro.uol.com.br/checkout/nc/nl/donation/sender-identification.jhtml?t=8b8ca05a0edd8514fca91a650545641e53996970f1d93de6627e1e44ab6d1de2&e=true#rmcl">Aqui!</a>
 
 # Testar o script 
 [Testar sem inteface da engine... Crie um arquivo chamado index.html e cole o seguinte código nele]
@@ -93,7 +94,7 @@ Email:ronanbatos@hotmail.com
 
 https://ronanbastos.github.io/Nandraki.js/
 
-<h4> Doar</h4>
 
-<a href="https://pagseguro.uol.com.br/checkout/nc/nl/donation/sender-identification.jhtml?t=8b8ca05a0edd8514fca91a650545641e53996970f1d93de6627e1e44ab6d1de2&e=true#rmcl">Aqui!</a>
+
+
 
