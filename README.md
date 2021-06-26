@@ -1,10 +1,11 @@
-<h1 align="center"> Nandraki.js <img src="https://img.shields.io/badge/Lincense-MIT-green" alt="index-html" border="0"> <img src="https://img.shields.io/badge/Version-1.2.0-blue" alt="index-html" border="0"> <img src="https://img.shields.io/badge/Projeto-Ativo-success" alt="index-html" border="0">
+<h1 align="center"> Nandraki.js <img src="https://img.shields.io/badge/Lincense-MIT-green" alt="index-html" border="0"> <img src="https://img.shields.io/badge/Version-1.2.0-blue" alt="index-html" border="0"> <img src="https://img.shields.io/badge/Projeto-Ativo-success" alt="index-html" border="0"> <img src="https://img.shields.io/badge/repo%20size-5%2C0%20MiB-important" alt="index-html" border="0">   
 </h1>
 </p>
 <h5>Engine game index.html<h5>  
 <img src="https://i.ibb.co/k6pMWgQ/index-html.png" alt="index-html" border="0"></br>
-
-# Arquivos <br>
+# Sobre o projeto <p>
+ A engine game nandraki esta sendo feita com proposta de criar jogo de maneira facil pelo celular e computador,com objetivo de 
+favorecer computares antigo e com baixo consumo de ram e placa de video,com suporte para interagir com as lib de game que usa tecnologia Webgl canvas.Podendo ate possivel ser usanda para pessoas que não usa maquina robusta e que não tem suporte webgl no navegador,assim nasceu a ideia do DDP (Danamica Dom programar) que uso js,html e css para criar jogos.
 
 ***Download engine:*** https://github.com/ronanbastos/Nandraki.js/archive/refs/heads/main.zip
 
