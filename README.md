@@ -8,13 +8,14 @@ Engine game
 ***Download engine:*** https://github.com/ronanbastos/Nandraki.js/archive/refs/heads/main.zip
 
 ***Demostração test e test2:***<br> 
-Na pasta da engine tem arquivo test e  que tem todos os codigo de demostração:
+Na pasta da engine tem arquivo test que tem todos os codigo de demostração:
 
 
   Test 1 html: https://github.com/ronanbastos/Nandraki.js/blob/main/nandraki-engine-js/test.html
 <p>
   Test 2 html: https://github.com/ronanbastos/Nandraki.js/blob/main/nandraki-engine-js/test2.html
 <p>
+	
 # Playgrand
 <p>
   Playgrand Dom : https://tironan.000webhostapp.com/test2.html
