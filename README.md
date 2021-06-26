@@ -1,7 +1,7 @@
-<h1 align="center"> Nandraki.js <img src="https://img.shields.io/badge/Lincense-MIT-green" alt="index-html" border="0"> <img src="https://img.shields.io/badge/Version-1.2.0-blue" alt="index-html" border="0"> <img src="https://img.shields.io/badge/Projeto-Ativo-success" alt="index-html" border="0"> <img src="https://img.shields.io/badge/repo%20size-5%2C0%20MiB-important" alt="index-html" border="0"> <img src="https://img.shields.io/badge/build-alfa-red" alt="index-html" border="0">     
+[url=https://ibb.co/CtxFSGg][img]https://i.ibb.co/CtxFSGg/mascote.png[/img][/url]<h1 align="center"> Nandraki.js  <img src="https://img.shields.io/badge/Lincense-MIT-green" alt="index-html" border="0"> <img src="https://img.shields.io/badge/Version-1.2.0-blue" alt="index-html" border="0"> <img src="https://img.shields.io/badge/Projeto-Ativo-success" alt="index-html" border="0"> <img src="https://img.shields.io/badge/repo%20size-5%2C0%20MiB-important" alt="index-html" border="0"> <img src="https://img.shields.io/badge/build-alfa-red" alt="index-html" border="0">     
 </h1>
 </p>
-<h5>Engine game index.html<h5>  
+<h5>Engine game index.html <h5>  
 <img src="https://i.ibb.co/k6pMWgQ/index-html.png" alt="index-html" border="0"></br>
 
 <h3>Sobre o projeto</h3>
