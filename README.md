@@ -23,9 +23,11 @@ Na pasta da engine tem arquivo test e  que tem todos os codigo de demostração:
 <p>
   Playgrand canvas 2D: https://tironan.000webhostapp.com/test.html
 <p>
-  Playgrand canvas 3D: 🚧  Em construção...  🚧!  	
+  Playgrand canvas 3D: 🚧  Em construção...  🚧	
 
-<p>	
+<p>
+  Playgrand Site : 🚧  Em construção...  🚧	
+	
 # CDN 
 
 ***<script src= "https://tironan.000webhostapp.com/nandraki.js" ></script>***
