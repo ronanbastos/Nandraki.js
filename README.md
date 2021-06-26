@@ -1,5 +1,5 @@
-# Nandraki.js 1.2.0
-Engine game <img src="https://img.shields.io/badge/Lincense-MIT-green" alt="index-html" border="0"> <img src="https://img.shields.io/badge/Version-1.2.0-blue" alt="index-html" border="0">   </br>
+# Nandraki.js <img src="https://img.shields.io/badge/Lincense-MIT-green" alt="index-html" border="0"> <img src="https://img.shields.io/badge/Version-1.2.0-blue" alt="index-html" border="0">
+Engine game    </br>
 
 </p>
 
