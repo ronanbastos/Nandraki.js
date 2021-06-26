@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+  <html>
+  <head>
+      	<script src="nandraki.js"></script>
+      <script src="https://tironan.000webhostapp.com/nandraki.js"></script>
+  </head>
+  <body>
+
+      <script>
+	x=0;
+        const txt = new Nandraki("h6","text","Ola mundo!");
+        Nandraki.create_ui(txt.obj,txt.id,"0px","100px","50px","50px");
+	game.click_start(txt.id,cont);
+	function cont() {
+		game.set_text(txt.id,"test");
+	}
+      </script>
+
+  </body>
+  </html>

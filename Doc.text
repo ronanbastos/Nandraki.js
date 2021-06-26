@@ -1,0 +1,620 @@
+
+
+// seleciona elemento
+let el = document.getElementById('box');
+// utiliza método
+let elCoordenadas = el.getBoundingClientRect();
+// verificar as propriedades com as coord
+console.log(elCoordenadas);
+_________________________________________
+var div = document.createElement("div");
+div.style.width = "100px";
+div.style.height = "100px";
+div.style.background = "red";
+div.style.color = "white";
+div.innerHTML = "Hello";
+
+document.getElementById("main").appendChild(div); ou document.body.appendChild(div);
+
+<body>
+<div id="main"></div>
+</body>
+
+var div = document.getElementById("player");
+div.style.width = "100px";
+div.style.height = "100px";
+div.style.background = "red";
+div.style.color = "white";
+div.innerHTML = "Hello";
+
+document.getElementById("main").appendChild(div); ou document.body.appendChild(div);
+
+_______________________________________________________________________________________
+var DivA = document.querySelector("#DivA")
+var DivB = document.querySelector("#DivB")
+var Top = 0;//Se o T não for maiusculo não funciona no iframe do codepen
+var left = 0;
+
+//Função de utilidade
+var rangeIntersect = function(min0, max0, min1, max1) {
+    return Math.max(min0, max0) >= Math.min(min1, max1) && Math.min(min0, max0) <= Math.max(min1, max1)
+}
+
+//Função para detectar se 2 BoundingClientRect's estão colidindo
+var rectIntersect = function (r0, r1) {
+    return rangeIntersect(r0.left, r0.right, r1.left, r1.right) && rangeIntersect(r0.top, r0.bottom, r1.top, r1.bottom)
+}
+
+_____________________________________________
+
+document.querySelector('body').addEventListener('keydown', function(event) {
+ 
+	var tecla = event.keyCode;
+	
+	if(tecla == 13) {
+	 
+	 // tecla ENTER
+		
+	} else if(tecla == 27) {
+	 
+	 // tecla ESC
+		
+	} else if(tecla == 37) {
+	 
+	 // seta pra ESQUERDA
+		
+	} else if(tecla == 38) {
+	 
+	 // seta pra CIMA
+		
+	} else if(tecla == 39) {
+	 
+	 // seta pra DIREITA
+		
+	} else if(tecla == 40) {
+	 
+	 // seta pra BAIXO
+		
+	}
+ 
+});
+_____________________________________________________
+
+// seleciona elemento
+let el = document.getElementById('player');
+
+// utiliza método
+let elCoordenadas = el.getBoundingClientRect();
+
+// verificar as propriedades com as coord
+console.log(elCoordenadas
+
+______________________________________________________
+
+<img id="image" src="smiley.gif">
+
+<script>
+document.getElementById("image").src = "pic_mountain.jpg";
+</script>
+_______________________________________________________
+<input type="text" id="myText" value="Hello">
+
+<script>
+document.getElementById("myText").value = "Have a nice day!";
+</script>
+_______________________________________________________
+TOUCH CLICK
+<span ontouchstart="countTouches(event)" ontouchend="countTouches(event)" id="demo">TOCOU AQUI = 0</span>.</p>
+
+
+<script>
+function countTouches(event) {
+  var x = event.targetTouches.length;
+  document.getElementById("demo").innerHTML = "TOCOU AQUI = "+x;
+}
+</script>
+_______________________________________________________
+TOUCH MOVE
+<p ontouchmove="myFunction()">Touch this paragraph, and move the finger to trigger a function that will write "Hello World".</p>
+
+<p><strong>Note:</strong> This example is for touch devices only.</p>
+
+<p id="demo">RF</p>
+
+<script>
+function myFunction() {
+  document.getElementById("demo").innerHTML = "Hello World";
+}
+</script>
+__________________________________________________________
+<script>
+function myFunction(event) {
+var x = document.createEvent("MouseEvent");
+x.initMouseEvent("mouseover", true, true, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
+
+document.getElementById("myDiv").dispatchEvent(x);
+}
+</script>
+
+<h1>The createEvent() Method</h1>
+
+<p>The createEvent() method allows you to simulate any event.</p>
+
+<p>In this example, the red div will get a new star every time you mouse over it:</p>
+
+<div onmouseover="this.innerHTML += '*';" id="myDiv">*</div>
+
+<br>
+<button onclick="myFunction(event)">Simulate Mouse Over</button>
+
+__________________________________________________________
+CRIAR UI
+var h = document.createElement("H1")                // Create a <h1> element
+var t = document.createTextNode("Hello World");     // Create a text node
+h.appendChild(t);                                   // Append the text to <h1>
+
+
+__________________________________________________________
+
+
+function SomenteNumero(v)
+{      
+  return v.replace(/\D/g,"");  
+}
+
+/*
+A função vai pegar o valor do rotateZ, mas somente o número.
+Exemplo:
+    DE: <div id="ID" style="-webkit-transform: rotateZ(320deg);" ></div>
+    PARA: 320
+
+Entendeu?! :D
+*/
+var get_rotate = function()
+{
+    var z = SomenteNumero( document.getElementById(" ID ").style.WebkitTransform );
+    return z;
+}
+
+/*
+A mágica é nesta função milagrosa! rsrs'
+
+window.body_largura = Largura do body em px.
+window.body_altura =  Altura do body em px.
+*/
+var efeito_ir = function( velocidade )
+{   
+    var deg = get_rotate(); //Pega o valor do rotateZ atual
+    var plus = velocidade; //$velocidade: quanto maior é o valor, maior é a distância. Recomendado é de 10 á 100
+
+    var rotation = deg - 270;
+    var dist = Math.sqrt( (window.body_largura * plus)^2 + (window.body_altura * plus)^2);
+    var degtorad = Math.PI/180;
+
+    var x = Math.cos(degtorad * (rotation)) * dist;
+    var y = Math.sin(degtorad * (rotation)) * dist;
+
+    x = Math.round( document.getElementById(" ID ").offsetLeft + (-x) );
+    y = Math.round( document.getElementById(" ID ").offsetTop + (-y) );
+
+    console.log("X: " + (x) );
+    console.log("Y: " + (y) );
+
+    document.getElementById(" ID ").style.top = y + "px";
+    document.getElementById(" ID ").style.left = x + "px";  
+
+}
+
+camera 2d 
+
+var myElement = document.getElementById('element_within_div');
+var topPos = myElement.offsetTop;
+The variable topPos is now set to the distance between the top of the scrolling div and the element you wish to have visible (in pixels).
+
+Now we tell the div to scroll to that position using scrollTop:
+
+document.getElementById('scrolling_div').scrollTop = topPos;
+
+
+
+document.addEventListener('click', evt => {
+  if (evt.path.indexOf(document.querySelector('div.search-results')) < 0) {
+    alert('fora no div!');
+  } else {
+    alert('dentro do div!');
+  }
+}, true);
+
+window.addEventListener("gamepadconnected", function(e) {
+  console.log("Gamepad connected at index %d: %s. %d buttons, %d axes.",
+  e.gamepad.index, e.gamepad.id,
+  e.gamepad.buttons.length, e.gamepad.axes.length);
+});
+
+
+
+window.addEventListener("gamepadconnected", function(e) {
+  console.log("Gamepad connected at index %d: %s. %d buttons, %d axes.",
+  e.gamepad.index, e.gamepad.id,
+  e.gamepad.buttons.length, e.gamepad.axes.length);
+});
+
+
+function gameLoop() {
+  if(navigator.webkitGetGamepads) {
+    var gp = navigator.webkitGetGamepads()[0];
+
+    if(gp.buttons[0] == 1) {
+      b--;
+    } else if(gp.buttons[1] == 1) {
+      a++;
+    } else if(gp.buttons[2] == 1) {
+      b++;
+    } else if(gp.buttons[3] == 1) {
+      a--;
+    }
+  } else {
+    var gp = navigator.getGamepads()[0];
+
+    if(gp.buttons[0].value > 0 || gp.buttons[0].pressed == true) {
+      b--;
+    } else if(gp.buttons[1].value > 0 || gp.buttons[1].pressed == true) {
+      a++;
+    } else if(gp.buttons[2].value > 0 || gp.buttons[2].pressed == true) {
+      b++;
+    } else if(gp.buttons[3].value > 0 || gp.buttons[3].pressed == true) {
+      a--;
+    }
+  }
+
+  ball.style.left = a*2 + "px";
+  ball.style.top = b*2 + "px";
+
+  var start = rAF(gameLoop);
+};
+
+
+
+ 
+
+
+class Ponto {
+    constructor(x, y) {
+        this.x = x;
+        this.y = y;
+    }
+
+    static distancia(a, b) {
+        const dx = a.x - b.x;
+        const dy = a.y - b.y;
+
+        return Math.hypot(dx, dy);
+    }
+}
+//const p1 = new Ponto(1, 1);
+//const p2 = new Ponto(2,2);
+//p1.distancia; //undefined
+//p2.distancia; //undefined
+//console.log(Ponto.distancia(p1, p2));	
+
+
+#map {
+  height: 150vh;
+  width: 70vw;
+  background: linear-gradient(blue, green);
+  touch-action: none;
+}
+
+___________________________________________________________________
+
+<textarea id="code"></textarea>
+<iframe id="output"></iframe>
+
+
+
+var old = '';
+ function update(){
+  var textarea = document.getElementById('code');
+  var iFrame = document.getElementById('output');
+  var IframeDocument=document.getElementById('output').contentDocument
+  if (old != textarea.value){
+    old = textarea.value;
+    iFrame.src="about:blank";
+    IframeDocument.write(old);
+  }
+
+  window.setTimeout(update, 150);
+ }
+ window.onload=update();
+___________________________________________________________________
+mover objeto
+<script>
+var id = null;
+function myMove() {
+  var elem = document.getElementById("myAnimation");   
+  var pos = 0;
+  clearInterval(id);
+  id = setInterval(frame, 10);
+  function frame() {
+    if (pos == 350) {
+      clearInterval(id);
+    } else {
+      pos++; 
+      elem.style.top = pos + 'px'; 
+      elem.style.left = pos + 'px'; 
+    }
+  }
+}
+</script>
+___________________________________________________________________
+
+function reset1(){
+
+    clearTimeout(my_time);
+    document.getElementById('ball1').style.left= "500px";
+    document.getElementById('ball1').style.top= "100px";
+    document.getElementById('ball1').style.right= "100px";
+    document.getElementById("msg").innerHTML="";
+
+}
+
+
+
+function move_img(str) {
+
+    var x=document.getElementById('ball1').offsetTop;
+    x= x +100;
+    document.getElementById('ball1').style.top= x + "px";
+
+}
+
+function disp(){
+
+    var step=1; // Change this step value
+
+    var y=document.getElementById('ball1').offsetTop;
+    var x=document.getElementById('ball1').offsetLeft;
+
+        if(y < 100){
+	        y= y +step; // DEFINA AQUI OS VALORES
+                document.getElementById('ball1').style.top= y + "px"; // vertical movimento
+            }else{
+                if(x < 200){
+                x= x +step; // DEFINA AQUI OS VALORES
+                document.getElementById('ball1').style.left= x + "px"; // horizontal movimento
+            }
+    }
+//////////////////////
+
+}
+
+function timer(){
+disp();
+var y=document.getElementById('ball1').offsetTop;
+var x=document.getElementById('ball1').offsetLeft;
+document.getElementById("msg").innerHTML="X: " + x + " Y : " + y
+my_time=setTimeout('timer()',10);
+}
+
+___________________________________________________________________
+Pode utilizar o método children para obter todos os elementos filhos do elemento pai e o appendChild para adicionar os elementos no novo elemento pai.
+
+function mover() {
+    origem = document.getElementById("origem");
+    destino = document.getElementById("destino");
+
+    filhos = Array.prototype.slice.call(origem.children); //Convertendo HTMLCollection para Array
+    filhos.forEach(function(element, index) {
+        destino.appendChild(element);
+    });
+}
+___________________________________________________________________
+function allowDrop(ev) {
+  ev.preventDefault();
+}
+
+function drag(ev) {
+  ev.dataTransfer.setData("text", ev.target.id);
+}
+
+function drop(ev) {
+  ev.preventDefault();
+  var data = ev.dataTransfer.getData("text");
+  ev.target.appendChild(document.getElementById(data));
+}
+
+<div id="div1" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+
+<img id="drag1" src="img_logo.gif" draggable="true" ondragstart="drag(event)" width="336" height="69">
+___________________________________________________________________
+
+<script>
+function move(elem, duracao) {
+  // altura do botao
+  var btnH	= document.getElementById('btnMover').offsetHeight;
+  // valor da posição a esquerda do elemento
+  var left 	= elem.clientLeft;
+  // valor da posição topo do elemento
+  var top       = btnH - elem.clientTop;
+  // função a ser chamada até chegar a posição informada
+  function deslocamento() {
+    // incrementando contador
+    left++;
+   
+    // aplicando estilo no elemento
+    elem.style.left = left + 'px';
+    elem.style.top  = top + 'px';
+    // verificando se chegou ao ponto desejado
+    if (left == 200 || top == 200)
+      // interrompe o processo de deslocamento 
+      clearInterval(id);
+    }
+   // desloca o elemento até 10 segundos
+   // aumentando o valor, vai demorar mais para chegar
+   var id = setInterval(deslocamento, duracao);
+}
+
+function move1(elem, duracao) {
+  // altura do botao
+  var btnH	= document.getElementById('btnMover').offsetHeight;
+  // valor da posição a esquerda do elemento
+  var left 	= elem.clientLeft;
+  // valor da posição topo do elemento
+  var top       = btnH - elem.clientTop;
+  // função a ser chamada até chegar a posição informada
+  function deslocamento() {
+    // incrementando contador
+    left--;
+    
+    // aplicando estilo no elemento
+    elem.style.left = left + 'px';
+
+    // verificando se chegou ao ponto desejado
+    if (left == 0 )
+      // interrompe o processo de deslocamento 
+      clearInterval(id1);
+    }
+   // desloca o elemento até 10 segundos
+   // aumentando o valor, vai demorar mais para chegar
+   var id1 = setInterval(deslocamento, duracao);
+}
+</script>
+</head>
+<body>
+<input type="button" id="btnMover" value="Mover" onclick="move(elemento, 10)">
+<input type="button" id="btnMover" value="Mover" onclick="move1(elemento, 10)">
+<div id="elemento">clique para mover</div>
+__________________________________________________________________________________
+canvas
+
+<body onload="startGame()">
+<script>
+
+var myGamePiece;
+
+function startGame() {
+    myGamePiece = new component(30, 30, "red", 80, 75);
+    myGameArea.start();
+}
+
+var myGameArea = {
+    canvas : document.createElement("canvas"),
+    start : function() {
+        this.canvas.width = 480;
+        this.canvas.height = 270;
+        this.context = this.canvas.getContext("2d");
+        document.body.insertBefore(this.canvas, document.body.childNodes[0]);
+        this.interval = setInterval(updateGameArea, 20);        
+    },
+    stop : function() {
+        clearInterval(this.interval);
+    },    
+    clear : function() {
+        this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    }
+}
+
+function component(width, height, color, x, y, type) {
+    this.type = type;
+    this.width = width;
+    this.height = height;
+    this.x = x;
+    this.y = y;    
+    this.speedX = 0;
+    this.speedY = 0;    
+    this.gravity = 0.05;
+    this.gravitySpeed = 0;
+    this.update = function() {
+        ctx = myGameArea.context;
+        ctx.fillStyle = color;
+        ctx.fillRect(this.x, this.y, this.width, this.height);
+    }
+    this.newPos = function() {
+        this.gravitySpeed += this.gravity;
+        this.x += this.speedX;
+        this.y += this.speedY + this.gravitySpeed;        
+    }
+}
+
+function updateGameArea() {
+    myGameArea.clear();
+    myGamePiece.newPos();
+    myGamePiece.update();
+}
+____________________________________________________________________________________
+canvas pular com gravidade 
+
+function component(width, height, color, x, y, type) {
+    this.type = type;
+    this.width = width;
+    this.height = height;
+    this.x = x;
+    this.y = y;
+    this.speedX = 0;
+    this.speedY = 0;
+    this.gravity = 0.1;
+    this.gravitySpeed = 0;
+    this.bounce = 0.6;
+    this.update = class="notranslate">function() {
+        ctx = myGameArea.context;
+        ctx.fillStyle = color;
+        ctx.fillRect(this.x, this.y, this.width, this.height);
+    }
+    this.newPos = class="notranslate">function() {
+        this.gravitySpeed += this.gravity;
+        this.x += this.speedX;
+        this.y += this.speedY + this.gravitySpeed;
+        this.hitBottom();
+    }
+    this.hitBottom = class="notranslate">function() {
+        var rockbottom = this.gamearea.canvas.height - this.height;
+        if (this.y > rockbottom) {
+            this.y = rockbottom;
+            this.gravitySpeed = -(this.gravitySpeed * this.bounce);
+        }
+    }
+}
+_________________________________________________________________________________________
+criar componente canvas
+
+<body onload="startGame()">
+<script>
+
+var myGamePiece;
+var myGamePiece2;
+function startGame() {
+    myGameArea.start();
+    myGamePiece = new component(30, 30, "red", 10, 120);
+    myGamePiece2 = new component(30, 30, "red", 50, 120);
+}
+
+var myGameArea = {
+    canvas : document.createElement("canvas"),
+    start : function() {
+        this.canvas.width = 480;
+        this.canvas.height = 270;
+        this.context = 
+        this.canvas.getContext("2d");
+        document.body.insertBefore(this.canvas, document.body.childNodes[0]);
+    }
+}
+
+function component(width, height, color, x, y) {
+    this.width = width;
+    this.height = height;
+    this.x = x;
+    this.y = y;
+    
+    ctx = myGameArea.context;
+    ctx.fillStyle = color;
+    ctx.fillRect(this.x, this.y, this.width, this.height);
+}
+
+</script>
+
+<p>We have added a component to our game, a red square!</p>
+
+</body>
+
+
+
