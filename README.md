@@ -74,7 +74,7 @@ Email:ronanbatos@hotmail.com
 	</body>
 	</html>
 
-###Funcionalidades e Metas
+<h2>Funcionalidades e Metas<h2>
 
 - [x] Criar interface da engine html
 - [x] Export html
