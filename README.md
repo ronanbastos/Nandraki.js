@@ -61,7 +61,7 @@ Na pasta da engine tem arquivo test e  que tem todos os codigo de demostração:
 	</body>
 	</html>
   
-# Documentação
+# Wiki
 
 https://ronanbastos.github.io/Nandraki.js/
 
