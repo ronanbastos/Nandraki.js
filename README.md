@@ -93,3 +93,7 @@ Email:ronanbatos@hotmail.com
 
 https://ronanbastos.github.io/Nandraki.js/
 
+# Doar
+
+<a href="https://pagseguro.uol.com.br/checkout/nc/nl/donation/sender-identification.jhtml?t=8b8ca05a0edd8514fca91a650545641e53996970f1d93de6627e1e44ab6d1de2&e=true#rmcl">Aqui!</a>
+
