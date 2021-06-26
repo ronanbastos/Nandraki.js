@@ -15,9 +15,9 @@ Demostração test e test2 <br>
 Nota:[Na pasta da engine contém arquivo test de demostração]
 
 
-  Test 1 html: https://github.com/ronanbastos/Nandraki.js/blob/main/nandraki-engine-js/test.html
+  Test 1 html: https://github.com/ronanbastos/Nandraki.js/blob/main/test.html
 <p>
-  Test 2 html: https://github.com/ronanbastos/Nandraki.js/blob/main/nandraki-engine-js/test2.html
+  Test 2 html: https://github.com/ronanbastos/Nandraki.js/blob/main/test2.html
 <p>
 	
 *Download engine: https://github.com/ronanbastos/Nandraki.js/archive/refs/heads/main.zip
