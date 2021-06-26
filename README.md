@@ -1,5 +1,5 @@
-<h1 align="center"> <img src="https://i.ibb.co/YBrLT1C/logo.png" alt="mascote"  border="0"></h1>
-<h1 align="center"> Nandraki.js  <img src="https://img.shields.io/badge/Lincense-MIT-green" alt="index-html" border="0"> <img src="https://img.shields.io/badge/Version-1.2.0-blue" alt="index-html" border="0"> <img src="https://img.shields.io/badge/Projeto-Ativo-success" alt="index-html" border="0"> <img src="https://img.shields.io/badge/repo%20size-5%2C0%20MiB-important" alt="index-html" border="0"> <img src="https://img.shields.io/badge/build-alfa-red" alt="index-html" border="0">     
+<h1 align="center"> <img src="https://i.ibb.co/n3BMNKM/logo.png" alt="mascote"  border="0"></h1>
+<h1 align="center"><img src="https://img.shields.io/badge/Lincense-MIT-green" alt="index-html" border="0"> <img src="https://img.shields.io/badge/Version-1.2.0-blue" alt="index-html" border="0"> <img src="https://img.shields.io/badge/Projeto-Ativo-success" alt="index-html" border="0"> <img src="https://img.shields.io/badge/repo%20size-5%2C0%20MiB-important" alt="index-html" border="0"> <img src="https://img.shields.io/badge/build-alfa-red" alt="index-html" border="0">     
 </h1>
 
 </p>
