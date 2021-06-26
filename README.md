@@ -1,11 +1,6 @@
 # Nandraki.js 1.2.0
-Engine game https://img.shields.io/badge/Lincense-MIT-green https://img.shields.io/badge/Version-1.2.0-blue </br>
-<p align="center">
- <a href="#CDN">CDN</a> •
- <a href="#Testar o script ">Script test</a> • 
- <a href="#Arquivos">Arquivos de test</a> • 
- <a href="#contribuicao">Contribuição</a> •  
- <a href="#autor">Autor</a>
+Engine game <img src="https://img.shields.io/badge/Lincense-MIT-green" alt="index-html" border="0"> <img src="https://img.shields.io/badge/Version-1.2.0-blue" alt="index-html" border="0">   </br>
+
 </p>
 
 <img src="https://i.ibb.co/k6pMWgQ/index-html.png" alt="index-html" border="0"></br>
