@@ -31,10 +31,11 @@ Na pasta da engine tem arquivo test que tem todos os codigo de demostração:
 
 ***<script src= "https://tironan.000webhostapp.com/nandraki.js" ></script>***
 <p>
+
 # Autor 
 
-Projeto esta sendo feito por mim @RonanBasto,caso queria ajudar pode entra conta comigo,email ronanbatos@hotmail.com	
-
+Projeto esta sendo feito por mim @RonanBasto,caso queria ajudar pode entra conta comigo.<p>
+Email:ronanbatos@hotmail.com	
 
 # Testar o script 
 [Testar sem inteface da engine... Crie um arquivo chamado index.html e cole o seguinte código nele]
