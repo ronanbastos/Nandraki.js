@@ -23,16 +23,16 @@ Nota:[Na pasta da engine contém arquivo test de demostração]
 *Download engine: https://github.com/ronanbastos/Nandraki.js/archive/refs/heads/main.zip
 <p>
 	
-# Playgrand
+# Playground
 <p>
-  Playgrand Dom : https://tironan.000webhostapp.com/test2.html
+  Playground Dom : https://tironan.000webhostapp.com/test2.html
 <p>
-  Playgrand canvas 2D: https://tironan.000webhostapp.com/test.html
+  Playground canvas 2D: https://tironan.000webhostapp.com/test.html
 <p>
-  Playgrand canvas 3D: 🚧  Em construção...  🚧	
+  Playground canvas 3D: 🚧  Em construção...  🚧	
 
 <p>
-  Playgrand Site : 🚧  Em construção...  🚧	
+  Playground Site : 🚧  Em construção...  🚧	
 	
 # CDN 
 
