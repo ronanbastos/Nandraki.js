@@ -6,7 +6,7 @@
 <h3>Projeto Electronjs </h3>
 </br>
  Ainda esta em test alfa,no momento estou focando em termina as funcinalidade da engine no codigo fonte<p>
-tem previsão em estar pronto e estavel esta versão electron assim que codigo fonte atinger a versão 2.0.0 e sair<p>
+tem previsão em estar pronto e estavel na versão electron assim que codigo fonte atinger a version 2.0.0 e sair<p>
 do alfa para beta.	
 
 # Autor 
