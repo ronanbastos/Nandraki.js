@@ -25,7 +25,7 @@ Email:ronanbatos@hotmail.com
 	
 	
 # Documentação
-install e build
+  Install e Build
 - https://www.electronjs.org/docs/tutorial/quick-start
 - https://www.electronjs.org/docs/development/build-instructions-gn
 - https://www.electronjs.org/docs/development/build-instructions-windows
