@@ -3,7 +3,7 @@
 </h1>
 <br>
 <h6 align="center"><img src="https://i.ibb.co/D8fp6cv/Captura-de-tela-de-2021-06-26-21-27-56.png" alt="index-html" border="0"><p>index.html</h6>
-<h3>Projeto Electron </h3>
+<h3>Projeto Electronjs </h3>
 </br>
  Ainda esta em test alfa,no momento estou focando em termina as funcinalidade da engine no codigo fonte<p>
 tem previsão em estar pronto e estavel esta versão electron assim que codigo fonte atinger a versão 2.0.0 e sair<p>
