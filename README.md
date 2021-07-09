@@ -65,7 +65,7 @@ Nota:[Na pasta da engine contém arquivo test de demostração]
 	       }
 
 	     fps=60;	
-	     game.update(myjogo.start(),fps);  
+	     game.update(myjogo.start,fps);  
 
 	</script>
 	</body>
