@@ -31,7 +31,7 @@ Nota:[Na pasta da engine contém arquivo test de demostração]
   Playground canvas 3D: 🚧  Em construção...  🚧	
 
 <p>
-  Playground Site : 🚧  Em construção...  🚧	
+  Playground Site : https://tironan.000webhostapp.com/nandraki.html	
 	
 # CDN 
 
