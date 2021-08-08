@@ -31,8 +31,8 @@ class Nandraki {
 	
     }	
     static version(){
-        console.log("Version[1.2.6]");
-	alert("Version[1.2.6]");
+        console.log("Version[1.3.0]");
+	alert("Version[1.3.0]");
 	
     }		
     		
@@ -207,6 +207,19 @@ game = {
 	        
 	
     },
+    force_obj: function(id,x,y,espelhar){
+	let element = document.getElementById(id);
+	if(espelhar==true){
+
+	   element.style.transform="translate3d("+x+"px,"+y+"px, 0px) rotateY(180deg)";
+	
+	}else{
+	
+	   element.style.transform="translate3d("+x+"px,"+y+"px, -0px) rotateY(0deg)";
+	
+	}
+    },	 
+
     scaleX:function(id,valor){
 	let obj = document.getElementById(id);
 	obj.style.transform="scaleX("+valor+")";	 
@@ -348,7 +361,7 @@ game = {
       obj.style.opacity=op;
 
    },				 
-   camera_2d: function(player){
+   camera_2d: function(obj){
 
 
    },
@@ -362,7 +375,7 @@ game = {
 	variavel[nome] = v;
 
     },	
-   create_objById : function(obj,id){
+   create_obj : function(obj,id){
 		
 	document.body.innerHTML += '<'+obj+' id="'+id+'">'+'</'+obj+'>';
 
@@ -433,7 +446,8 @@ game = {
    get_window_w:function(){
      let w = window.innerWidth;
      return w;
-   }, 
+   },
+  	 
    get_window_h:function(){
      let h = window.innerHeight;
      return h;
@@ -449,7 +463,12 @@ game = {
    },		
    id_in_obj:function(obj,nome){
 	document.querySelector(obj).id +=" "+nome;
-    },		
+    },
+   get_obj: function(id){
+	let element = document.getElementById(id);
+	return element;
+
+   },		
     camada:function(player,num){
 	let obj = document.getElementById(player);	
 	obj.style.zIndex=num;
