@@ -1,5 +1,5 @@
 <h1 align="center"> <img src="https://i.ibb.co/n3BMNKM/logo.png" alt="mascote"  border="0"></h1>
-<h1 align="center"><img src="https://img.shields.io/badge/Lincense-MIT-green" alt="index-html" border="0"> <img src="https://img.shields.io/badge/Version-1.2.6-blue" alt="index-html" border="0"> <img src="https://img.shields.io/badge/Projeto-Ativo-success" alt="index-html" border="0"><img src="https://img.shields.io/badge/Ultima%20Att-26/07/2021-green" alt="index-html" >     
+<h1 align="center"><img src="https://img.shields.io/badge/Lincense-MIT-green" alt="index-html" border="0"> <img src="https://img.shields.io/badge/Version-1.3.0-blue" alt="index-html" border="0"> <img src="https://img.shields.io/badge/Projeto-Ativo-success" alt="index-html" border="0"><img src="https://img.shields.io/badge/Ultima%20Att-08/08/2021-green" alt="index-html" >     
 <br>
 <h6 align="center"><img src="https://i.ibb.co/3hqPt3N/index-html.png" alt="index-html" border="0"><p>index.html</h6>
 
@@ -55,10 +55,10 @@ Nota:[Na pasta da engine contém arquivo test de demostração]
 	      myjogo = {
 		 start : function(){
 
-		   const txt = new Nandraki("h1","text","Ola mundo!");
+		   const txt = new Nandraki("h1","text","Ola mundo!",0,0,0);
 		   Nandraki.create_ui(txt.obj,txt.id,"0px","100px","50px","50px");
 
-		   const txt2 = new Nandraki("h1","text",1+1);
+		   const txt2 = new Nandraki("h1","text",1+1,0,0,0);
 		   Nandraki.create_ui(txt2.obj,txt2.id,"0px","100px","50px","100px");
 
 		 },	
