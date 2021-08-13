@@ -31,8 +31,8 @@ class Nandraki {
 	
     }	
     static version(){
-        console.log("Version[1.3.0]");
-	alert("Version[1.3.0]");
+        console.log("Version[1.3.2]");
+	alert("Version[1.3.2]");
 	
     }		
     		
