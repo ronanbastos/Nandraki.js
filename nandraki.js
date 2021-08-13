@@ -133,7 +133,13 @@ game = {
 	});
 
     },
-     	
+    get_mouse_x: function(){
+	
+    },
+    get_mouse_y: function(y){
+       
+	
+    },	
     get_left : function (id){
 
 	
@@ -141,7 +147,7 @@ game = {
 	return x;
 
     },
-
+	
     get_top : function (id){
 
 	
@@ -207,9 +213,9 @@ game = {
 	        
 	
     },
-    force_obj: function(id,x,y,espelhar){
+    force_obj: function(id,x,y,rotate){
 	let element = document.getElementById(id);
-	if(espelhar==true){
+	if(rotate==true){
 
 	   element.style.transform="translate3d("+x+"px,"+y+"px, 0px) rotateY(180deg)";
 	
@@ -224,7 +230,16 @@ game = {
 	let obj = document.getElementById(id);
 	obj.style.transform="scaleX("+valor+")";	 
     },
-    	
+    load:function(valor){
+	return window.location.href=valor;	 
+    },
+    load_time:function(valor,time){
+	setTimeout(function() {
+          window.location.href = valor;
+	}, time);
+
+    
+    },	
     move_mouse: function(id){
 	
 	dragElement(document.getElementById(id));
@@ -380,7 +395,7 @@ game = {
 	document.body.innerHTML += '<'+obj+' id="'+id+'">'+'</'+obj+'>';
 
     },
-     ia_left: function(obj1,obj2,id,dis){
+     ia_left: function(obj1,obj2,id,dis,v){
 		
 	if(obj1.left >= obj2.left){
 		document.getElementById(id).animate([
@@ -390,7 +405,7 @@ game = {
 		
 		], {
 		  // timing options
-		  duration: 10000,
+		  duration: v,
 		  iterations: Infinity
 		 
 		});
@@ -402,13 +417,13 @@ game = {
 		
 		], {
 		  // timing options
-		  duration: 10000,
+		  duration: v,
 		  iterations: Infinity
 		 
 		});
 	}
     },
-    ia_top: function(obj1,obj2,id,dis){
+    ia_top: function(obj1,obj2,id,dis,v){
 		
 	if(obj1.top >= obj2.top){
 		document.getElementById(id).animate([
@@ -418,7 +433,7 @@ game = {
 		
 		], {
 		  // timing options
-		  duration: 10000,
+		  duration: v,
 		  iterations: Infinity
 		 
 		});
@@ -430,7 +445,7 @@ game = {
 		
 		], {
 		  // timing options
-		  duration: 10000,
+		  duration: v,
 		  iterations: Infinity
 		 
 		});
@@ -480,18 +495,24 @@ game = {
     radius: function(radius) {
   	return 2 * Math.PI * radius;
     },
-    colidir_calQL: function(id1,id2,valor,pulo,check) {
+    colidir_aq: function(id1,id2,valor,pulo,check) {
 	    let obj1 = document.getElementById(id1);
 	    let obj2 = document.getElementById(id2); 	
-	    return pulo == false && Math.min(obj2.left*2-valor) <=  Math.min(obj1.left*2) && Math.min(obj2.top) <= Math.min(obj1.top)&& Math.max(obj2.left*2-valor) <=  Math.max(obj1.left*2) && Math.max(obj2.top) <= Math.max(obj1.top+valor) && check==true;		
+	    return pulo == false && Math.min(obj2.left*2-valor) >=  Math.min(obj1.left*2) && Math.min(obj2.top) <= Math.min(obj1.top)&& Math.max(obj2.left*2-valor) <=  Math.max(obj1.left*2) && Math.max(obj2.top) <= Math.max(obj1.top+valor) && check==true;		
 	  						
 		
     },
-    colidir_calQR: function(id1,id2,valor,pulo,check) {
+    colidir_force: function(id1,id2,check_contato) {
 	    let obj1 = document.getElementById(id1);
-	    let obj2 = document.getElementById(id2); 	
-	    return pulo == false && obj2.right*2-valor <=  obj1.right*2 && obj2.top <= obj1.top && check==true;
-    },		
+	    let obj2 = document.getElementById(id2);
+	    let local1=game.coord(obj1);
+	    let local2=game.coord(obj2);		
+	    let check_r=local1.right <=local2.right;
+	   
+	    		
+	    return check_r == check_contato && local1.top >= local2.top;
+    },
+		
     colidir_cal: function(min0, max0, min1, max1) {
     return Math.max(min0, max0) >= Math.min(min1, max1) && Math.min(min0, max0) <= Math.max(min1, max1);
     },
