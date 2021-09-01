@@ -1,16 +1,23 @@
 <!DOCTYPE html>
 <html>
 <head>
+<style>
+
+</style>	
 </head>
 <body style="height:100%; overflow:hidden;">
 
 <player  id="player"></player>
-
 <chao id="chao"></chao>
 <item  id="power">
 <msg id="msg"></msg>
 </item>
 <parede id="parede"></parede>
+
+<div id="base-stick" style="border: 1px solid black;border-radius:100%; width:128px;height:128px; position: absolute; left:64px; top:55px; ">	
+<div id="stick1" style=" display: block;background: black;border-radius:100%; height: 64px;width:64px; background: radial-gradient(circle at 100px 100px, #F52D02, #801D08);  left:32px; top:32px;">	</div>		
+
+</div>
 
 <script>
 
@@ -18,12 +25,14 @@ var scale = 'scale(1)';
 document.body.style.webkitTransform =  scale;     // Chrome, Opera, Safari
 document.body.style.msTransform =   scale;       // IE 9
 document.body.style.transform = scale;          // Geral
-document.body.style.zoom=1.0;
-                    
+document.body.style.zoom=1;
+
+
+           
 class Nandraki {
     constructor(obj,id,txt,grav,vel,mas) {
-        this.obj = obj;
-        this.id = id;
+     this.obj = obj;
+     this.id = id;
 	this.txt = txt;
 	document.body.innerHTML += '<'+this.obj+' id="'+this.id+'">'+txt+'</'+this.obj+'>';
 	this.body=document.getElementById(this.id);	
@@ -33,28 +42,62 @@ class Nandraki {
 	
     }
 
-    static create_obj(id,width,height,top,left) {
+    static create_obj(id,width,height,top,left,debug) {
         let obj = document.getElementById(id);
-	obj.style.width = width;
-	obj.style.height = height;
-	obj.style.border = "solid 1px";
-	obj.style.top = top;
-	obj.style.left = left;
-	obj.style.position = 'absolute';
-	
+	if(debug==true){	
+		obj.style.width = width;
+		obj.style.height = height;
+		obj.style.border = "solid 1px";
+		obj.style.top = top;
+		obj.style.left = left;
+		obj.style.position = 'absolute';
+		obj.style.borderColor="green";
+	}else{
+		obj.style.width = width;
+		obj.style.height = height;
+		obj.style.top = top;
+		obj.style.left = left;
+		obj.style.position = 'absolute';
+	}
     }
     static create_ui(id,width,height,top,left) {
-        let obj = document.getElementById(id);
-	obj.style.width = width;
-	obj.style.height = height;
-	obj.style.top = top;
-	obj.style.left = left;
-	obj.style.position = 'absolute';
+	let obj = document.getElementById(id);
+		obj.style.width = width;
+		obj.style.height = height;
+		obj.style.top = top;
+		obj.style.left = left;
+		obj.style.position = 'absolute';
+		
+    }
+    static create_box(obj,id,width,height,top,left,debug) {
+		
+	obj.innerHTML += '<box id="box_'+id+'"></box>';	
+			
+	if(debug==true){
+		let obj = document.getElementById("box_"+id);
+		obj.style.width = width;
+		obj.style.height = height;
+		obj.style.top = top;
+		obj.style.left = left;
+		obj.style.border = "solid 1px";
+		obj.style.borderColor="green";
+		obj.style.position = 'absolute';
+		
+	}else{
+		let obj = document.getElementById("box_"+id);
+	        obj.style.width = width;
+		obj.style.height = height;
+		obj.style.top = top;
+		obj.style.left = left;
+		obj.style.position = 'absolute';
+		
+	  }
 	
-    }	
+	}	
+   		
     static version(){
-        console.log("Version[1.2.6]");
-	alert("Version[1.2.6]");
+        console.log("Version[1.3.7]");
+	alert("Version[1.3.7]");
 	
     }		
     		
@@ -63,16 +106,18 @@ class Nandraki {
 
 
 const parede_1 = new  Nandraki("parede","parede1","",0,0,0);
-Nandraki.create_obj(parede_1.id,"100px","500px","50px","900px");
+Nandraki.create_obj(parede_1.id,"100px","500px","50px","900px",false);
 
 const item1 = new  Nandraki("div","power1","test",0,5.5,10);
-Nandraki.create_obj(item1.id,"30px","50px","50px","50px");
+Nandraki.create_obj(item1.id,"30px","50px","50px","150px",true);
+
+
 
 //body.id do elemento e obj.id nome string do id alert(item1.body.style.top);
 
 
 const lifebarra = new  Nandraki("barra","life","",0,0,0);
-Nandraki.create_obj(lifebarra.id,"100px","5px","15px","50px");
+Nandraki.create_obj(lifebarra.id,"100px","5px","15px","50px",true);
 
 document.getElementById(lifebarra.id).style.background = "red";
 
@@ -97,13 +142,11 @@ bloco = document.getElementById("power1");
 parede = document.getElementById("parede");
 parede1 = document.getElementById(parede_1.id);
 
-
-
 item.style.width = "30px";
 item.style.height = "50px";
 item.style.border = "solid 1.5px";
 item.style.top = '50px';
-item.style.left = '150px';
+item.style.left = '250px';
 item.style.position = 'absolute';
 topAtual2 = parseInt(item.style.top, 10);
 leftAtual2 =  parseInt(item.style.left, 10);
@@ -134,7 +177,8 @@ player.style.left = '60px';
 player.style.background='url("player.png") no-repeat -77px -93px';
 player.style.width="34px";
 player.style.height= "35px";
-
+Nandraki.create_box(player,"player_box_corpo","10px","30px","0px","10px",false);
+Nandraki.create_box(player,"player_box_cabeca","10px","15px","0px","20px",false);
 velocidade=100;
 gravidade =10;
 lefts = 0;
@@ -150,6 +194,10 @@ di=0;
 up=0;
 scala=1;
 x_mouse="";
+m=0;
+s=0;
+h=0;
+
 function parado(){
   
 	    player.style.background='url("player.png") no-repeat -77px -93px';
@@ -231,7 +279,7 @@ parede.animate([ { color: 'blue', left: '0px' },
                { color: 'yellow', left: '50px'} ], 2000); 
 */
 
-item.animate({ left: '100px' }, 3000);
+//item.animate({ left: '100px' }, 3000);
 game = {
     canvas_start: function(id,width,height){
 	document.body.innerHTML += "<canvas id='canvas' width="+width+" height="+height+">";	
@@ -279,6 +327,15 @@ game = {
 	clearTimeout(myVar);
 
     },
+    som_play: function(id,link_som){
+	    function play(){
+	    var audio1 = new Audio();
+	    audio1.src = link_som;
+	    audio1.play();
+		}
+		document.getElementById(id).addEventListener("click",play, false);
+
+	},		
     start_time: function (func,time){
 	setTimeout(func,time); 
     },    
@@ -327,6 +384,7 @@ game = {
     },
     get_mouse_x: function(){
 	
+
     },
     get_mouse_y: function(y){
        
@@ -431,7 +489,18 @@ game = {
 	}, time);
 
     
-    },	
+    },
+    hover_mouse: function(id){
+	const isHover = e => e.parentElement.querySelector(':hover') === e;    
+	const myDiv = document.getElementById(id);
+	document.addEventListener('mousemove', function checkHover() {
+	  const hovered = isHover(myDiv);
+	  if (hovered !== checkHover.hovered) {
+	    return true;
+	    checkHover.hovered = hovered;
+	  }
+	});
+   },  		
     move_mouse: function(id){
 	
 	dragElement(document.getElementById(id));
@@ -475,12 +544,17 @@ game = {
     },
     touch_start:function(id,func){
       
-	document.getElementById(id).addEventListener("touchstart", func, false);
+	document.getElementById(id).addEventListener("touchstart", func, true);
 	
     },
     touch_end:function(id,func){
       
-	document.getElementById(id).addEventListener("touchend", func, false);
+	document.getElementById(id).addEventListener("touchend", func, true);
+
+    },
+    ative_touch:function(){
+      
+	return document.body.style.touchAction="auto";
 
     },
     touch_long:function(id,func,t){
@@ -520,22 +594,96 @@ game = {
 	document.getElementById(id).addEventListener("click",func, false);
 
     },	
-    touch_move:function(id){
+    move_touch:function(id){
       let element = document.getElementById(id);
       element.classList.add("dragme");
+	 var dom = {
+       container: document.body
+	}
+	 var container = {
+	    x: dom.container.getBoundingClientRect().left,
+	    y: dom.container.getBoundingClientRect().top,
+	    w: dom.container.getBoundingClientRect().width,
+	    h: dom.container.getBoundingClientRect().height
+    } 	
+	 var drag = {
+   	  w: element.offsetWidth,
+   	  h: element.offsetHeight
+	}
       let nodeList = document.getElementsByClassName('dragme');
 
 	for (let i = 0; i < nodeList.length; i++) {
 	  let obj = nodeList[i];
 	  obj.addEventListener('touchmove', function(event) {
-	    let touch = event.targetTouches[0];
-	    event.target.style.left = touch.pageX + 'px';
-	    event.target.style.top = touch.pageY + 'px';
+	    let touch = event.touches[0];
+	    posX = touch.pageX - container.x - drag.w / 2;
+         posY = touch.pageY - container.y - drag.h / 2;	
+	    element.style.left = posX + "px"; 
+	    element.style.top = posY + "px";
 	    event.preventDefault();
 	  }, false);
        }
     },
-	   
+    move_touch_imbut:function(id_item,id_container){
+	
+		document.getElementById(id_item).style.position = 'absolute';  
+	     document.getElementById(id_item).style.width= "50%";
+    		document.getElementById(id_item).style.height= "50%";
+		var dom = {
+		    container: document.getElementById(id_container),//document.body,
+		    drag: document.getElementById(id_item),
+		}
+		var container = {
+		    x: dom.container.getBoundingClientRect().left,
+		    y: dom.container.getBoundingClientRect().top,
+		    w: dom.container.getBoundingClientRect().width,
+		    h: dom.container.getBoundingClientRect().height
+		}
+		var drag = {
+		    w: dom.drag.offsetWidth,
+		    h: dom.drag.offsetHeight
+		}
+
+		target = null;
+
+		document.body.addEventListener('touchstart', handleTouchStart, false);
+		document.body.addEventListener('touchmove', handleTouchMove, false);
+		document.body.addEventListener('touchend', handleTouchEnd, false);
+		document.body.addEventListener('touchcancel', handleTouchCancel, false);
+
+		function handleTouchStart(e) {
+		    if (e.touches.length == 1) {
+			   var touch = e.touches[0];
+			   target = touch.target;
+		    }
+		}
+		function handleTouchMove(e) {
+		    if (e.touches.length == 1) {
+			   if(target ===  dom.drag) {
+				  moveDrag(e);
+			   }
+		    }
+		}
+		function handleTouchEnd(e) {
+		    if (e.touches.length == 0) { // User just took last finger off screen
+			   target = null;
+		    }
+		}
+		function handleTouchCancel(e) {
+		    return;
+		}
+
+		function moveDrag(e) {
+			touch = e.touches[0];
+			posX = touch.pageX - container.x - drag.w / 2;
+			posY = touch.pageY - container.y - drag.h / 2;
+		    
+
+		    dom.drag.style.left = posX + "px";
+		    dom.drag.style.top = posY + "px";
+		    	 
+		}
+    },  	 
     random_m: function(ma,mi,s){
     
        return Math.random() * (ma-mi) + s;
@@ -545,7 +693,8 @@ game = {
     
        return Math.floor(Math.random() * (ma-mi) + s);
        
-    },     	
+    },
+   	
     set_text: function (id,txt){
       let h = document.getElementById(id);
       return h.innerHTML = txt;	
@@ -643,12 +792,12 @@ game = {
 		});
 	}
     },	 						
-   obj_in_obj:function(obj,add){
+   obj_in_obj:function(obj,id){
 	document.getElementById(obj).appendChild(document.getElementById(add));	
     },
-   remove_class: function(id,c){
+   remove_class: function(id,obj){
      let element = document.getElementById(id);
-     element.classList.remove(c);	
+     element.classList.remove(obj);	
    },
    get_window_w:function(){
      let w = window.innerWidth;
@@ -668,9 +817,15 @@ game = {
 	element.style.borderRadius= rad+"%";
 
    },		
-   id_in_obj:function(obj,nome){
+   id_in_obj_min:function(obj,nome){
+	document.querySelector(obj).id +=nome;
+    },
+    id_in_obj_max:function(obj,nome){
 	document.querySelector(obj).id +=" "+nome;
     },
+    id_in_two_obj:function(obj,nome1,nome2){
+	document.querySelector(obj).id +=" "+nome1+" "+nome2;
+    },	
    get_obj: function(id){
 	let element = document.getElementById(id);
 	return element;
@@ -680,10 +835,124 @@ game = {
 	let obj = document.getElementById(player);	
 	obj.style.zIndex=num;
     }, 	
-    kill_free : function(player){
-	let obj = document.getElementById(player);
+    kill_free : function(id){
+	let obj = document.getElementById(id);
 	obj.remove();
     },
+    animar_obj:function(id,css,time){
+	let obj = document.getElementById(id);
+	x=css;
+	obj.animate(x,time);	
+    },
+    text_bot:function(id,txt,vel){
+		let content = txt;
+		let text = document.getElementById('text');
+
+		let speed = vel;
+		let cont = 0;
+
+		function typeWriter () {
+		  if(cont < content.length){
+		    text.textContent += content.charAt(cont);
+		    cont++;
+		    setTimeout(typeWriter, speed);
+		  }else{
+		    text.textContent = '';
+		    cont = 0;
+		    typeWriter();
+		  }
+		}
+
+		typeWriter();
+
+	
+
+	
+	},
+    get_text:function(id){
+
+	 let get_text = document.getElementById(id).textContent;	
+	 return get_text;
+
+	},
+     edite_text: function(id,text){
+	
+	document.getElementById(id).textContent = text;
+
+	},	
+    clock_time: function(m,s,valor){
+		  	
+		  let segundos = 0;
+            let minutos = 0;
+            	
+            function segundo(){
+                //incrementa os segundos
+                segundos++;
+                if(segundos==60){
+                    //incrementa os minutos
+                    minutos++;
+                    //Zerar os segundos
+                    segundos=0;
+                    //escreve os minutos
+                    document.getElementById(m).innerHTML=minutos
+                }
+                //escreve os segundos
+                document.getElementById(s).innerHTML=segundos
+                
+            }
+		
+            setInterval(function(){
+
+			segundo();
+			if(valor==minutos){
+			
+			return true;	
+
+			}
+		  },1000)
+		   /*
+		   ex html
+		  <div id="clock">
+		    <span id="minuto">00</span><span>:</span><span id="segundo">00</span>
+	       </div>
+	      */
+
+	 
+    },
+    id_check: function(id){
+	
+	if (document.getElementById(id)) {
+	    return true;
+	} else {
+	   return false;
+	}
+    },
+    move_parent: function(id){
+     let div_p = document.getElementById(id);
+	div_p.appendChild(this.parentElement);
+	
+
+   },
+   create_clone_animate: function(id,obj,css,time){
+     obj.innerHTML += '<div id="obj_'+id+'"></div>';		
+	let clone = document.getElementById("obj_"+id);
+	x=css;
+	clone.animate(x,time);	
+   },
+   clone_obj_move: function(id,obj){
+
+	
+	let seuNode = document.getElementById(id);
+     let clone   = seuNode.cloneNode(true); 
+     obj.appendChild(clone);
+
+   },	
+   clone_obj: function(id){
+   	let seuNode = document.getElementById(id);
+     let clone   = seuNode.cloneNode(true);
+	return clone;
+   },
+
     radius: function(radius) {
   	return 2 * Math.PI * radius;
     },
@@ -694,17 +963,46 @@ game = {
 	  						
 		
     },
-    colidir_force: function(id1,id2,check_contato) {
+    r_check: function(id1,id2) {
+
+	let obj1 = document.getElementById(id1);
+	let obj2 = document.getElementById(id2);
+     let local1 = game.coord(obj1);
+	let local2 = game.coord(obj2);	 
+	let check_r = local1.offsetRight < local2.offsetRight;
+	
+	return check_r;
+	},
+     l_check: function(id1,id2) {
+
+	let obj1 = document.getElementById(id1);
+	let obj2 = document.getElementById(id2);
+     let local1 = game.coord(obj1);
+	let local2 = game.coord(obj2);	 
+	let check_r = local1.offsetLeft > local2.offsetLeft;
+	
+	return check_r;
+	},
+    colidir_force_r: function(id1,id2,check_contato) {
 	    let obj1 = document.getElementById(id1);
 	    let obj2 = document.getElementById(id2);
-	    let local1=game.coord(obj1);
-	    let local2=game.coord(obj2);		
-	    let check_r=local1.right <=local2.right;
+	    let local1 = game.coord(obj1);
+	    let local2 = game.coord(obj2);		
+	    let check_r = local1.right  <=local2.right ;
 	   
 	    		
 	    return check_r == check_contato && local1.top >= local2.top;
     },
-		
+    colidir_force_l: function(id1,id2,check_contato) {
+	    let obj1 = document.getElementById(id1);
+	    let obj2 = document.getElementById(id2);
+	    let local1 = game.coord(obj1);
+	    let local2 = game.coord(obj2);		
+	    let check_l = local1.left <=local2.left;
+	   
+	    		
+	    return check_l == check_contato && local1.top >= local2.top;
+    },		
     colidir_cal: function(min0, max0, min1, max1) {
     return Math.max(min0, max0) >= Math.min(min1, max1) && Math.min(min0, max0) <= Math.max(min1, max1);
     },
@@ -724,58 +1022,121 @@ game = {
     start : function() {
 	
 	
-		        	
+	        	
 	if(scala==1){
 	
 	game.force_obj("player",di,up,false);
 
 	}else{
     
-	game.force_obj("player",di,up,true);	
+		game.force_obj("player",di,up,true);	
 
 	}
+
+
 	chaolocal=game.coord(chao);
-        playerlocal=game.coord(player);
+     playerlocal=game.coord(player);
 	powerlocal=game.coord(item);
 	paredelocal=game.coord(parede);
 	parede1local=game.coord(parede1);
 	localbloco=game.coord(bloco);
 	
-	check_item_in_chao=  game.colidir(chaolocal, powerlocal);	
-	check_item1_in_chao=  game.colidir(localbloco,chaolocal);
-	check_item1_in_player=  game.colidir(localbloco,playerlocal);
-	check_item_in_player=  game.colidir(playerlocal, powerlocal);
-	check_parede_in_player=  game.colidir(paredelocal,playerlocal);
-	check_parede1_in_player=  game.colidir(parede1local,playerlocal);
-	check_parede_in_item = game.colidir(parede1local,powerlocal);
-	check_parede1_in_item = game.colidir(parede1local,powerlocal);
+
+	stick=game.get_obj("stick1");	
+	base=game.get_obj("base-stick");
 	
 
-	if(game.colidir_force("player","power",true)==true && check_item_in_player==true){
-	di-=5;
+	if(stick.offsetLeft >= base.offsetLeft){
+		scala=1;
+		di+=1.5;
+		corre();
+	} 
+	else if(stick.offsetLeft <= base.offsetLeft-20){
+		scala=-1;
+		di-=1.5;
+		corre();
 	}else{
-
-	di+=0;
+	  parado();
 	}
-	if(game.colidir_force("player","power",false)==true && check_item_in_player==true ){
-	di+=5;
+     if(stick.offsetLeft >= base.offsetLeft+50 ){
+		 stick.style.left = "32px";
+	}
+	if(stick.offsetLeft <= base.offsetLeft-100 ){
+		 stick.style.left = "32px";
+	}
+	if(stick.offsetTop > base.offsetTop+50 ){
+		 stick.style.left = "32px";
+		 stick.style.top = "32px";
+	}
+	
+	if(stick.offsetTop <= -1 ){
+		up-=25;
+	}
+	if(stick.offsetTop <= base.offsetTop-100 ){
+
+		stick.style.left = "32px";
+		stick.style.top = "32px";
+
+	}
+	
+	
+	console.log("Top: "+stick.style.top+ " / "+ " left: "+stick.style.left)
+	
+	
+	
+     game.click_start("stick1",jump);
+	
+	check_item_in_chao   =    game.colidir(chaolocal, powerlocal);	
+	check_item1_in_chao   =    game.colidir(localbloco,chaolocal);
+	check_item1_in_player  =    game.colidir(localbloco,playerlocal);
+	check_item_in_player    =    game.colidir(playerlocal, powerlocal);
+	check_parede_in_player   =    game.colidir(paredelocal,playerlocal);
+	check_parede1_in_player   =    game.colidir(parede1local,playerlocal);
+	check_parede_in_item       =    game.colidir(parede1local,powerlocal);
+	check_parede1_in_item       =    game.colidir(parede1local,powerlocal);
+	
+	
+
+	if(game.colidir_force_r("player","power",true)==true && check_item_in_player==true){
+		di-=5;
 	}else{
 
-	di-=0;
+		di+=0;
+	}
+	if(game.colidir_force_l("player","power",false)==true && check_item_in_player==true ){
+		di+=5;
+	}else{
+
+		di-=0;
+	}
+	
+    if(check_item1_in_player==true && game.r_check("player",item1.id)==true){	
+		
+		lefts = lefts - 1.5;
+					
+	}else{
+	
+		lefts = lefts;
 	}
 
 	if(check_parede1_in_player==true){	
 		
 		lefts = lefts - 1.5;
 		
+	}else{
 	
+		player.style.left = (leftAtual + lefts) + 'px'; 
+	}
+
+	if(check_parede_in_player==true){	
 		
-				
+		lefts = lefts + 1.5;
+		
+			
 	}else{
 	
 	player.style.left = (leftAtual + lefts) + 'px'; 
 	}
-
 	///item check
 	if(powerlocal.right == playerlocal.right){
 	 
@@ -787,16 +1148,15 @@ game = {
 	if(pulo == false && powerlocal.left*2-50 <=  playerlocal.left*2-50 && powerlocal.top <= playerlocal.top && check_item_in_player==true){		
 			//di-=50;		
 			if(pulo == false && powerlocal.right*2-50 <=  playerlocal.right*2-50 && powerlocal.top <= playerlocal.top && check_item_in_player==true){			
-			 
 			 //game.kill_free("power");
 			}		
 	}
-		        
+	        
 		
 	if(check_item_in_player){
-		game.camada("player",2); 
-		game.camada("power",1); 
-		//pontos-=10;	
+		  game.camada("player",2); 
+		  game.camada("power",1); 
+		  //pontos-=10;	
 		Nandraki.create_obj(lifebarra.id,pontos+"px","5px","15px","50px");	
 		if(pontos<= 0){
 		  //game.kill_free("player");
@@ -811,22 +1171,22 @@ game = {
 	if(check_item1_in_chao==true){	
 		
 		
-		   item1.gravidade=item1.gravidade;
+		  item1.gravidade=item1.gravidade;
 
 		
 	        		
 		
 	}else{
 	
-        item1.gravidade+=item1.velocidade;
-	game.force_obj(item1.id,0,item1.gravidade,false);
+        	  item1.gravidade+=item1.velocidade;
+	   	  game.force_obj(item1.id,0,item1.gravidade,false);
 
 
         }
 	if(check_item_in_chao==true ){	
 		
-		item.style.top = (topAtual2 + gravidade2 ) + 'px';
-		   item1.gravidade=item1.gravidade;
+		  item.style.top = (topAtual2 + gravidade2 ) + 'px';
+		  item1.gravidade=item1.gravidade;
 
 		
 	        		
@@ -847,8 +1207,7 @@ game = {
 	if(game.colidir(chaolocal, playerlocal)){	
 		
 				
-		//player.style.left = (leftAtual + lefts) + 'px'; // desloca 5px para a direita	
-		//player.style.top = (topAtual + velocidade ) + 'px';
+	
 		pulo=false;		
 		up=up;
 				
@@ -874,10 +1233,7 @@ game = {
 	pulo=true;
 	if(pulo==true){	
 			
-	//velocidade += gravidade;
-	//player.style.top = (topAtual + velocidade) + 'px';
-	//player.style.left = (leftAtual + lefts) + 'px';
-	up+=10;
+		up+=10;
 	
 	
 	
@@ -919,42 +1275,7 @@ function logKey1(e) {
 		
 	}
    if( e.code == "KeyD") {
-	/*
-        if(check_parede_in_player == true){
-	   lefts = lefts - 1;
-	}else if(check_item_in_player){
-		lefts = lefts - 1;
-	}
-	else if(check_parede1_in_player == true){
-	   lefts = lefts - 1;
-	  }	
-	  else{
-	  lefts = lefts + 1.5;
-	  game.scaleX("player","1");
-	    if(pulo==true){
-	          lefts = lefts + 20;
-		  player.style.left = (leftAtual + lefts) + 'px';	
-		 
-	  }  
-	   corre(); 
-	 
-	  }
-	if( pulo == false && Math.min(powerlocal.left*2-35) <=  Math.min(playerlocal.left*2) && Math.min(powerlocal.top) <= Math.min(playerlocal.top)&& Math.max(powerlocal.left*2-35) <=  Math.max(playerlocal.left*2) && Math.max(powerlocal.top) <= Math.max(playerlocal.top+20) && check_item_in_player==true ){		
-						
-			if(pulo == false && powerlocal.right*2-35 <=  playerlocal.right*2 && powerlocal.top <= playerlocal.top && check_item_in_player==true){
-			
-			 lefts = lefts + 1;
-			}else{
-			 lefts = lefts - 1;
-		 	 
-			}		 
-			
-	}
-		
-	}else{
-	 parado();
-	}
-*/	
+	
 	 corre();
 	
 	 if(check_parede_in_player == true){
@@ -971,41 +1292,7 @@ function logKey1(e) {
 	}	
 	}
 if( e.code == "KeyA") {
-	/*	
-	 if(check_parede_in_player == true){
-	   lefts = lefts + 1;
-	}else if(check_item_in_player){
-		lefts = lefts + 1;
-	}
-	else if(check_parede1_in_player == true){
-	   lefts = lefts + 1;
-	  }	
-	  else{
-	  lefts = lefts - 1.5;
-	  game.scaleX("player","-1");
-	  if(pulo==true){
-	  lefts = lefts - 20;
-	  player.style.left = (leftAtual - lefts) + 'px';
-	 
-	  }      
-	  corre();	
-	}
-	if( pulo == false && Math.min(powerlocal.left*2-35) <=  Math.min(playerlocal.left*2) && Math.min(powerlocal.top) <= Math.min(playerlocal.top)&& Math.max(powerlocal.left*2-35) <=  Math.max(playerlocal.left*2) && Math.max(powerlocal.top) <= Math.max(playerlocal.top+20) && check_item_in_player==true ){		
-						
-			if(pulo == false && powerlocal.right*2-30 <=  playerlocal.right*2 && powerlocal.top <= playerlocal.top && check_item_in_player==true){
-			
-			 lefts = lefts + 1;
-			}else{
-			 lefts = lefts - 1;
-		 	 //game.set_text(txt_pontos.id,pontos+1);	
-			 //game.kill_free("power");
-			}
-			 
-			
-	}
-
 	
-	*/
 	  corre();
 	  if(check_parede_in_player == true){
 		di-=0;
@@ -1023,8 +1310,8 @@ if( e.code == "KeyA") {
 
 if(e.code == "KeyW"){
 	   if(pulo==false){
-		up-=100;
-		
+	
+	     up-=100;
 		}
 		
 	}
@@ -1063,14 +1350,40 @@ function logKey2(e) {
 
    }
 }
+function jump() {
+
+  up-=100;
+
+}
+cont=0;
+function hide(e) {
+	
+   cont++
+   if(cont==1){	
+   e.target.style.border = 'solid 1px';
+  }else{
+	e.target.style.border = 'solid 0px';
+	 cont=0;
+	}
+}
 
 
 
 
+//player.addEventListener('click', hide, false);
+
+//var el = document.getElementById('player');
+
+//el.addEventListener('click', function(e) {
+//    alert(e.target.id);
+//});
 game.update(game.start,60);
-//game.click_start("player",click);
-</script>
 
+//game.som_play("stick1","do.wav")	
+game.move_mouse("stick1");
+game.move_touch("parede");
+
+</script>
 
 
 </body>
