@@ -77,10 +77,15 @@ Nota:[Na pasta da engine contém arquivo test de demostração]
 - [x] Export html
 - [x] Manipulação de elemento Dom
 - [x] Key event down e up
-- [x] Event touch,click,move		
+- [x] Event touch,click,move
+- [x] Manipulação de css e js
+- [x] Criar event Gamepad touch			
 - [ ] Manipulação de canvas 
 - [ ] Criar event Gamepad
-- [x] Criar event Gamepad touch		
+- [ ] Manipulação de animação
+- [ ] Verficador de estados animação
+- [ ] Import Apps Android
+	
 	
 # projeto Electron
   Aqui: https://github.com/ronanbastos/Nandraki.js/tree/Nandraki-Electron
