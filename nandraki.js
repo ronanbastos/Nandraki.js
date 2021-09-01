@@ -87,6 +87,15 @@ game = {
 	clearTimeout(myVar);
 
     },
+    som_play: function(id,link_som){
+	    function play(){
+	    var audio1 = new Audio();
+	    audio1.src = link_som;
+	    audio1.play();
+		}
+		document.getElementById(id).addEventListener("click",play, false);
+
+	},		
     start_time: function (func,time){
 	setTimeout(func,time); 
     },    
@@ -135,6 +144,7 @@ game = {
     },
     get_mouse_x: function(){
 	
+
     },
     get_mouse_y: function(y){
        
@@ -239,7 +249,18 @@ game = {
 	}, time);
 
     
-    },	
+    },
+    hover_mouse: function(id){
+	const isHover = e => e.parentElement.querySelector(':hover') === e;    
+	const myDiv = document.getElementById(id);
+	document.addEventListener('mousemove', function checkHover() {
+	  const hovered = isHover(myDiv);
+	  if (hovered !== checkHover.hovered) {
+	    return true;
+	    checkHover.hovered = hovered;
+	  }
+	});
+   },  		
     move_mouse: function(id){
 	
 	dragElement(document.getElementById(id));
@@ -283,12 +304,17 @@ game = {
     },
     touch_start:function(id,func){
       
-	document.getElementById(id).addEventListener("touchstart", func, false);
+	document.getElementById(id).addEventListener("touchstart", func, true);
 	
     },
     touch_end:function(id,func){
       
-	document.getElementById(id).addEventListener("touchend", func, false);
+	document.getElementById(id).addEventListener("touchend", func, true);
+
+    },
+    ative_touch:function(){
+      
+	return document.body.style.touchAction="auto";
 
     },
     touch_long:function(id,func,t){
@@ -328,22 +354,96 @@ game = {
 	document.getElementById(id).addEventListener("click",func, false);
 
     },	
-    touch_move:function(id){
+    move_touch:function(id){
       let element = document.getElementById(id);
       element.classList.add("dragme");
+	 var dom = {
+       container: document.body
+	}
+	 var container = {
+	    x: dom.container.getBoundingClientRect().left,
+	    y: dom.container.getBoundingClientRect().top,
+	    w: dom.container.getBoundingClientRect().width,
+	    h: dom.container.getBoundingClientRect().height
+    } 	
+	 var drag = {
+   	  w: element.offsetWidth,
+   	  h: element.offsetHeight
+	}
       let nodeList = document.getElementsByClassName('dragme');
 
 	for (let i = 0; i < nodeList.length; i++) {
 	  let obj = nodeList[i];
 	  obj.addEventListener('touchmove', function(event) {
-	    let touch = event.targetTouches[0];
-	    event.target.style.left = touch.pageX + 'px';
-	    event.target.style.top = touch.pageY + 'px';
+	    let touch = event.touches[0];
+	    posX = touch.pageX - container.x - drag.w / 2;
+         posY = touch.pageY - container.y - drag.h / 2;	
+	    element.style.left = posX + "px"; 
+	    element.style.top = posY + "px";
 	    event.preventDefault();
 	  }, false);
        }
     },
-	   
+    move_touch_imbut:function(id_item,id_container){
+	
+		document.getElementById(id_item).style.position = 'absolute';  
+	     document.getElementById(id_item).style.width= "50%";
+    		document.getElementById(id_item).style.height= "50%";
+		var dom = {
+		    container: document.getElementById(id_container),//document.body,
+		    drag: document.getElementById(id_item),
+		}
+		var container = {
+		    x: dom.container.getBoundingClientRect().left,
+		    y: dom.container.getBoundingClientRect().top,
+		    w: dom.container.getBoundingClientRect().width,
+		    h: dom.container.getBoundingClientRect().height
+		}
+		var drag = {
+		    w: dom.drag.offsetWidth,
+		    h: dom.drag.offsetHeight
+		}
+
+		target = null;
+
+		document.body.addEventListener('touchstart', handleTouchStart, false);
+		document.body.addEventListener('touchmove', handleTouchMove, false);
+		document.body.addEventListener('touchend', handleTouchEnd, false);
+		document.body.addEventListener('touchcancel', handleTouchCancel, false);
+
+		function handleTouchStart(e) {
+		    if (e.touches.length == 1) {
+			   var touch = e.touches[0];
+			   target = touch.target;
+		    }
+		}
+		function handleTouchMove(e) {
+		    if (e.touches.length == 1) {
+			   if(target ===  dom.drag) {
+				  moveDrag(e);
+			   }
+		    }
+		}
+		function handleTouchEnd(e) {
+		    if (e.touches.length == 0) { // User just took last finger off screen
+			   target = null;
+		    }
+		}
+		function handleTouchCancel(e) {
+		    return;
+		}
+
+		function moveDrag(e) {
+			touch = e.touches[0];
+			posX = touch.pageX - container.x - drag.w / 2;
+			posY = touch.pageY - container.y - drag.h / 2;
+		    
+
+		    dom.drag.style.left = posX + "px";
+		    dom.drag.style.top = posY + "px";
+		    	 
+		}
+    },  	 
     random_m: function(ma,mi,s){
     
        return Math.random() * (ma-mi) + s;
@@ -353,7 +453,8 @@ game = {
     
        return Math.floor(Math.random() * (ma-mi) + s);
        
-    },     	
+    },
+   	
     set_text: function (id,txt){
       let h = document.getElementById(id);
       return h.innerHTML = txt;	
@@ -451,12 +552,12 @@ game = {
 		});
 	}
     },	 						
-   obj_in_obj:function(obj,add){
+   obj_in_obj:function(obj,id){
 	document.getElementById(obj).appendChild(document.getElementById(add));	
     },
-   remove_class: function(id,c){
+   remove_class: function(id,obj){
      let element = document.getElementById(id);
-     element.classList.remove(c);	
+     element.classList.remove(obj);	
    },
    get_window_w:function(){
      let w = window.innerWidth;
@@ -476,9 +577,15 @@ game = {
 	element.style.borderRadius= rad+"%";
 
    },		
-   id_in_obj:function(obj,nome){
+   id_in_obj_min:function(obj,nome){
+	document.querySelector(obj).id +=nome;
+    },
+    id_in_obj_max:function(obj,nome){
 	document.querySelector(obj).id +=" "+nome;
     },
+    id_in_two_obj:function(obj,nome1,nome2){
+	document.querySelector(obj).id +=" "+nome1+" "+nome2;
+    },	
    get_obj: function(id){
 	let element = document.getElementById(id);
 	return element;
@@ -488,10 +595,123 @@ game = {
 	let obj = document.getElementById(player);	
 	obj.style.zIndex=num;
     }, 	
-    kill_free : function(player){
-	let obj = document.getElementById(player);
+    kill_free : function(id){
+	let obj = document.getElementById(id);
 	obj.remove();
     },
+    animar_obj:function(id,css,time){
+	let obj = document.getElementById(id);
+	x=css;
+	obj.animate(x,time);	
+    },
+    text_bot:function(id,txt,vel){
+		let content = txt;
+		let text = document.getElementById('text');
+
+		let speed = vel;
+		let cont = 0;
+
+		function typeWriter () {
+		  if(cont < content.length){
+		    text.textContent += content.charAt(cont);
+		    cont++;
+		    setTimeout(typeWriter, speed);
+		  }else{
+		    text.textContent = '';
+		    cont = 0;
+		    typeWriter();
+		  }
+		}
+
+		typeWriter();
+
+	
+
+	
+	},
+    get_text:function(id){
+
+	 let get_text = document.getElementById(id).textContent;	
+	 return get_text;
+
+	},
+     edite_text: function(id,text){
+	
+	document.getElementById(id).textContent = text;
+
+	},	
+    clock_time: function(m,s,valor){
+		  	
+		  let segundos = 0;
+            let minutos = 0;
+            	
+            function segundo(){
+                //incrementa os segundos
+                segundos++;
+                if(segundos==60){
+                    //incrementa os minutos
+                    minutos++;
+                    //Zerar os segundos
+                    segundos=0;
+                    //escreve os minutos
+                    document.getElementById(m).innerHTML=minutos
+                }
+                //escreve os segundos
+                document.getElementById(s).innerHTML=segundos
+                
+            }	
+            setInterval(function(){
+
+			segundo();
+			if(valor==minutos){
+			
+			return true;	
+
+			}
+		  },1000)
+		   /*
+		   ex html
+		  <div id="clock">
+		    <span id="minuto">00</span><span>:</span><span id="segundo">00</span>
+	       </div>
+	      */
+
+	 
+    },
+    id_check: function(id){
+	
+	if (document.getElementById(id)) {
+	    return true;
+	} else {
+	   return false;
+	}
+    },
+    move_parent: function(id){
+     let div_p = document.getElementById(id);
+	div_p.appendChild(this.parentElement);
+	
+
+   },
+   create_clone_animate: function(id,obj,css,time){
+     obj.innerHTML += '<div id="obj_'+id+'"></div>';		
+	let clone = document.getElementById("obj_"+id);
+	x=css;
+	clone.animate(x,time);	
+   },
+   clone_obj_move: function(id,obj){
+
+	
+	let seuNode = document.getElementById(id);
+     let clone   = seuNode.cloneNode(true); 
+     obj.appendChild(clone);
+
+   },	
+   clone_obj: function(id){
+   	let seuNode = document.getElementById(id);
+     let clone   = seuNode.cloneNode(true);
+	return clone;
+   },
+
     radius: function(radius) {
   	return 2 * Math.PI * radius;
     },
@@ -502,17 +722,46 @@ game = {
 	  						
 		
     },
-    colidir_force: function(id1,id2,check_contato) {
+    r_check: function(id1,id2) {
+
+	let obj1 = document.getElementById(id1);
+	let obj2 = document.getElementById(id2);
+     let local1 = game.coord(obj1);
+	let local2 = game.coord(obj2);	 
+	let check_r = local1.offsetRight < local2.offsetRight;
+	
+	return check_r;
+	},
+     l_check: function(id1,id2) {
+
+	let obj1 = document.getElementById(id1);
+	let obj2 = document.getElementById(id2);
+     let local1 = game.coord(obj1);
+	let local2 = game.coord(obj2);	 
+	let check_r = local1.offsetLeft > local2.offsetLeft;
+	
+	return check_r;
+	},
+    colidir_force_r: function(id1,id2,check_contato) {
 	    let obj1 = document.getElementById(id1);
 	    let obj2 = document.getElementById(id2);
-	    let local1=game.coord(obj1);
-	    let local2=game.coord(obj2);		
-	    let check_r=local1.right <=local2.right;
+	    let local1 = game.coord(obj1);
+	    let local2 = game.coord(obj2);		
+	    let check_r = local1.right  <=local2.right ;
 	   
 	    		
 	    return check_r == check_contato && local1.top >= local2.top;
     },
-		
+    colidir_force_l: function(id1,id2,check_contato) {
+	    let obj1 = document.getElementById(id1);
+	    let obj2 = document.getElementById(id2);
+	    let local1 = game.coord(obj1);
+	    let local2 = game.coord(obj2);		
+	    let check_l = local1.left <=local2.left;
+	   
+	    		
+	    return check_l == check_contato && local1.top >= local2.top;
+    },		
     colidir_cal: function(min0, max0, min1, max1) {
     return Math.max(min0, max0) >= Math.min(min1, max1) && Math.min(min0, max0) <= Math.max(min1, max1);
     },
