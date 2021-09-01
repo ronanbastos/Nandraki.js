@@ -80,7 +80,7 @@ Nota:[Na pasta da engine contém arquivo test de demostração]
 - [x] Event touch,click,move		
 - [ ] Manipulação de canvas 
 - [ ] Criar event Gamepad
-- [ ] Criar event Gamepad touch		
+- [x] Criar event Gamepad touch		
 	
 # projeto Electron
   Aqui: https://github.com/ronanbastos/Nandraki.js/tree/Nandraki-Electron
