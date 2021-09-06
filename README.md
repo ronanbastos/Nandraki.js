@@ -6,10 +6,9 @@
 </br>
 <h3>Sobre o projeto</h3>
 <p>
-<h4></h4>A engine game nandraki  esta sendo criada com base webgl,html,js e css com proposta de criar jogo de maneira facil pelo celular e computador,com objetivo de 
-favorecer computares antigo e com baixo consumo de ram e placa de video,com suporte para interagir lib de game existente que usa tecnologia Webgl canvas.Projeto esta sendo feito em class principal e blocos de função js.Podendo ate possivel ser usanda para pessoas que não usa maquina robusta e que não tem suporte webgl no navegador,assim nasceu a ideia do DDP (dinâmica Dom programar)que uso js,html e css sem canvas para criar jogos.
-	
-Em processo alfa aqui em baixo tem links de exemplos de projetos feitos na engine<br>
+<h4></h4>A A engine game nandraki esta sendo criada com base webgl,html,js e css com proposta de criar jogo de maneira fácil pelo celular e computador, com objetivo de favorecer computares antigo e com baixo consumo de ram e placa de vídeo, com suporte para interagir lib de game existente que usa tecnologia Webgl canvas.Projeto esta sendo feito em class principal e blocos de função js.Podendo ate possível ser usada para pessoas que não usa maquina robusta e que não tem suporte webgl no navegador, assim nasceu a ideia do DDP (dinâmica Dom programar)que uso js,html e css sem canvas para criar jogos.
+Em processo alfa aqui em baixo tem links de exemplos de projetos feitos na engine
+<br>
 Demostração test e test2 <br> 
 Nota:[Na pasta da engine contém arquivo test de demostração]
 
