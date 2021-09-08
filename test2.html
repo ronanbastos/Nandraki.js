@@ -5,7 +5,7 @@
 
 </style>	
 </head>
-<body style="height:100%; overflow:hidden;">
+<body style="width:100%;height:100%;  touch-action: none; overflow:hidden;">
 
 <player  id="player"></player>
 <chao id="chao"></chao>
@@ -13,12 +13,12 @@
 <msg id="msg"></msg>
 </item>
 <parede id="parede"></parede>
-
-<div id="base-stick" style="border: 1px solid black;border-radius:100%; width:128px;height:128px; position: absolute; left:64px; top:55px; ">	
-<div id="stick1" style=" display: block;background: black;border-radius:100%; height: 64px;width:64px; background: radial-gradient(circle at 100px 100px, #F52D02, #801D08);  left:32px; top:32px;">	</div>		
-
+<div id="move-base" style="width:256px;height:256px; position: absolute; left:250px; top:600px; ">
+	<div id="base-stick" style="border: 1px solid black;border-radius:100%; width:128px;height:128px; position: absolute; left:64px; top:64px; ">	
+		<div id="stick1" style=" display: block;background: black;border-radius:100%; height: 64px;width:64px; background: radial-gradient(circle at 100px 100px, #F52D02, #801D08);  left:32px; top:32px;">	
+		</div>		
+	</div>
 </div>
-
 <script>
 
 var scale = 'scale(1)';
@@ -101,7 +101,48 @@ class Nandraki {
 	
     }		
     		
-  	 	
+    static create_animator(id,p1,p2,time,ative){
+	
+	var animationInterval;
+	var spriteSheet = document.getElementById(id);
+	var widthOfSpriteSheet = p1;
+	var widthOfEachSprite = p2;
+
+	function stopAnimation() {
+	  clearInterval(animationInterval);
+	}
+
+	function startAnimation() {
+	  var position = widthOfEachSprite; //start position for the image
+	  const speed = time; //in millisecond(ms)
+	  const diff = widthOfEachSprite; //difference between two sprites
+
+	  animationInterval = setInterval(() => {
+	    spriteSheet.style.backgroundPosition = `-${position}px 0px`;
+
+	    if (position < widthOfSpriteSheet) {
+		 position = position + diff;
+	    } else {
+		 //increment the position by the width of each sprite each time
+		 position = widthOfEachSprite;
+	    }
+	    //reset the position to show first sprite after the last one
+	  }, speed);
+
+	}
+	if(ative==true){
+		
+		//Start animation
+		startAnimation();
+	
+	}else{
+	
+	   //stop animation		
+	   stopAnimation();	
+	}
+		
+
+	}	 	
 }
 
 
@@ -257,29 +298,7 @@ function corre() {
 }
 
 
-/*
-document.getElementById("power").animate([
-	  // keyframes
-	  {animationDirection:"alternate"},
-	  { left: "0px" },
-	  { left: "800px" },
-	  {animationDirection:"alternate"}
-	], {
-	  // timing options
-	  duration: 10000,
-	  iterations: Infinity
-	 
-	});
-*/
-//item.animate({ left: '100px' }, 3000);
-/*
-parede.animate([ { color: 'blue', left: '0px' },
-               { color: 'green', left: '-20px' },
-               { color: 'red', left: '100px' },
-               { color: 'yellow', left: '50px'} ], 2000); 
-*/
 
-//item.animate({ left: '100px' }, 3000);
 game = {
     canvas_start: function(id,width,height){
 	document.body.innerHTML += "<canvas id='canvas' width="+width+" height="+height+">";	
@@ -443,6 +462,7 @@ game = {
 	}
 	
     },
+    	
     timeXD: function(valor,id){
  
 	game.moveXD(valor,id);
@@ -624,7 +644,7 @@ game = {
 	  }, false);
        }
     },
-    move_touch_imbut:function(id_item,id_container){
+    move_touch_pro:function(id_item,id_container){
 	
 		document.getElementById(id_item).style.position = 'absolute';  
 	     document.getElementById(id_item).style.width= "50%";
@@ -1045,26 +1065,30 @@ game = {
 	stick=game.get_obj("stick1");	
 	base=game.get_obj("base-stick");
 	
-
-	if(stick.offsetLeft >= base.offsetLeft){
+	if(stick.offsetLeft == 32){
+	  parado();
+	  di=di;	
+	}else if(stick.offsetLeft >= -10){
 		scala=1;
 		di+=1.5;
 		corre();
 	} 
-	else if(stick.offsetLeft <= base.offsetLeft-20){
+	else if(stick.offsetLeft < 50){
 		scala=-1;
 		di-=1.5;
 		corre();
-	}else{
-	  parado();
 	}
-     if(stick.offsetLeft >= base.offsetLeft+50 ){
+     if(stick.offsetLeft >= 125 ){
 		 stick.style.left = "32px";
+	
+		
 	}
-	if(stick.offsetLeft <= base.offsetLeft-100 ){
+	if(stick.offsetLeft <= -75  ){
 		 stick.style.left = "32px";
+		
+		
 	}
-	if(stick.offsetTop > base.offsetTop+50 ){
+	if(stick.offsetTop > base.offsetTop+100 ){
 		 stick.style.left = "32px";
 		 stick.style.top = "32px";
 	}
@@ -1080,8 +1104,8 @@ game = {
 	}
 	
 	
-	console.log("Top: "+stick.style.top+ " / "+ " left: "+stick.style.left)
-	
+	 //console.log("Stick = Top: "+stick.style.top+ " / "+ " left: "+stick.style.left)
+	//console.log("Base  = Top: "+base.style.top+ " / "+ " left: "+base.style.left)
 	
 	
      game.click_start("stick1",jump);
@@ -1276,7 +1300,7 @@ function logKey1(e) {
 	}
    if( e.code == "KeyD") {
 	
-	 corre();
+	 //corre();
 	
 	 if(check_parede_in_player == true){
 		di+=0;
@@ -1293,7 +1317,7 @@ function logKey1(e) {
 	}
 if( e.code == "KeyA") {
 	
-	  corre();
+	  //corre();
 	  if(check_parede_in_player == true){
 		di-=0;
 	 	
@@ -1381,7 +1405,7 @@ game.update(game.start,60);
 
 //game.som_play("stick1","do.wav")	
 game.move_mouse("stick1");
-game.move_touch("parede");
+game.move_touch_pro("stick1","base-stick");
 
 </script>
 
