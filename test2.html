@@ -5,7 +5,7 @@
 
 </style>	
 </head>
-<body style="width:100%;height:100%;  touch-action: none; overflow:hidden;">
+<body style="width:100%;height:100%;  touch-action: none; overflow: auto; ">
 
 <player  id="player"></player>
 <chao id="chao"></chao>
@@ -13,15 +13,11 @@
 <msg id="msg"></msg>
 </item>
 <parede id="parede"></parede>
-<div id="move-base" style="width:256px;height:256px; position: absolute; left:250px; top:600px; ">
-	<div id="base-stick" style="border: 1px solid black;border-radius:100%; width:128px;height:128px; position: absolute; left:64px; top:64px; ">	
-		<div id="stick1" style=" display: block;background: black;border-radius:100%; height: 64px;width:64px; background: radial-gradient(circle at 100px 100px, #F52D02, #801D08);  left:32px; top:32px;">	
-		</div>		
-	</div>
+<div id="joy">
 </div>
 <script>
 
-var scale = 'scale(1)';
+let scale = 'scale(1)';
 document.body.style.webkitTransform =  scale;     // Chrome, Opera, Safari
 document.body.style.msTransform =   scale;       // IE 9
 document.body.style.transform = scale;          // Geral
@@ -103,17 +99,17 @@ class Nandraki {
     		
     static create_animator(id,p1,p2,time,ative){
 	
-	var animationInterval;
-	var spriteSheet = document.getElementById(id);
-	var widthOfSpriteSheet = p1;
-	var widthOfEachSprite = p2;
+	let animationInterval;
+	let spriteSheet = document.getElementById(id);
+	let widthOfSpriteSheet = p1;
+	let widthOfEachSprite = p2;
 
 	function stopAnimation() {
 	  clearInterval(animationInterval);
 	}
 
 	function startAnimation() {
-	  var position = widthOfEachSprite; //start position for the image
+	  let position = widthOfEachSprite; //start position for the image
 	  const speed = time; //in millisecond(ms)
 	  const diff = widthOfEachSprite; //difference between two sprites
 
@@ -194,6 +190,7 @@ leftAtual2 =  parseInt(item.style.left, 10);
 gravidade2=100;
 velocidade2=10;
 
+	
 
 chao.style.width = "1500px";
 chao.style.height = "100px";
@@ -335,20 +332,20 @@ game = {
     return document.location.reload(ative);
      
     },
-    stop_interval(myVar){
-     clearInterval(myVar);
+    stop_interval(mylet){
+     clearInterval(mylet);
     }, 
-    start_interval(myVar,time){
-     setInterval(myVar,time);
+    start_interval(mylet,time){
+     setInterval(mylet,time);
     },			
-    stop_time : function (myVar){
+    stop_time : function (mylet){
 
-	clearTimeout(myVar);
+	clearTimeout(mylet);
 
     },
     som_play: function(id,link_som){
 	    function play(){
-	    var audio1 = new Audio();
+	    let audio1 = new Audio();
 	    audio1.src = link_som;
 	    audio1.play();
 		}
@@ -387,7 +384,12 @@ game = {
 	   
 	});
 
-    },			
+    },
+	pixeled: function(id){
+
+	document.getElementById(id).imageRendering="pixelated";	
+	
+	},			
      jump_force : function (id,valor,time){
 
 	document.getElementById(id).animate([
@@ -426,9 +428,9 @@ game = {
     },
     moveX_rest : function (a,rest,id){
 
-	var step=5;
+	let step=5;
 	
-	var x=document.getElementById(id).offsetLeft;
+	let x=document.getElementById(id).offsetLeft;
 	//document.getElementById("msg").innerHTML="X: " + x;
 
 	if(x > a){
@@ -442,8 +444,8 @@ game = {
     },		
     moveXD : function (a,id){
 
-	var step=5; 
-	var x=document.getElementById(id).offsetLeft;
+	let step=5; 
+	let x=document.getElementById(id).offsetLeft;
 	if(x < a){
                 x= x +step;
                 document.getElementById(id).style.left= x + "px"; 
@@ -452,9 +454,9 @@ game = {
     },
     moveXE : function (a,id){
 
-	var step=5;
-	var y=document.getElementById(id).offsetTop; 
-	var x=document.getElementById(id).offsetLeft;
+	let step=5;
+	let y=document.getElementById(id).offsetTop; 
+	let x=document.getElementById(id).offsetLeft;
 	//document.getElementById("msg").innerHTML="X: " + x + " Y : " + y;
 	if(x > a){
                 x= x - step;
@@ -466,8 +468,8 @@ game = {
     timeXD: function(valor,id){
  
 	game.moveXD(valor,id);
-	var y=document.getElementById(id).offsetTop;
-	var x=document.getElementById(id).offsetLeft;
+	let y=document.getElementById(id).offsetTop;
+	let x=document.getElementById(id).offsetLeft;
 	//document.getElementById("msg").innerHTML="X: " + x + " Y : " + y;
 	timeD=setTimeout('game.timeXD',1000);
 	fim=setTimeout(clearTimeout(timeD),1100)
@@ -475,8 +477,8 @@ game = {
     timeXE: function(valor,id){
  
 	game.moveXE(valor,id);
-	var y=document.getElementById(id).offsetTop;
-	var x=document.getElementById(id).offsetLeft;
+	let y=document.getElementById(id).offsetTop;
+	let x=document.getElementById(id).offsetLeft;
 	//document.getElementById("msg").innerHTML="X: " + x + " Y : " + y;
 	timeE=setTimeout('game.timeXE',1000);
 	
@@ -494,8 +496,7 @@ game = {
 	   element.style.transform="translate3d("+x+"px,"+y+"px, -0px) rotateY(0deg)";
 	
 	}
-    },	 
-
+    },	 			
     scaleX:function(id,valor){
 	let obj = document.getElementById(id);
 	obj.style.transform="scaleX("+valor+")";	 
@@ -511,22 +512,19 @@ game = {
     
     },
     hover_mouse: function(id){
-	const isHover = e => e.parentElement.querySelector(':hover') === e;    
-	const myDiv = document.getElementById(id);
-	document.addEventListener('mousemove', function checkHover() {
-	  const hovered = isHover(myDiv);
-	  if (hovered !== checkHover.hovered) {
-	    return true;
-	    checkHover.hovered = hovered;
-	  }
-	});
-   },  		
+	let div = document.getElementById(id);
+	div.addEventListener('mouseenter', function(){
+	  	return true;
+	}, false);
+
+   },
+		  		
     move_mouse: function(id){
 	
 	dragElement(document.getElementById(id));
 	document.getElementById(id).style.position = 'absolute';
 	function dragElement(elmnt) {
-	  var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+	  let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
 	  if (document.getElementById(elmnt.id + "header")) {
 	    document.getElementById(elmnt.id + "header").onmousedown = dragMouseDown;
 	  } else {
@@ -562,6 +560,7 @@ game = {
 	  }
 	}
     },
+
     touch_start:function(id,func){
       
 	document.getElementById(id).addEventListener("touchstart", func, true);
@@ -579,9 +578,9 @@ game = {
     },
     touch_long:function(id,func,t){
 	
-	var onlongtouch; 
-	var timer;
-	var touchduration = t; //length of time we want the user to touch before we do something
+	let onlongtouch; 
+	let timer;
+	let touchduration = t; //length of time we want the user to touch before we do something
 
 	function touchstart(e) {
 	    e.preventDefault();
@@ -589,7 +588,7 @@ game = {
 		timer = setTimeout(onlongtouch, touchduration);
 	    }
 	}
-
+	
 	function touchend() {
 	    //stops short touches from firing the event
 	    if (timer) {
@@ -617,16 +616,16 @@ game = {
     move_touch:function(id){
       let element = document.getElementById(id);
       element.classList.add("dragme");
-	 var dom = {
+	 let dom = {
        container: document.body
 	}
-	 var container = {
+	 let container = {
 	    x: dom.container.getBoundingClientRect().left,
 	    y: dom.container.getBoundingClientRect().top,
 	    w: dom.container.getBoundingClientRect().width,
 	    h: dom.container.getBoundingClientRect().height
     } 	
-	 var drag = {
+	 let drag = {
    	  w: element.offsetWidth,
    	  h: element.offsetHeight
 	}
@@ -649,17 +648,17 @@ game = {
 		document.getElementById(id_item).style.position = 'absolute';  
 	     document.getElementById(id_item).style.width= "50%";
     		document.getElementById(id_item).style.height= "50%";
-		var dom = {
-		    container: document.getElementById(id_container),//document.body,
+		let dom = {
+		    container: document.getElementById(id_container),
 		    drag: document.getElementById(id_item),
 		}
-		var container = {
+		let container = {
 		    x: dom.container.getBoundingClientRect().left,
 		    y: dom.container.getBoundingClientRect().top,
 		    w: dom.container.getBoundingClientRect().width,
 		    h: dom.container.getBoundingClientRect().height
 		}
-		var drag = {
+		let drag = {
 		    w: dom.drag.offsetWidth,
 		    h: dom.drag.offsetHeight
 		}
@@ -673,7 +672,7 @@ game = {
 
 		function handleTouchStart(e) {
 		    if (e.touches.length == 1) {
-			   var touch = e.touches[0];
+			   let touch = e.touches[0];
 			   target = touch.target;
 		    }
 		}
@@ -685,7 +684,7 @@ game = {
 		    }
 		}
 		function handleTouchEnd(e) {
-		    if (e.touches.length == 0) { // User just took last finger off screen
+		    if (e.touches.length == 0) {
 			   target = null;
 		    }
 		}
@@ -703,7 +702,45 @@ game = {
 		    dom.drag.style.top = posY + "px";
 		    	 
 		}
-    },  	 
+    },
+    remove_all: function(selector){
+
+	
+	    let myObj = document.querySelectorAll(selector);
+	    i = 0,
+	    l = myObj.length;
+
+	    for (i; i < l; i++) {
+		   myObj[i].remove();
+	    }
+
+		
+
+	},	
+    none_all:function(selector){
+
+	   let myObj = document.querySelectorAll(selector),
+        i = 0,
+        l = myObj.length;
+
+	    for (i; i < l; i++) {
+		   myObj[i].style.display = 'none';
+	    }
+	
+
+	},
+	block_all:function(selector){
+
+	   let myObj = document.querySelectorAll(selector),
+        i = 0,
+        l = myObj.length;
+
+	    for (i; i < l; i++) {
+		   myObj[i].style.display = 'block';
+	    }
+	
+
+	},	  	 
     random_m: function(ma,mi,s){
     
        return Math.random() * (ma-mi) + s;
@@ -714,7 +751,44 @@ game = {
        return Math.floor(Math.random() * (ma-mi) + s);
        
     },
-   	
+    sprite_frame: function(id,x,y,vel){
+
+		let animationInterval;
+	let spriteSheet = document.getElementById(id);
+	let widthOfSpriteSheet = x;
+	let widthOfEachSprite = y;
+
+	function stopAnimation() {
+	  clearInterval(animationInterval);
+	}
+
+	function startAnimation() {
+	  let position = widthOfEachSprite; //start position for the image
+	  const speed = vel; //in millisecond(ms)
+	  const diff = widthOfEachSprite; //difference between two sprites
+
+	  animationInterval = setInterval(() => {
+	    spriteSheet.style.backgroundPosition = `-${position}px 0px`;
+
+	    if (position < widthOfSpriteSheet) {
+		 position = position + diff;
+	    } else {
+		 //increment the position by the width of each sprite each time
+		 position = widthOfEachSprite;
+	    }
+	    //reset the position to show first sprite after the last one
+	  }, speed);
+	}
+
+	//Start animation
+	startAnimation();
+
+		
+
+	
+	
+
+    },	
     set_text: function (id,txt){
       let h = document.getElementById(id);
       return h.innerHTML = txt;	
@@ -747,7 +821,7 @@ game = {
 	
    }, 	
    variavel : function(n,v){
-	var nome = n;	
+	let nome = n;	
 	variavel[nome] = v;
 
     },	
@@ -841,9 +915,9 @@ game = {
 	document.querySelector(obj).id +=nome;
     },
     id_in_obj_max:function(obj,nome){
-	document.querySelector(obj).id +=" "+nome;
+	document.querySelector(obj).id +=" "+nome+" ";
     },
-    id_in_two_obj:function(obj,nome1,nome2){
+    id_two_in_obj:function(obj,nome1,nome2){
 	document.querySelector(obj).id +=" "+nome1+" "+nome2;
     },	
    get_obj: function(id){
@@ -889,6 +963,119 @@ game = {
 
 	
 	},
+	touchpad:function(id,left,top){
+		
+		 let html=`<div id="move-base" style="width:256px;height:256px; position: absolute; left:${left}px; top:${top}px; ">
+					<div id="base-stick" style="border: 1px solid black;border-radius:100%; width:128px;height:128px; position: absolute; left:64px; top:64px; ">	
+						<div id="stick" style=" display: block;background: black;border-radius:100%; height: 64px;width:64px; background: radial-gradient(circle at 100px 100px, #F52D02, #801D08);  left:32px; top:32px;">	
+						</div>		
+					</div>
+					</div>`;
+
+		 document.getElementById(id).innerHTML += html;
+		 document.getElementById("stick").style.position = 'absolute';  
+		 document.getElementById("stick").style.width= "50%";
+		 document.getElementById("stick").style.height= "50%";
+			let dom = {
+			    container: document.getElementById("base-stick"),
+			    drag: document.getElementById("stick"),
+			}
+			let container = {
+			    x: dom.container.getBoundingClientRect().left,
+			    y: dom.container.getBoundingClientRect().top,
+			    w: dom.container.getBoundingClientRect().width,
+			    h: dom.container.getBoundingClientRect().height
+			}
+			let drag = {
+			    w: dom.drag.offsetWidth,
+			    h: dom.drag.offsetHeight
+			}
+
+			target = null;
+
+			document.body.addEventListener('touchstart', handleTouchStart, false);
+			document.body.addEventListener('touchmove', handleTouchMove, false);
+			document.body.addEventListener('touchend', handleTouchEnd, false);
+			document.body.addEventListener('touchcancel', handleTouchCancel, false);
+
+			function handleTouchStart(e) {
+			    if (e.touches.length == 1) {
+				   let touch = e.touches[0];
+				   target = touch.target;
+			    }
+			}
+			function handleTouchMove(e) {
+			    if (e.touches.length == 1) {
+				   if(target ===  dom.drag) {
+					  moveDrag(e);
+				   }
+			    }
+			}
+			function handleTouchEnd(e) {
+			    if (e.touches.length == 0) {
+				   target = null;
+				   dom.drag.style.left = "32px";
+				   dom.drag.style.top = "32px";	
+			    }
+			}
+			function handleTouchCancel(e) {
+			    return;
+			}
+
+			function moveDrag(e) {
+				touch = e.touches[0];
+				posX = touch.pageX - container.x - drag.w / 2;
+				posY = touch.pageY - container.y - drag.h / 2;
+			    
+
+			    dom.drag.style.left = posX + "px";
+			    dom.drag.style.top = posY + "px";
+			    	 
+			}
+
+			dragElement(document.getElementById("stick"));
+	document.getElementById("stick").style.position = 'absolute';
+	function dragElement(elmnt) {
+	  let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+	  if (document.getElementById(elmnt.id + "header")) {
+	    document.getElementById(elmnt.id + "header").onmousedown = dragMouseDown;
+	  } else {
+	    elmnt.onmousedown = dragMouseDown;
+	  }
+
+	  function dragMouseDown(e) {
+	    e = e || window.event;
+	    e.preventDefault();
+	    pos3 = e.clientX;
+	    pos4 = e.clientY;
+	    document.onmouseup = closeDragElement;
+	    document.onmousemove = elementDrag;
+	  }
+
+	  function elementDrag(e) {
+	    e = e || window.event;
+	    e.preventDefault();
+	  
+	    pos1 = pos3 - e.clientX;
+	    pos2 = pos4 - e.clientY;
+	    pos3 = e.clientX;
+	    pos4 = e.clientY;
+	 
+	    elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
+	    elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
+	  }
+
+	  function closeDragElement() {
+	   
+	    document.onmouseup = null;
+	    document.onmousemove = null;
+	    dom.drag.style.left = "32px";
+	    dom.drag.style.top = "32px";
+	  }
+	}
+
+	},
+
     get_text:function(id){
 
 	 let get_text = document.getElementById(id).textContent;	
@@ -999,9 +1186,9 @@ game = {
 	let obj2 = document.getElementById(id2);
      let local1 = game.coord(obj1);
 	let local2 = game.coord(obj2);	 
-	let check_r = local1.offsetLeft > local2.offsetLeft;
+	let check_l = local1.offsetLeft > local2.offsetLeft;
 	
-	return check_r;
+	return check_l;
 	},
     colidir_force_r: function(id1,id2,check_contato) {
 	    let obj1 = document.getElementById(id1);
@@ -1053,7 +1240,7 @@ game = {
 
 	}
 
-
+	
 	chaolocal=game.coord(chao);
      playerlocal=game.coord(player);
 	powerlocal=game.coord(item);
@@ -1061,8 +1248,8 @@ game = {
 	parede1local=game.coord(parede1);
 	localbloco=game.coord(bloco);
 	
-
-	stick=game.get_obj("stick1");	
+	
+	stick=game.get_obj("stick");	
 	base=game.get_obj("base-stick");
 	
 	if(stick.offsetLeft == 32){
@@ -1078,29 +1265,9 @@ game = {
 		di-=1.5;
 		corre();
 	}
-     if(stick.offsetLeft >= 125 ){
-		 stick.style.left = "32px";
-	
-		
-	}
-	if(stick.offsetLeft <= -75  ){
-		 stick.style.left = "32px";
-		
-		
-	}
-	if(stick.offsetTop > base.offsetTop+100 ){
-		 stick.style.left = "32px";
-		 stick.style.top = "32px";
-	}
-	
+   
 	if(stick.offsetTop <= -1 ){
 		up-=25;
-	}
-	if(stick.offsetTop <= base.offsetTop-100 ){
-
-		stick.style.left = "32px";
-		stick.style.top = "32px";
-
 	}
 	
 	
@@ -1108,7 +1275,7 @@ game = {
 	//console.log("Base  = Top: "+base.style.top+ " / "+ " left: "+base.style.left)
 	
 	
-     game.click_start("stick1",jump);
+     game.click_start("stick",jump);
 	
 	check_item_in_chao   =    game.colidir(chaolocal, powerlocal);	
 	check_item1_in_chao   =    game.colidir(localbloco,chaolocal);
@@ -1120,7 +1287,6 @@ game = {
 	check_parede1_in_item       =    game.colidir(parede1local,powerlocal);
 	
 	
-
 	if(game.colidir_force_r("player","power",true)==true && check_item_in_player==true){
 		di-=5;
 	}else{
@@ -1396,7 +1562,7 @@ function hide(e) {
 
 //player.addEventListener('click', hide, false);
 
-//var el = document.getElementById('player');
+//let el = document.getElementById('player');
 
 //el.addEventListener('click', function(e) {
 //    alert(e.target.id);
@@ -1404,8 +1570,9 @@ function hide(e) {
 game.update(game.start,60);
 
 //game.som_play("stick1","do.wav")	
-game.move_mouse("stick1");
-game.move_touch_pro("stick1","base-stick");
+
+
+game.touchpad("joy",500,150);
 
 </script>
 
