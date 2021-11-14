@@ -1,7 +1,8 @@
 class Nandraki {
+    
     constructor(obj,id,txt,grav,vel,mas) {
-        this.obj = obj;
-        this.id = id;
+          this.obj = obj;
+          this.id = id;
 	this.txt = txt;
 	document.body.innerHTML += '<'+this.obj+' id="'+this.id+'">'+txt+'</'+this.obj+'>';
 	this.body=document.getElementById(this.id);	
@@ -10,37 +11,105 @@ class Nandraki {
 	this.massa=mas;	
 	
     }
+    static create_sprite(id,img,width,height,left,top){
+	 let html=`<div id="${id}" style="width:${width}px;height:${height}px;overflow: hidden;position:absolute;left:${left}px;top:${top}px;">
+		<div id="box_${id}" style="width:64px;height:64px;overflow: hidden;position:absolute;left:0px;top:0px;">
+		</div>
+		<img id="img_${id}" src="${img}" alt=""/>
 
-    static create_obj(id,width,height,top,left) {
-        let obj = document.getElementById(id);
-	obj.style.width = width;
-	obj.style.height = height;
-	obj.style.border = "solid 1px";
-	obj.style.top = top;
-	obj.style.left = left;
-	obj.style.position = 'absolute';
+		</div>`;	
+	 document.body.innerHTML +=html;
 	
     }
-    static create_ui(id,width,height,top,left) {
-        let obj = document.getElementById(id);
-	obj.style.width = width;
-	obj.style.height = height;
-	obj.style.top = top;
-	obj.style.left = left;
-	obj.style.position = 'absolute';
+ 	
+   static create_animator(img_id,width,height,fm,fis,ffe,fr,fps,bool){
 	
-    }	
+	let img_frame = document.getElementById(img_id);
+
+	let frame_inicio = fis;   	
+	let frame_math=fm;	   
+	let largura =  width ;  	
+	let altura = height;   
+	let frame_final=ffe;   
+	let frame_rest=fr;   
+	
+	function animar() {
+	    frame_inicio++;	
+	    
+	    if (frame_inicio == frame_final) frame_inicio = frame_rest;
+	    let linha = Math.floor(frame_inicio / frame_math) * altura;
+	    let coluna = frame_inicio % frame_math * largura ;
+	    img_frame.style.marginTop = -linha + 'px';
+	    img_frame.style.marginLeft = -coluna + 'px';
+	}
+	
+	setInterval(animar,fps);
+	
+	
+   }		
+    static create_obj(id,width,height,top,left,debug) {
+        let obj = document.getElementById(id);
+	if(debug==true){	
+		obj.style.width = width;
+		obj.style.height = height;
+		obj.style.border = "solid 1px";
+		obj.style.top = top;
+		obj.style.left = left;
+		obj.style.position = 'absolute';
+		obj.style.borderColor="green";
+	}else{
+		obj.style.width = width;
+		obj.style.height = height;
+		obj.style.top = top;
+		obj.style.left = left;
+		obj.style.position = 'absolute';
+	}
+    }
+    static create_ui(id,width,height,top,left) {
+	let obj = document.getElementById(id);
+		obj.style.width = width;
+		obj.style.height = height;
+		obj.style.top = top;
+		obj.style.left = left;
+		obj.style.position = 'absolute';
+		
+    }
+    static create_box(obj,id,width,height,top,left,debug) {
+		
+	obj.innerHTML += '<box id="box_'+id+'"></box>';	
+	if(debug==true){
+		let obj = document.getElementById("box_"+id);
+		obj.style.width = width;
+		obj.style.height = height;
+		obj.style.top = top;
+		obj.style.left = left;
+		obj.style.border = "solid 1px";
+		obj.style.borderColor="green";
+		obj.style.position = 'absolute';
+		
+		
+	}else{
+		let obj = document.getElementById("box_"+id);
+	     obj.style.width = width;
+		obj.style.height = height;
+		obj.style.top = top;
+		obj.style.left = left;
+		obj.style.position = 'absolute';
+		
+	  }
+	
+	}			
     static version(){
-        console.log("Version[1.3.2]");
-	alert("Version[1.3.2]");
+        console.log("Version[1.3.8]");
+	alert("Version[1.3.8]");
 	
     }		
     		
-  	 	
+
 }
 
-
 game = {
+    
     canvas_start: function(id,width,height){
 	document.body.innerHTML += "<canvas id='canvas' width="+width+" height="+height+">";	
 	canvas = document.getElementById(id);
@@ -49,7 +118,7 @@ game = {
    canvas_text : function(text,font,cor,x,y) {
 	if(font == null || font == " ")
 	{	
-	nandraki.font = '20pt Calibri';
+	nandraki.font = '10px Times New Roman';
 	}else{
 	nandraki.font = font;
         }
@@ -76,20 +145,20 @@ game = {
     return document.location.reload(ative);
      
     },
-    stop_interval(myVar){
-     clearInterval(myVar);
+    stop_interval(mylet){
+     clearInterval(mylet);
     }, 
-    start_interval(myVar,time){
-     setInterval(myVar,time);
+    start_interval(mylet,time){
+     setInterval(mylet,time);
     },			
-    stop_time : function (myVar){
+    stop_time : function (mylet){
 
-	clearTimeout(myVar);
+	clearTimeout(mylet);
 
     },
     som_play: function(id,link_som){
 	    function play(){
-	    var audio1 = new Audio();
+	    let audio1 = new Audio();
 	    audio1.src = link_som;
 	    audio1.play();
 		}
@@ -98,7 +167,51 @@ game = {
 	},		
     start_time: function (func,time){
 	setTimeout(func,time); 
-    },    
+    },
+    bd_save: function(variavel,value){
+
+         localStorage.setItem(variavel, value);
+
+   
+     },  
+     bd_load: function(variavel){
+
+	const val = localStorage.getItem(variavel);
+	return val;
+   
+     }, 
+     bd_remove: function(variavel){
+
+	localStorage.removeItem(variavel);
+   
+     },  
+     bd_clear: function(variavel){
+
+	localStorage.clear();
+   
+     }, 
+    img_frame: function(img_id,width,height,fm,fis,ffe,fr){
+	
+	let img_frame = document.getElementById(img_id);
+	
+	let frame_inicio = fis;   //10 	
+	let frame_math=fm;	     //6	
+	let largura =  width ;  //64	
+	let altura = height;   //64
+	let frame_final=ffe;   //15
+	let frame_rest=fr;   //10
+	
+	let linha = Math.floor(frame_inicio / frame_math) * altura;
+	let coluna = frame_inicio % frame_math * largura ;
+	
+	img_frame.style.marginTop = -linha + 'px';
+	img_frame.style.marginLeft = -coluna + 'px';
+
+	
+	
+	
+	
+     },   
     animar_left : function (id,mi,ma,time){
 
 	document.getElementById(id).animate([
@@ -128,7 +241,12 @@ game = {
 	   
 	});
 
-    },			
+    },
+	pixeled: function(id){
+
+	document.getElementById(id).imageRendering="pixelated";	
+	
+	},			
      jump_force : function (id,valor,time){
 
 	document.getElementById(id).animate([
@@ -144,10 +262,21 @@ game = {
     },
     get_mouse_x: function(){
 	
+	function tellPos(p){
+	   return p.pageX ;
+	}
+	addEventListener('mousemove', tellPos, false);
+	
 
     },
     get_mouse_y: function(y){
-       
+       onmousemove = function(e2){
+			
+			console.log("mouse location X:", e1.clientY)	
+		     	 return e2.clientY;
+		
+		
+	}	
 	
     },	
     get_left : function (id){
@@ -167,9 +296,9 @@ game = {
     },
     moveX_rest : function (a,rest,id){
 
-	var step=5;
+	let step=5;
 	
-	var x=document.getElementById(id).offsetLeft;
+	let x=document.getElementById(id).offsetLeft;
 	//document.getElementById("msg").innerHTML="X: " + x;
 
 	if(x > a){
@@ -183,8 +312,8 @@ game = {
     },		
     moveXD : function (a,id){
 
-	var step=5; 
-	var x=document.getElementById(id).offsetLeft;
+	let step=5; 
+	let x=document.getElementById(id).offsetLeft;
 	if(x < a){
                 x= x +step;
                 document.getElementById(id).style.left= x + "px"; 
@@ -193,9 +322,9 @@ game = {
     },
     moveXE : function (a,id){
 
-	var step=5;
-	var y=document.getElementById(id).offsetTop; 
-	var x=document.getElementById(id).offsetLeft;
+	let step=5;
+	let y=document.getElementById(id).offsetTop; 
+	let x=document.getElementById(id).offsetLeft;
 	//document.getElementById("msg").innerHTML="X: " + x + " Y : " + y;
 	if(x > a){
                 x= x - step;
@@ -203,11 +332,12 @@ game = {
 	}
 	
     },
+    	
     timeXD: function(valor,id){
  
 	game.moveXD(valor,id);
-	var y=document.getElementById(id).offsetTop;
-	var x=document.getElementById(id).offsetLeft;
+	let y=document.getElementById(id).offsetTop;
+	let x=document.getElementById(id).offsetLeft;
 	//document.getElementById("msg").innerHTML="X: " + x + " Y : " + y;
 	timeD=setTimeout('game.timeXD',1000);
 	fim=setTimeout(clearTimeout(timeD),1100)
@@ -215,8 +345,8 @@ game = {
     timeXE: function(valor,id){
  
 	game.moveXE(valor,id);
-	var y=document.getElementById(id).offsetTop;
-	var x=document.getElementById(id).offsetLeft;
+	let y=document.getElementById(id).offsetTop;
+	let x=document.getElementById(id).offsetLeft;
 	//document.getElementById("msg").innerHTML="X: " + x + " Y : " + y;
 	timeE=setTimeout('game.timeXE',1000);
 	
@@ -234,8 +364,7 @@ game = {
 	   element.style.transform="translate3d("+x+"px,"+y+"px, -0px) rotateY(0deg)";
 	
 	}
-    },	 
-
+    },	 			
     scaleX:function(id,valor){
 	let obj = document.getElementById(id);
 	obj.style.transform="scaleX("+valor+")";	 
@@ -251,22 +380,19 @@ game = {
     
     },
     hover_mouse: function(id){
-	const isHover = e => e.parentElement.querySelector(':hover') === e;    
-	const myDiv = document.getElementById(id);
-	document.addEventListener('mousemove', function checkHover() {
-	  const hovered = isHover(myDiv);
-	  if (hovered !== checkHover.hovered) {
-	    return true;
-	    checkHover.hovered = hovered;
-	  }
-	});
-   },  		
+	let div = document.getElementById(id);
+	div.addEventListener('mouseenter', function(){
+	  	return true;
+	}, false);
+
+   },
+		  		
     move_mouse: function(id){
 	
 	dragElement(document.getElementById(id));
 	document.getElementById(id).style.position = 'absolute';
 	function dragElement(elmnt) {
-	  var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+	  let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
 	  if (document.getElementById(elmnt.id + "header")) {
 	    document.getElementById(elmnt.id + "header").onmousedown = dragMouseDown;
 	  } else {
@@ -302,6 +428,7 @@ game = {
 	  }
 	}
     },
+
     touch_start:function(id,func){
       
 	document.getElementById(id).addEventListener("touchstart", func, true);
@@ -319,17 +446,16 @@ game = {
     },
     touch_long:function(id,func,t){
 	
-	var onlongtouch; 
-	var timer;
-	var touchduration = t; //length of time we want the user to touch before we do something
-
+	let onlongtouch; 
+	let timer;
+	let touchduration = t; 
 	function touchstart(e) {
 	    e.preventDefault();
 	    if (!timer) {
 		timer = setTimeout(onlongtouch, touchduration);
 	    }
 	}
-
+	
 	function touchend() {
 	    //stops short touches from firing the event
 	    if (timer) {
@@ -353,20 +479,31 @@ game = {
       
 	document.getElementById(id).addEventListener("click",func, false);
 
-    },	
+    },
+    play_start: function(id,link_audio){
+	
+	
+	function func(){
+	    const som = new Audio();
+	    som.src = link_audio;
+	    som.play();
+	}
+	game.click_start(id,func);
+	document.getElementById(id).dispatchEvent(new MouseEvent("click"));
+   },	
     move_touch:function(id){
       let element = document.getElementById(id);
       element.classList.add("dragme");
-	 var dom = {
+	 let dom = {
        container: document.body
 	}
-	 var container = {
+	 let container = {
 	    x: dom.container.getBoundingClientRect().left,
 	    y: dom.container.getBoundingClientRect().top,
 	    w: dom.container.getBoundingClientRect().width,
 	    h: dom.container.getBoundingClientRect().height
     } 	
-	 var drag = {
+	 let drag = {
    	  w: element.offsetWidth,
    	  h: element.offsetHeight
 	}
@@ -384,22 +521,21 @@ game = {
 	  }, false);
        }
     },
-    move_touch_imbut:function(id_item,id_container){
+    move_touch_pro:function(id_item,id_container){
 	
 		document.getElementById(id_item).style.position = 'absolute';  
-	     document.getElementById(id_item).style.width= "50%";
-    		document.getElementById(id_item).style.height= "50%";
-		var dom = {
-		    container: document.getElementById(id_container),//document.body,
+
+		let dom = {
+		    container: document.getElementById(id_container),
 		    drag: document.getElementById(id_item),
 		}
-		var container = {
+		let container = {
 		    x: dom.container.getBoundingClientRect().left,
 		    y: dom.container.getBoundingClientRect().top,
 		    w: dom.container.getBoundingClientRect().width,
 		    h: dom.container.getBoundingClientRect().height
 		}
-		var drag = {
+		let drag = {
 		    w: dom.drag.offsetWidth,
 		    h: dom.drag.offsetHeight
 		}
@@ -413,7 +549,7 @@ game = {
 
 		function handleTouchStart(e) {
 		    if (e.touches.length == 1) {
-			   var touch = e.touches[0];
+			   let touch = e.touches[0];
 			   target = touch.target;
 		    }
 		}
@@ -425,7 +561,7 @@ game = {
 		    }
 		}
 		function handleTouchEnd(e) {
-		    if (e.touches.length == 0) { // User just took last finger off screen
+		    if (e.touches.length == 0) {
 			   target = null;
 		    }
 		}
@@ -443,7 +579,42 @@ game = {
 		    dom.drag.style.top = posY + "px";
 		    	 
 		}
-    },  	 
+    },
+    remove_all: function(selector){
+
+	    let myObj = document.querySelectorAll(selector);
+	    i = 0,
+	    l = myObj.length;
+
+	    for (i; i < l; i++) {
+		   myObj[i].remove();
+	    }
+
+	},	
+    none_all:function(selector){
+
+	   let myObj = document.querySelectorAll(selector),
+        i = 0,
+        l = myObj.length;
+
+	    for (i; i < l; i++) {
+		   myObj[i].style.display = 'none';
+	    }
+	
+
+	},
+     block_all:function(selector){
+
+	   let myObj = document.querySelectorAll(selector),
+        i = 0,
+        l = myObj.length;
+
+	    for (i; i < l; i++) {
+		   myObj[i].style.display = 'block';
+	    }
+	
+
+	},	  	 
     random_m: function(ma,mi,s){
     
        return Math.random() * (ma-mi) + s;
@@ -454,7 +625,7 @@ game = {
        return Math.floor(Math.random() * (ma-mi) + s);
        
     },
-   	
+  
     set_text: function (id,txt){
       let h = document.getElementById(id);
       return h.innerHTML = txt;	
@@ -487,8 +658,13 @@ game = {
 	
    }, 	
    variavel : function(n,v){
-	var nome = n;	
+	let nome = n;	
 	variavel[nome] = v;
+
+    },
+   create_obj_pro : function(obj){
+		
+	document.body.innerHTML += obj;
 
     },	
    create_obj : function(obj,id){
@@ -581,9 +757,9 @@ game = {
 	document.querySelector(obj).id +=nome;
     },
     id_in_obj_max:function(obj,nome){
-	document.querySelector(obj).id +=" "+nome;
+	document.querySelector(obj).id +=" "+nome+" ";
     },
-    id_in_two_obj:function(obj,nome1,nome2){
+    id_two_in_obj:function(obj,nome1,nome2){
 	document.querySelector(obj).id +=" "+nome1+" "+nome2;
     },	
    get_obj: function(id){
@@ -604,31 +780,138 @@ game = {
 	x=css;
 	obj.animate(x,time);	
     },
-    text_bot:function(id,txt,vel){
-		let content = txt;
-		let text = document.getElementById('text');
+    text_bot:function(id,vel){
+			function typeWrite(elemento){
+	    const textoArray = elemento.innerHTML.split('');
+	    elemento.innerHTML = ' ';
+	    textoArray.forEach(function(letra, i){   
+	      
+	    setTimeout(function(){
+	        elemento.innerHTML += letra;
+	    }, vel * i)
 
-		let speed = vel;
-		let cont = 0;
-
-		function typeWriter () {
-		  if(cont < content.length){
-		    text.textContent += content.charAt(cont);
-		    cont++;
-		    setTimeout(typeWriter, speed);
-		  }else{
-		    text.textContent = '';
-		    cont = 0;
-		    typeWriter();
-		  }
-		}
-
-		typeWriter();
+	  });
+	}
+	const titulo = document.getElementById(id);
+	typeWrite(titulo);
 
 	
 
 	
 	},
+	touchpad:function(id,left,top){
+		
+		 let html=`<div id="move-base" style="width:256px;height:256px; position: absolute; left:${left}px; top:${top}px; ">
+					<div id="base-stick" style="border: 1px solid black;border-radius:100%; width:128px;height:128px; position: absolute; left:64px; top:64px; ">	
+						<div id="stick" style=" display: block;background: black;border-radius:100%; height: 64px;width:64px; background: radial-gradient(circle at 100px 100px, #F52D02, #801D08);  left:32px; top:32px;">	
+						</div>		
+					</div>
+					</div>`;
+
+			 document.getElementById(id).innerHTML += html;
+			 document.getElementById("stick").style.position = 'absolute';  
+			 document.getElementById("stick").style.width= "50%";
+			 document.getElementById("stick").style.height= "50%";
+			let dom = {
+			    container: document.getElementById("base-stick"),
+			    drag: document.getElementById("stick"),
+			}
+			let container = {
+			    x: dom.container.getBoundingClientRect().left,
+			    y: dom.container.getBoundingClientRect().top,
+			    w: dom.container.getBoundingClientRect().width,
+			    h: dom.container.getBoundingClientRect().height
+			}
+			let drag = {
+			    w: dom.drag.offsetWidth,
+			    h: dom.drag.offsetHeight
+			}
+
+			target = null;
+
+			document.body.addEventListener('touchstart', handleTouchStart, false);
+			document.body.addEventListener('touchmove', handleTouchMove, false);
+			document.body.addEventListener('touchend', handleTouchEnd, false);
+			document.body.addEventListener('touchcancel', handleTouchCancel, false);
+
+			function handleTouchStart(e) {
+			    if (e.touches.length == 1) {
+				   let touch = e.touches[0];
+				   target = touch.target;
+			    }
+			}
+			function handleTouchMove(e) {
+			    if (e.touches.length == 1) {
+				   if(target ===  dom.drag) {
+					  moveDrag(e);
+				   }
+			    }
+			}
+			function handleTouchEnd(e) {
+			    if (e.touches.length == 0) {
+				   target = null;
+				   dom.drag.style.left = "32px";
+				   dom.drag.style.top = "32px";	
+			    }
+			}
+			function handleTouchCancel(e) {
+			    return;
+			}
+
+			function moveDrag(e) {
+				touch = e.touches[0];
+				posX = touch.pageX - container.x - drag.w / 2;
+				posY = touch.pageY - container.y - drag.h / 2;
+			    
+
+			    dom.drag.style.left = posX + "px";
+			    dom.drag.style.top = posY + "px";
+			    	 
+			}
+
+			dragElement(document.getElementById("stick"));
+			document.getElementById("stick").style.position = 'absolute';
+			function dragElement(elmnt) {
+			  let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+			  if (document.getElementById(elmnt.id + "header")) {
+			    document.getElementById(elmnt.id + "header").onmousedown = dragMouseDown;
+			  } else {
+			    elmnt.onmousedown = dragMouseDown;
+			  }
+
+			  function dragMouseDown(e) {
+			    e = e || window.event;
+			    e.preventDefault();
+			    pos3 = e.clientX;
+			    pos4 = e.clientY;
+			    document.onmouseup = closeDragElement;
+			    document.onmousemove = elementDrag;
+			  }
+
+			  function elementDrag(e) {
+			    e = e || window.event;
+			    e.preventDefault();
+			  
+			    pos1 = pos3 - e.clientX;
+			    pos2 = pos4 - e.clientY;
+			    pos3 = e.clientX;
+			    pos4 = e.clientY;
+			 
+			    elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
+			    elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
+			  }
+
+			  function closeDragElement() {
+			   
+			    document.onmouseup = null;
+			    document.onmousemove = null;
+			    dom.drag.style.left = "32px";
+			    dom.drag.style.top = "32px";
+			  }
+			}
+
+	},
+
     get_text:function(id){
 
 	 let get_text = document.getElementById(id).textContent;	
@@ -659,7 +942,8 @@ game = {
                 //escreve os segundos
                 document.getElementById(s).innerHTML=segundos
                 
-            }	
+            }
+		
             setInterval(function(){
 
 			segundo();
@@ -738,9 +1022,9 @@ game = {
 	let obj2 = document.getElementById(id2);
      let local1 = game.coord(obj1);
 	let local2 = game.coord(obj2);	 
-	let check_r = local1.offsetLeft > local2.offsetLeft;
+	let check_l = local1.offsetLeft > local2.offsetLeft;
 	
-	return check_r;
+	return check_l;
 	},
     colidir_force_r: function(id1,id2,check_contato) {
 	    let obj1 = document.getElementById(id1);
@@ -777,5 +1061,5 @@ game = {
 		
 		return setInterval(jogo,fps);
 		
-    }, 		
-}
+    }, 			
+}		
