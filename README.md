@@ -6,8 +6,12 @@
 </br>
 <h3>Sobre o projeto</h3>
 <p>
-<h4></h4>A A engine game nandraki esta sendo criada com base webgl,html,js e css com proposta de criar jogo de maneira fácil pelo celular e computador, com objetivo de favorecer computares antigo e com baixo consumo de ram e placa de vídeo, com suporte para interagir lib de game existente que usa tecnologia Webgl canvas.Projeto esta sendo feito em class principal e blocos de função js.Podendo ate possível ser usada para pessoas que não usa maquina robusta e que não tem suporte webgl no navegador, assim nasceu a ideia do DDP (dinâmica Dom programar)que uso js,html e css sem canvas para criar jogos.
+<h4></h4>A engine game nandraki esta sendo criada com base webgl,html,js e css com proposta de criar jogo de maneira fácil pelo celular e computador, com objetivo de favorecer computares antigo e com baixo consumo de ram e placa de vídeo, com suporte para interagir lib de game existente que usa tecnologia Webgl canvas.Projeto esta sendo feito em class principal e blocos de função js.Podendo ate possível ser usada para pessoas que não usa maquina robusta e que não tem suporte webgl no navegador, assim nasceu a ideia do DDP (dinâmica Dom programar)que uso js,html e css sem canvas para criar jogos.
 Em processo alfa aqui em baixo tem links de exemplos de projetos feitos na engine
+<br>
+<h4></h4>The nandraki game engine is being created based on webgl, html, js and css with the purpose of creating games easily on cell phones and computers, with the objective of favoring old computers with low consumption of ram and video card, with support for interacting Existing game lib that uses Webgl technology canvas.Project is being done in main class and js function blocks.It can even be used for people who don't use robust machines and don't have webgl support in their browser, so the idea of ​​DDP was born (Dynamic Dom program) I use js, html and css without canvas to create games.
+In alpha process below, there are links to examples of projects made in the engine
+
 <br>
 Demostração test e test2 <br> 
 Nota:[Na pasta da engine contém arquivo test de demostração]
