@@ -1,5 +1,5 @@
 <h1 align="center"> <img src="https://i.ibb.co/n3BMNKM/logo.png" alt="mascote"  border="0"></h1>
-<h1 align="center"><img src="https://img.shields.io/badge/Lincense-MIT-green" alt="index-html" border="0"> <img src="https://img.shields.io/badge/Version-1.3.8-blue" alt="index-html" border="0"> <img src="https://img.shields.io/badge/Projeto-Ativo-success" alt="index-html" border="0"><img src="https://img.shields.io/badge/Ultima%20Att-31/08/2021-green" alt="index-html" >     
+<h1 align="center"><img src="https://img.shields.io/badge/Lincense-MIT-green" alt="index-html" border="0"> <img src="https://img.shields.io/badge/Version-1.4.0-blue" alt="index-html" border="0"> <img src="https://img.shields.io/badge/Projeto-Ativo-success" alt="index-html" border="0"><img src="https://img.shields.io/badge/Ultima%20Att-14/11/2021-green" alt="index-html" >     
 <br>
 <h6 align="center"><img src="https://i.ibb.co/3hqPt3N/index-html.png" alt="index-html" border="0"><p>index.html</h6>
 
@@ -35,8 +35,9 @@ Nota:[Na pasta da engine contém arquivo test de demostração]
 # CDN 
 
 ***<script src= "https://tironan.000webhostapp.com/nandraki.js" ></script>***
-	
-***<script src="https://unpkg.com/nandraki@1.3.8/nandraki.js" ></script>***		
+version{	
+***<script src="https://unpkg.com/nandraki@1.3.8/nandraki.js" ></script>***
+}
 <p>
 
 # Testar o script 
@@ -81,10 +82,10 @@ Nota:[Na pasta da engine contém arquivo test de demostração]
 - [x] Key event down e up
 - [x] Event touch,click,move
 - [x] Manipulação de css e js
-- [x] Criar event Gamepad touch			
+- [x] Criar event Gamepad touch
+- [x] Manipulação de animação			
 - [ ] Manipulação de canvas 
 - [ ] Criar event Gamepad
-- [ ] Manipulação de animação
 - [ ] Verficador de estados animação
 - [ ] Import Apps Android
 	
