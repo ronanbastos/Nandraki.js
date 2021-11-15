@@ -53,21 +53,17 @@ In the engine folder contains demo test file]
 # Testar o script 
 [Testar sem inteface da engine... Crie um arquivo chamado index.html e cole o seguinte código nele]
 
-
-		<!DOCTYPE html>
-		<html>
-		<head>
-
-		 <script src="nandraki.js"></script>
-
-		</head>
-		<body>
+	<!DOCTYPE html>
+	<html>
+	<head>
+		<script src="nandraki.js"></script>
+	</head>
+	<body>
 
 		<script>
 		       Nandraki.create_obj("text",500,500,10,10,true);
-
-			 const txt = new Nandraki("text",0,0,0);	
-		      myjogo = {
+		       const txt = new Nandraki("text",0,0,0);	
+		       myjogo = {
 
 
 			 start : function(){
@@ -79,12 +75,13 @@ In the engine folder contains demo test file]
 			 },	
 		       }
 
-		     fps=60;	
-		     game.update(myjogo.start,fps);  
+		       fps=60;	
+		       game.update(myjogo.start,fps);  
 
-		</script>
-		</body>
-		</html>
+	</script>
+	</body>
+	</html>
+
 
 <h2>Funcionalidades e Metas</h2>
 
