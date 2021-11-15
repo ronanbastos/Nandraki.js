@@ -54,35 +54,37 @@ In the engine folder contains demo test file]
 [Testar sem inteface da engine... Crie um arquivo chamado index.html e cole o seguinte código nele]
 
 
+		<!DOCTYPE html>
+		<html>
+		<head>
 
-	<!DOCTYPE html>
-	<html>
-	<head>
+		 <script src="nandraki.js"></script>
 
-	 <script src="https://tironan.000webhostapp.com/nandraki.js"></script>
-         <script src="https://unpkg.com/nandraki@1.3.8/nandraki.js"></script>			
-		
-	</head>
-	<body>
-	<script>
-	      myjogo = {
-		 start : function(){
+		</head>
+		<body>
 
-		   const txt = new Nandraki("h1","text","Ola mundo!",0,0,0);
-		   Nandraki.create_ui(txt.obj,txt.id,"0px","100px","50px","50px");
+		<script>
+		       Nandraki.create_obj("text",500,500,10,10,true);
 
-		   const txt2 = new Nandraki("h1","text",1+1,0,0,0);
-		   Nandraki.create_ui(txt2.obj,txt2.id,"0px","100px","50px","100px");
+			 const txt = new Nandraki("text",0,0,0);	
+		      myjogo = {
 
-		 },	
-	       }
 
-	     fps=60;	
-	     game.update(myjogo.start,fps);  
+			 start : function(){
 
-	</script>
-	</body>
-	</html>
+
+			   Nandraki.create_ui(txt.id," Hello, world!","100px","100px","50px","50px");	
+
+
+			 },	
+		       }
+
+		     fps=60;	
+		     game.update(myjogo.start,fps);  
+
+		</script>
+		</body>
+		</html>
 
 <h2>Funcionalidades e Metas</h2>
 
