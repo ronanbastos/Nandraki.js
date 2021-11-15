@@ -1,11 +1,6 @@
 <!DOCTYPE html>
-<html>
-<head>
 <script src="nandraki.js"></script>
-<style>
-
-</style>	
-</head>
+<html>
 <body style="width:100%;height:100%;  touch-action: none; overflow: auto; ">
 
 <script>
@@ -19,9 +14,10 @@ document.body.style.zoom=1;
 
 Nandraki.create_sprite("player","player.png",64,64,32,50);
 
-player = document.getElementById("box_player");
+Nandraki.create_box("box_player",25,25,32,50,true);
 
-//Nandraki.create_box(player,"player_box_corpo","10px","30px","0px","10px",true);
+const player = new Nandraki("player",10,1.5,5);
+
 
 
 frame=10;
@@ -63,29 +59,25 @@ jogo = {
 	 	if(frame==15)frame=10
 	}
 
-	chaolocal=game.coord(chao);
-          playerlocal=game.coord(player);
-	paredelocal=game.coord(parede);
-	parede1local=game.coord(parede1);
 	
-
-	check_item_in_chao   =    game.colidir(chaolocal, powerlocal);	
-	check_item1_in_chao   =    game.colidir(localbloco,chaolocal);
-	check_item1_in_player  =    game.colidir(localbloco,playerlocal);
+          playerlocal=game.coord(player.body);
 	
-	
-	
-
-	if(game.colidir_force_r("player","power",true)==true && check_item_in_player==true){
+	/*
+	if(game.colidir_force_r(player.id,"chao",true)==true && check_chao_in_player==true){
 		di+=5
 	}
 
-	if(game.colidir( playerlocal,chaolocal)==true && check_item1_in_player==true){
+	if(game.colidir(player.id,"chao")==true && check_chao_in_player==true){
 		up=up
 	}else{
 	up+=gravidade
 
 	}
+	*/
+	
+	
+
+	
 	/*
 	stick=game.get_obj("stick");	
 	base=game.get_obj("base-stick");
@@ -144,7 +136,7 @@ function logKey1(e) {
 	
 	
 		 
-		 di+=5;
+		 di+=3;
 		 scala=1; 
 		 game.force_obj("player",di,up,false);
 		
@@ -154,7 +146,7 @@ if( e.code == "KeyA") {
 	  anim="corre";
 	  //corre();
 	
-	           di-=5;
+	           di-=3;
 	     	 scala=-1;
 		 game.force_obj("player",di,up,true);
 	
@@ -209,9 +201,8 @@ function jump() {
   up-=100;
 }
 
-game.update(jogo.start,75);
+game.update(jogo.start,60);
 
-//game.touchpad("joy",50,50);
 
 </script>
 
