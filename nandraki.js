@@ -1,22 +1,17 @@
 class Nandraki {
     
-    constructor(obj,id,txt,grav,vel,mas) {
-          this.obj = obj;
-          this.id = id;
-	this.txt = txt;
-	document.body.innerHTML += '<'+this.obj+' id="'+this.id+'">'+txt+'</'+this.obj+'>';
-	this.body=document.getElementById(this.id);	
+    constructor(id,grav,vel,mas) {
+          this.id = id;	
 	this.gravidade =grav;
 	this.velocidade =vel;
-	this.massa=mas;	
+	this.massa=mas;
+	this.body=document.getElementById(this.id);	
 	
     }
-    static create_sprite(id,img,width,height,left,top){
-	 let html=`<div id="${id}" style="width:${width}px;height:${height}px;overflow: hidden;position:absolute;left:${left}px;top:${top}px;">
-		<div id="box_${id}" style="width:64px;height:64px;overflow: hidden;position:absolute;left:0px;top:0px;">
-		</div>
-		<img id="img_${id}" src="${img}" alt=""/>
-
+    static create_sprite(id,img,width,height){
+	 let html=`<div id="${id}" style="width:${width}px;height:${height}px;overflow: hidden;position:absolute;">
+		<div id="box_${id}"></div>		
+		<img id="img_${id}" style="position:absolute;" src="${img}" alt=""/>
 		</div>`;	
 	 document.body.innerHTML +=html;
 	
@@ -47,8 +42,11 @@ class Nandraki {
 	
 	
    }		
-    static create_obj(id,width,height,top,left,debug) {
-        let obj = document.getElementById(id);
+    static create_obj(id,width,height,top,left,debug) {         
+	let html=`<div id="${id}" style="width:${width}px;height:${height}px;position:absolute;">
+		</div>`;	
+	 document.body.innerHTML +=html;
+           let obj = document.getElementById(id);
 	if(debug==true){	
 		obj.style.width = width;
 		obj.style.height = height;
@@ -65,43 +63,45 @@ class Nandraki {
 		obj.style.position = 'absolute';
 	}
     }
-    static create_ui(id,width,height,top,left) {
-	let obj = document.getElementById(id);
+    static create_ui(id,txt,width,height,top,left) {
+		let obj = document.getElementById(id);	
 		obj.style.width = width;
 		obj.style.height = height;
 		obj.style.top = top;
 		obj.style.left = left;
 		obj.style.position = 'absolute';
+		obj.innerHTML = txt;
 		
     }
-    static create_box(obj,id,width,height,top,left,debug) {
-		
-	obj.innerHTML += '<box id="box_'+id+'"></box>';	
+    static create_box(id,width,height,top,left,debug) {
+	let box = document.getElementById(id);
+	console.log(box);		
 	if(debug==true){
-		let obj = document.getElementById("box_"+id);
-		obj.style.width = width;
-		obj.style.height = height;
-		obj.style.top = top;
-		obj.style.left = left;
-		obj.style.border = "solid 1px";
-		obj.style.borderColor="green";
-		obj.style.position = 'absolute';
-		
+		console.log(1);		
+		box.style.width = width;
+		box.style.height = height;
+		box.style.top = top;
+		box.style.left = left;
+		box.style.border = "solid 1px";
+		box.style.borderColor="green";
+		box.style.position = 'absolute';
+		console.log(2);
 		
 	}else{
-		let obj = document.getElementById("box_"+id);
-	     obj.style.width = width;
-		obj.style.height = height;
-		obj.style.top = top;
-		obj.style.left = left;
-		obj.style.position = 'absolute';
-		
+		console.log(3);
+	          box.style.width = width;
+		box.style.height = height;
+		box.style.top = top;
+		box.style.left = left;
+		box.style.position = 'absolute';
+		console.log(4);
+		console.log(5);
 	  }
 	
 	}			
     static version(){
-        console.log("Version[1.3.8]");
-	alert("Version[1.3.8]");
+        console.log("Version[1.4.0]");
+	alert("Version[1.4.0]");
 	
     }		
     		
@@ -135,7 +135,7 @@ game = {
     canvas_clear: function(){
      nandraki.clearRect(0, 0, canvas.width, canvas.height);	
     },  
-    sprite_add: function(id,img,arg){
+    background_add: function(id,img,arg){
        let element = document.getElementById(id);
        element.style.background="url('"+igm+"')"+arg;
      
@@ -514,7 +514,7 @@ game = {
 	  obj.addEventListener('touchmove', function(event) {
 	    let touch = event.touches[0];
 	    posX = touch.pageX - container.x - drag.w / 2;
-         posY = touch.pageY - container.y - drag.h / 2;	
+              posY = touch.pageY - container.y - drag.h / 2;	
 	    element.style.left = posX + "px"; 
 	    element.style.top = posY + "px";
 	    event.preventDefault();
@@ -925,7 +925,7 @@ game = {
 	},	
     clock_time: function(m,s,valor){
 		  	
-		  let segundos = 0;
+	  let segundos = 0;
             let minutos = 0;
             	
             function segundo(){
