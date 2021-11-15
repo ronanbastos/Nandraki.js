@@ -1,7 +1,7 @@
 class Nandraki {
     
     constructor(id,grav,vel,mas) {
-          this.id = id;	
+        this.id = id;	
 	this.gravidade =grav;
 	this.velocidade =vel;
 	this.massa=mas;
