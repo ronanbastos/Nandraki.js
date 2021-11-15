@@ -1,1254 +1,92 @@
 <!DOCTYPE html>
 <html>
 <head>
+<script src="nandraki.js"></script>
 <style>
 
 </style>	
 </head>
 <body style="width:100%;height:100%;  touch-action: none; overflow: auto; ">
 
-<player  id="player"></player>
-<chao id="chao"></chao>
-<item  id="power">
-<msg id="msg"></msg>
-</item>
-<parede id="parede"></parede>
-<div id="joy">
-</div>
 <script>
 
-let scale = 'scale(1)';
+scale = 'scale(1)';
 document.body.style.webkitTransform =  scale;     // Chrome, Opera, Safari
 document.body.style.msTransform =   scale;       // IE 9
 document.body.style.transform = scale;          // Geral
 document.body.style.zoom=1;
 
 
-           
-class Nandraki {
-    constructor(obj,id,txt,grav,vel,mas) {
-     this.obj = obj;
-     this.id = id;
-	this.txt = txt;
-	document.body.innerHTML += '<'+this.obj+' id="'+this.id+'">'+txt+'</'+this.obj+'>';
-	this.body=document.getElementById(this.id);	
-	this.gravidade =grav;
-	this.velocidade =vel;
-	this.massa=mas;	
-	
-    }
+Nandraki.create_sprite("player","player.png",64,64,32,50);
 
-    static create_obj(id,width,height,top,left,debug) {
-        let obj = document.getElementById(id);
-	if(debug==true){	
-		obj.style.width = width;
-		obj.style.height = height;
-		obj.style.border = "solid 1px";
-		obj.style.top = top;
-		obj.style.left = left;
-		obj.style.position = 'absolute';
-		obj.style.borderColor="green";
-	}else{
-		obj.style.width = width;
-		obj.style.height = height;
-		obj.style.top = top;
-		obj.style.left = left;
-		obj.style.position = 'absolute';
-	}
-    }
-    static create_ui(id,width,height,top,left) {
-	let obj = document.getElementById(id);
-		obj.style.width = width;
-		obj.style.height = height;
-		obj.style.top = top;
-		obj.style.left = left;
-		obj.style.position = 'absolute';
-		
-    }
-    static create_box(obj,id,width,height,top,left,debug) {
-		
-	obj.innerHTML += '<box id="box_'+id+'"></box>';	
-			
-	if(debug==true){
-		let obj = document.getElementById("box_"+id);
-		obj.style.width = width;
-		obj.style.height = height;
-		obj.style.top = top;
-		obj.style.left = left;
-		obj.style.border = "solid 1px";
-		obj.style.borderColor="green";
-		obj.style.position = 'absolute';
-		
-	}else{
-		let obj = document.getElementById("box_"+id);
-	        obj.style.width = width;
-		obj.style.height = height;
-		obj.style.top = top;
-		obj.style.left = left;
-		obj.style.position = 'absolute';
-		
-	  }
-	
-	}	
-   		
-    static version(){
-        console.log("Version[1.3.7]");
-	alert("Version[1.3.7]");
-	
-    }		
-    		
-    static create_animator(id,p1,p2,time,ative){
-	
-	let animationInterval;
-	let spriteSheet = document.getElementById(id);
-	let widthOfSpriteSheet = p1;
-	let widthOfEachSprite = p2;
+player = document.getElementById("box_player");
 
-	function stopAnimation() {
-	  clearInterval(animationInterval);
-	}
-
-	function startAnimation() {
-	  let position = widthOfEachSprite; //start position for the image
-	  const speed = time; //in millisecond(ms)
-	  const diff = widthOfEachSprite; //difference between two sprites
-
-	  animationInterval = setInterval(() => {
-	    spriteSheet.style.backgroundPosition = `-${position}px 0px`;
-
-	    if (position < widthOfSpriteSheet) {
-		 position = position + diff;
-	    } else {
-		 //increment the position by the width of each sprite each time
-		 position = widthOfEachSprite;
-	    }
-	    //reset the position to show first sprite after the last one
-	  }, speed);
-
-	}
-	if(ative==true){
-		
-		//Start animation
-		startAnimation();
-	
-	}else{
-	
-	   //stop animation		
-	   stopAnimation();	
-	}
-		
-
-	}	 	
-}
+//Nandraki.create_box(player,"player_box_corpo","10px","30px","0px","10px",true);
 
 
-const parede_1 = new  Nandraki("parede","parede1","",0,0,0);
-Nandraki.create_obj(parede_1.id,"100px","500px","50px","900px",false);
-
-const item1 = new  Nandraki("div","power1","test",0,5.5,10);
-Nandraki.create_obj(item1.id,"30px","50px","50px","150px",true);
-
-
-
-//body.id do elemento e obj.id nome string do id alert(item1.body.style.top);
-
-
-const lifebarra = new  Nandraki("barra","life","",0,0,0);
-Nandraki.create_obj(lifebarra.id,"100px","5px","15px","50px",true);
-
-document.getElementById(lifebarra.id).style.background = "red";
-
-const lifebarra2 = new  Nandraki("barra2","life2","",0,0,0);
-Nandraki.create_obj(lifebarra2.id,"100px","5px","15px","50px");
-
-const txt = new Nandraki("h6","text","Pontos:",0,0,0);
-Nandraki.create_ui(txt.id,"0px","0px","0px","50px");
-ui_ponto = document.getElementById(txt.id);
-
-const txt_pontos = new Nandraki("h6","pontos","0",0,0);
-Nandraki.create_ui(txt_pontos.id,"0px","0px","0px","110px");
-pontos=100;
-x=0;
-
-barralife= document.getElementById(lifebarra.id);
-ui_ponto = document.getElementById(txt_pontos.id);
-player = document.getElementById("player");
-chao = document.getElementById("chao");
-item = document.getElementById("power");
-bloco = document.getElementById("power1");
-parede = document.getElementById("parede");
-parede1 = document.getElementById(parede_1.id);
-
-item.style.width = "30px";
-item.style.height = "50px";
-item.style.border = "solid 1.5px";
-item.style.top = '50px';
-item.style.left = '250px';
-item.style.position = 'absolute';
-topAtual2 = parseInt(item.style.top, 10);
-leftAtual2 =  parseInt(item.style.left, 10);
-gravidade2=100;
-velocidade2=10;
-
-	
-
-chao.style.width = "1500px";
-chao.style.height = "100px";
-chao.style.border = "solid 1.5px";
-chao.style.top = '550px';
-chao.style.left = '-80px';
-chao.style.position = 'absolute';
-topAtual1 = parseInt(chao.style.top, 10);
-
-parede.style.border = "solid 1.5px";
-parede.style.width = "100px";
-parede.style.height = "500px";
-parede.style.top = '50px';
-parede.style.left = '-80px';
-parede.style.position = 'absolute';
-
-
-
-player.style.position = 'absolute';
-player.style.top = '100px';
-player.style.left = '60px';
-player.style.background='url("player.png") no-repeat -77px -93px';
-player.style.width="34px";
-player.style.height= "35px";
-Nandraki.create_box(player,"player_box_corpo","10px","30px","0px","10px",false);
-Nandraki.create_box(player,"player_box_cabeca","10px","15px","0px","20px",false);
-velocidade=100;
-gravidade =10;
-lefts = 0;
-pulo = false;
-vida = 5;
-leftAtual =  parseInt(player.style.left, 10);
-topAtual = parseInt(player.style.top, 10);
-frame=0;
-variavel = {};
-tecla="";
-framep=0;
+frame=10;
 di=0;
 up=0;
 scala=1;
-x_mouse="";
-m=0;
-s=0;
-h=0;
+anim="parado";
 
-function parado(){
-  
-	    player.style.background='url("player.png") no-repeat -77px -93px';
-	    player.style.width="34px";
-	    player.style.height= "35px";
-   
-    
-  
-}
-  
-function corre() {
-    if (frame == 6) frame = 0;
-    frame++;
-    if(frame==1){
-	    player.style.background='url("player.png") no-repeat -77px -93px';
-	    player.style.width="34px";
-	    player.style.height= "35px";
-    }
-    if(frame==2){
-	    player.style.background='url("player.png") no-repeat -206px -95px';
-	    player.style.width="34px";
-	    player.style.height= "32px";
 
-    }
-    if(frame==3){
-            player.style.background='url("player.png") no-repeat -269px -94px';
-	    player.style.width="34pxx";
-	    player.style.height= "34px";
-
-
-    }
-
-     if(frame==4){
-            player.style.background='url("player.png")  no-repeat -332px -94px';
-	    player.style.width="34px";
-	    player.style.height= "34px";
-
-
-    }				
-	
-    if(frame==5){
-            player.style.background='url("player.png")  no-repeat -13px -156px';
-	    player.style.width="34px";
-	    player.style.height= "36px";
-
-
-    }
-    if(frame==6){
-            player.style.background='url("player.png") no-repeat -77px -156px';
-	    player.style.width="34px";
-	    player.style.height= "36px";
-
-
-    }	
-    		
-    	  			
-}
-
-
-
-game = {
-    canvas_start: function(id,width,height){
-	document.body.innerHTML += "<canvas id='canvas' width="+width+" height="+height+">";	
-	canvas = document.getElementById(id);
-	return nandraki = canvas.getContext('2d');
-   },
-   canvas_text : function(text,font,cor,x,y) {
-	if(font == null || font == " ")
-	{	
-	nandraki.font = '20pt Calibri';
-	}else{
-	nandraki.font = font;
-        }
-        nandraki.fillStyle = cor;
-	nandraki.fillText(text,x,y);
-		
-    },
-	
-    canvas_arc: function(x,y,font,b,p){
-     
-	nandraki.arc(x, y,font,b,p);
-	
-    },	
-    canvas_clear: function(){
-     nandraki.clearRect(0, 0, canvas.width, canvas.height);	
-    },  
-    sprite_add: function(id,img,arg){
-       let element = document.getElementById(id);
-       element.style.background="url('"+igm+"')"+arg;
-     
-    }, 
-    reload: function(ative){
-    
-    return document.location.reload(ative);
-     
-    },
-    stop_interval(mylet){
-     clearInterval(mylet);
-    }, 
-    start_interval(mylet,time){
-     setInterval(mylet,time);
-    },			
-    stop_time : function (mylet){
-
-	clearTimeout(mylet);
-
-    },
-    som_play: function(id,link_som){
-	    function play(){
-	    let audio1 = new Audio();
-	    audio1.src = link_som;
-	    audio1.play();
-		}
-		document.getElementById(id).addEventListener("click",play, false);
-
-	},		
-    start_time: function (func,time){
-	setTimeout(func,time); 
-    },    
-    animar_left : function (id,mi,ma,time){
-
-	document.getElementById(id).animate([
-	  {animationDirection:"alternate"},
-	  { left: mi+"px" },
-	  { left: ma+"px" },
-	  {animationDirection:"alternate"}
-	], {
-	  
-	  duration: time,
-	  iterations: Infinity
-	   
-	});
-
-    },
-    animar_top : function (id,mi,ma,time){
-
-	document.getElementById(id).animate([
-	  {animationDirection:"alternate"},
-	  { top: mi+"px" },
-	  { top: ma+"px" },
-	  {animationDirection:"alternate"}
-	], {
-	  
-	  duration: time,
-	  iterations: Infinity
-	   
-	});
-
-    },
-	pixeled: function(id){
-
-	document.getElementById(id).imageRendering="pixelated";	
-	
-	},			
-     jump_force : function (id,valor,time){
-
-	document.getElementById(id).animate([
-	  { top: valor+"px" },
-	  { animationFillMode:"forwards"}
-	], {
-	  
-	  duration: time,
-	  iterations: 1
-	   
-	});
-
-    },
-    get_mouse_x: function(){
-	
-
-    },
-    get_mouse_y: function(y){
-       
-	
-    },	
-    get_left : function (id){
-
-	
-	let x=document.getElementById(id).offsetLeft;
-	return x;
-
-    },
-	
-    get_top : function (id){
-
-	
-	let y=document.getElementById(id).offsetTop;
-	return y;
-
-    },
-    moveX_rest : function (a,rest,id){
-
-	let step=5;
-	
-	let x=document.getElementById(id).offsetLeft;
-	//document.getElementById("msg").innerHTML="X: " + x;
-
-	if(x > a){
-                x= x - step;
-                document.getElementById(id).style.left= x + "px"; 
-	}else{
-	  x= x + step + rest;
-          document.getElementById(id).style.left= x + "px";
-	}
-	
-    },		
-    moveXD : function (a,id){
-
-	let step=5; 
-	let x=document.getElementById(id).offsetLeft;
-	if(x < a){
-                x= x +step;
-                document.getElementById(id).style.left= x + "px"; 
-	}
-
-    },
-    moveXE : function (a,id){
-
-	let step=5;
-	let y=document.getElementById(id).offsetTop; 
-	let x=document.getElementById(id).offsetLeft;
-	//document.getElementById("msg").innerHTML="X: " + x + " Y : " + y;
-	if(x > a){
-                x= x - step;
-                document.getElementById(id).style.left= x + "px"; // horizontal movimento
-	}
-	
-    },
-    	
-    timeXD: function(valor,id){
- 
-	game.moveXD(valor,id);
-	let y=document.getElementById(id).offsetTop;
-	let x=document.getElementById(id).offsetLeft;
-	//document.getElementById("msg").innerHTML="X: " + x + " Y : " + y;
-	timeD=setTimeout('game.timeXD',1000);
-	fim=setTimeout(clearTimeout(timeD),1100)
-    },
-    timeXE: function(valor,id){
- 
-	game.moveXE(valor,id);
-	let y=document.getElementById(id).offsetTop;
-	let x=document.getElementById(id).offsetLeft;
-	//document.getElementById("msg").innerHTML="X: " + x + " Y : " + y;
-	timeE=setTimeout('game.timeXE',1000);
-	
-	        
-	
-    },
-    force_obj: function(id,x,y,rotate){
-	let element = document.getElementById(id);
-	if(rotate==true){
-
-	   element.style.transform="translate3d("+x+"px,"+y+"px, 0px) rotateY(180deg)";
-	
-	}else{
-	
-	   element.style.transform="translate3d("+x+"px,"+y+"px, -0px) rotateY(0deg)";
-	
-	}
-    },	 			
-    scaleX:function(id,valor){
-	let obj = document.getElementById(id);
-	obj.style.transform="scaleX("+valor+")";	 
-    },
-    load:function(valor){
-	return window.location.href=valor;	 
-    },
-    load_time:function(valor,time){
-	setTimeout(function() {
-          window.location.href = valor;
-	}, time);
-
-    
-    },
-    hover_mouse: function(id){
-	let div = document.getElementById(id);
-	div.addEventListener('mouseenter', function(){
-	  	return true;
-	}, false);
-
-   },
-		  		
-    move_mouse: function(id){
-	
-	dragElement(document.getElementById(id));
-	document.getElementById(id).style.position = 'absolute';
-	function dragElement(elmnt) {
-	  let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
-	  if (document.getElementById(elmnt.id + "header")) {
-	    document.getElementById(elmnt.id + "header").onmousedown = dragMouseDown;
-	  } else {
-	    elmnt.onmousedown = dragMouseDown;
-	  }
-
-	  function dragMouseDown(e) {
-	    e = e || window.event;
-	    e.preventDefault();
-	    pos3 = e.clientX;
-	    pos4 = e.clientY;
-	    document.onmouseup = closeDragElement;
-	    document.onmousemove = elementDrag;
-	  }
-
-	  function elementDrag(e) {
-	    e = e || window.event;
-	    e.preventDefault();
-	  
-	    pos1 = pos3 - e.clientX;
-	    pos2 = pos4 - e.clientY;
-	    pos3 = e.clientX;
-	    pos4 = e.clientY;
-	 
-	    elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
-	    elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
-	  }
-
-	  function closeDragElement() {
-	   
-	    document.onmouseup = null;
-	    document.onmousemove = null;
-	  }
-	}
-    },
-
-    touch_start:function(id,func){
-      
-	document.getElementById(id).addEventListener("touchstart", func, true);
-	
-    },
-    touch_end:function(id,func){
-      
-	document.getElementById(id).addEventListener("touchend", func, true);
-
-    },
-    ative_touch:function(){
-      
-	return document.body.style.touchAction="auto";
-
-    },
-    touch_long:function(id,func,t){
-	
-	let onlongtouch; 
-	let timer;
-	let touchduration = t; //length of time we want the user to touch before we do something
-
-	function touchstart(e) {
-	    e.preventDefault();
-	    if (!timer) {
-		timer = setTimeout(onlongtouch, touchduration);
-	    }
-	}
-	
-	function touchend() {
-	    //stops short touches from firing the event
-	    if (timer) {
-		clearTimeout(timer);
-		timer = null;
-	    }
-	}
-
-	onlongtouch = func;
-	
-
-	document.addEventListener("DOMContentLoaded", function(event) { 
-	    document.getElementById(id).addEventListener("touchstart", touchstart, false);
-	    document.getElementById(id).addEventListener("touchend", touchend, false);
-	});
-
-
-
-    },
-    click_start:function(id,func){
-      
-	document.getElementById(id).addEventListener("click",func, false);
-
-    },	
-    move_touch:function(id){
-      let element = document.getElementById(id);
-      element.classList.add("dragme");
-	 let dom = {
-       container: document.body
-	}
-	 let container = {
-	    x: dom.container.getBoundingClientRect().left,
-	    y: dom.container.getBoundingClientRect().top,
-	    w: dom.container.getBoundingClientRect().width,
-	    h: dom.container.getBoundingClientRect().height
-    } 	
-	 let drag = {
-   	  w: element.offsetWidth,
-   	  h: element.offsetHeight
-	}
-      let nodeList = document.getElementsByClassName('dragme');
-
-	for (let i = 0; i < nodeList.length; i++) {
-	  let obj = nodeList[i];
-	  obj.addEventListener('touchmove', function(event) {
-	    let touch = event.touches[0];
-	    posX = touch.pageX - container.x - drag.w / 2;
-         posY = touch.pageY - container.y - drag.h / 2;	
-	    element.style.left = posX + "px"; 
-	    element.style.top = posY + "px";
-	    event.preventDefault();
-	  }, false);
-       }
-    },
-    move_touch_pro:function(id_item,id_container){
-	
-		document.getElementById(id_item).style.position = 'absolute';  
-	     document.getElementById(id_item).style.width= "50%";
-    		document.getElementById(id_item).style.height= "50%";
-		let dom = {
-		    container: document.getElementById(id_container),
-		    drag: document.getElementById(id_item),
-		}
-		let container = {
-		    x: dom.container.getBoundingClientRect().left,
-		    y: dom.container.getBoundingClientRect().top,
-		    w: dom.container.getBoundingClientRect().width,
-		    h: dom.container.getBoundingClientRect().height
-		}
-		let drag = {
-		    w: dom.drag.offsetWidth,
-		    h: dom.drag.offsetHeight
-		}
-
-		target = null;
-
-		document.body.addEventListener('touchstart', handleTouchStart, false);
-		document.body.addEventListener('touchmove', handleTouchMove, false);
-		document.body.addEventListener('touchend', handleTouchEnd, false);
-		document.body.addEventListener('touchcancel', handleTouchCancel, false);
-
-		function handleTouchStart(e) {
-		    if (e.touches.length == 1) {
-			   let touch = e.touches[0];
-			   target = touch.target;
-		    }
-		}
-		function handleTouchMove(e) {
-		    if (e.touches.length == 1) {
-			   if(target ===  dom.drag) {
-				  moveDrag(e);
-			   }
-		    }
-		}
-		function handleTouchEnd(e) {
-		    if (e.touches.length == 0) {
-			   target = null;
-		    }
-		}
-		function handleTouchCancel(e) {
-		    return;
-		}
-
-		function moveDrag(e) {
-			touch = e.touches[0];
-			posX = touch.pageX - container.x - drag.w / 2;
-			posY = touch.pageY - container.y - drag.h / 2;
-		    
-
-		    dom.drag.style.left = posX + "px";
-		    dom.drag.style.top = posY + "px";
-		    	 
-		}
-    },
-    remove_all: function(selector){
-
-	
-	    let myObj = document.querySelectorAll(selector);
-	    i = 0,
-	    l = myObj.length;
-
-	    for (i; i < l; i++) {
-		   myObj[i].remove();
-	    }
-
-		
-
-	},	
-    none_all:function(selector){
-
-	   let myObj = document.querySelectorAll(selector),
-        i = 0,
-        l = myObj.length;
-
-	    for (i; i < l; i++) {
-		   myObj[i].style.display = 'none';
-	    }
-	
-
-	},
-	block_all:function(selector){
-
-	   let myObj = document.querySelectorAll(selector),
-        i = 0,
-        l = myObj.length;
-
-	    for (i; i < l; i++) {
-		   myObj[i].style.display = 'block';
-	    }
-	
-
-	},	  	 
-    random_m: function(ma,mi,s){
-    
-       return Math.random() * (ma-mi) + s;
-       
-    },
-    random_mf: function(ma,mi,s){
-    
-       return Math.floor(Math.random() * (ma-mi) + s);
-       
-    },
-    sprite_frame: function(id,x,y,vel){
-
-		let animationInterval;
-	let spriteSheet = document.getElementById(id);
-	let widthOfSpriteSheet = x;
-	let widthOfEachSprite = y;
-
-	function stopAnimation() {
-	  clearInterval(animationInterval);
-	}
-
-	function startAnimation() {
-	  let position = widthOfEachSprite; //start position for the image
-	  const speed = vel; //in millisecond(ms)
-	  const diff = widthOfEachSprite; //difference between two sprites
-
-	  animationInterval = setInterval(() => {
-	    spriteSheet.style.backgroundPosition = `-${position}px 0px`;
-
-	    if (position < widthOfSpriteSheet) {
-		 position = position + diff;
-	    } else {
-		 //increment the position by the width of each sprite each time
-		 position = widthOfEachSprite;
-	    }
-	    //reset the position to show first sprite after the last one
-	  }, speed);
-	}
-
-	//Start animation
-	startAnimation();
-
-		
-
-	
-	
-
-    },	
-    set_text: function (id,txt){
-      let h = document.getElementById(id);
-      return h.innerHTML = txt;	
-    },	
-    log_key:function(){
-	
-	log = document.getElementById('body');
-	
-    },		
-    log_down:function(func){
-	
-	document.addEventListener('keydown', func);
-    },
-    log_up:function(func){
-	
-	document.addEventListener('keyup', func);
-    },	
-    opacity: function(ob,op){
-      let obj = document.getElementById(ob); 	
-      obj.style.opacity=op;
-
-   },				 
-   camera_2d: function(obj){
-
-
-   },
-   print: function(p){
-	
-     return alert(p);
-	
-   }, 	
-   variavel : function(n,v){
-	let nome = n;	
-	variavel[nome] = v;
-
-    },	
-   create_obj : function(obj,id){
-		
-	document.body.innerHTML += '<'+obj+' id="'+id+'">'+'</'+obj+'>';
-
-    },
-     ia_left: function(obj1,obj2,id,dis,v){
-		
-	if(obj1.left >= obj2.left){
-		document.getElementById(id).animate([
-		  // keyframes
-		  {animationDirection:"alternate"},
-		  { left: obj1.left+dis+"px" }
-		
-		], {
-		  // timing options
-		  duration: v,
-		  iterations: Infinity
-		 
-		});
-	}else{
-		document.getElementById(id).animate([
-		  // keyframes
-		  
-		  { left: obj1.left-dis+"px" }
-		
-		], {
-		  // timing options
-		  duration: v,
-		  iterations: Infinity
-		 
-		});
-	}
-    },
-    ia_top: function(obj1,obj2,id,dis,v){
-		
-	if(obj1.top >= obj2.top){
-		document.getElementById(id).animate([
-		  // keyframes
-		  {animationDirection:"alternate"},
-		  { top: obj1.top+dis+"px" }
-		
-		], {
-		  // timing options
-		  duration: v,
-		  iterations: Infinity
-		 
-		});
-	}else{
-		document.getElementById(id).animate([
-		  // keyframes
-		  
-		  { top: obj1.top-dis+"px" }
-		
-		], {
-		  // timing options
-		  duration: v,
-		  iterations: Infinity
-		 
-		});
-	}
-    },	 						
-   obj_in_obj:function(obj,id){
-	document.getElementById(obj).appendChild(document.getElementById(add));	
-    },
-   remove_class: function(id,obj){
-     let element = document.getElementById(id);
-     element.classList.remove(obj);	
-   },
-   get_window_w:function(){
-     let w = window.innerWidth;
-     return w;
-   },
-  	 
-   get_window_h:function(){
-     let h = window.innerHeight;
-     return h;
-   },
-   class_in_obj: function(obj,add){
-     let element = document.getElementById(obj);
-     element.classList.add(add);
-   },
-   ball_border: function(id,rad){
-	let element = document.getElementById(id);
-	element.style.borderRadius= rad+"%";
-
-   },		
-   id_in_obj_min:function(obj,nome){
-	document.querySelector(obj).id +=nome;
-    },
-    id_in_obj_max:function(obj,nome){
-	document.querySelector(obj).id +=" "+nome+" ";
-    },
-    id_two_in_obj:function(obj,nome1,nome2){
-	document.querySelector(obj).id +=" "+nome1+" "+nome2;
-    },	
-   get_obj: function(id){
-	let element = document.getElementById(id);
-	return element;
-
-   },		
-    camada:function(player,num){
-	let obj = document.getElementById(player);	
-	obj.style.zIndex=num;
-    }, 	
-    kill_free : function(id){
-	let obj = document.getElementById(id);
-	obj.remove();
-    },
-    animar_obj:function(id,css,time){
-	let obj = document.getElementById(id);
-	x=css;
-	obj.animate(x,time);	
-    },
-    text_bot:function(id,txt,vel){
-		let content = txt;
-		let text = document.getElementById('text');
-
-		let speed = vel;
-		let cont = 0;
-
-		function typeWriter () {
-		  if(cont < content.length){
-		    text.textContent += content.charAt(cont);
-		    cont++;
-		    setTimeout(typeWriter, speed);
-		  }else{
-		    text.textContent = '';
-		    cont = 0;
-		    typeWriter();
-		  }
-		}
-
-		typeWriter();
-
-	
-
-	
-	},
-	touchpad:function(id,left,top){
-		
-		 let html=`<div id="move-base" style="width:256px;height:256px; position: absolute; left:${left}px; top:${top}px; ">
-					<div id="base-stick" style="border: 1px solid black;border-radius:100%; width:128px;height:128px; position: absolute; left:64px; top:64px; ">	
-						<div id="stick" style=" display: block;background: black;border-radius:100%; height: 64px;width:64px; background: radial-gradient(circle at 100px 100px, #F52D02, #801D08);  left:32px; top:32px;">	
-						</div>		
-					</div>
-					</div>`;
-
-		 document.getElementById(id).innerHTML += html;
-		 document.getElementById("stick").style.position = 'absolute';  
-		 document.getElementById("stick").style.width= "50%";
-		 document.getElementById("stick").style.height= "50%";
-			let dom = {
-			    container: document.getElementById("base-stick"),
-			    drag: document.getElementById("stick"),
-			}
-			let container = {
-			    x: dom.container.getBoundingClientRect().left,
-			    y: dom.container.getBoundingClientRect().top,
-			    w: dom.container.getBoundingClientRect().width,
-			    h: dom.container.getBoundingClientRect().height
-			}
-			let drag = {
-			    w: dom.drag.offsetWidth,
-			    h: dom.drag.offsetHeight
-			}
-
-			target = null;
-
-			document.body.addEventListener('touchstart', handleTouchStart, false);
-			document.body.addEventListener('touchmove', handleTouchMove, false);
-			document.body.addEventListener('touchend', handleTouchEnd, false);
-			document.body.addEventListener('touchcancel', handleTouchCancel, false);
-
-			function handleTouchStart(e) {
-			    if (e.touches.length == 1) {
-				   let touch = e.touches[0];
-				   target = touch.target;
-			    }
-			}
-			function handleTouchMove(e) {
-			    if (e.touches.length == 1) {
-				   if(target ===  dom.drag) {
-					  moveDrag(e);
-				   }
-			    }
-			}
-			function handleTouchEnd(e) {
-			    if (e.touches.length == 0) {
-				   target = null;
-				   dom.drag.style.left = "32px";
-				   dom.drag.style.top = "32px";	
-			    }
-			}
-			function handleTouchCancel(e) {
-			    return;
-			}
-
-			function moveDrag(e) {
-				touch = e.touches[0];
-				posX = touch.pageX - container.x - drag.w / 2;
-				posY = touch.pageY - container.y - drag.h / 2;
-			    
-
-			    dom.drag.style.left = posX + "px";
-			    dom.drag.style.top = posY + "px";
-			    	 
-			}
-
-			dragElement(document.getElementById("stick"));
-	document.getElementById("stick").style.position = 'absolute';
-	function dragElement(elmnt) {
-	  let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
-	  if (document.getElementById(elmnt.id + "header")) {
-	    document.getElementById(elmnt.id + "header").onmousedown = dragMouseDown;
-	  } else {
-	    elmnt.onmousedown = dragMouseDown;
-	  }
-
-	  function dragMouseDown(e) {
-	    e = e || window.event;
-	    e.preventDefault();
-	    pos3 = e.clientX;
-	    pos4 = e.clientY;
-	    document.onmouseup = closeDragElement;
-	    document.onmousemove = elementDrag;
-	  }
-
-	  function elementDrag(e) {
-	    e = e || window.event;
-	    e.preventDefault();
-	  
-	    pos1 = pos3 - e.clientX;
-	    pos2 = pos4 - e.clientY;
-	    pos3 = e.clientX;
-	    pos4 = e.clientY;
-	 
-	    elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
-	    elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
-	  }
-
-	  function closeDragElement() {
-	   
-	    document.onmouseup = null;
-	    document.onmousemove = null;
-	    dom.drag.style.left = "32px";
-	    dom.drag.style.top = "32px";
-	  }
-	}
-
-	},
-
-    get_text:function(id){
-
-	 let get_text = document.getElementById(id).textContent;	
-	 return get_text;
-
-	},
-     edite_text: function(id,text){
-	
-	document.getElementById(id).textContent = text;
-
-	},	
-    clock_time: function(m,s,valor){
-		  	
-		  let segundos = 0;
-            let minutos = 0;
-            	
-            function segundo(){
-                //incrementa os segundos
-                segundos++;
-                if(segundos==60){
-                    //incrementa os minutos
-                    minutos++;
-                    //Zerar os segundos
-                    segundos=0;
-                    //escreve os minutos
-                    document.getElementById(m).innerHTML=minutos
-                }
-                //escreve os segundos
-                document.getElementById(s).innerHTML=segundos
-                
-            }
-		
-            setInterval(function(){
-
-			segundo();
-			if(valor==minutos){
-			
-			return true;	
-
-			}
-		  },1000)
-		   /*
-		   ex html
-		  <div id="clock">
-		    <span id="minuto">00</span><span>:</span><span id="segundo">00</span>
-	       </div>
-	      */
-
-	 
-    },
-    id_check: function(id){
-	
-	if (document.getElementById(id)) {
-	    return true;
-	} else {
-	   return false;
-	}
-    },
-    move_parent: function(id){
-     let div_p = document.getElementById(id);
-	div_p.appendChild(this.parentElement);
-	
-
-   },
-   create_clone_animate: function(id,obj,css,time){
-     obj.innerHTML += '<div id="obj_'+id+'"></div>';		
-	let clone = document.getElementById("obj_"+id);
-	x=css;
-	clone.animate(x,time);	
-   },
-   clone_obj_move: function(id,obj){
-
-	
-	let seuNode = document.getElementById(id);
-     let clone   = seuNode.cloneNode(true); 
-     obj.appendChild(clone);
-
-   },	
-   clone_obj: function(id){
-   	let seuNode = document.getElementById(id);
-     let clone   = seuNode.cloneNode(true);
-	return clone;
-   },
-
-    radius: function(radius) {
-  	return 2 * Math.PI * radius;
-    },
-    colidir_aq: function(id1,id2,valor,pulo,check) {
-	    let obj1 = document.getElementById(id1);
-	    let obj2 = document.getElementById(id2); 	
-	    return pulo == false && Math.min(obj2.left*2-valor) >=  Math.min(obj1.left*2) && Math.min(obj2.top) <= Math.min(obj1.top)&& Math.max(obj2.left*2-valor) <=  Math.max(obj1.left*2) && Math.max(obj2.top) <= Math.max(obj1.top+valor) && check==true;		
-	  						
-		
-    },
-    r_check: function(id1,id2) {
-
-	let obj1 = document.getElementById(id1);
-	let obj2 = document.getElementById(id2);
-     let local1 = game.coord(obj1);
-	let local2 = game.coord(obj2);	 
-	let check_r = local1.offsetRight < local2.offsetRight;
-	
-	return check_r;
-	},
-     l_check: function(id1,id2) {
-
-	let obj1 = document.getElementById(id1);
-	let obj2 = document.getElementById(id2);
-     let local1 = game.coord(obj1);
-	let local2 = game.coord(obj2);	 
-	let check_l = local1.offsetLeft > local2.offsetLeft;
-	
-	return check_l;
-	},
-    colidir_force_r: function(id1,id2,check_contato) {
-	    let obj1 = document.getElementById(id1);
-	    let obj2 = document.getElementById(id2);
-	    let local1 = game.coord(obj1);
-	    let local2 = game.coord(obj2);		
-	    let check_r = local1.right  <=local2.right ;
-	   
-	    		
-	    return check_r == check_contato && local1.top >= local2.top;
-    },
-    colidir_force_l: function(id1,id2,check_contato) {
-	    let obj1 = document.getElementById(id1);
-	    let obj2 = document.getElementById(id2);
-	    let local1 = game.coord(obj1);
-	    let local2 = game.coord(obj2);		
-	    let check_l = local1.left <=local2.left;
-	   
-	    		
-	    return check_l == check_contato && local1.top >= local2.top;
-    },		
-    colidir_cal: function(min0, max0, min1, max1) {
-    return Math.max(min0, max0) >= Math.min(min1, max1) && Math.min(min0, max0) <= Math.max(min1, max1);
-    },
-    
-    colidir : function (r0, r1) {
-    	return game.colidir_cal(r0.left, r0.right, r1.left, r1.right) && game.colidir_cal(r0.top, r0.bottom,r1.top, r1.bottom);
-    },	
-    coord : function(obj){
-	return obj.getBoundingClientRect();  
-
-    },
-    update : function(jogo,fps) {
-		
-		return setInterval(jogo,fps);
-		
-    }, 	
+jogo = {
     start : function() {
 	
 	
-	        	
-	if(scala==1){
-	
-	game.force_obj("player",di,up,false);
+	if(anim=="abaixar"){
 
-	}else{
-    
-		game.force_obj("player",di,up,true);	
+		game.img_frame("img_player",64,64,6,1,1,1);
+			 	
+		if(frame>=1)frame=1
 
 	}
 
+	if(anim=="parado"){
+				
+		game.img_frame("img_player",64,64,6,frame++,3,8);
+			 	
+		if(frame>=8)frame=3
+
+	}else if(scala==1){
+		
+		game.force_obj("player",di,up,false);
+		anim=="corre"
+		game.img_frame("img_player",64,64,6,frame++,13,10);
+	 	if(frame==15)frame=10
+	}else{
+    
+		game.force_obj("player",di,up,true);	
 	
+		game.img_frame("img_player",64,64,6,frame++,15,10);
+	 	if(frame==15)frame=10
+	}
+
 	chaolocal=game.coord(chao);
-     playerlocal=game.coord(player);
-	powerlocal=game.coord(item);
+          playerlocal=game.coord(player);
 	paredelocal=game.coord(parede);
 	parede1local=game.coord(parede1);
-	localbloco=game.coord(bloco);
+	
+
+	check_item_in_chao   =    game.colidir(chaolocal, powerlocal);	
+	check_item1_in_chao   =    game.colidir(localbloco,chaolocal);
+	check_item1_in_player  =    game.colidir(localbloco,playerlocal);
 	
 	
+	
+
+	if(game.colidir_force_r("player","power",true)==true && check_item_in_player==true){
+		di+=5
+	}
+
+	if(game.colidir( playerlocal,chaolocal)==true && check_item1_in_player==true){
+		up=up
+	}else{
+	up+=gravidade
+
+	}
+	/*
 	stick=game.get_obj("stick");	
 	base=game.get_obj("base-stick");
 	
@@ -1276,174 +114,12 @@ game = {
 	
 	
      game.click_start("stick",jump);
-	
-	check_item_in_chao   =    game.colidir(chaolocal, powerlocal);	
-	check_item1_in_chao   =    game.colidir(localbloco,chaolocal);
-	check_item1_in_player  =    game.colidir(localbloco,playerlocal);
-	check_item_in_player    =    game.colidir(playerlocal, powerlocal);
-	check_parede_in_player   =    game.colidir(paredelocal,playerlocal);
-	check_parede1_in_player   =    game.colidir(parede1local,playerlocal);
-	check_parede_in_item       =    game.colidir(parede1local,powerlocal);
-	check_parede1_in_item       =    game.colidir(parede1local,powerlocal);
-	
-	
-	if(game.colidir_force_r("player","power",true)==true && check_item_in_player==true){
-		di-=5;
-	}else{
+	*/
 
-		di+=0;
-	}
-	if(game.colidir_force_l("player","power",false)==true && check_item_in_player==true ){
-		di+=5;
-	}else{
-
-		di-=0;
-	}
-	
-    if(check_item1_in_player==true && game.r_check("player",item1.id)==true){	
-		
-		lefts = lefts - 1.5;
-					
-	}else{
-	
-		lefts = lefts;
-	}
-
-	if(check_parede1_in_player==true){	
-		
-		lefts = lefts - 1.5;
-		
-	}else{
-	
-		player.style.left = (leftAtual + lefts) + 'px'; 
-	}
-
-	if(check_parede_in_player==true){	
-		
-		lefts = lefts + 1.5;
-		
-			
-	}else{
-	
-	player.style.left = (leftAtual + lefts) + 'px'; 
-	}
-	///item check
-	if(powerlocal.right == playerlocal.right){
-	 
-	  let obj = document.getElementById("life");
-	  obj.style.background="red";	
-	  obj.style.width -= "5px"		
-	}
-			
-	if(pulo == false && powerlocal.left*2-50 <=  playerlocal.left*2-50 && powerlocal.top <= playerlocal.top && check_item_in_player==true){		
-			//di-=50;		
-			if(pulo == false && powerlocal.right*2-50 <=  playerlocal.right*2-50 && powerlocal.top <= playerlocal.top && check_item_in_player==true){			
-			 //game.kill_free("power");
-			}		
-	}
-	        
-		
-	if(check_item_in_player){
-		  game.camada("player",2); 
-		  game.camada("power",1); 
-		  //pontos-=10;	
-		Nandraki.create_obj(lifebarra.id,pontos+"px","5px","15px","50px");	
-		if(pontos<= 0){
-		  //game.kill_free("player");
-		  //game.reload("true");     	
-		}
-
-	}else{
-
-	
-	}
-	
-	if(check_item1_in_chao==true){	
-		
-		
-		  item1.gravidade=item1.gravidade;
-
-		
-	        		
-		
-	}else{
-	
-        	  item1.gravidade+=item1.velocidade;
-	   	  game.force_obj(item1.id,0,item1.gravidade,false);
-
-
-        }
-	if(check_item_in_chao==true ){	
-		
-		  item.style.top = (topAtual2 + gravidade2 ) + 'px';
-		  item1.gravidade=item1.gravidade;
-
-		
-	        		
-		
-	}else{
-	
-        item1.gravidade+=item1.velocidade;
-	game.force_obj(item1.id,0,item1.gravidade,false);
-	gravidade2 += velocidade2;
-	item.style.top = (topAtual2 + gravidade2) + 'px';
-
-        }
-	
-		
-	///____________
-	//player check
-		
-	if(game.colidir(chaolocal, playerlocal)){	
-		
-				
-	
-		pulo=false;		
-		up=up;
-				
-				
-	}
-	else if(game.colidir(powerlocal, playerlocal)){	
-		
-				
-		pulo=false;		
-		up=up;
-		
-				
-	}else if(check_item1_in_player==true ){	
-	
-	pulo=false;		
-	up=up;        		
-		
-
-	}
-	
-	else{
-	
-	pulo=true;
-	if(pulo==true){	
-			
-		up+=10;
-	
-	
-	
-	   }	
-	  }
-	///____________
-	///parede check
-	if(check_parede_in_player==true){	
-		
-		lefts = lefts + 0.5;	
-		
-				
-	}else{
-	
-	player.style.left = (leftAtual + lefts) + 'px'; 
-
-	}
 	
 	
 
+	
 
 	},
 
@@ -1459,50 +135,37 @@ game.log_down(logKey1);
 function logKey1(e) {
 
    if( e.code == "KeyS") {
-	player.style.background='url("player.png") no-repeat -141px -108px';
-	player.style.width="40px";
-	player.style.height= "20px";
+ 	anim="abaixar"
 		
 	}
    if( e.code == "KeyD") {
-	
+	anim="corre";
 	 //corre();
 	
-	 if(check_parede_in_player == true){
-		di+=0;
-	 	
-	}else if(check_parede1_in_player == true){
-		di+=0;
-	 	
-	}else{
+	
 		 
-		 di+=1;
+		 di+=5;
 		 scala=1; 
-		 //game.force_x("player",di,up,false);
-	}	
+		 game.force_obj("player",di,up,false);
+		
+		
 	}
 if( e.code == "KeyA") {
-	
+	  anim="corre";
 	  //corre();
-	  if(check_parede_in_player == true){
-		di-=0;
-	 	
-	 }else if(check_parede1_in_player == true){
-		di-=0;
-	 	
-	}else{
-	         di-=1;
+	
+	           di-=5;
 	     	 scala=-1;
-		 //game.force_x("player",di,up,true);
-	}
+		 game.force_obj("player",di,up,true);
+	
 	  		
 	}
 
 if(e.code == "KeyW"){
 	   if(pulo==false){
 	
-	     up-=100;
-		}
+	     up-=150;
+	   }
 		
 	}
 }
@@ -1526,13 +189,14 @@ function logKey2(e) {
    if( e.code == "KeyA") {
 	 
 	
-	
-	parado();
+	anim="parado";
+	//parado();
 		
 	}
    else if( e.code == "KeyD") {
-	 
-	 parado();
+	
+	anim="parado";
+	// parado();
 		
 	}	
    if(e.code == "KeyW"){
@@ -1543,39 +207,13 @@ function logKey2(e) {
 function jump() {
 
   up-=100;
-
-}
-cont=0;
-function hide(e) {
-	
-   cont++
-   if(cont==1){	
-   e.target.style.border = 'solid 1px';
-  }else{
-	e.target.style.border = 'solid 0px';
-	 cont=0;
-	}
 }
 
+game.update(jogo.start,75);
 
-
-
-//player.addEventListener('click', hide, false);
-
-//let el = document.getElementById('player');
-
-//el.addEventListener('click', function(e) {
-//    alert(e.target.id);
-//});
-game.update(game.start,60);
-
-//game.som_play("stick1","do.wav")	
-
-
-game.touchpad("joy",500,150);
+//game.touchpad("joy",50,50);
 
 </script>
 
-
-</body>
+<body >
 </html>
