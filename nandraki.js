@@ -1,26 +1,89 @@
+
 class Nandraki {
     
-    constructor(id,grav,vel,mas) {
-        this.id = id;	
-	this.gravidade =grav;
-	this.velocidade =vel;
-	this.massa=mas;
-	this.body=document.getElementById(this.id);	
+    constructor(id,gravidade,velocidade,massa,di,up,mirror,anim,jump,frame) {
+          this.id = id;	
+          this.gravidade =gravidade;
+          this.velocidade =velocidade;
+          this.massa=massa;
+          this.di=di;
+          this.up=up;
+          this.mirror=mirror;
+          this.anim=anim;
+          this.jump=jump;
+          this.frame=frame;
+          this.body=document.getElementById(id);	
 	
     }
-    static create_sprite(id,img,width,height){
-	 let html=`<div id="${id}" style="width:${width}px;height:${height}px;overflow: hidden;position:absolute;">
-		<div id="box_${id}"></div>		
-		<img id="img_${id}" style="position:absolute;" src="${img}" alt=""/>
-		</div>`;	
-	 document.body.innerHTML +=html;
-	
+    static create_sprite(id,camadas,img1,img2,img3,img4,img5,width,height,boxl,boxh,left,top){
+        
+		const expr = camadas;
+		switch (expr) {
+			case 1:
+				let html1=`							  
+					<div id="${id}" style="width:${width}px;height:${height}px;overflow: hidden;position:absolute;">		
+					<img id="img[1]${id}" style="position:absolute;" src="${img1}" alt=""/>
+					<div id="box_${id}" style="width:${boxl}px;height:${boxh}px;position:absolute;left:${left}px;top:${top}px;">
+					</div>
+					</div> `;	
+					document.body.innerHTML +=html1;
+			break;
+			case 2:
+				let html2=`			  
+					<div id="${id}" style="width:${width}px;height:${height}px;overflow: hidden;position:absolute;">		
+					<img id="img[1]${id}" style="position:absolute;" src="${img1}" alt=""/>
+					<img id="img[2]${id}" style="position:absolute;" src="${img2}" alt=""/>
+					<div id="box_${id}" style="width:${boxl}px;height:${boxh}px;position:absolute;left:${left}px;top:${top}px;">
+					</div>
+					</div> `;	
+				document.body.innerHTML +=html2;	
+				break;
+			case 3:
+				let html3=`						  
+					<div id="${id}" style="width:${width}px;height:${height}px;overflow: hidden;position:absolute;">		
+					<img id="img[1]${id}" style="position:absolute;" src="${img1}" alt=""/>
+					<img id="img[2]${id}" style="position:absolute;" src="${img2}" alt=""/>
+					<img id="img[3]${id}" style="position:absolute;" src="${img3}" alt=""/>
+					<div id="box_${id}" style="width:${boxl}px;height:${boxh}px;position:absolute;left:${left}px;top:${top}px;">
+					</div>
+					</div> `;	
+			 	document.body.innerHTML +=html3;
+				break;
+			case 4:
+				let html4=`	  
+					<div id="${id}" style="width:${width}px;height:${height}px;overflow: hidden;position:absolute;">		
+					<img id="img[1]${id}" style="position:absolute;" src="${img1}" alt=""/>
+					<img id="img[2]${id}" style="position:absolute;" src="${img2}" alt=""/>
+					<img id="img[3]${id}" style="position:absolute;" src="${img3}" alt=""/>
+					<img id="img[4]${id}" style="position:absolute;" src="${img4}" alt=""/>
+					<div id="box_${id}" style="width:${boxl}px;height:${boxh}px;position:absolute;left:${left}px;top:${top}px;">
+					</div>
+					</div> `;	
+			    document.body.innerHTML +=html4;
+				break;
+			case 5:
+			   let html5=`
+					<div id="${id}" style="width:${width}px;height:${height}px;overflow: hidden;position:absolute;">		
+					<img id="img[1]${id}" style="position:absolute;" src="${img1}" alt=""/>
+					<img id="img[2]${id}" style="position:absolute;" src="${img2}" alt=""/>
+					<img id="img[3]${id}" style="position:absolute;" src="${img3}" alt=""/>
+					<img id="img[4]${id}" style="position:absolute;" src="${img4}" alt=""/>
+					<img id="img[5]${id}" style="position:absolute;" src="${img5}" alt=""/>
+					<div id="box_${id}" style="width:${boxl}px;height:${boxh}px;position:absolute;left:${left}px;top:${top}px;">
+					</div>
+					</div> `;	
+					document.body.innerHTML +=html5;
+				break;		 
+		default:
+			console.log(`Erro, camada não encontrada: ${expr}.`);
+		}
+
+		
     }
  	
    static create_animator(img_id,width,height,fm,fis,ffe,fr,fps,bool){
 	
 	let img_frame = document.getElementById(img_id);
-
 	let frame_inicio = fis;   	
 	let frame_math=fm;	   
 	let largura =  width ;  	
@@ -42,26 +105,16 @@ class Nandraki {
 	
 	
    }		
-    static create_obj(id,width,height,top,left,debug) {         
-	let html=`<div id="${id}" style="width:${width}px;height:${height}px;position:absolute;">
-		</div>`;	
-	 document.body.innerHTML +=html;
-           let obj = document.getElementById(id);
-	if(debug==true){	
-		obj.style.width = width;
-		obj.style.height = height;
-		obj.style.border = "solid 1px";
-		obj.style.top = top;
-		obj.style.left = left;
-		obj.style.position = 'absolute';
-		obj.style.borderColor="green";
-	}else{
-		obj.style.width = width;
-		obj.style.height = height;
-		obj.style.top = top;
-		obj.style.left = left;
-		obj.style.position = 'absolute';
-	}
+    static move_obj(body,width,height,top,left,debug) {         
+	
+        	
+		body.style.width = width;
+		body.style.height = height;		
+		body.style.top = top;
+		body.style.left = left;
+		body.style.position = 'absolute';
+
+	
     }
     static create_ui(id,txt,width,height,top,left) {
 		let obj = document.getElementById(id);	
@@ -73,30 +126,19 @@ class Nandraki {
 		obj.innerHTML = txt;
 		
     }
-    static create_box(id,width,height,top,left,debug) {
+    static create_box(id,debug) {
 	let box = document.getElementById(id);
-	console.log(box);		
+	
 	if(debug==true){
-		console.log(1);		
-		box.style.width = width;
-		box.style.height = height;
-		box.style.top = top;
-		box.style.left = left;
-		box.style.border = "solid 1px";
-		box.style.borderColor="green";
-		box.style.position = 'absolute';
-		console.log(2);
+				
 		
-	}else{
-		console.log(3);
-	          box.style.width = width;
-		box.style.height = height;
-		box.style.top = top;
-		box.style.left = left;
+		box.style.borderStyle="groove";
+		box.style.borderWidth="1px";  
+		box.style.borderColor="greenyellow";
 		box.style.position = 'absolute';
-		console.log(4);
-		console.log(5);
-	  }
+		
+		
+	}
 	
 	}			
     static version(){
@@ -145,10 +187,10 @@ game = {
     return document.location.reload(ative);
      
     },
-    stop_interval(mylet){
+    stop_interval: function(mylet){
      clearInterval(mylet);
     }, 
-    start_interval(mylet,time){
+    start_interval: function(mylet,time){
      setInterval(mylet,time);
     },			
     stop_time : function (mylet){
@@ -168,6 +210,7 @@ game = {
     start_time: function (func,time){
 	setTimeout(func,time); 
     },
+   
     bd_save: function(variavel,value){
 
          localStorage.setItem(variavel, value);
@@ -182,30 +225,123 @@ game = {
      }, 
      bd_remove: function(variavel){
 
-	localStorage.removeItem(variavel);
+		localStorage.removeItem(variavel);
    
      },  
      bd_clear: function(variavel){
 
-	localStorage.clear();
+		localStorage.clear();
    
      }, 
-    img_frame: function(img_id,width,height,fm,fis,ffe,fr){
+    img_frame: function(id,img_id,width,height,fm,fis,ffe,fr){
 	
-	let img_frame = document.getElementById(img_id);
-	
-	let frame_inicio = fis;   //10 	
-	let frame_math=fm;	     //6	
-	let largura =  width ;  //64	
-	let altura = height;   //64
-	let frame_final=ffe;   //15
-	let frame_rest=fr;   //10
-	
-	let linha = Math.floor(frame_inicio / frame_math) * altura;
-	let coluna = frame_inicio % frame_math * largura ;
-	
-	img_frame.style.marginTop = -linha + 'px';
-	img_frame.style.marginLeft = -coluna + 'px';
+		if("img[1]"+id == img_id){
+				//console.log("camada 1")
+				document.getElementById("img[1]"+id).style.display = "block";
+			   
+				if (document.getElementById("img[2]"+id)) {
+
+					document.getElementById("img[2]"+id).style.display = "none";
+				} 
+				if (document.getElementById("img[3]"+id)) {
+
+					document.getElementById("img[3]"+id).style.display = "none";
+				} 
+				if (document.getElementById("img[4]"+id)) {
+
+					document.getElementById("img[4]"+id).style.display = "none";
+				} 
+				if (document.getElementById("img[5]"+id)) {
+
+					document.getElementById("img[5]"+id).style.display = "none";
+				} 
+
+		}else if("img[2]"+id == img_id){
+
+			//console.log("camada 2")
+			document.getElementById("img[1]"+id).style.display = "none";
+			
+			document.getElementById("img[2]"+id).style.display = "block";
+			
+			if (document.getElementById("img[3]"+id)) {
+
+				document.getElementById("img[3]"+id).style.display = "none";
+			} 
+			if (document.getElementById("img[4]"+id)) {
+
+				document.getElementById("img[4]"+id).style.display = "none";
+			} 
+			if (document.getElementById("img[5]"+id)) {
+
+				document.getElementById("img[5]"+id).style.display = "none";
+			} 
+		
+
+		}else  if("img[3]"+id == img_id){
+
+			//console.log("camada 3")
+			document.getElementById("img[1]"+id).style.display = "none";
+			
+			document.getElementById("img[2]"+id).style.display = "none";
+			
+			document.getElementById("img[3]"+id).style.display = "block";
+			
+			if (document.getElementById("img[4]"+id)) {
+
+				document.getElementById("img[4]"+id).style.display = "none";
+			} 
+			if (document.getElementById("img[5]"+id)) {
+
+				document.getElementById("img[5]"+id).style.display = "none";
+			} 
+		
+			
+		} else if("img[4]"+id == img_id){
+
+			//console.log("camada 4")
+			document.getElementById("img[1]"+id).style.display = "none";
+			
+			document.getElementById("img[2]"+id).style.display = "none";
+			
+			document.getElementById("img[3]"+id).style.display = "none";
+			
+			document.getElementById("img[4]"+id).style.display = "block";
+
+			if (document.getElementById("img[5]"+id)) {
+
+				document.getElementById("img[5]"+id).style.display = "none";
+			} 
+		
+
+		}else if("img[5]"+id == img_id){
+
+			console.log("camada 5")
+			
+			document.getElementById("img[1]"+id).style.display = "none";
+			
+			document.getElementById("img[2]"+id).style.display = "none";
+			
+			document.getElementById("img[3]"+id).style.display = "none";
+			
+			document.getElementById("img[4]"+id).style.display = "none";
+			
+			document.getElementById("img[5]"+id).style.display = "block";
+		}
+		
+		let img_frame = document.getElementById(img_id);
+
+		let frame_inicio = fis;    //10 	
+		let frame_math=fm;	      //6	
+		let largura =  width ;   //64	
+		let altura = height;    //64
+		let frame_final=ffe;   //15
+		let frame_rest=fr;    //10
+		
+		let linha = Math.floor(frame_inicio / frame_math) * altura;
+		let coluna = frame_inicio % frame_math * largura ;
+		
+		img_frame.style.marginTop = -linha + 'px';
+		img_frame.style.marginLeft = -coluna + 'px';
 
 	
 	
@@ -620,6 +756,15 @@ game = {
        return Math.random() * (ma-mi) + s;
        
     },
+    create_go: function(){
+	texto = game.get_text("text");
+	num=game.random_mf(1500,5,5);
+	
+	Maps.create("sprite_",num,texto);
+	texto="";
+	game.camada("drag",1500);
+		
+    },
     random_mf: function(ma,mi,s){
     
        return Math.floor(Math.random() * (ma-mi) + s);
@@ -648,8 +793,15 @@ game = {
       obj.style.opacity=op;
 
    },				 
-   camera_2d: function(obj){
+   camera: function(specto,x,y){
+    if(specto == "2d" || specto == "2D" ){
+		
+		window.scroll(x,y);
 
+	}else{
+
+		console.log("Erro:specto x,y");
+	}
 
    },
    print: function(p){
@@ -922,7 +1074,8 @@ game = {
 	
 	document.getElementById(id).textContent = text;
 
-	},	
+	},
+   
     clock_time: function(m,s,valor){
 		  	
 	  let segundos = 0;
@@ -999,6 +1152,53 @@ game = {
     radius: function(radius) {
   	return 2 * Math.PI * radius;
     },
+    check_colidir:function(id,obj){
+			
+
+
+	let obj1 = document.getElementById(id);
+	let obj2 = document.getElementById(obj);
+	let local1 = game.coord(obj1);
+	let local2 = game.coord(obj2);		
+	check_r= game.colidir(local1,local2);  
+
+		
+   
+     return check_r;
+    
+    },
+    gravit:function(obj){
+    
+   	    obj.gravidade++;
+   	    obj.velocidade++;
+   	    pulo=true;
+	   	
+			
+	  
+	   obj.up+=obj.gravidade+obj.velocidade;
+    
+    
+    },
+    
+   
+    colidir_obj:function(id1,id2){
+    
+    
+	    if(game.check_colidir(id1,id2)==true){
+		    
+			return true;
+			
+		}else{
+			
+		  	return false; 
+		  }
+		
+	
+    
+    
+    
+    },
+    
     colidir_aq: function(id1,id2,valor,pulo,check) {
 	    let obj1 = document.getElementById(id1);
 	    let obj2 = document.getElementById(id2); 	
@@ -1006,21 +1206,42 @@ game = {
 	  						
 		
     },
-    r_check: function(id1,id2) {
+    right_check: function(id1,id2) {
 
-	let obj1 = document.getElementById(id1);
-	let obj2 = document.getElementById(id2);
+     let obj1 = document.getElementById(id1);
+     let obj2 = document.getElementById(id2);
      let local1 = game.coord(obj1);
-	let local2 = game.coord(obj2);	 
-	let check_r = local1.offsetRight < local2.offsetRight;
+     let local2 = game.coord(obj2);	 
+     let check_r = local1.offsetRight < local2.offsetRight;
 	
 	return check_r;
 	},
-     l_check: function(id1,id2) {
+     top_up_check: function(id1,id2) {
 
 	let obj1 = document.getElementById(id1);
 	let obj2 = document.getElementById(id2);
-     let local1 = game.coord(obj1);
+          let local1 = game.coord(obj1);
+	let local2 = game.coord(obj2);	 
+	let check_t = local1.offsetTop >= local2.offsetTop;
+	
+	return check_t;
+	},
+
+      top_down_check: function(id1,id2) {
+
+	let obj1 = document.getElementById(id1);
+	let obj2 = document.getElementById(id2);
+          let local1 = game.coord(obj1);
+	let local2 = game.coord(obj2);	 
+	let check_t = local1.offsetTop < local2.offsetTop;
+	
+	return check_t;
+	},
+     left_check: function(id1,id2) {
+
+	let obj1 = document.getElementById(id1);
+	let obj2 = document.getElementById(id2);
+          let local1 = game.coord(obj1);
 	let local2 = game.coord(obj2);	 
 	let check_l = local1.offsetLeft > local2.offsetLeft;
 	
@@ -1057,9 +1278,8 @@ game = {
 	return obj.getBoundingClientRect();  
 
     },
-    update : function(jogo,fps) {
-		
-		return setInterval(jogo,fps);
-		
-    }, 			
+	
+	
+    update : (jogo,fps) => setInterval(jogo,fps)
+, 			
 }		
