@@ -967,11 +967,16 @@ game = {
     },
     camada: function(player, num) {
         let obj = document.getElementById(player);
-        obj.style.zIndex = num;
+      
+		obj.style.zIndex = num;
+	
     },
     kill_free: function(id) {
         let obj = document.getElementById(id);
-        obj.remove();
+		if(game.check_id(id)==true){
+			obj.remove();
+		}
+        
     },
     animar_obj: function(id, css, time) {
         let obj = document.getElementById(id);
