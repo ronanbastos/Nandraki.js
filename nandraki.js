@@ -11,7 +11,7 @@ class Nandraki {
         this.anim = anim;
         this.jump = jump;
         this.frame = frame;
-        this.body = document.getElementById(id);
+        this.body = document.getElementById(this.id);
 
     }
     static create_sprite(id, camadas, img1, img2, img3, img4, img5, width, height, boxl, boxh, left, top) {
@@ -1324,7 +1324,8 @@ game = {
     colidir: function(r0, r1) {
         return game.colidir_cal(r0.left, r0.right, r1.left, r1.right) && game.colidir_cal(r0.top, r0.bottom, r1.top, r1.bottom);
     },
-    coord: function(obj) {
+    coord: function(id) {
+	let obj = document.getElementById(id);
         return obj.getBoundingClientRect();
 
     },
