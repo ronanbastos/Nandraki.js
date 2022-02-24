@@ -2,7 +2,7 @@ class Nandraki {
 
     constructor(id,vida, gravidade, velocidade, massa, di, up, mirror, anim, jump, frame) {
         this.id = id;
-	this.vida = vida;
+	    this.vida = vida;
         this.gravidade = gravidade;
         this.velocidade = velocidade;
         this.massa = massa;
@@ -16,7 +16,7 @@ class Nandraki {
 
     }
     static create_sprite(id, camadas, img1, img2, img3, img4, img5, width, height, boxl, boxh, left, top) {
-
+        
         const expr = camadas;
         switch (expr) {
             case 1:
@@ -78,11 +78,11 @@ class Nandraki {
                 console.log(`Erro, camada não encontrada: ${expr}.`);
         }
 
-
+       
     }
 
     static create_animator(img_id, width, height, fm, fis, ffe, fr, fps, bool) {
-
+        if(game.check_id(img_id) == true){    
         let img_frame = document.getElementById(img_id);
         let frame_inicio = fis;
         let frame_math = fm;
@@ -102,17 +102,24 @@ class Nandraki {
         }
 
         setInterval(animar, fps);
-
+    } 
 
     }
-    static move_obj(body, width, height, top, left, debug) {
+    static move_obj(id,top, left,fixed) {
 
-
-        body.style.width = width;
-        body.style.height = height;
-        body.style.top = top;
-        body.style.left = left;
-        body.style.position = 'absolute';
+        let body = document.getElementById(id);
+        if(fixed==true){
+            body.style.position = 'absolute'; 
+            body.style.top = top+"px";
+            body.style.left = left+"px";  
+            body.style.position = 'fixed';
+        }else{
+            body.style.position = 'absolute';
+            body.style.top = top+"px";
+            body.style.left = left+"px"; 
+         
+        }
+       
 
 
     }
@@ -240,115 +247,115 @@ game = {
 
     },
     img_frame: function(id, img_id, width, height, fm, fis, ffe, fr) {
+        if(game.check_id(id) == true){
+            if ("img[1]" + id == img_id) {
+                //console.log("camada 1")
+                document.getElementById("img[1]" + id).style.display = "block";
 
-        if ("img[1]" + id == img_id) {
-            //console.log("camada 1")
-            document.getElementById("img[1]" + id).style.display = "block";
+                if (document.getElementById("img[2]" + id)) {
 
-            if (document.getElementById("img[2]" + id)) {
+                    document.getElementById("img[2]" + id).style.display = "none";
+                }
+                if (document.getElementById("img[3]" + id)) {
+
+                    document.getElementById("img[3]" + id).style.display = "none";
+                }
+                if (document.getElementById("img[4]" + id)) {
+
+                    document.getElementById("img[4]" + id).style.display = "none";
+                }
+                if (document.getElementById("img[5]" + id)) {
+
+                    document.getElementById("img[5]" + id).style.display = "none";
+                }
+
+            } else if ("img[2]" + id == img_id) {
+
+                //console.log("camada 2")
+                document.getElementById("img[1]" + id).style.display = "none";
+
+                document.getElementById("img[2]" + id).style.display = "block";
+
+                if (document.getElementById("img[3]" + id)) {
+
+                    document.getElementById("img[3]" + id).style.display = "none";
+                }
+                if (document.getElementById("img[4]" + id)) {
+
+                    document.getElementById("img[4]" + id).style.display = "none";
+                }
+                if (document.getElementById("img[5]" + id)) {
+
+                    document.getElementById("img[5]" + id).style.display = "none";
+                }
+
+
+            } else if ("img[3]" + id == img_id) {
+
+                //console.log("camada 3")
+                document.getElementById("img[1]" + id).style.display = "none";
 
                 document.getElementById("img[2]" + id).style.display = "none";
-            }
-            if (document.getElementById("img[3]" + id)) {
+
+                document.getElementById("img[3]" + id).style.display = "block";
+
+                if (document.getElementById("img[4]" + id)) {
+
+                    document.getElementById("img[4]" + id).style.display = "none";
+                }
+                if (document.getElementById("img[5]" + id)) {
+
+                    document.getElementById("img[5]" + id).style.display = "none";
+                }
+
+
+            } else if ("img[4]" + id == img_id) {
+
+                //console.log("camada 4")
+                document.getElementById("img[1]" + id).style.display = "none";
+
+                document.getElementById("img[2]" + id).style.display = "none";
 
                 document.getElementById("img[3]" + id).style.display = "none";
-            }
-            if (document.getElementById("img[4]" + id)) {
 
-                document.getElementById("img[4]" + id).style.display = "none";
-            }
-            if (document.getElementById("img[5]" + id)) {
+                document.getElementById("img[4]" + id).style.display = "block";
 
-                document.getElementById("img[5]" + id).style.display = "none";
-            }
+                if (document.getElementById("img[5]" + id)) {
 
-        } else if ("img[2]" + id == img_id) {
+                    document.getElementById("img[5]" + id).style.display = "none";
+                }
 
-            //console.log("camada 2")
-            document.getElementById("img[1]" + id).style.display = "none";
 
-            document.getElementById("img[2]" + id).style.display = "block";
+            } else if ("img[5]" + id == img_id) {
 
-            if (document.getElementById("img[3]" + id)) {
+                console.log("camada 5")
+
+                document.getElementById("img[1]" + id).style.display = "none";
+
+                document.getElementById("img[2]" + id).style.display = "none";
 
                 document.getElementById("img[3]" + id).style.display = "none";
-            }
-            if (document.getElementById("img[4]" + id)) {
 
                 document.getElementById("img[4]" + id).style.display = "none";
-            }
-            if (document.getElementById("img[5]" + id)) {
 
-                document.getElementById("img[5]" + id).style.display = "none";
+                document.getElementById("img[5]" + id).style.display = "block";
             }
 
+            let img_frame = document.getElementById(img_id);
 
-        } else if ("img[3]" + id == img_id) {
+            let frame_inicio = fis; //10 	
+            let frame_math = fm; //6	
+            let largura = width; //64	
+            let altura = height; //64
+            let frame_final = ffe; //15
+            let frame_rest = fr; //10
 
-            //console.log("camada 3")
-            document.getElementById("img[1]" + id).style.display = "none";
+            let linha = Math.floor(frame_inicio / frame_math) * altura;
+            let coluna = frame_inicio % frame_math * largura;
 
-            document.getElementById("img[2]" + id).style.display = "none";
-
-            document.getElementById("img[3]" + id).style.display = "block";
-
-            if (document.getElementById("img[4]" + id)) {
-
-                document.getElementById("img[4]" + id).style.display = "none";
-            }
-            if (document.getElementById("img[5]" + id)) {
-
-                document.getElementById("img[5]" + id).style.display = "none";
-            }
-
-
-        } else if ("img[4]" + id == img_id) {
-
-            //console.log("camada 4")
-            document.getElementById("img[1]" + id).style.display = "none";
-
-            document.getElementById("img[2]" + id).style.display = "none";
-
-            document.getElementById("img[3]" + id).style.display = "none";
-
-            document.getElementById("img[4]" + id).style.display = "block";
-
-            if (document.getElementById("img[5]" + id)) {
-
-                document.getElementById("img[5]" + id).style.display = "none";
-            }
-
-
-        } else if ("img[5]" + id == img_id) {
-
-            console.log("camada 5")
-
-            document.getElementById("img[1]" + id).style.display = "none";
-
-            document.getElementById("img[2]" + id).style.display = "none";
-
-            document.getElementById("img[3]" + id).style.display = "none";
-
-            document.getElementById("img[4]" + id).style.display = "none";
-
-            document.getElementById("img[5]" + id).style.display = "block";
-        }
-
-        let img_frame = document.getElementById(img_id);
-
-        let frame_inicio = fis; //10 	
-        let frame_math = fm; //6	
-        let largura = width; //64	
-        let altura = height; //64
-        let frame_final = ffe; //15
-        let frame_rest = fr; //10
-
-        let linha = Math.floor(frame_inicio / frame_math) * altura;
-        let coluna = frame_inicio % frame_math * largura;
-
-        img_frame.style.marginTop = -linha + 'px';
-        img_frame.style.marginLeft = -coluna + 'px';
-
+            img_frame.style.marginTop = -linha + 'px';
+            img_frame.style.marginLeft = -coluna + 'px';
+    }
     },
     animar_left: function(id, mi, ma, time) {
 
@@ -965,11 +972,11 @@ game = {
         return element;
 
     },
-    camada: function(player, num) {
-        let obj = document.getElementById(player);
-      
-		obj.style.zIndex = num;
-	
+    camada: function(id, num) {
+        if(game.check_id(id) == true){
+            let obj = document.getElementById(id);
+            obj.style.zIndex = num;
+        }
     },
     kill_free: function(id) {
         let obj = document.getElementById(id);
