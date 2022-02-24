@@ -349,9 +349,6 @@ game = {
         img_frame.style.marginTop = -linha + 'px';
         img_frame.style.marginLeft = -coluna + 'px';
 
-
-
-
     },
     animar_left: function(id, mi, ma, time) {
 
@@ -512,6 +509,7 @@ game = {
 
     },
     force_obj: function(id, x, y, rotate) {
+        if(game.check_id(id) == true){
         let element = document.getElementById(id);
         if (rotate == true) {
 
@@ -522,6 +520,7 @@ game = {
             element.style.transform = "translate3d(" + x + "px," + y + "px, -0px) rotateY(0deg)";
 
         }
+       }
     },
     scaleX: function(id, valor) {
         let obj = document.getElementById(id);
