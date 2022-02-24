@@ -1,7 +1,8 @@
 class Nandraki {
 
-    constructor(id, gravidade, velocidade, massa, di, up, mirror, anim, jump, frame) {
+    constructor(id,vida, gravidade, velocidade, massa, di, up, mirror, anim, jump, frame) {
         this.id = id;
+		this.vida = vida;
         this.gravidade = gravidade;
         this.velocidade = velocidade;
         this.massa = massa;
@@ -1208,14 +1209,18 @@ game = {
         return 2 * Math.PI * radius;
     },
     check_colidir: function(id1, id2) {
+		if(game.check_id(id1)== true && game.check_id(id2)== true ){
 
-        let obj1 = document.getElementById(id1);
-        let obj2 = document.getElementById(id2);
-        let local1 = game.coord(id1);
-        let local2 = game.coord(id2);
-        check_r = game.colidir(local1, local2);
+			let obj1 = document.getElementById(id1);
+			let obj2 = document.getElementById(id2);
+			let local1 = game.coord(id1);
+			let local2 = game.coord(id2);
+			check_r = game.colidir(local1, local2);
+			
+		}
+       
 
-        return check_r;
+		return check_r;
 
     },
     gravit: function(obj) {
@@ -1234,71 +1239,74 @@ game = {
 
     colidir_obj: function(id1, id2) {
 
+		if(game.check_id(id1) == true && game.check_id(id2)== true){
+			if (game.check_colidir(id1, id2) == true) {
 
-        if (game.check_colidir(id1, id2) == true) {
+				return true;
+	
+			} else {
+	
+				return false;
+			}
 
-            return true;
-
-        } else {
-
-            return false;
-        }
-
-
-
+		}
 
     },
 
     colidir_aq: function(id1, id2, valor, pulo, check) {
-        let obj1 = document.getElementById(id1);
+        if(game.check_id(id1) == true && game.check_id(id2)== true){
+		let obj1 = document.getElementById(id1);
         let obj2 = document.getElementById(id2);
         return pulo == false && Math.min(obj2.left * 2 - valor) >= Math.min(obj1.left * 2) && Math.min(obj2.top) <= Math.min(obj1.top) && Math.max(obj2.left * 2 - valor) <= Math.max(obj1.left * 2) && Math.max(obj2.top) <= Math.max(obj1.top + valor) && check == true;
-
+		}
 
     },
     right_check: function(id1, id2) {
-
+	if(game.check_id(id1) == true && game.check_id(id2)== true){
         let obj1 = document.getElementById(id1);
         let obj2 = document.getElementById(id2);
         let local1 = game.coord(obj1);
         let local2 = game.coord(obj2);
         let check_r = local1.offsetRight < local2.offsetRight;
-
+		}	
         return check_r;
     },
     top_up_check: function(id1, id2) {
-
+		if(game.check_id(id1) == true && game.check_id(id2)== true){
         let obj1 = document.getElementById(id1);
         let obj2 = document.getElementById(id2);
         let local1 = game.coord(obj1);
         let local2 = game.coord(obj2);
         let check_t = local1.offsetTop >= local2.offsetTop;
-
+		}
         return check_t;
     },
 
     top_down_check: function(id1, id2) {
-
+		if(game.check_id(id1) == true && game.check_id(id2)== true){
         let obj1 = document.getElementById(id1);
         let obj2 = document.getElementById(id2);
         let local1 = game.coord(obj1);
         let local2 = game.coord(obj2);
         let check_t = local1.offsetTop < local2.offsetTop;
-
+			
         return check_t;
+		}
     },
     left_check: function(id1, id2) {
-
+		if(game.check_id(id1) == true && game.check_id(id2)== true){
         let obj1 = document.getElementById(id1);
         let obj2 = document.getElementById(id2);
         let local1 = game.coord(obj1);
         let local2 = game.coord(obj2);
         let check_l = local1.offsetLeft > local2.offsetLeft;
-
+		
         return check_l;
+		}
     },
     colidir_force_r: function(id1, id2, check_contato) {
-        let obj1 = document.getElementById(id1);
+        if(game.check_id(id1) == true && game.check_id(id2)== true){
+		let obj1 = document.getElementById(id1);
         let obj2 = document.getElementById(id2);
         let local1 = game.coord(obj1);
         let local2 = game.coord(obj2);
@@ -1306,28 +1314,30 @@ game = {
 
 
         return check_r == check_contato && local1.top >= local2.top;
+		}
     },
     colidir_force_l: function(id1, id2, check_contato) {
-        let obj1 = document.getElementById(id1);
+        if(game.check_id(id1) == true && game.check_id(id2)== true){
+		let obj1 = document.getElementById(id1);
         let obj2 = document.getElementById(id2);
         let local1 = game.coord(obj1);
         let local2 = game.coord(obj2);
         let check_l = local1.left <= local2.left;
-
-
         return check_l == check_contato && local1.top >= local2.top;
+		}
     },
     colidir_cal: function(min0, max0, min1, max1) {
         return Math.max(min0, max0) >= Math.min(min1, max1) && Math.min(min0, max0) <= Math.max(min1, max1);
     },
 
     colidir: function(r0, r1) {
-        return game.colidir_cal(r0.left, r0.right, r1.left, r1.right) && game.colidir_cal(r0.top, r0.bottom, r1.top, r1.bottom);
+		return game.colidir_cal(r0.left, r0.right, r1.left, r1.right) && game.colidir_cal(r0.top, r0.bottom, r1.top, r1.bottom);
     },
     coord: function(id) {
-	let obj = document.getElementById(id);
+		if(game.check_id(id) == true){
+		let obj = document.getElementById(id);
         return obj.getBoundingClientRect();
-
+		}	
     },
     update: (jogo, fps) => setInterval(jogo, fps),
 }
