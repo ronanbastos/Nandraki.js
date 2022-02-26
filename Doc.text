@@ -1,5 +1,68 @@
+  _Move: function () {
+          if(find==false && normalizar==true){       
+            player.di=inimigo.di +Math.floor(Math.random() * 250)         
+            console.log("limite: "+limite+"/ mirror: "+inimigo.mirror)
+          }else if(find==true){
+            limite=Math.floor(Math.random() * 100)+player.di;
+          }
+          if(player.di==inimigo.di+10 && inimigo.mirror !=player.mirror  ){
+            find=true;
+        }
+         if(game.check_id("player")==false && find==false &&  normalizar==true){
+            anim="parado"
+        } else if(game.check_id("inimigo")==true){
+           
+            if(game.check_colidir("box_player","box_inimigo")==true ){
+                Inimigo.AnimationFrame();
+                inimigo.anim="atk"
+                player.vida-=1
+                find=true;
+                if(player.vida<=0){
+                    normalizar=true;
+                    find=false;
+                }
+            }else{
+                if( find==true &&  normalizar==false){
+                    Inimigo.AnimationFrame()
+                     inimigo.anim="correr"
+                }else{
+                    anim="parado"
+                }
+                
+                if(player.up>inimigo.up && player.di<inimigo.di && inimigo.mirror==1 && find==true &&  normalizar==false ){
+                    inimigo.up+=2 
 
+                }else if(player.up<inimigo.up && player.di<inimigo.di && inimigo.mirror==1  && find==true &&  normalizar==false ){
+                    inimigo.up-=2 
 
+                }else if(player.up>inimigo.up && player.di>inimigo.di && inimigo.mirror==0 && find==true &&  normalizar==false){
+                    inimigo.up+=2 
+
+                }else if(player.up<inimigo.up && player.di>inimigo.di && inimigo.mirror==0 && find==true &&  normalizar==false ){
+                    inimigo.up-=2 
+
+                }
+
+                 if(inimigo.di>=-30 && inimigo.mirror==0 && find==true &&  normalizar==false){
+                    inimigo.di+=2
+                    }
+                    if( inimigo.di >= limite && find==true &&  normalizar==false){
+                    
+                    inimigo.mirror=1;
+                    
+                    }
+                    if(inimigo.di>=-30 && inimigo.mirror==1 && find==true &&  normalizar==false){
+                        inimigo.di-=2
+                  
+                    }      
+                   if(inimigo.di==-30 || player.di==inimigo.di+20 && find==true &&  normalizar==false ){
+                            inimigo.mirror=0
+                    }
+            
+                    }
+                }    
+        },
+_________________________________________
 // seleciona elemento
 let el = document.getElementById('box');
 // utiliza método
