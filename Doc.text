@@ -1,4 +1,34 @@
-  _Move: function () {
+  _________________________________________
+  [ative anim inimigo]
+  
+  if (inimigo.mirror == 0) {
+                game.force_obj("inimigo", inimigo.di, inimigo.up, false);
+                
+            } else {
+
+                game.force_obj("inimigo", inimigo.di, inimigo.up, true);
+            
+            }
+        if(inimigo.anim == "parado"){
+
+            game.img_frame("inimigo","img[1]inimigo",64, 64, 8,0,8, 8); 
+            
+        }  
+            if (inimigo.anim == "correr") {
+                if (inimigo.frame >=2 ) inimigo.frame = 0;
+                game.img_frame("inimigo","img[1]inimigo",64, 64, 2, inimigo.frame++, 2, 0);
+
+
+            }
+            if (inimigo.anim == "atk") {
+                if (inimigo.frame >=3 ) inimigo.frame = 0;
+                game.img_frame("inimigo","img[2]inimigo",64, 64, 3, inimigo.frame++, 3, 0);
+
+
+            }
+ 
+ 
+ _Move: function () {
           if(find==false && normalizar==true){       
             player.di=inimigo.di +Math.floor(Math.random() * 250)         
             console.log("limite: "+limite+"/ mirror: "+inimigo.mirror)
