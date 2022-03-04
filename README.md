@@ -46,9 +46,7 @@ In the engine folder contains demo test file]
 
 	<script src= "https://tironan.000webhostapp.com/nandraki.js" ></script>
 
-	<script src="https://unpkg.com/nandraki@1.3.8/nandraki.js" ></script>
-
-	<script src="https://unpkg.com/nandraki@1.4.0/nandraki.js" ></script>
+	<script src="https://unpkg.com/nandraki@1.4.5/nandraki.js" ></script>
 <p>
 
 # Testar o script 
