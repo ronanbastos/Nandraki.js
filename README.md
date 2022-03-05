@@ -60,15 +60,14 @@ In the engine folder contains demo test file]
 	<body>
 
 		<script>
-		       Nandraki.create_obj("text",500,500,10,10,true);
-		       const txt = new Nandraki("text",0,0,0);	
+		        
 		       myjogo = {
 
 
 			 start : function(){
 
 
-			   Nandraki.create_ui(txt.id," Hello, world!","100px","100px","50px","50px");	
+			   Nandraki.create_ui("text_id","hello world")	
 
 
 			 },	
