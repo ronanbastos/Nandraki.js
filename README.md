@@ -44,9 +44,9 @@ In the engine folder contains demo test file]
 	
 # CDN 
 
-	<script src= "https://tironan.000webhostapp.com/nandraki.js" ></script>
 
 	<script src="https://unpkg.com/nandraki@1.4.5/nandraki.js" ></script>
+	<script src="https://unpkg.com/nandraki@1.4.6/nandraki.js" ></script>
 <p>
 
 # Testar o script 
