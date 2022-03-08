@@ -2,7 +2,7 @@
 <h1 align="center"><img src="https://img.shields.io/badge/Lincense-MIT-green" alt="index-html" border="0"> <img src="https://img.shields.io/badge/Version-1.0.0-blue" alt="index-html" border="0"> <img src="https://img.shields.io/badge/Projeto-Stop-important" alt="index-html" border="0"> <img src="https://img.shields.io/badge/Repo%20size-1,3/227,0MiB-important" alt="index-html" border="0"> <img src="https://img.shields.io/badge/Build-Alfa-red" alt="index-html" border="0">     
 </h1>
 <br>
-<h6 align="center"><img src="https://i.ibb.co/D8fp6cv/Captura-de-tela-de-2021-06-26-21-27-56.png" alt="index-html" border="0"><p>index.html</h6>
+<h6 align="center"><img src="" alt="index-html" border="0"><p>index.html</h6>
 <h3>Projeto Electronjs </h3>
 </br>
  Ainda esta em test alfa,no momento estou focando em termina as funcinalidade da engine no codigo fonte<p>
