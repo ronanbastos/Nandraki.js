@@ -37,7 +37,7 @@ In the engine folder contains demo test file]
   Playground canvas 3D: 🚧  Em construção...  🚧	
 
 <p>
-  Playground CodePen: https://codepen.io/nandraki-js/pen/ZEJqmmB?editors=1010
+  Playground CodePen: https://codepen.io/ronan-varella/pen/xxPeeEM
 <p><br>
 	
   Playground Site : https://tironan.000webhostapp.com/nandraki.html	
