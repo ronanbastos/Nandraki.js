@@ -106,9 +106,9 @@ class Nandraki {
 
     }
     static move_obj(id,left,top,fixed) {
-
         let body = document.getElementById(id);
         if(fixed==true){
+            body.style.position = 'absolute'; 
             body.style.top = top+"px";
             body.style.left = left+"px";  
             body.style.position = 'fixed';
@@ -117,15 +117,13 @@ class Nandraki {
             body.style.top = top+"px";
             body.style.left = left+"px"; 
          
-        }
+        }   
     }
     
-    static create_ui(id, txt,left,top,size) {
-     
-        obj.innerHTML =`<h${size} id="${id}" style="position:absolute;left:${left}px;top:${top}px;>
-        ${txt}
-      </h${size}>`;
-
+    static create_ui(id,txt,cor) {
+       
+        document.body.innerHTML +=`<h5 id="${id}"> ${txt}</h5>`;
+        game.color(id,cor);
     }
 
     static move_ui(id,left,top,fixed) {
@@ -154,6 +152,7 @@ class Nandraki {
 
     }
     static ative_box(id, debug) {
+        if(game.check_id(id) == true){
         let box = document.getElementById(id);
         if (debug == true) {
 
@@ -165,6 +164,7 @@ class Nandraki {
 
 
         }
+    }
     }
 
     static version() {
@@ -199,6 +199,10 @@ game = {
         nandraki.arc(x, y, font, b, p);
 
     },
+    obj: function(){
+        let obj ={};
+        return obj;
+    },
     canvas_clear: function() {
         nandraki.clearRect(0, 0, canvas.width, canvas.height);
     },
@@ -224,7 +228,7 @@ game = {
         clearTimeout(mylet);
 
     },
-    som_play: function(id, link_som) {
+    click_som: function(id, link_som) {
         function play() {
             let audio1 = new Audio();
             audio1.src = link_som;
@@ -232,7 +236,26 @@ game = {
         }
         document.getElementById(id).addEventListener("click", play, false);
 
-    },  
+    }, 
+    start_som: function(link_som) {
+        function play() {
+            let audio = new Audio();
+            audio.src = link_som;
+            audio.play();
+        }
+        return play();
+
+    },
+    time_som:function(link_som,time){
+        setTimeout(function() {
+            let audio = new Audio();
+            audio.src = link_som;
+            audio.play();
+          
+        }, time)
+
+
+    },   
     spawn_sprite: function(id,img,left,top) {
       
         let html = `				  		
@@ -708,17 +731,6 @@ game = {
 
         document.getElementById(id).addEventListener("click", func, false);
 
-    },
-    play_start: function(id, link_audio) {
-
-
-        function func() {
-            const som = new Audio();
-            som.src = link_audio;
-            som.play();
-        }
-        game.click_start(id, func);
-        document.getElementById(id).dispatchEvent(new MouseEvent("click"));
     },
     move_touch: function(id) {
         let element = document.getElementById(id);
