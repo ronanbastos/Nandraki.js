@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<script src="nandraki.js"></script>
+<script src="maps.js"></script>
+<html>
+<head>
+<meta charset="utf-8"> 
+<style>
+
+
+</style>     
+</head>
+<body style="width:100%;height:100%;  touch-action: none; overflow: auto; ">
+
+
+ 
+<script>
+
+scale = 'scale(1)';
+document.body.style.webkitTransform =  scale;     // Chrome, Opera, Safari
+document.body.style.msTransform =   scale;       // IE 9
+document.body.style.transform = scale;          // Geral
+document.body.style.zoom=1;
+
+pulo=false;
+
+
+Nandraki.create_sprite("player","player.png",64,64,15,20,25,44.5);
+
+const player = new Nandraki("player",10,1.5,10,0,0,0,"parado",false,10);
+
+Nandraki.create_box("box_player",false);
+
+
+
+Nandraki.create_sprite("map","sprite/map.png",32,32,32,32,0,0,false,1);
+const map = new Nandraki("map",10,1.5,10,0,0,0,"parado",false,10);
+Nandraki.create_box("box_map",false);
+game.force_obj("map",10,500,false);
+
+Nandraki.create_sprite("purre","sprite/Object/Crate.png",77,77,77,77,0,0,false,1);
+const purre = new Nandraki("purre",10,1.5,5,0,0,0,"parado",false,10);
+Nandraki.create_box("box_purre",false);
+game.force_obj("purre",50,480,false);
+
+
+
+jogo = {
+    start : function() {
+    	
+    	
+    	
+    if(player.anim=="abaixar"){
+
+		game.img_frame("img_player",64,64,6,1,1,1);
+			 	
+		if(player.frame>=1)player.frame=1
+
+	}else if(player.anim=="parado"){
+				
+		game.img_frame("img_player",64,64,6,player.frame++,3,8);
+			 	
+		if(player.frame>=8)player.frame=3
+
+	 }	
+	 if(player.mirror==1){
+		
+		game.force_obj("player",player.di,player.up,false);
+		player.anim=="corre"
+		game.img_frame("img_player",64,64,6,player.frame++,13,10);
+	 	if(player.frame==15)player.frame=10
+	}else{
+    		
+		game.force_obj("player",player.di,player.up,true);
+			
+		game.img_frame("img_player",64,64,6,player.frame++,15,10);
+		
+	 	if(player.frame==15)player.frame=10
+	 	
+	}
+	
+	
+		
+	if(game.colidir_obj("box_player","box_map")==true || game.colidir_obj("box_player","box_purre")==true ){
+	
+	
+	player.up-=50
+	
+	
+	
+	}
+	
+	//game.click_start("go_create",go);
+	
+	game.camada(player.id,10);
+	
+	/*
+	stick=game.get_obj("stick");	
+	base=game.get_obj("base-stick");
+	
+	if(stick.offsetLeft == 32){
+	  parado();
+	  player.di=player.di;	
+	}else if(stick.offsetLeft >= -10){
+		player.mirror=1;
+		player.di+=1.5;
+		corre();
+	} 
+	else if(stick.offsetLeft < 50){
+		player.mirror=-1;
+		player.di-=1.5;
+		corre();
+	}
+   
+	if(stick.offsetTop <= -1 ){
+		player.up-=25;
+	}
+	
+	
+	 //console.log("Stick = Top: "+stick.style.top+ " / "+ " left: "+stick.style.left)
+	//console.log("Base  = Top: "+base.style.top+ " / "+ " left: "+base.style.left)
+	
+	
+     game.click_start("stick",jump);
+	*/
+
+	
+	
+
+	
+
+	},
+
+     	
+}
+
+
+game.log_key;
+game.log_down(logKey1);
+
+
+
+function logKey1(e) {
+   if(e.code == "KeyW"){
+	 
+	   player.up-=5
+	 if(pulo==false){
+	    ///  player.velocidade++;	
+	   ///  player.up-=100+player.velocidade/player.up;
+	   }
+	
+	}	
+
+	
+   if( e.code == "KeyS") {
+	
+	    player.up+=5  
+	    // player.anim="abaixar"
+	 	
+	}
+   if( e.code == "KeyA") {
+	 
+	         player.anim="corre";
+	         player.di-=5;
+	         player.mirror=0;
+	     	// if(pulo==true && e.code == "KeyA"){
+		// player.di--;
+	          // player.di-=10;
+	      
+	
+		//}	
+	
+		
+	}
+	if( e.code == "KeyD") {
+	    player.anim="corre";
+	    player.di+=5;
+	    player.mirror=1;
+    	//if(pulo==true && e.code == "KeyD" ){
+	//	 player.di++;
+	//          player.di+=10;
+			
+	
+	//}
+		
+ 	}
+
+}
+
+
+game.log_up(logKey2);
+
+function logKey2(e) {
+     
+  if(e.code == "KeyW"){
+	
+	
+	}	
+
+	
+   if( e.code == "KeyS") {
+	
+	   //player.anim="parado";
+	  	
+	}
+   if( e.code == "KeyA") {
+	 
+	
+	player.anim="parado";
+	
+		
+	}
+   else if( e.code == "KeyD") {
+	
+	player.anim="parado";
+	
+		
+	}	
+
+}
+function jump() {
+
+  player.up-=50;
+}
+
+game.update(jogo.start,100);
+
+//const map = new Maps();
+
+function go(){
+
+  game.create_go();
+
+}
+
+
+///code do tecla ctrl=17 e s=83
+console.log(player);
+
+</script>
+
+<body >
+</html>
