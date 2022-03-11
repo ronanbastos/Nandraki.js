@@ -1,145 +1,127 @@
 <!DOCTYPE html>
 <html>
-
 <head>
-	<meta name="viewport" content="initial-scale=1.0, width=device-width, user-scalable=yes" />
-	<meta charset=”UTF-8” lang=”pt-br” http-equiv="content-type" content="text/html; charset=windows-1252">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<script src="popper.min.js"></script>
-	<script src="bootstrap.js"></script>
-	<link href="bootstrap.min.css" rel="stylesheet" />
-	<script src="bootstrap.bundle.js"></script>
-	<script src="nandraki.js"></script>
-	<script src="pixi.min.js"></script>
-	<script src="phaser-arcade-physics.min.js"></script>
+<meta name="viewport" content="initial-scale=1.0, width=device-width, user-scalable=yes" />
+<meta charset=”UTF-8” lang=”pt-br” http-equiv="content-type" content="text/html; charset=windows-1252">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="popper.min.js"></script>
+<script src="bootstrap.js"></script>
+<link href="bootstrap.min.css" rel="stylesheet"/>
+<script src="bootstrap.bundle.js"></script>
+<script src="nandraki.js"></script>
+<script src="pixi.min.js"></script>
+<script src="phaser-arcade-physics.min.js"></script>
 
-	<style>
-		body {
+<style>
+body{
 
-			background-color: #f1f1f1;
-			color: #000000;
-			margin: 0px;
+background-color: #f1f1f1;
+color: #000000;
+margin: 0px;
 
-		}
+}
 
-		.text-area {
+.text-area {
 
-			margin-top: 5px;
-			margin-bottom: 0px;
-			height: 611px;
-			width: 90%;
-			cursor: pointer;
-			background-color: #444;
-			color: white;
-			font-size: 14px;
-			font-family: monospace;
+margin-top: 5px; 
+margin-bottom: 0px; 
+height: 611px;
+width: 90%;
+cursor: pointer;
+background-color: #444;
+color: white;
+font-size: 14px;
+font-family: monospace;	
 
-		}
+}
+.responsive-iframe {
+position: absolute;
+top: 50px;
+left: 0;
+bottom: 0;
+right: 0;
+width: 50%;
+height:50%;
+border: none;
+  
+}
+.fun{
+background-color: #d3d3d3;
+margin-top:20px;	
+}
+img{
+margin-left:40px;
 
-		.responsive-iframe {
-			position: absolute;
-			top: 50px;
-			left: 0;
-			bottom: 0;
-			right: 0;
-			width: 100%;
-			height: 100%;
-			border: none;
+}
+.cont {
+float:left;
+margin-top:5px;		
+}
+.esp{
+ margin-left:10px;	
+}
+.play {
+    cursor: pointer;
+    margin-right: 20px;
+}
+h6{
 
-		}
+font-size:15px;
+margin-right:70px;
 
-		.fun {
-			background-color: #d3d3d3;
-			margin-top: 20px;
-		}
+}
+.display{
+ display: none;
 
-		img {
-			margin-left: 40px;
+}
+.close{
+margin:0px;
 
-		}
+}
 
-		.cont {
-			float: left;
-			margin-top: 5px;
-		}
+h4{
+color: red;
+font-size:15px;
+padding-top:10px;
+}
+label.labelInputinput[type="file"] {
+    position: fixed;
+}
 
-		.esp {
-			margin-left: 10px;
-			margin-top: 10px;
-		}
+.labelInput {
+    margin-left: 0px;
+    margin-right: 30px;
+	
+}
 
-		.play {
-			cursor: pointer;
-			margin-right: 20px;
-		}
-
-		h6 {
-
-			font-size: 15px;
-			margin-right: 70px;
-
-		}
-
-		.display {
-			display: none;
-
-		}
-
-		.close {
-			margin: 0px;
-
-		}
-
-		h4 {
-			color: red;
-			font-size: 15px;
-			padding-top: 10px;
-		}
-
-		label.labelInputinput[type="file"] {
-			position: fixed;
-		}
-
-		.labelInput {
-
-			float: left;
-		}
-
-		.labelInputSegund {
-
-			float: left;
-
-		}
-
-		.labelInput :invalid+span {
-			color: blue;
-		}
-
-		.labelInput :valid+span {
-			color: blue;
-		}
+.labelInput :invalid + span {
+    color: blue;
+}
+.labelInput :valid + span {
+    color: blue;
+}
 
 
 
 
-		#editor {
-			width: 400px;
-			height: 250px;
-			padding: 10px;
-			background-color: #444;
-			color: white;
-			font-size: 14px;
-			font-family: monospace;
-		}
+#editor {
+    width: 400px;
+    height: 250px;
+    padding: 10px;
+    background-color: #444;
+    color: white;
+    font-size: 14px;
+    font-family: monospace;
+}
+.statement {
+    color: orange;
+}
 
-		.statement {
-			color: orange;
-		}
-	</style>
+
+</style>
 
 
 </head>
-
 <body>
 
 
@@ -147,55 +129,55 @@
 
 
 
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-	<script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script>
 
-		var old = '';
+var old = '';
 
-		function salvarprojetos() {
+function salvarprojetos() {
+	   
+ 		localStorage.setItem("text1", document.getElementById("texto").value);
+	    	localStorage.setItem("text2", document.getElementById("update").value);
+	   	localStorage.setItem("text3", document.getElementById("inserir").value);
+            
 
-			localStorage.setItem("text1", document.getElementById("texto").value);
-			localStorage.setItem("text2", document.getElementById("update").value);
-			localStorage.setItem("text3", document.getElementById("inserir").value);
-
-
-
-
-		}
-
-		function carregarprojetos() {
-
-			document.getElementById("texto").innerHTML = localStorage.getItem("text1");
-			document.getElementById("update").innerHTML = localStorage.getItem("text2");
-			document.getElementById("inserir").innerHTML = localStorage.getItem("text3");
-			document.getElementById("iframe").innerHTML = localStorage.getItem("text3");
-
-
-
-
-
-		}
-		function reload() {
-			document.location.reload(true);
-		}
-	</script>
-	<h1> </h1>
-	<script type="text/javascript" src="FileSaver.min.js"></script>
-	<button class="btn-primary">?</button>
-	<button class="btn-primary" onclick="salvarprojetos()">Salvar</button>
-	<button class="btn-primary btn-click" onclick="carregarprojetos()">Carregar</button>
-	<button class="btn-primary" onclick="reload()">F5</button>
-	<button class="btn-primary" onclick="engine()">Engine</button>
-	<a class="btn btn-primary border " href="https://pag.ae/7X1k-ms4n">Doar</a>
-	<h1> </h1>
-	<!-- função ao clicar em salvar -->
-	<script>
-		function salvar() {
-			let texto = document.getElementById("texto").value;
-			let update = document.getElementById("update").value;
-			let titulo = document.getElementById("titulo").value;
-			let engine = document.getElementById("engine").value;
-			var html = `
+   		
+           		
+    }
+	
+function carregarprojetos(){
+	
+	document.getElementById("texto").innerHTML = localStorage.getItem("text1");
+	document.getElementById("update").innerHTML = localStorage.getItem("text2");
+	document.getElementById("inserir").innerHTML = localStorage.getItem("text3");
+	document.getElementById("iframe").innerHTML = localStorage.getItem("text3");
+	  
+		
+	
+	
+	
+}
+function reload(){
+	document.location.reload(true);
+}
+</script>
+	  <h1> </h1>
+	  <script type="text/javascript" src="FileSaver.min.js"></script>
+	  <button class="btn-primary">?</button>
+	  <button class="btn-primary" onclick="salvarprojetos()">Salvar</button>
+	  <button class="btn-primary btn-click" onclick="carregarprojetos()">Carregar</button>
+	  <button class="btn-primary" onclick="reload()">F5</button>
+	  <button class="btn-primary" onclick="engine()">Engine</button>
+	  <a class="btn btn-primary border " href="https://pag.ae/7X1k-ms4n" >Doar</a>
+	  <h1> </h1>
+   <!-- função ao clicar em salvar -->
+   <script>
+   function salvar() {
+      let texto = document.getElementById("texto").value;
+      let update = document.getElementById("update").value;
+      let titulo = document.getElementById("titulo").value;
+      let engine = document.getElementById("engine").value;	
+	var html=`
 	<!DOCTYPE html>
 	<html>
 	<title>Projeto Game</title>
@@ -208,267 +190,252 @@
 	</body>
 	</html>
       `
-				;
-			var ancora = document.createElement('a');
-			ancora.href = 'data:application/octet-stream;charset=utf-8,' + html;
-			ancora.download = titulo + ".html";
-			ancora.click();
-		}
-		function engine() {
-			if (document.getElementById("myDIV").style.display == "none") {
-				document.getElementById("myDIV").style.display = "block";
+      ;	
+    var ancora = document.createElement('a');
+    ancora.href = 'data:application/octet-stream;charset=utf-8,'+html;
+    ancora.download = titulo+".html";
+    ancora.click();
+   }
+   function engine(){	
+    if(document.getElementById("myDIV").style.display == "none"){
+    document.getElementById("myDIV").style.display = "block";	
+ 	
+    }else{
+    document.getElementById("myDIV").style.display = "none";		 
+   }
+	
+   }
+   window.onload = engine;
+	
+   </script>
 
-			} else {
-				document.getElementById("myDIV").style.display = "none";
-			}
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="#"><img src="logo.png" alt="Nandraki" width=250 height=50> </a>
+ 
+        <p class="esp">
+      <input class="form-control mr-sm-2"  id="titulo" type="search" placeholder="Nome do jogo" aria->
+      <button class="btn-primary" onclick="salvar()">Export html</button>	
+      	</p>
+     
+  </div>
 
-		}
-		window.onload = engine;
+<label class="labelInput" onclick=" loading()">
 
-	</script>
+<input  id="myBtn" class=" esp btn-primary play" style="display:none;" type='file' value="selecione o jogo" accept='file/*'onchange='openFile(event)'>
+  <img class="play" src="btn.png" alt="Run" width=50 height=50>
+</input>
+</label>
+<label class="labelInput" onclick=" loading()">
+<button  class=" esp btn-primary play"    onclick="run()">Run</button>
+</label>
+</nav>
 
-	<nav class="navbar navbar-expand-lg navbar-light bg-light">
-		<a class="navbar-brand" href="#"><img src="logo.png" alt="Nandraki" width=250 height=50> </a>
+<script>
+ 
+	function init() {
+		var user = document.getElementById("texto");
+		var user1 = document.getElementById("update");
+	user.onkeyup = function()
+        {
+	 document.getElementById('total_linhas0').innerHTML = user.value.split('\n').length;
+	
+	};
 
-		<p class="esp">
-			<input class="form-control" id="titulo" type="search" placeholder="name game" aria->
-			<button class="esp btn-primary play" onclick="salvar()">Export html</button>
-			<label class="labelInputSegund " onclick=" loading()">
-				<button class=" esp btn-primary play" onclick="run();">Run Time </button>
-			</label>
-			<label class="labelInput" onclick=" loading()">
-				<input id="myBtn" class=" esp btn-primary play" style="display:none;" type='file'
-					value="selecione o jogo" accept='file/*' onchange='openFile(event)'>
-				<button class=" esp btn-primary play"> Load game </button>
-				</input>
-			</label>
-
-
-		</p>
-
-		</div>
-
-
-	</nav>
-
-	<script>
-
-		function init() {
-			var user = document.getElementById("texto");
-			var user1 = document.getElementById("update");
-			user.onkeyup = function () {
-				document.getElementById('total_linhas0').innerHTML = user.value.split('\n').length;
-
-			};
-
-			user1.onkeyup = function () {
-				document.getElementById('total_linhas1').innerHTML = user1.value.split('\n').length;
-
-			};
-
+	user1.onkeyup = function(){	 
+         document.getElementById('total_linhas1').innerHTML = user1.value.split('\n').length;
+   
+	};
+	 
 
 
+	
+	}
+	window.onload = init;
+     
+</script>
 
-		}
-		window.onload = init;
-
-	</script>
-
-	<div class="container">
-		<div class="row ">
-			<div id="myDIV" class="col-sm border fun display">
-				<textarea class="text-area " id="engine">
+<div class="container">
+  <div class="row ">
+   <div id="myDIV" class="col-sm border fun display">
+<textarea class="text-area " id="engine" >
 <script>
 
 </script>
 
 </textarea>
-				<p>
-					<label for="textarea" class="font-weight-bold">Engine</label>
-			</div>
-
-			<div class="col-sm border fun">
-				<span class="cont border" id='total_linhas0'>1</span>
-				<html>
-				<textarea class="text-area" id="texto">
+	<p> 	
+	<label for="textarea" class="font-weight-bold">Engine</label>
+    </div>
+    
+	<div class="col-sm border fun">
+<span class="cont border" id='total_linhas0'>1</span>
+<html>
+<textarea class="text-area" id="texto">
 </textarea>
-				<p>
-					<label for="textarea" class="font-weight-bold">Html</label>
-			</div>
-			<div class="col-sm border fun">
-				<span class="cont border" id='total_linhas1'>1</span>
-				<textarea class="text-area" id="update">
+	<p> 	
+	<label for="textarea" class="font-weight-bold">Html</label>
+    </div>
+    <div class="col-sm border fun">
+<span class="cont border" id='total_linhas1'>1</span>	
+<textarea class="text-area" id="update"  >
 <script>
 </script>
 </textarea>
-
 </html>
-<p>
-	<label for="textarea" class="font-weight-bold">Update</label>
-	</div>
+	<p> 	
+	<label for="textarea" class="font-weight-bold">Update</label>	
+    </div>
 
 
 
-	<!-- The Modal -->
+<!-- The Modal -->
 <div id="myModal" class="modal">
 
-	<!-- Modal content -->
-	<div class="modal-content">
+  <!-- Modal content -->
+  <div class="modal-content">
+    
+    <span class="close">&times;</span>
+    <iframe id="frame" style="WIDTH: 100%; display: flex; scroll-behavior: smooth; HEIGHT: 650px"  frameborder="no"> </iframe>
+  
+	<script>
+	
+	function loading() {	
+		
+		// Get the modal
+		var modal = document.getElementById("myModal");
 
-		<span class="close">&times;</span>
-		<iframe id="frame" style="WIDTH: 100%; display: flex; scroll-behavior: smooth; HEIGHT: 650px" frameborder="no">
-		</iframe>
+		// Get the button that opens the modal
+		var btn = document.getElementById("myBtn");
 
-		<script>
+		// Get the <span> element that closes the modal
+		var span = document.getElementsByClassName("close")[0];
 
-			function loading() {
+		// When the user clicks the button, open the modal 
+		btn.onclick = function() {
+		  modal.style.display = "block";
+		}
 
-				// Get the modal
-				var modal = document.getElementById("myModal");
+		// When the user clicks on <span> (x), close the modal
+		span.onclick = function() {
+		  modal.style.display = "none";
+		  		
+		 		
+		}
 
-				// Get the button that opens the modal
-				var btn = document.getElementById("myBtn");
+		// When the user clicks anywhere outside of the modal, close it
+		window.onclick = function(event) {
+		  if (event.target == modal) {
+		    modal.style.display = "none";
+		  }
+		}
+	}
+	</script>
+	<style>
+	body {font-family: Arial, Helvetica, sans-serif;}
 
-				// Get the <span> element that closes the modal
-				var span = document.getElementsByClassName("close")[0];
+	/* The Modal (background) */
+	.modal {
+	  display: none; /* Hidden by default */
+	  position: fixed; /* Stay in place */
+	  z-index: 1; /* Sit on top */
+	  padding-top: 0px; /* Location of the box */
+	  left: 0;
+	  top: 0;
+	  width: 100%; /* Full width */
+	  height: 100%; /* Full height */
+	  overflow: auto; /* Enable scroll if needed */
+	  background-color: rgb(0,0,0); /* Fallback color */
+	  background-color: rgba(0,0,0,0.9); /* Black w/ opacity */
+	  
+	}
 
-				// When the user clicks the button, open the modal 
-				btn.onclick = function () {
-					modal.style.display = "block";
-				}
+	/* Modal Content */
+	.modal-content {
+	  background-color: #fefefe;
+	  margin:0px;
+	  padding:0px;
+	  border: 1px solid #888;
+	  width: 100%;
+	}
 
-				// When the user clicks on <span> (x), close the modal
-				span.onclick = function () {
-					modal.style.display = "none";
+	/* The Close Button */
+	.close:hover,
+	.close:focus {
+	  color: #000;
+	  text-decoration: none;
+	  cursor: pointer;
+	}
+	</style>
 
+</div>
+<div>
+<script type="application/javascript">
 
-				}
+function resizeIFrameToFitContent( iFrame ) {
 
-				// When the user clicks anywhere outside of the modal, close it
-				window.onclick = function (event) {
-					if (event.target == modal) {
-						modal.style.display = "none";
-					}
-				}
-			}
-		</script>
-		<style>
-			body {
-				font-family: Arial, Helvetica, sans-serif;
-			}
+    iFrame.width  = iFrame.contentWindow.document.body.scrollWidth;
+    iFrame.height = iFrame.contentWindow.document.body.scrollHeight;
+}
 
-			/* The Modal (background) */
-			.modal {
-				display: none;
-				/* Hidden by default */
-				position: fixed;
-				/* Stay in place */
-				z-index: 1;
-				/* Sit on top */
-				padding-top: 0px;
-				/* Location of the box */
-				left: 0;
-				top: 0;
-				width: 100%;
-				/* Full width */
-				height: 100%;
-				/* Full height */
-				overflow: auto;
-				/* Enable scroll if needed */
-				background-color: rgb(0, 0, 0);
-				/* Fallback color */
-				background-color: rgba(0, 0, 0, 0.9);
-				/* Black w/ opacity */
+window.addEventListener('DOMContentLoaded', function(e) {
 
-			}
+    var iFrame = document.getElementById( 'frame' );
+    resizeIFrameToFitContent( iFrame );
 
-			/* Modal Content */
-			.modal-content {
-				background-color: #fefefe;
-				margin: 0px;
-				padding: 0px;
-				border: 1px solid #888;
-				width: 100%;
-			}
+    // or, to resize all iframes:
+    var iframes = document.querySelectorAll("frame");
+    for( var i = 0; i < iframes.length; i++) {
+        resizeIFrameToFitContent( iframes[i] );
+    }
+} );
 
-			/* The Close Button */
-			.close:hover,
-			.close:focus {
-				color: #000;
-				text-decoration: none;
-				cursor: pointer;
-			}
-		</style>
+</script>
 
-	</div>
-	<div>
-		<script type="application/javascript">
+    <script>
+	
+	
+        var openFile = function(event) {
+            var input = event.target;
+	   
+        
 
-			function resizeIFrameToFitContent(iFrame) {
+            var reader = new FileReader();
+            reader.onload = function() {
+                var dataURL = reader.result;
+                var output = document.getElementById('frame');
+                output.src =  dataURL;
+	
+            };
+            reader.readAsDataURL(input.files[0]);
+	   
+	       document.getElementById('frame').style.display = 'block'; 	
+        };
 
-				iFrame.width = iFrame.contentWindow.document.body.scrollWidth;
-				iFrame.height = iFrame.contentWindow.document.body.scrollHeight;
-			}
-
-			window.addEventListener('DOMContentLoaded', function (e) {
-
-				var iFrame = document.getElementById('frame');
-				resizeIFrameToFitContent(iFrame);
-
-				// or, to resize all iframes:
-				var iframes = document.querySelectorAll("frame");
-				for (var i = 0; i < iframes.length; i++) {
-					resizeIFrameToFitContent(iframes[i]);
-				}
-			});
-
-		</script>
-
-		<script>
-
-
-			var openFile = function (event) {
-				var input = event.target;
-
-
-
-				var reader = new FileReader();
-				reader.onload = function () {
-					var dataURL = reader.result;
-					var output = document.getElementById('frame');
-					output.src = dataURL;
-
-				};
-				reader.readAsDataURL(input.files[0]);
-
-				document.getElementById('frame').style.display = 'block';
-			};
-			function run() {
-				let texto = document.getElementById("texto").value;
-				let update = document.getElementById("update").value;
-				var html = `
+		function run(){
+			let texto = document.getElementById("texto").value;
+			let update = document.getElementById("update").value;
+			var html=`
 			<!DOCTYPE html>
 			<html>
-			<title>Projeto Game</title>	
+			<title>Projeto Game</title>
 			<body>
 			${texto}
 			${update}
 			</body>
-			</html>	`;
+			</html>
+			`
+			;	
+			let output =document.getElementById('frame');
+			output.contentDocument.body.innerHTML=html;
+			let modal = document.getElementById("myModal");
+			modal.style.display = "block";
+  
+		}	
+    </script>
 
-				let output = document.getElementById('frame');
-				output.contentDocument.body.innerHTML = html;
-				var modal = document.getElementById("myModal");
-				modal.style.display = "block";
+</div>
 
 
-			}
+</body>
 
-		</script>
-
-	</div>
-
-
-	</body>
-
-	</html>
+</html>
