@@ -184,7 +184,6 @@ function reload(){
 	
 	<body>
     ${texto}
-	${engine}
 	${update}
 
 	</body>
@@ -225,9 +224,7 @@ function reload(){
   <img class="play" src="btn.png" alt="Run" width=50 height=50>
 </input>
 </label>
-<label class="labelInput" onclick=" loading()">
-<button  class=" esp btn-primary play"    onclick="run()">Run</button>
-</label>
+
 </nav>
 
 <script>
@@ -411,26 +408,7 @@ window.addEventListener('DOMContentLoaded', function(e) {
 	       document.getElementById('frame').style.display = 'block'; 	
         };
 
-		function run(){
-			let texto = document.getElementById("texto").value;
-			let update = document.getElementById("update").value;
-			var html=`
-			<!DOCTYPE html>
-			<html>
-			<title>Projeto Game</title>
-			<body>
-			${texto}
-			${update}
-			</body>
-			</html>
-			`
-			;	
-			let output =document.getElementById('frame');
-			output.contentDocument.body.innerHTML=html;
-			let modal = document.getElementById("myModal");
-			modal.style.display = "block";
-  
-		}	
+	
     </script>
 
 </div>
