@@ -1,127 +1,145 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-<meta name="viewport" content="initial-scale=1.0, width=device-width, user-scalable=yes" />
-<meta charset=”UTF-8” lang=”pt-br” http-equiv="content-type" content="text/html; charset=windows-1252">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<script src="popper.min.js"></script>
-<script src="bootstrap.js"></script>
-<link href="bootstrap.min.css" rel="stylesheet"/>
-<script src="bootstrap.bundle.js"></script>
-<script src="nandraki.js"></script>
-<script src="pixi.min.js"></script>
-<script src="phaser-arcade-physics.min.js"></script>
+	<meta name="viewport" content="initial-scale=1.0, width=device-width, user-scalable=yes" />
+	<meta charset=”UTF-8” lang=”pt-br” http-equiv="content-type" content="text/html; charset=windows-1252">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<script src="popper.min.js"></script>
+	<script src="bootstrap.js"></script>
+	<link href="bootstrap.min.css" rel="stylesheet" />
+	<script src="bootstrap.bundle.js"></script>
+	<script src="nandraki.js"></script>
+	<script src="pixi.min.js"></script>
+	<script src="phaser-arcade-physics.min.js"></script>
 
-<style>
-body{
+	<style>
+		body {
 
-background-color: #f1f1f1;
-color: #000000;
-margin: 0px;
+			background-color: #f1f1f1;
+			color: #000000;
+			margin: 0px;
 
-}
+		}
 
-.text-area {
+		.text-area {
 
-margin-top: 5px; 
-margin-bottom: 0px; 
-height: 611px;
-width: 90%;
-cursor: pointer;
-background-color: #444;
-color: white;
-font-size: 14px;
-font-family: monospace;	
+			margin-top: 5px;
+			margin-bottom: 0px;
+			height: 611px;
+			width: 90%;
+			cursor: pointer;
+			background-color: #444;
+			color: white;
+			font-size: 14px;
+			font-family: monospace;
 
-}
-.responsive-iframe {
-position: absolute;
-top: 50px;
-left: 0;
-bottom: 0;
-right: 0;
-width: 50%;
-height:50%;
-border: none;
-  
-}
-.fun{
-background-color: #d3d3d3;
-margin-top:20px;	
-}
-img{
-margin-left:40px;
+		}
 
-}
-.cont {
-float:left;
-margin-top:5px;		
-}
-.esp{
- margin-left:10px;	
-}
-.play {
-    cursor: pointer;
-    margin-right: 20px;
-}
-h6{
+		.responsive-iframe {
+			position: absolute;
+			top: 50px;
+			left: 0;
+			bottom: 0;
+			right: 0;
+			width: 100%;
+			height: 100%;
+			border: none;
 
-font-size:15px;
-margin-right:70px;
+		}
 
-}
-.display{
- display: none;
+		.fun {
+			background-color: #d3d3d3;
+			margin-top: 20px;
+		}
 
-}
-.close{
-margin:0px;
+		img {
+			margin-left: 40px;
 
-}
+		}
 
-h4{
-color: red;
-font-size:15px;
-padding-top:10px;
-}
-label.labelInputinput[type="file"] {
-    position: fixed;
-}
+		.cont {
+			float: left;
+			margin-top: 5px;
+		}
 
-.labelInput {
-    margin-left: 0px;
-    margin-right: 30px;
-	
-}
+		.esp {
+			margin-left: 10px;
+			margin-top: 10px;
+		}
 
-.labelInput :invalid + span {
-    color: blue;
-}
-.labelInput :valid + span {
-    color: blue;
-}
+		.play {
+			cursor: pointer;
+			margin-right: 20px;
+		}
+
+		h6 {
+
+			font-size: 15px;
+			margin-right: 70px;
+
+		}
+
+		.display {
+			display: none;
+
+		}
+
+		.close {
+			margin: 0px;
+
+		}
+
+		h4 {
+			color: red;
+			font-size: 15px;
+			padding-top: 10px;
+		}
+
+		label.labelInputinput[type="file"] {
+			position: fixed;
+		}
+
+		.labelInput {
+
+			float: left;
+		}
+
+		.labelInputSegund {
+
+			float: left;
+
+		}
+
+		.labelInput :invalid+span {
+			color: blue;
+		}
+
+		.labelInput :valid+span {
+			color: blue;
+		}
 
 
 
 
-#editor {
-    width: 400px;
-    height: 250px;
-    padding: 10px;
-    background-color: #444;
-    color: white;
-    font-size: 14px;
-    font-family: monospace;
-}
-.statement {
-    color: orange;
-}
+		#editor {
+			width: 400px;
+			height: 250px;
+			padding: 10px;
+			background-color: #444;
+			color: white;
+			font-size: 14px;
+			font-family: monospace;
+		}
 
-
-</style>
+		.statement {
+			color: orange;
+		}
+	</style>
 
 
 </head>
+
 <body>
 
 
@@ -129,717 +147,328 @@ label.labelInputinput[type="file"] {
 
 
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-<script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+	<script>
 
-var old = '';
+		var old = '';
 
-function salvarprojetos() {
-	   
- 		localStorage.setItem("text1", document.getElementById("texto").value);
-	    	localStorage.setItem("text2", document.getElementById("update").value);
-	   	localStorage.setItem("text3", document.getElementById("inserir").value);
-            
+		function salvarprojetos() {
 
-   		
-           		
-    }
-	
-function carregarprojetos(){
-	
-	document.getElementById("texto").innerHTML = localStorage.getItem("text1");
-	document.getElementById("update").innerHTML = localStorage.getItem("text2");
-	document.getElementById("inserir").innerHTML = localStorage.getItem("text3");
-	document.getElementById("iframe").innerHTML = localStorage.getItem("text3");
-	  
-		
-	
-	
-	
-}
-function reload(){
-	document.location.reload(true);
-}
-</script>
-	  <h1> </h1>
-	  <script type="text/javascript" src="FileSaver.min.js"></script>
-	  <button class="btn-primary">?</button>
-	  <button class="btn-primary" onclick="salvarprojetos()">Salvar</button>
-	  <button class="btn-primary btn-click" onclick="carregarprojetos()">Carregar</button>
-	  <button class="btn-primary" onclick="reload()">F5</button>
-	  <button class="btn-primary" onclick="engine()">Engine</button>
-	  <a class="btn btn-primary border " href="https://pag.ae/7X1k-ms4n" >Doar</a>
-	  <h1> </h1>
-   <!-- função ao clicar em salvar -->
-   <script>
-   function salvar() {
-      let texto = document.getElementById("texto").value;
-      let update = document.getElementById("update").value;
-      let titulo = document.getElementById("titulo").value;
-      let engine = document.getElementById("engine").value;	
-      
-	var html=`
+			localStorage.setItem("text1", document.getElementById("texto").value);
+			localStorage.setItem("text2", document.getElementById("update").value);
+			localStorage.setItem("text3", document.getElementById("inserir").value);
+
+
+
+
+		}
+
+		function carregarprojetos() {
+
+			document.getElementById("texto").innerHTML = localStorage.getItem("text1");
+			document.getElementById("update").innerHTML = localStorage.getItem("text2");
+			document.getElementById("inserir").innerHTML = localStorage.getItem("text3");
+			document.getElementById("iframe").innerHTML = localStorage.getItem("text3");
+
+
+
+
+
+		}
+		function reload() {
+			document.location.reload(true);
+		}
+	</script>
+	<h1> </h1>
+	<script type="text/javascript" src="FileSaver.min.js"></script>
+	<button class="btn-primary">?</button>
+	<button class="btn-primary" onclick="salvarprojetos()">Salvar</button>
+	<button class="btn-primary btn-click" onclick="carregarprojetos()">Carregar</button>
+	<button class="btn-primary" onclick="reload()">F5</button>
+	<button class="btn-primary" onclick="engine()">Engine</button>
+	<a class="btn btn-primary border " href="https://pag.ae/7X1k-ms4n">Doar</a>
+	<h1> </h1>
+	<!-- função ao clicar em salvar -->
+	<script>
+		function salvar() {
+			let texto = document.getElementById("texto").value;
+			let update = document.getElementById("update").value;
+			let titulo = document.getElementById("titulo").value;
+			let engine = document.getElementById("engine").value;
+			var html = `
 	<!DOCTYPE html>
 	<html>
 	<title>Projeto Game</title>
+	
 	<body>
-        ${texto}
-
+    ${texto}
 	${engine}
 	${update}
 
 	</body>
 	</html>
       `
-      ;	
-    var ancora = document.createElement('a');
-    ancora.href = 'data:application/octet-stream;charset=utf-8,'+html;
-    ancora.download = titulo+".html";
-    ancora.click();
-   }
-   function engine(){	
-    if(document.getElementById("myDIV").style.display == "none"){
-    document.getElementById("myDIV").style.display = "block";	
- 	
-    }else{
-    document.getElementById("myDIV").style.display = "none";		 
-   }
-	
-   }
-   window.onload = engine;
-	
-   </script>
+				;
+			var ancora = document.createElement('a');
+			ancora.href = 'data:application/octet-stream;charset=utf-8,' + html;
+			ancora.download = titulo + ".html";
+			ancora.click();
+		}
+		function engine() {
+			if (document.getElementById("myDIV").style.display == "none") {
+				document.getElementById("myDIV").style.display = "block";
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="#"><img src="logo.png" alt="Nandraki" width=250 height=50> </a>
- 
-        <p class="esp">
-      <input class="form-control mr-sm-2"  id="titulo" type="search" placeholder="Nome do jogo" aria->
-      <button class="btn border" onclick="salvar()">Export html</button>
-	 <a class="btn border" href="editorSprite.html" >Editor Sprite</a>
-	
-      	</p>
-     
-  </div>
+			} else {
+				document.getElementById("myDIV").style.display = "none";
+			}
 
-<label class="labelInput" onclick=" loading()">
-<input  id="myBtn" class=" esp btn-primary play" style="display:none;" type='file' value="selecione o jogo" accept='file/*'onchange='openFile(event)'>
-  <img class="play" src="btn.png" alt="Run" width=50 height=50>
-</input>
-</label>
+		}
+		window.onload = engine;
 
-</nav>
+	</script>
 
+	<nav class="navbar navbar-expand-lg navbar-light bg-light">
+		<a class="navbar-brand" href="#"><img src="logo.png" alt="Nandraki" width=250 height=50> </a>
+
+		<p class="esp">
+			<input class="form-control" id="titulo" type="search" placeholder="name game" aria->
+			<button class="esp btn-primary play" onclick="salvar()">Export html</button>
+			<label class="labelInputSegund " onclick=" loading()">
+				<button class=" esp btn-primary play" onclick="run();">Run Time </button>
+			</label>
+			<label class="labelInput" onclick=" loading()">
+				<input id="myBtn" class=" esp btn-primary play" style="display:none;" type='file'
+					value="selecione o jogo" accept='file/*' onchange='openFile(event)'>
+				<button class=" esp btn-primary play"> Load game </button>
+				</input>
+			</label>
+
+
+		</p>
+
+		</div>
+
+
+	</nav>
+
+	<script>
+
+		function init() {
+			var user = document.getElementById("texto");
+			var user1 = document.getElementById("update");
+			user.onkeyup = function () {
+				document.getElementById('total_linhas0').innerHTML = user.value.split('\n').length;
+
+			};
+
+			user1.onkeyup = function () {
+				document.getElementById('total_linhas1').innerHTML = user1.value.split('\n').length;
+
+			};
+
+
+
+
+		}
+		window.onload = init;
+
+	</script>
+
+	<div class="container">
+		<div class="row ">
+			<div id="myDIV" class="col-sm border fun display">
+				<textarea class="text-area " id="engine">
 <script>
- 
-	function init() {
-		var user = document.getElementById("texto");
-		var user1 = document.getElementById("update");
-	user.onkeyup = function()
-        {
-	 document.getElementById('total_linhas0').innerHTML = user.value.split('\n').length;
-	
-	};
-
-	user1.onkeyup = function(){	 
-         document.getElementById('total_linhas1').innerHTML = user1.value.split('\n').length;
-   
-	};
-	 
-
-
-	
-	}
-	window.onload = init;
-     
-</script>
-
-<div class="container">
-  <div class="row ">
-   <div id="myDIV" class="col-sm border fun display">
-<textarea class="text-area " id="engine" >
-<script>
-class Nandraki {
-    constructor(obj,id,txt) {
-        this.obj = obj;
-        this.id = id;
-	this.txt = txt;	
-	document.body.innerHTML += '<'+this.obj+' id="'+this.id+'">'+txt+'</'+this.obj+'>';
-	this.obj = document.getElementById(this.id);	
-	return obj;
-    }
-
-    static create_obj(obj,id,width,height,top,left) {
-        obj = document.getElementById(id);
-	obj.style.width = width;
-	obj.style.height = height;
-	obj.style.border = "solid 1px";
-	obj.style.top = top;
-	obj.style.left = left;
-	obj.style.position = 'absolute';
-	
-    }
-    static create_ui(obj,id,width,height,top,left) {
-        obj = document.getElementById(id);
-	obj.style.width = width;
-	obj.style.height = height;
-	obj.style.top = top;
-	obj.style.left = left;
-	obj.style.position = 'absolute';
-	
-    }
-    		
-  	 	
-}
-
-game = {
-    canvas_start: function(id,width,height){
-	document.body.innerHTML += "<canvas id='canvas' width="+width+" height="+height+">";	
-	canvas = document.getElementById(id);
-	return nandraki = canvas.getContext('2d');
-   },
-   canvas_text : function(text,font,cor,x,y) {
-	if(font == null || font == " ")
-	{	
-	nandraki.font = '20pt Calibri';
-	}else{
-	nandraki.font = font;
-        }
-        nandraki.fillStyle = cor;
-	nandraki.fillText(text,x,y);
-		
-    },
-    canvas_arc: function(x,y,font,b,p){
-     
-	nandraki.arc(x, y,font,b,p);
-	
-    },
-    canvas_clear: function(){
-     nandraki.clearRect(0, 0, canvas.width, canvas.height);	
-    }, 
-    reload: function(ative){
-    
-    return document.location.reload(ative);
-     
-    },
-    stop_interval(myVar){
-     clearInterval(myVar);
-    }, 
-    start_interval(myVar,time){
-     setInterval(myVar,time);
-    },			
-    stop_time : function (myVar){
-
-	clearTimeout(myVar);
-
-    },
-    start_time: function (func,time){
-	setTimeout('func',time); 
-    },    
-   animar_left : function (id,mi,ma,time){
-
-	document.getElementById(id).animate([
-	  // keyframes
-	  {animationDirection:"alternate"},
-	  { left: mi+"px" },
-	  { left: ma+"px" },
-	  {animationDirection:"alternate"}
-	], {
-	  // timing options
-	  duration: time,
-	  iterations: Infinity
-	   
-	});
-
-    },
-
-     get_left : function (id){
-
-	
-	let x=document.getElementById(id).offsetLeft;
-	return x;
-
-    },
-
-    get_top : function (id){
-
-	
-	let y=document.getElementById(id).offsetTop;
-	return y;
-
-    },
-    moveX_rest : function (a,rest,id){
-
-	var step=5;
-	
-	var x=document.getElementById(id).offsetLeft;
-	document.getElementById("msg").innerHTML="X: " + x;
-	if(x > a){
-                x= x - step;
-                document.getElementById(id).style.left= x + "px"; // horizontal movimento
-	}else{
-	  x= x + step + rest;
-          document.getElementById(id).style.left= x + "px";
-	}
-	
-    },		
-    moveXD : function (a,id){
-
-	var step=5; 
-	var x=document.getElementById(id).offsetLeft;
-	if(x < a){
-                x= x +step;
-                document.getElementById(id).style.left= x + "px"; // horizontal movimento
-	}
-
-    },
-    moveXE : function (a,id){
-
-	var step=5;
-	var y=document.getElementById(id).offsetTop; 
-	var x=document.getElementById(id).offsetLeft;
-	//document.getElementById("msg").innerHTML="X: " + x + " Y : " + y;
-	if(x > a){
-                x= x - step;
-                document.getElementById(id).style.left= x + "px"; // horizontal movimento
-	}
-	
-    },
-    timeXD: function(valor,id){
- 
-	game.moveXD(valor,id);
-	var y=document.getElementById(id).offsetTop;
-	var x=document.getElementById(id).offsetLeft;
-	//document.getElementById("msg").innerHTML="X: " + x + " Y : " + y;
-	timeD=setTimeout('game.timeXD',1000);
-	
-    },
-    timeXE: function(valor,id){
- 
-	game.moveXE(valor,id);
-	var y=document.getElementById(id).offsetTop;
-	var x=document.getElementById(id).offsetLeft;
-	//document.getElementById("msg").innerHTML="X: " + x + " Y : " + y;
-	timeE=setTimeout('game.timeXE',1000);
-	
-	        
-	
-    },
-    scaleX:function(id,valor){
-	let obj = document.getElementById(id);
-	obj.style.transform="scaleX("+valor+")";	 
-    },
-    	
-    move_mouse: function(id){
-	
-	dragElement(document.getElementById(id));
-
-	function dragElement(elmnt) {
-	  var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
-	  if (document.getElementById(elmnt.id + "header")) {
-	    document.getElementById(elmnt.id + "header").onmousedown = dragMouseDown;
-	  } else {
-	    elmnt.onmousedown = dragMouseDown;
-	  }
-
-	  function dragMouseDown(e) {
-	    e = e || window.event;
-	    e.preventDefault();
-	    pos3 = e.clientX;
-	    pos4 = e.clientY;
-	    document.onmouseup = closeDragElement;
-	    document.onmousemove = elementDrag;
-	  }
-
-	  function elementDrag(e) {
-	    e = e || window.event;
-	    e.preventDefault();
-	  
-	    pos1 = pos3 - e.clientX;
-	    pos2 = pos4 - e.clientY;
-	    pos3 = e.clientX;
-	    pos4 = e.clientY;
-	 
-	    elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
-	    elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
-	  }
-
-	  function closeDragElement() {
-	   
-	    document.onmouseup = null;
-	    document.onmousemove = null;
-	  }
-	}
-    },
-   touch_start:function(id,func){
-      
-	document.getElementById(id).addEventListener("touchstart", func, false);
-	
-    },
-    touch_end:function(id,func){
-      
-	document.getElementById(id).addEventListener("touchend", func, false);
-
-    },
-    touch_move:function(id){
-      let element = document.getElementById(id);
-      element.classList.add("dragme");
-      let nodeList = document.getElementsByClassName('dragme');
-
-	for (let i = 0; i < nodeList.length; i++) {
-	  let obj = nodeList[i];
-	  obj.addEventListener('touchmove', function(event) {
-	    let touch = event.targetTouches[0];
-	    event.target.style.left = touch.pageX + 'px';
-	    event.target.style.top = touch.pageY + 'px';
-	    event.preventDefault();
-	  }, false);
-       }
-    },
-	   
-    random_m: function(ma,mi,s){
-    
-       return Math.random() * (ma-mi) + s;
-       
-    },
-    random_mf: function(ma,mi,s){
-    
-       return Math.floor(Math.random() * (ma-mi) + s);
-       
-    },     	
-    set_text: function (id,txt){
-      let h = document.getElementById(id);
-      return h.innerHTML = txt;	
-    },	
-    log_key:function(){
-	
-	log = document.getElementById('body');
-	
-    },		
-    move_key:function(id,func,updown){
-	const nome = document.getElementById(id);
-	document.addEventListener(updown, func);
-    },
-    opacity: function(ob,op){
-      let obj = document.getElementById(ob); 	
-      obj.style.opacity=op;
-
-   },				 
-   camera_2d: function(player){
-
-
-   },
-   print: function(p){
-	
-     return alert(p);
-	
-   }, 	
-   variavel : function(n,v){
-	var nome = n;	
-	variavel[nome] = v;
-
-    },	
-   create_objById : function(obj,id){
-		
-	document.body.innerHTML += '<'+obj+' id="'+id+'">'+'</'+obj+'>';
-
-    },		
-   obj_in_obj:function(obj,add){
-	document.getElementById(obj).appendChild(document.getElementById(add));	
-    },
-   remove_class: function(id,c){
-     let element = document.getElementById(id);
-     element.classList.remove(c);	
-   },
-   get_window_W:function(){
-     let w = window.innerWidth;
-     return w;
-   }, 
-   get_window_H:function(){
-     let h = window.innerHeight;
-     return h;
-   },
-   class_in_obj: function(obj,add){
-     let element = document.getElementById(obj);
-     element.classList.add(add);
-   },	
-   id_in_obj:function(obj,nome){
-	document.querySelector(obj).id +=" "+nome;
-    },		
-    camada:function(player,num){
-	let obj = document.getElementById(player);	
-	obj.style.zIndex=num;
-    }, 	
-    kill_free : function(player){
-	let obj = document.getElementById(player);
-	obj.remove();
-    },
-    radius: function(radius) {
-  	return 2 * Math.PI * radius;
-    },
-    colidir_calQL: function(id1,id2,valor,pulo,check) {
-	    let obj1 = document.getElementById(id1);
-	    let obj2 = document.getElementById(id2); 	
-	    return pulo == false && Math.min(obj2.left*2-valor) <=  Math.min(obj1.left*2) && Math.min(obj2.top) <= Math.min(obj1.top)&& Math.max(obj2.left*2-valor) <=  Math.max(obj1.left*2) && Math.max(obj2.top) <= Math.max(obj1.top+valor) && check==true;		
-	  						
-		
-    },
-    colidir_calQR: function(id1,id2,valor,pulo,check) {
-	    let obj1 = document.getElementById(id1);
-	    let obj2 = document.getElementById(id2); 	
-	    return pulo == false && obj2.right*2-valor <=  obj1.right*2 && obj2.top <= obj1.top && check==true;
-    },		
-    colidir_cal: function(min0, max0, min1, max1) {
-    return Math.max(min0, max0) >= Math.min(min1, max1) && Math.min(min0, max0) <= Math.max(min1, max1);
-    },
-    
-    colidir : function (r0, r1) {
-    	return game.colidir_cal(r0.left, r0.right, r1.left, r1.right) && game.colidir_cal(r0.top, r0.bottom,r1.top, r1.bottom);
-    },	
-    coord : function(obj){
-	return obj.getBoundingClientRect();  
-
-    },
-    update : function(jogo,fps) {
-		
-		return setInterval(jogo,fps);
-		
-    }, 	 	
-}
-velocidade=0;
-gravidade =0;
-lefts = 0;
-pulo = false;
-vida =0;
-esquerda=false;
-direita=false;
-leftAtual =  parseInt(player.style.left, 10);
-topAtual = parseInt(player.style.top, 10);
-frame=1;
-tecla="";
-variavel = {};
-game = {
-    moveX : function(nome,left,grav){
-	alert("test");
-    },
-    key_move:function(id,key,key_type,sty,valor){
-	const nome = document.getElementById(id);
-	nome.style.position="absolute";
-	document.addEventListener(key_type, function(event) {
-	  if (event.keyCode == key) {
-	    nome.style.sty = nome.getBoundingClientRect().sty - valor + 'px';
-	    
-	  }
-	});
-    },
-    opacity: function(ob,op){
-      let obj = document.getElementById(ob); 	
-      obj.style.opacity=op;
-
-   },	 
-    camera_2d: function(player){
-
-
-   },	
-   variavel : function(n,v){
-	var nome = n;	
-	variavel[nome] = v;
-
-    },	
-   create_player : function(player,id){
-		
-	document.body.innerHTML += '<'+player+' id="'+id+'"> create'+'</'+player+'>';
-
-    },
-   add_in_obj:function(obj,player){
-	document.getElementById(obj).appendChild(player);	
-    },
-   id_in_player:function(obj,nome){
-	document.querySelector(obj).id +=nome;
-    },		
-    camada:function(player,num){
-	let obj = document.getElementById(player);	
-	obj.style.zIndex=num;
-    }, 	
-    kill_free : function(player){
-	let obj = document.getElementById(player);
-	obj.remove();
-    },
-    calculecolid: function(min0, max0, min1, max1) {
-    return Math.max(min0, max0) >= Math.min(min1, max1) && Math.min(min0, max0) <= Math.max(min1, max1)
-    },
-    
-    colidir : function (r0, r1) {
-    	return game.calculecolid(r0.left, r0.right, r1.left, r1.right) && game.calculecolid(r0.top, r0.bottom, 		r1.top, r1.bottom);
-    },	
-    coord : function(player){
-	return player.getBoundingClientRect();  
-
-    },
-}
-
 
 </script>
 
 </textarea>
-	<p> 	
-	<label for="textarea" class="font-weight-bold">Engine</label>
-    </div>
-    
-	<div class="col-sm border fun">
-<span class="cont border" id='total_linhas0'>1</span>
-<html>
-<textarea class="text-area" id="texto">
+				<p>
+					<label for="textarea" class="font-weight-bold">Engine</label>
+			</div>
+
+			<div class="col-sm border fun">
+				<span class="cont border" id='total_linhas0'>1</span>
+				<html>
+				<textarea class="text-area" id="texto">
 </textarea>
-	<p> 	
-	<label for="textarea" class="font-weight-bold">Html</label>
-    </div>
-    <div class="col-sm border fun">
-<span class="cont border" id='total_linhas1'>1</span>	
-<textarea class="text-area" id="update"  >
+				<p>
+					<label for="textarea" class="font-weight-bold">Html</label>
+			</div>
+			<div class="col-sm border fun">
+				<span class="cont border" id='total_linhas1'>1</span>
+				<textarea class="text-area" id="update">
 <script>
 </script>
 </textarea>
+
 </html>
-	<p> 	
-	<label for="textarea" class="font-weight-bold">Update</label>	
-    </div>
+<p>
+	<label for="textarea" class="font-weight-bold">Update</label>
+	</div>
 
 
 
-<!-- The Modal -->
+	<!-- The Modal -->
 <div id="myModal" class="modal">
 
-  <!-- Modal content -->
-  <div class="modal-content">
-    
-    <span class="close">&times;</span>
-    <iframe id="frame" style="WIDTH: 100%; display: flex; scroll-behavior: smooth; HEIGHT: 650px"  frameborder="no"> </iframe>
-  
-	<script>
-	
-	function loading() {	
-		
-		// Get the modal
-		var modal = document.getElementById("myModal");
+	<!-- Modal content -->
+	<div class="modal-content">
 
-		// Get the button that opens the modal
-		var btn = document.getElementById("myBtn");
+		<span class="close">&times;</span>
+		<iframe id="frame" style="WIDTH: 100%; display: flex; scroll-behavior: smooth; HEIGHT: 650px" frameborder="no">
+		</iframe>
 
-		// Get the <span> element that closes the modal
-		var span = document.getElementsByClassName("close")[0];
+		<script>
 
-		// When the user clicks the button, open the modal 
-		btn.onclick = function() {
-		  modal.style.display = "block";
-		}
+			function loading() {
 
-		// When the user clicks on <span> (x), close the modal
-		span.onclick = function() {
-		  modal.style.display = "none";
-		  		
-		 		
-		}
+				// Get the modal
+				var modal = document.getElementById("myModal");
 
-		// When the user clicks anywhere outside of the modal, close it
-		window.onclick = function(event) {
-		  if (event.target == modal) {
-		    modal.style.display = "none";
-		  }
-		}
-	}
-	</script>
-	<style>
-	body {font-family: Arial, Helvetica, sans-serif;}
+				// Get the button that opens the modal
+				var btn = document.getElementById("myBtn");
 
-	/* The Modal (background) */
-	.modal {
-	  display: none; /* Hidden by default */
-	  position: fixed; /* Stay in place */
-	  z-index: 1; /* Sit on top */
-	  padding-top: 0px; /* Location of the box */
-	  left: 0;
-	  top: 0;
-	  width: 100%; /* Full width */
-	  height: 100%; /* Full height */
-	  overflow: auto; /* Enable scroll if needed */
-	  background-color: rgb(0,0,0); /* Fallback color */
-	  background-color: rgba(0,0,0,0.9); /* Black w/ opacity */
-	  
-	}
+				// Get the <span> element that closes the modal
+				var span = document.getElementsByClassName("close")[0];
 
-	/* Modal Content */
-	.modal-content {
-	  background-color: #fefefe;
-	  margin:0px;
-	  padding:0px;
-	  border: 1px solid #888;
-	  width: 100%;
-	}
+				// When the user clicks the button, open the modal 
+				btn.onclick = function () {
+					modal.style.display = "block";
+				}
 
-	/* The Close Button */
-	.close:hover,
-	.close:focus {
-	  color: #000;
-	  text-decoration: none;
-	  cursor: pointer;
-	}
-	</style>
+				// When the user clicks on <span> (x), close the modal
+				span.onclick = function () {
+					modal.style.display = "none";
 
-</div>
-<div>
-<script type="application/javascript">
 
-function resizeIFrameToFitContent( iFrame ) {
+				}
 
-    iFrame.width  = iFrame.contentWindow.document.body.scrollWidth;
-    iFrame.height = iFrame.contentWindow.document.body.scrollHeight;
-}
+				// When the user clicks anywhere outside of the modal, close it
+				window.onclick = function (event) {
+					if (event.target == modal) {
+						modal.style.display = "none";
+					}
+				}
+			}
+		</script>
+		<style>
+			body {
+				font-family: Arial, Helvetica, sans-serif;
+			}
 
-window.addEventListener('DOMContentLoaded', function(e) {
+			/* The Modal (background) */
+			.modal {
+				display: none;
+				/* Hidden by default */
+				position: fixed;
+				/* Stay in place */
+				z-index: 1;
+				/* Sit on top */
+				padding-top: 0px;
+				/* Location of the box */
+				left: 0;
+				top: 0;
+				width: 100%;
+				/* Full width */
+				height: 100%;
+				/* Full height */
+				overflow: auto;
+				/* Enable scroll if needed */
+				background-color: rgb(0, 0, 0);
+				/* Fallback color */
+				background-color: rgba(0, 0, 0, 0.9);
+				/* Black w/ opacity */
 
-    var iFrame = document.getElementById( 'frame' );
-    resizeIFrameToFitContent( iFrame );
+			}
 
-    // or, to resize all iframes:
-    var iframes = document.querySelectorAll("frame");
-    for( var i = 0; i < iframes.length; i++) {
-        resizeIFrameToFitContent( iframes[i] );
-    }
-} );
+			/* Modal Content */
+			.modal-content {
+				background-color: #fefefe;
+				margin: 0px;
+				padding: 0px;
+				border: 1px solid #888;
+				width: 100%;
+			}
 
-</script>
+			/* The Close Button */
+			.close:hover,
+			.close:focus {
+				color: #000;
+				text-decoration: none;
+				cursor: pointer;
+			}
+		</style>
 
-    <script>
-	
-	
-        var openFile = function(event) {
-            var input = event.target;
-	   
-        
+	</div>
+	<div>
+		<script type="application/javascript">
 
-            var reader = new FileReader();
-            reader.onload = function() {
-                var dataURL = reader.result;
-                var output = document.getElementById('frame');
-                output.src = dataURL;
-	
-            };
-            reader.readAsDataURL(input.files[0]);
-	   
-	    document.getElementById('frame').style.display = 'block'; 	
-        };
-	
-    </script>
+			function resizeIFrameToFitContent(iFrame) {
 
-</div>
+				iFrame.width = iFrame.contentWindow.document.body.scrollWidth;
+				iFrame.height = iFrame.contentWindow.document.body.scrollHeight;
+			}
+
+			window.addEventListener('DOMContentLoaded', function (e) {
+
+				var iFrame = document.getElementById('frame');
+				resizeIFrameToFitContent(iFrame);
+
+				// or, to resize all iframes:
+				var iframes = document.querySelectorAll("frame");
+				for (var i = 0; i < iframes.length; i++) {
+					resizeIFrameToFitContent(iframes[i]);
+				}
+			});
+
+		</script>
+
+		<script>
+
+
+			var openFile = function (event) {
+				var input = event.target;
 
 
 
-</body>
+				var reader = new FileReader();
+				reader.onload = function () {
+					var dataURL = reader.result;
+					var output = document.getElementById('frame');
+					output.src = dataURL;
+
+				};
+				reader.readAsDataURL(input.files[0]);
+
+				document.getElementById('frame').style.display = 'block';
+			};
+			function run() {
+				let texto = document.getElementById("texto").value;
+				let update = document.getElementById("update").value;
+				var html = `
+			<!DOCTYPE html>
+			<html>
+			<title>Projeto Game</title>	
+			<body>
+			${texto}
+			${update}
+			</body>
+			</html>	`;
+
+				let output = document.getElementById('frame');
+				output.contentDocument.body.innerHTML = html;
+				var modal = document.getElementById("myModal");
+				modal.style.display = "block";
 
 
-</html>
+			}
+
+		</script>
+
+	</div>
 
 
+	</body>
 
+	</html>
