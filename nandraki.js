@@ -105,7 +105,7 @@ class Nandraki {
     } 
 
     }
-    static move_obj(id,left,top,fixed) {
+    static move_obj(id="String",left=0,top=0,fixed=false) {
         let body = document.getElementById(id);
         if(fixed==true){
             body.style.position = 'absolute'; 
@@ -229,14 +229,27 @@ game = {
 
     },
     click_som: function(id, link_som) {
+        if(game.check_id(id) == true){
         function play() {
             let audio1 = new Audio();
             audio1.src = link_som;
             audio1.play();
         }
         document.getElementById(id).addEventListener("click", play, false);
-
-    }, 
+       } 
+    },
+    click: function(id, func) {
+        if(game.check_id(id) == true){
+        document.getElementById(id).addEventListener("click", func, false);
+        }
+    },
+    click_target: function (id, func) {
+        window.onclick = function (event) {
+            if (event.target == id) {
+                func;
+            }
+        };
+    },
     start_som: function(link_som) {
         function play() {
             let audio = new Audio();
@@ -454,17 +467,24 @@ game = {
         document.getElementById(id).imageRendering = "pixelated";
 
     },
-    jump_force: function(id, valor, time) {
+    jump_force: function(id,mi,ma,cont) {
 
         document.getElementById(id).animate([{
-                top: valor + "px"
-            },
-            {
-                animationFillMode: "forwards"
-            }
-        ], {
+            animationDirection: "alternate"
+        },
+        {
+           top:mi + "px"
+        },
+        {
+            top: ma + "px"
+        },
+        {
+            animationDirection: "alternate"
+        }
+    ], {
 
-            duration: time,
+
+            duration:cont,
             iterations: 1
 
         });
@@ -727,11 +747,7 @@ game = {
 
 
     },
-    click_start: function(id, func) {
-
-        document.getElementById(id).addEventListener("click", func, false);
-
-    },
+ 
     move_touch: function(id) {
         let element = document.getElementById(id);
         element.classList.add("dragme");
@@ -1238,7 +1254,25 @@ game = {
         document.getElementById(id).textContent = text;
 
     },
+    modal: function(id,text,FontSize,height,width,posX,posY,left,top){
+        if(game.check_id(id)==false){
+            let html = `
+            <div id="${id}" style="position: absolute;
+            background-color: #ccc;top:${posY}px;left:${posX}px;
+            height:${height}px;width:${width}px; border: thick  groove #d3d3d3;">
+        <p id="text_${id}" style=" position: absolute;
+            left:1${left}px;
+            top:${top}px;   font-family:Courier New;font-size:${FontSize}px;">${text}</p>
+            <p id="btn_${id}" style=" font-size:${FontSize}px;background-color: #ccc; position: absolute;top:${top/2}px;left:${width+5}px;cursor:pointer;border: thick  groove #d3d3d3;">Click</p>
+        </div>
+            `;
+          
+         document.body.innerHTML += html;
+         document.getElementById(id).style.zIndex = 100;
+         
+        }
 
+    },
     clock_time: function(m, s, valor) {
 
         let segundos = 0;
