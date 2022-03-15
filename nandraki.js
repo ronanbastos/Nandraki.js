@@ -1,18 +1,18 @@
 class Nandraki {
 
     constructor(id,vida, gravidade, velocidade, massa, di, up, mirror, anim, jump, frame) {
-        this.id = id;
-	this.vida = vida;
-        this.gravidade = gravidade;
-        this.velocidade = velocidade;
-        this.massa = massa;
-        this.di = di;
-        this.up = up;
-        this.mirror = mirror;
-        this.anim = anim;
-        this.jump = jump;
-        this.frame = frame;
-        this.body = document.getElementById(this.id);
+		this.id = id;
+		this.vida = vida;
+		this.gravidade = gravidade;
+		this.velocidade = velocidade;
+		this.massa = massa;
+		this.di = di;
+		this.up = up;
+		this.mirror = mirror;
+		this.anim = anim;
+		this.jump = jump;
+		this.frame = frame;
+		this.body = document.getElementById(this.id);
 
     }
     static create_sprite(id, camadas, img1, img2, img3, img4, img5, width, height, boxl, boxh, left, top) {
@@ -1254,7 +1254,7 @@ game = {
         document.getElementById(id).textContent = text;
 
     },
-    modal: function(id,text,FontSize,height,width,posX,posY,left,top){
+    modal: function(id,text,FontSize,height,width,posX,posY,left,top,func){
         if(game.check_id(id)==false){
             let html = `
             <div id="${id}" style="position: absolute;
@@ -1263,13 +1263,14 @@ game = {
         <p id="text_${id}" style=" position: absolute;
             left:1${left}px;
             top:${top}px;   font-family:Courier New;font-size:${FontSize}px;">${text}</p>
-            <p id="btn_${id}" style=" font-size:${FontSize}px;background-color: #ccc; position: absolute;top:${top/2}px;left:${width+5}px;cursor:pointer;border: thick  groove #d3d3d3;">Click</p>
+            <p id="btn_${id}" style=" font-size:${FontSize}px;background-color: #ccc; position: absolute;top:${top/2+11.5}px;left:${width+5}px;cursor:pointer;border: #d3d3d3;">▼</p>
         </div>
             `;
           
          document.body.innerHTML += html;
          document.getElementById(id).style.zIndex = 100;
-         
+         game.click("btn_"+id,func);
+
         }
 
     },
