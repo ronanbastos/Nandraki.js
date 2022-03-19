@@ -105,7 +105,7 @@ class Nandraki {
     } 
 
     }
-    static move_obj(id="String",left=0,top=0,fixed=false) {
+    static move_obj(id,left,top,fixed) {
         let body = document.getElementById(id);
         if(fixed==true){
             body.style.position = 'absolute'; 
@@ -250,13 +250,25 @@ game = {
             }
         };
     },
+	import_audio:function(){
+		
+		 let html = `
+					 <audio id="audio"></audio>    
+					 `;
+                document.body.innerHTML += html;
+	},
+	set_audio:function(link_som){
+		
+		let som = document.getElementById("audio");
+		som.src = link_som;
+		som.play();
+				
+	},
     start_som: function(link_som) {
-        function play() {
+      
             let audio = new Audio();
             audio.src = link_som;
-            audio.play();
-        }
-        return play();
+			return audio.play();
 
     },
     time_som:function(link_som,time){
@@ -272,7 +284,7 @@ game = {
     spawn_sprite: function(id,img,left,top) {
       
         let html = `				  		
-        <img id="sprite_${id}" style="position:absolute;left:${left}px;top:${top}px;" src="${img}" />
+        <img id="${id}" style="position:absolute;left:${left}px;top:${top}px;" src="${img}" />
              `;
         document.body.innerHTML += html;
 
@@ -1363,11 +1375,11 @@ game = {
 			let local1 = game.coord(id1);
 			let local2 = game.coord(id2);
 			check_r = game.colidir(local1, local2);
-			
+            return check_r;
 		}
        
 
-		return check_r;
+	
 
     },
     gravit: function(obj) {
