@@ -1427,8 +1427,9 @@ game = {
         let local1 = game.coord(obj1);
         let local2 = game.coord(obj2);
         let check_r = local1.offsetRight < local2.offsetRight;
+		return check_r;
 		}	
-        return check_r;
+        
     },
     top_up_check: function(id1, id2) {
 		if(game.check_id(id1) == true && game.check_id(id2)== true){
@@ -1437,8 +1438,9 @@ game = {
         let local1 = game.coord(obj1);
         let local2 = game.coord(obj2);
         let check_t = local1.offsetTop >= local2.offsetTop;
+			   return check_t;
 		}
-        return check_t;
+     
     },
 
     top_down_check: function(id1, id2) {
