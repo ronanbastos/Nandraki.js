@@ -59,6 +59,9 @@ function crono(){
     if(def==1){
        let value=game.get_text("tempo")
         value-=1
+        if(value<=0){
+        game.load("gameOver.html")
+        }
         game.set_text("tempo",value)
         def=-60
     }
