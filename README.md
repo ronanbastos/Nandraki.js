@@ -58,6 +58,7 @@ In the engine folder contains demo test file]
 	<html>
 	<head>
 		<script src="nandraki.js"></script>
+		<script src="https://unpkg.com/nandraki@1.4.6/nandraki.js" ></script>
 	</head>
 	<body>
 
