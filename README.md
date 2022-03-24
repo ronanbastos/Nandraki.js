@@ -2,8 +2,6 @@
 
 <br>
 <h1 align="center"><img src="https://img.shields.io/badge/Lincense-MIT-green" alt="index-html" border="0"> <img src="https://img.shields.io/badge/Version-1.4.5 [next:05/05/2022]-blue" alt="index-html" border="0"> <img src="https://img.shields.io/badge/Projeto-Ativo-success" alt="index-html" border="0"><img src="https://img.shields.io/badge/Ultima%20Att-17/03/2022-green" alt="index-html" >     
-<br>
-<h6 align="center"><img src="https://i.ibb.co/3hqPt3N/index-html.png" alt="index-html" border="0"><p>index.html</h6>
 
 </br>
 <h3>Sobre o projeto / 
