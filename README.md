@@ -87,28 +87,28 @@ In the engine folder contains demo test file]
 
 <h2>Funcionalidades e Metas</h2>
 
-- [x] Criar interface completa<p>
-- [x] Export html<p>
-- [ ] Pre-renderização de frame<p>
-- [ ] Visulização de arquivos do projeto<p>	
-- [x] Criar interface da engine html<p>
-- [x] Export html<p>
-- [x] Manipulação de elemento Dom<p>
-- [x] Key event down e up<p>
-- [x] Event touch,click,move<p>
-- [x] Manipulação de css e js<p>
-- [x] Criar event Gamepad touch<p>
-- [x] Manipulação de animação	<p>		
-- [ ] Manipulação de canvas <p>
-- [ ] Criar event Gamepad<p>
-- [ ] Verficador de estados animação<p>
-- [ ] Import Apps Android<p>
+- [x] Criar interface completa<p><br>
+- [x] Export html<p><br>
+- [ ] Pre-renderização de frame<p><br>
+- [ ] Visulização de arquivos do projeto<p><br>	
+- [x] Criar interface da engine html<p><br>
+- [x] Export html<p><br>
+- [x] Manipulação de elemento Dom<p><br>
+- [x] Key event down e up<p><br>
+- [x] Event touch,click,move<p><br>
+- [x] Manipulação de css e js<p><br>
+- [x] Criar event Gamepad touch<p><br>
+- [x] Manipulação de animação	<p><br>		
+- [ ] Manipulação de canvas <p><br>
+- [ ] Criar event Gamepad<p><br>
+- [ ] Verficador de estados animação<p><br>
+- [ ] Import Apps Android<p><br>
 	
-	
+<br>	
 # projeto Electron
   Aqui: https://github.com/ronanbastos/Nandraki.js/tree/Nandraki-Electron
 	
-
+<br>
 # Autor 
 Projeto esta sendo feito por mim @RonanBasto,caso queria ajudar pode entra conta comigo.<p>
 Email:ronanbatos@hotmail.com	
