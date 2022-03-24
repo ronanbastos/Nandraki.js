@@ -112,4 +112,4 @@ Email:ronanbatos@hotmail.com
 <h4> Doar:<a href="https://www.paypal.com/donate?business=4KJAVYQLQDMHA&no_recurring=0&item_name=Ajudar+a+engine&currency_code=BRL">Aqui!</a></h4>
 
 # Documentation.md
- Aqui:--
+ Aqui: https://github.com/ronanbastos/Nandraki.js/blob/main/Documentation.md
