@@ -110,7 +110,7 @@ In the engine folder contains demo test file]
 	
 # Documentação
 
-Aqui: https://ronanbastos.github.io/Nandraki.js/
+Aqui: --
 
 # Autor 
 Projeto esta sendo feito por mim @RonanBasto,caso queria ajudar pode entra conta comigo.<p>
