@@ -1,6 +1,3 @@
-<h1 align="center"> <img src="https://i.ibb.co/n3BMNKM/logo.png" alt="mascote"  border="0"></h1>
-<h1 align="center"><img src="https://img.shields.io/badge/Lincense-MIT-green" alt="index-html" border="0"> <img src="https://img.shields.io/badge/Version-1.0.0-blue" alt="index-html" border="0"> <img src="https://img.shields.io/badge/Projeto-inBuild-important" alt="index-html" border="0"> <img src="https://img.shields.io/badge/Repo%20size-1,3/227,0MiB-important" alt="index-html" border="0"> <img src="https://img.shields.io/badge/Build-Alfa-red" alt="index-html" border="0">     
-</h1>
 <br>
 <h1 align="center"><img src="https://img.shields.io/badge/Lincense-MIT-green" alt="index-html" border="0"> <img src="https://img.shields.io/badge/Version-1.4.5 [next:05/05/2022]-blue" alt="index-html" border="0"> <img src="https://img.shields.io/badge/Projeto-Ativo-success" alt="index-html" border="0"><img src="https://img.shields.io/badge/Ultima%20Att-19/02/2022-green" alt="index-html" >     
 <br>
