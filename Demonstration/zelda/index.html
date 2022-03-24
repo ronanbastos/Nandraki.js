@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" http-equiv="Content-Language" content="pt-br">
+<script src="nandraki.js"></script>
+<script src="controle.js"></script>
+<script src="maps.js"></script>
+<script src="player.js"></script>
+<script src="inimigo.js"></script>
+<script src="hud.js"></script>
+<style>
+body {
+  background-color: #3a3a3af1;
+}
+</style>     
+</head>
+<body style="width:100%;height:100%;   zoom: 2; touch-action: none; overflow: auto; ">
+
+<script>
+ 
+  Nandraki.create_sprite("player",5,"sprite/link/linkWalk.png","sprite/link/linkWalkDown.png","sprite/link/linkWalkUp.png","sprite/link/linkAtk.png","sprite/link/linkGrapAtk.png",64,64,9,14,28,25);
+  Nandraki.ative_box("box_player",false);
+  Nandraki.create_box("player",10,5,40,33,"none");
+  Nandraki.ative_box("hit_player",false);
+  
+  Nandraki.create_sprite("vida",1,"sprite/itens/item.png",null,null,null,null,64,64,8,10,10,10);
+  Nandraki.move_obj("vida",100,-20,true) 
+
+  Nandraki.create_sprite("life+",1,"sprite/itens/item.png",null,null,null,null,64,64,8,10,10,10);
+  Nandraki.move_obj("life+",150,100,false) 
+  Nandraki.ative_box("box_life+",false);
+  Nandraki.move_obj("box_life+",25,25,false) 
+
+  game.img_frame("life+","img[1]life+",64,64, 8,7, 8, 0);
+
+  Nandraki.create_sprite("enegia",1,"sprite/itens/item01.png",null,null,null,null,64,64,23,23,10,10);
+  Nandraki.move_obj("enegia",-11.5,-10,true) 
+  game.img_frame("enegia","img[1]enegia",64, 64,32,24, 8, 0);
+  game.camada("enegia",50)
+
+  Nandraki.create_sprite("inimigo",2,"sprite/enemies/Enemies01-walk01.png","sprite/enemies/Enemies01-atk.png",null,null,null,64,64,9,14,28,28);
+  Nandraki.ative_box("box_inimigo",false);
+  
+
+
+  const player = new Nandraki("player",10,10,1.5,10,0,0,0,"parado",false,1);
+  const inimigo = new Nandraki("inimigo",5,10,1.5,0,500,0,0,"parado",false,1);
+  //const maps = new Maps();
+  var itemPlayer = Player.hud(0,0,0,0);
+  Hud_config()
+  x=-20
+jogo = {
+  
+    loop : function() {   
+     
+
+      Inimigo.Move;
+      
+  
+      Player.AnimationFrame();
+
+   
+
+      game.camera("2d",player.di,player.up);
+      if(player.up > inimigo.up){
+         
+         game.camada("player",5)
+         
+
+     }else{
+      
+      game.camada("player",-5)
+     
+
+     }
+    
+     if(game.check_colidir("hit_player","box_inimigo")==true && game.check_id("box_inimigo")==true ){
+      inimigo.vida-=1;
+
+      if(player.di>inimigo.di){
+        inimigo.di-=5;
+      }else{
+        inimigo.di+=5;
+      }
+     
+     }
+     
+     if(inimigo.vida<0){
+
+      game.kill_free("inimigo")
+   
+    
+     }
+     if(player.vida>=10){
+      game.img_frame("vida","img[1]vida",64,64, 8,0, 8, 0);
+      player.vida=10
+     }
+     if(player.vida==7){
+      game.img_frame("vida","img[1]vida",64,64, 8,1, 8, 0);
+   
+     }
+     if(player.vida<=5 && game.check_id("player") == true ){
+      if(x>=1){
+        game.start_som("som/lowhp.wav")
+        x=-20
+      }
+      x++
+      game.img_frame("vida","img[1]vida",64,64, 8,2, 8, 0);
+       
+     }
+     if(player.vida<=0){
+ 
+    game.kill_free("player")
+    game.img_frame("vida","img[1]vida",64,64, 8,3, 8, 0);
+    } 
+   
+    
+      //console.log("bumerangue: "+bumbe);
+     // console.log("destancia: "+distancia);
+    // console.log("fim distino: "+fimDistino);
+   // console.log("fim hit inimigo: "+game.check_colidir("sprite_item","box_inimigo")==true); 
+  // console.log(inimigo.vida);
+
+  function irbomberfrente(){
+      if(game.check_id("sprite_item") == true){
+
+
+        if(distancia >= player.di+50 && fimDistino==false ){
+
+              fimDistino=true   
+
+        }  
+
+        if(fimDistino==false){
+          
+              distancia+=10
+              game.force_obj("sprite_item",distancia,game.coord(player.id).y-player.up-10, false);
+
+        }
+
+        if(fimDistino==true){
+          
+             distancia-=10
+             game.force_obj("sprite_item",distancia,game.coord(player.id).y-player.up-10, true); 
+          
+
+        }
+
+        if(distancia == -50 || distancia >= 1000 ){
+                 game.kill_free("sprite_item")
+                bumbe=false
+                  gobumbe=false
+                distancia=false
+                  fimDistino=false
+                  distancia=0
+        } 
+
+        if(game.check_colidir("sprite_item","box_player")==true){
+                game.kill_free("sprite_item")
+                bumbe=false
+                  gobumbe=false
+                  distancia=false
+                    fimDistino=false
+                  distancia=0
+
+        }
+        if(game.check_colidir("sprite_item","box_inimigo")==true){
+
+            inimigo.vida-=1
+
+        }
+    
+
+      }
+
+
+   }
+
+   //---------------//
+
+  function irbombercosta(){
+      if(game.check_id("sprite_item") == true){
+
+       
+        if(fimDistino==false && gobumbe=="costa" && distancia==-150){
+
+              fimDistino=true   
+              
+        }  
+
+        if(fimDistino==false){
+          
+              distancia-=10
+              game.force_obj("sprite_item",distancia,game.coord(player.id).y-player.up-10, false);
+
+        }
+
+        if(fimDistino==true){
+          
+             distancia+=10
+             game.force_obj("sprite_item",distancia,game.coord(player.id).y-player.up-10, true); 
+          
+
+        }
+
+        if(distancia == -200 ){
+               game.kill_free("sprite_item")
+                bumbe=false
+                gobumbe=false
+                distancia=false
+                fimDistino=false
+                distancia=0
+
+        } 
+        if(distancia == 200 ){
+               game.kill_free("sprite_item")
+                bumbe=false
+                  gobumbe=false
+                distancia=false
+                  fimDistino=false
+                  distancia=0
+                  
+        } 
+
+        if(game.check_colidir("sprite_item","box_player")==true){
+                game.kill_free("sprite_item")
+                bumbe=false
+                  gobumbe=false
+                distancia=false
+                  fimDistino=false
+                  distancia=0
+
+        }
+        if(game.check_colidir("sprite_item","box_inimigo")==true){
+
+            inimigo.vida-=1
+        }
+     
+        
+      }
+
+
+   }
+
+
+   if(gobumbe=="frente"){
+
+      irbomberfrente();
+
+   }
+  if(gobumbe=="costa"){
+
+    irbombercosta();
+
+  } 
+
+  if(game.check_colidir("bomba","box_inimigo")==true &&  bombaKabom==true){
+   
+    //game.kill_free("inimigo")
+    inimigo.vida-=5
+    inimigo.di-=5
+
+  }
+  if(game.check_colidir("bomba","box_player")==true &&  bombaKabom==true){
+
+//game.kill_free("inimigo")
+player.vida-=1
+player.di-=5
+
+
+}
+if(game.check_colidir("box_life+","box_player")==true && game.check_id("box_life+") == true ){
+
+game.start_som("som/heart.wav")
+player.vida= player.vida + 8
+game.kill_free("life+")
+
+
+}
+
+  
+        
+    
+    
+    
+    
+     
+
+    },
+}
+
+game.update(jogo.loop,60);
+
+
+</script>
+
+<body >
+</html>
