@@ -87,22 +87,22 @@ In the engine folder contains demo test file]
 
 <h2>Funcionalidades e Metas</h2>
 
-- [x] Criar interface completa
-- [x] Export html
-- [ ] Pre-renderização de frame
-- [ ] Visulização de arquivos do projeto	
-- [x] Criar interface da engine html
-- [x] Export html
-- [x] Manipulação de elemento Dom
-- [x] Key event down e up
-- [x] Event touch,click,move
-- [x] Manipulação de css e js
-- [x] Criar event Gamepad touch
-- [x] Manipulação de animação			
-- [ ] Manipulação de canvas 
-- [ ] Criar event Gamepad
-- [ ] Verficador de estados animação
-- [ ] Import Apps Android
+- [x] Criar interface completa<p>
+- [x] Export html<p>
+- [ ] Pre-renderização de frame<p>
+- [ ] Visulização de arquivos do projeto<p>	
+- [x] Criar interface da engine html<p>
+- [x] Export html<p>
+- [x] Manipulação de elemento Dom<p>
+- [x] Key event down e up<p>
+- [x] Event touch,click,move<p>
+- [x] Manipulação de css e js<p>
+- [x] Criar event Gamepad touch<p>
+- [x] Manipulação de animação	<p>		
+- [ ] Manipulação de canvas <p>
+- [ ] Criar event Gamepad<p>
+- [ ] Verficador de estados animação<p>
+- [ ] Import Apps Android<p>
 	
 	
 # projeto Electron
