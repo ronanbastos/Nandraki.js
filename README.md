@@ -90,7 +90,7 @@ In the engine folder contains demo test file]
 - [ ] Pre-renderização de frame<br>
 - [ ] Visulização de arquivos do projeto<<br>	
 - [x] Criar interface da engine html<br>
-- [x] Export html<p><br>
+- [x] Export html<br>
 - [x] Manipulação de elemento Dom<br>
 - [x] Key event down e up<br>
 - [x] Event touch,click,move<br>
