@@ -417,5 +417,3 @@ display item: function()
 	 // none=ocuto
 	 // block=visivel
 	 game.display(id obj,"none")
-
-
