@@ -103,8 +103,7 @@ In the engine folder contains demo test file]
 	
 <br>	
 # projeto Electron
-  Aqui: https://github.com/ronanbastos/Nandraki.js/tree/Nandraki-Electron
-	
+  Aqui: --
 <br>
 # Autor 
 Projeto esta sendo feito por mim @RonanBasto,caso queria ajudar pode entra conta comigo.<p>
