@@ -2,7 +2,7 @@ class Nandraki {
 
     constructor(id,vida, gravidade, velocidade, massa, di, up, mirror, anim, jump, frame) {
         this.id = id;
-	    this.vida = vida;
+        this.vida = vida;
         this.gravidade = gravidade;
         this.velocidade = velocidade;
         this.massa = massa;
