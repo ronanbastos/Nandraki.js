@@ -2,7 +2,7 @@ class Nandraki {
 
     constructor(id,vida, gravidade, velocidade, massa, di, up, mirror, anim, jump, frame) {
         this.id = id;
-	this.vida = vida;
+	    this.vida = vida;
         this.gravidade = gravidade;
         this.velocidade = velocidade;
         this.massa = massa;
@@ -168,8 +168,8 @@ class Nandraki {
     }
 
     static version() {
-        console.log("Version[1.4.5]");
-        alert("Version[1.4.5]");
+        console.log("Version[1.4.7]");
+        alert("Version[1.4.7]");
 
     }
 
@@ -250,25 +250,13 @@ game = {
             }
         };
     },
-	import_audio:function(){
-		
-		 let html = `
-					 <audio id="audio"></audio>    
-					 `;
-                document.body.innerHTML += html;
-	},
-	set_audio:function(link_som){
-		
-		let som = document.getElementById("audio");
-		som.src = link_som;
-		som.play();
-				
-	},
     start_som: function(link_som) {
-      
+        function play() {
             let audio = new Audio();
             audio.src = link_som;
-			return audio.play();
+            audio.play();
+        }
+        return play();
 
     },
     time_som:function(link_som,time){
@@ -624,6 +612,11 @@ game = {
     force_obj: function(id, x, y, rotate) {
         if(game.check_id(id) == true){
         let element = document.getElementById(id);
+        if (rotate == null) {
+
+            element.style.transform = "translate3d(" + x + "px," + y + "px, 0px)";
+
+        }
         if (rotate == true) {
 
             element.style.transform = "translate3d(" + x + "px," + y + "px, 0px) rotateY(180deg)";
@@ -946,11 +939,6 @@ game = {
         return Math.floor(Math.random() * max + 1);
 
     },
-
-    set_text: function(id, txt) {
-        let h = document.getElementById(id);
-        return h.innerHTML = txt;
-    },
     log_key: function() {
 
         log = document.getElementById('body');
@@ -969,14 +957,28 @@ game = {
         obj.style.opacity = op;
 
     },
-    camera: function(specto, x, y) {
+    fixed_body:function(zoom){
+        document.body.style.width="100%";
+        document.body.style.height="100%";
+        document.body.style.position="absolute"; 
+        document.body.style.overflow="hidden";
+        document.body.style.zoom=zoom;  
+        document.body.style.scrollBehavior="smooth";
+    },
+    camera: function(specto, x, y,xLimit,yLimit) {
         if (specto == "2d" || specto == "2D") {
+            if(x>=xLimit){
 
-            window.scroll(x + 100, y + 100);
+            }else if(y >= yLimit){
+
+            }else{
+                window.scroll(x, y); 
+            }
+           
 
         } else {
 
-            console.log("Erro:specto x,y");
+            console.log("Erro:specto");
         }
 
     },
@@ -1266,6 +1268,10 @@ game = {
         return get_text;
 
     },
+    set_text: function(id, txt) {
+        let h = document.getElementById(id);
+        return h.innerHTML = txt;
+    },
     edite_text: function(id, text) {
 
         document.getElementById(id).textContent = text;
@@ -1427,9 +1433,8 @@ game = {
         let local1 = game.coord(obj1);
         let local2 = game.coord(obj2);
         let check_r = local1.offsetRight < local2.offsetRight;
-		return check_r;
 		}	
-        
+        return check_r;
     },
     top_up_check: function(id1, id2) {
 		if(game.check_id(id1) == true && game.check_id(id2)== true){
@@ -1438,9 +1443,8 @@ game = {
         let local1 = game.coord(obj1);
         let local2 = game.coord(obj2);
         let check_t = local1.offsetTop >= local2.offsetTop;
-			   return check_t;
 		}
-     
+        return check_t;
     },
 
     top_down_check: function(id1, id2) {
