@@ -952,10 +952,14 @@ game = {
 
         document.addEventListener('keyup', func);
     },
-    opacity: function(ob, op) {
-        let obj = document.getElementById(ob);
+    opacity: function(id, op) {
+        let obj = document.getElementById(id);
         obj.style.opacity = op;
 
+    },
+    type_curso:function(id,type){
+        let obj = document.getElementById(id);
+        obj.style.cursor = type;
     },
     fixed_body:function(zoom){
         document.body.style.width="100%";
