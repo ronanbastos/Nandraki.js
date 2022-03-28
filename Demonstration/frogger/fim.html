@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="nandraki.js"></script>
+<script src="player.js"></script>
+<script src="controle.js"></script>
+<script src="player.js"></script>
+</head>
+<body style="width:100%;height:100%; position: absolute; overflow: hidden; zoom:1.5;  scroll-behavior: smooth; touch-action: none;background:black; ">
+
+	<script>
+
+        game.spawn_sprite("ouver","fim.png",15,-10)
+        op=-60  
+		Player = new Nandraki("player",1,null,null,null,1,1,0,"parado",null,1)        
+		Nandraki.create_sprite(Player.id,1,"Froggerr.png",null,null,null,null,64,64,15,20,250,350)
+		Nandraki.move_obj("box_player",23,21)
+		Nandraki.ative_box("box_player",false)
+		game.opacity("ouver",0.01)
+		
+    Nandraki.create_ui("continue","Continue","#ffff")
+	Nandraki.move_ui("continue",325,150,false)
+	Nandraki.ative_box("continue",true) 
+	game.opacity("ouver",1)
+	    myjogo = {
+
+
+		    loop: function(){ 
+				game.force_obj(Player.id,Player.di,Player.up)
+				AnimPlayer(); 
+				if(game.check_colidir("box_player","continue")==true){
+					game.load("index.html")
+				}
+				op++
+				if(op==1){
+				game.opacity("ouver",0.1)
+				}
+			    if(op==2){
+				game.opacity("ouver",0.2)
+				}
+				if(op==6){
+				game.opacity("ouver",0.3)
+				}
+				if(op==7){
+				game.opacity("ouver",0.4)
+				}
+				if(op==8){
+				game.opacity("ouver",0.5)
+				}
+				if(op==9){
+				game.opacity("ouver",0.6)
+				}
+				if(op==10){
+				game.opacity("ouver",0.7)
+				}
+				if(op==11){
+				game.opacity("ouver",0.8)
+				}
+				if(op==12){
+				game.opacity("ouver",0.9)
+				}
+				if(op==13){
+				game.opacity("ouver",1)	
+				op=-60
+				}			
+		   
+		    },	
+        }
+
+	       fps=85;	
+	       game.update(myjogo.loop,fps);  
+     
+</script>
+</body>
+</html>
