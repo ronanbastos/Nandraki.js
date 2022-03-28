@@ -1,18 +1,18 @@
 class Nandraki {
 
     constructor(id,vida, gravidade, velocidade, massa, di, up, mirror, anim, jump, frame) {
-        this.id = id;
-	this.vida = vida;
-        this.gravidade = gravidade;
-        this.velocidade = velocidade;
-        this.massa = massa;
-        this.di = di;
-        this.up = up;
-        this.mirror = mirror;
-        this.anim = anim;
-        this.jump = jump;
-        this.frame = frame;
-        this.body = document.getElementById(this.id);
+		this.id = id;
+		this.vida = vida;
+		this.gravidade = gravidade;
+		this.velocidade = velocidade;
+		this.massa = massa;
+		this.di = di;
+		this.up = up;
+		this.mirror = mirror;
+		this.anim = anim;
+		this.jump = jump;
+		this.frame = frame;
+		this.body = document.getElementById(this.id);
 
     }
     static create_sprite(id, camadas, img1, img2, img3, img4, img5, width, height, boxl, boxh, left, top) {
