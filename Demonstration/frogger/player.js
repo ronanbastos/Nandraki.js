@@ -2,7 +2,7 @@ fim=0
 function check_ui(){
         
     Nandraki.create_ui("tempo_txt","Tempo:","#ffff")
-    Nandraki.create_ui("tempo",10,"#ffff")
+    Nandraki.create_ui("tempo",60,"#ffff")
     Nandraki.move_ui("tempo_txt",100,-15,true)
     Nandraki.move_ui("tempo",140,-15,true)  
 
