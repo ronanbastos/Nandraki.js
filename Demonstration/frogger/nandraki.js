@@ -2,7 +2,7 @@ class Nandraki {
 
     constructor(id,vida, gravidade, velocidade, massa, di, up, mirror, anim, jump, frame) {
         this.id = id;
-	    this.vida = vida;
+	this.vida = vida;
         this.gravidade = gravidade;
         this.velocidade = velocidade;
         this.massa = massa;
@@ -971,13 +971,16 @@ game = {
     },
     camera: function(specto, x, y,xLimit,yLimit) {
         if (specto == "2d" || specto == "2D") {
-            if(x>=xLimit){
-
-            }else if(y >= yLimit){
+            if(x >=xLimit && y >= yLimit){
 
             }else{
-                window.scroll(x, y); 
+
+              window.scroll(x, y); 
             }
+         
+        
+               
+         
            
 
         } else {
