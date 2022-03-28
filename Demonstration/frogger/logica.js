@@ -87,7 +87,7 @@ function LogicaGame(){
         game.kill_free("player");
         let value=game.get_text("tempo")
         game.kill_free("final1")
-        value= 10
+        value= 60
         game.set_text("tempo",value)
         fim=fim+1;
         checkFim=true
@@ -99,7 +99,7 @@ function LogicaGame(){
         game.kill_free("player");
         let value=game.get_text("tempo")
         game.kill_free("final2")
-        value= 10
+        value= 60
         game.set_text("tempo",value)
         fim=fim+1;
         checkFim=true
@@ -110,7 +110,7 @@ function LogicaGame(){
         game.display("sapo4","block") 
         game.kill_free("player");
         game.kill_free("final4")
-        value= 10
+        value= 60
         game.set_text("tempo",value)
         fim=fim+1;
         checkFim=true
