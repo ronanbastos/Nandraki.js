@@ -971,13 +971,16 @@ game = {
     },
     camera: function(specto, x, y,xLimit,yLimit) {
         if (specto == "2d" || specto == "2D") {
-            if(x>=xLimit){
-
-            }else if(y >= yLimit){
+            if(x >=xLimit && y >= yLimit){
 
             }else{
-                window.scroll(x, y); 
+
+              window.scroll(x, y); 
             }
+         
+        
+               
+         
            
 
         } else {
