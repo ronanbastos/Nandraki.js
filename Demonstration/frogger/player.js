@@ -1,18 +1,13 @@
-
+fim=0
 function check_ui(){
-    
-    Nandraki.create_ui("pontos_txt","Pontos:","#ffff")
-    Nandraki.create_ui("pontos",0,"#ffff")
-    Nandraki.move_ui("pontos_txt",5,-15,true)
-    Nandraki.move_ui("pontos",50,-15,true) 
-    
+        
     Nandraki.create_ui("tempo_txt","Tempo:","#ffff")
     Nandraki.create_ui("tempo",10,"#ffff")
     Nandraki.move_ui("tempo_txt",100,-15,true)
     Nandraki.move_ui("tempo",140,-15,true)  
 
     Nandraki.create_ui("vida_txt","Vida:","#ffff")
-    Nandraki.create_ui("vida",3,"#ffff")
+    Nandraki.create_ui("vida",5,"#ffff")
     Nandraki.move_ui("vida_txt",200,-15,true)
     Nandraki.move_ui("vida",230,-15,true)    
 }

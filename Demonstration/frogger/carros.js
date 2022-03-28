@@ -69,20 +69,9 @@ function speedCar(){
 
     }
     if(game.check_id("carro04")==true){
-        if(game.check_colidir("carro04","carro02")==true){
-            game.force_obj("carro04",car4.x+=80,car4.y+=20)
-        }
-        if(game.check_colidir("carro04","carro03")==true){
-            game.force_obj("carro04",car4.x+=80,car4.y+=50)
-        }
-        if(game.check_colidir("carro04","carro05")==true){
-            game.force_obj("carro04",car4.x+=80,car4.y+=50)
-        }
-        if(game.check_colidir("carro04","carro06")==true){
-            game.force_obj("carro04",car4.x+=80,car4.y+=50)
-        }else{
+       
         game.force_obj("carro04",car4.x+=60,car4.y)
-        }   
+        
     }
     if(game.check_id("carro05")==true){
         game.force_obj("carro05",car5.x+=70,car5.y)

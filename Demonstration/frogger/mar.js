@@ -1,107 +1,111 @@
-/*
 
-        game.spawn_sprite("tronco1","itens/itens_09.png",10,10)  
-        game.spawn_sprite("tronco2","itens/itens_09.png",10,10) 
-        game.spawn_sprite("tronco3","itens/itens_09.png",10,10)  
-        game.spawn_sprite("tronco4","itens/itens_09.png",10,10)    
-        game.spawn_sprite("tronco5","itens/itens_09.png",10,10)    
-        game.spawn_sprite("tartaruga1","itens/itens_08.png",10,10)
-        game.spawn_sprite("tartaruga2","itens/itens_16.png",10,10)
-        game.spawn_sprite("tartaruga3","itens/itens_08.png",10,10)
-        game.spawn_sprite("tartaruga4","itens/itens_16.png",10,10)
-        game.spawn_sprite("tartaruga5","itens/itens_08.png",10,10)
 
-*/
 tronco1 = {
-    x:0,
+    id:"tronco1",
+    x:-150,
     y:0,
     ativo:false
 }
 tronco2 = {
-    x:1300,
-    y:395,
+    id:"tronco2",
+    x:-150,
+    y:0,
     ativo:false
 }
 tronco3 = {
-    x:0,
+    id:"tronco3",
+    x:-150,
     y:0,
     ativo:false
 }
 tronco4 = {
-    x:0,
+    id:"tronco4",
+    x:-150,
     y:0,
     ativo:false
 }
 tronco5 = {
+    id:"tronco5",
     x:0,
     y:0,
     ativo:false
 }
 
-tartaruga1 = {
-    x:0,
+tart1 = {
+    id:"tart1",
+    x:800,
     y:0,
     ativo:false
 }
-tartaruga2 = {
-    x:0,
+tart2 = {
+    id:"tart2",
+    x:800,
     y:0,
     ativo:false
 }
-tartaruga3 = {
-    x:0,
+tart3 = {
+    id:"tart3",
+    x:800,
     y:0,
     ativo:false
 }
-tartaruga4 = {
-    x:0,
+tart4 = {
+    id:"tart4",
+    x:800,
     y:0,
     ativo:false
 }
-tartaruga5 = {
-    x:0,
+tart5 = {
+    id:"tart5",
+    x:800,
     y:0,
     ativo:false
 }
 
-function troncoCreate(){
-    if(game.check_id("tronco1")==true){
-        if(game.check_colidir("tronco1","box_player")==true){
-            game.force_obj("player",Player.di+=5,Player.up)
-            tronco1.ativo=true
-        }else{
-            tronco1.ativo=false
-        }
-        game.force_obj("tronco1",tronco1.x+=5,tronco1.y)
-                           
-        if(tronco1.x > game.get_window_w()){
-            game.kill_free("tronco1")
-            tronco1.x=-15
+function troncoCreate(img,valor,obj,id,x,y){
+ 
+    if(game.check_id(id)==false){
 
-        }
-    }else{
-        game.spawn_sprite("tronco1","itens/itens_09.png",-50,415)  
-        game.camada("tronco1",-5) 
+        game.spawn_sprite(id,img,x,y)  
+        game.camada(id,-5) 
+
     }
+    if(obj.x > game.get_window_w()){
 
-    if(game.check_id("tronco2")==true){
-       
-        if(game.check_colidir("tronco2","box_player")==true){
+        game.kill_free(id)
+        obj.x=-15
+
+    }
+    if(obj.x == -800){
+
+        game.kill_free(id)
+        obj.x=800
+
+    }
+    if(valor=="-"){
+        
+        if(game.check_colidir(id,"box_player")==true){
+            
             game.force_obj("player",Player.di-=5,Player.up)
-            tronco2.ativo=true
+            return obj.ativo=true
+            
         }else{
-            tronco2.ativo=false
+
+            return obj.ativo=false
         }
-        game.force_obj("tronco2",tronco2.x-=5,tronco2.y)
+      
+    }else  if(valor=="+"){
+       
+        if(game.check_colidir(id,"box_player")==true){
 
-        if(tronco2.x < -1300){
-            game.kill_free("tronco2")
-            tronco2.x=1300
+            game.force_obj("player",Player.di+=5,Player.up)
+            return obj.ativo=true
+            
+        }else{
 
+            return obj.ativo=false
         }
-
-    }else{
-        game.spawn_sprite("tronco2","itens/itens_09.png",tronco1.x,tronco1.y) 
-        game.camada("tronco1",-5) 
+     
     }
+
 }
