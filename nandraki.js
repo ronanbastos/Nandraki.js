@@ -2,7 +2,7 @@ class Nandraki {
 
     constructor(id,vida, gravidade, velocidade, massa, di, up, mirror, anim, jump, frame) {
         this.id = id;
-	this.vida = vida;
+	    this.vida = vida;
         this.gravidade = gravidade;
         this.velocidade = velocidade;
         this.massa = massa;
@@ -1411,16 +1411,27 @@ game = {
 	
 
     },
-    gravit: function(obj) {
+    gravity: function(obj,fim,bounce,velue) {
 
-        obj.gravidade++;
-        obj.velocidade++;
-        pulo = true;
+        obj.up += obj.velocidade ;
+        var rockbottom =fim;
+    if (obj.up >= rockbottom) {
 
+        obj.up = rockbottom;
+        obj.velocidade=5
+        pulo=1
+        if(bounce==true){
+            obj.velocidade = -(obj.velocidade * velue);
+        }
+      
+      
+    }else{
+        
 
-
-        obj.up += obj.gravidade + obj.velocidade;
-
+      obj.velocidade   +=  obj.gravidade;
+    
+    
+    }
 
     },
 
@@ -1529,7 +1540,7 @@ game = {
     },
 
     rest:(game,canvas) => requestAnimationFrame(game,canvas),
-    loop:(game,canvas) => requestAnimationFrame(game,canvas),
+	loop:(game,canvas) => requestAnimationFrame(game,canvas),
     update: (jogo, fps) => setInterval(jogo, fps),
 	
 }
