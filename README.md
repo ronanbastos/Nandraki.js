@@ -2,7 +2,8 @@
 
 <br>
 <h1 align="center"><img src="https://img.shields.io/badge/Lincense-MIT-green" alt="index-html" border="0"> 
-<img src="https://img.shields.io/badge/Version-1.5.0" alt="index-html" border="0"> <img src="https://img.shields.io/badge/Projeto-Ativo-success" alt="index-html" border="0"><img src="https://img.shields.io/badge/Ultima%20Att-17/03/2022-green" alt="index-html" >     
+<img src="https://img.shields.io/badge/1.5.0-green" alt="index-html" >     
+ <img src="https://img.shields.io/badge/Projeto-Ativo-success" alt="index-html" border="0"><img src="https://img.shields.io/badge/Ultima%20Att-17/03/2022-green" alt="index-html" >     
 
 <br>
 <h3>Sobre o projeto / 
