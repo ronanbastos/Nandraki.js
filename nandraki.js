@@ -1,18 +1,18 @@
 class Nandraki {
 
     constructor(id,vida, gravidade, velocidade, massa, di, up, mirror, anim, jump, frame) {
-		this.id = id;
-		this.vida = vida;
-		this.gravidade = gravidade;
-		this.velocidade = velocidade;
-		this.massa = massa;
-		this.di = di;
-		this.up = up;
-		this.mirror = mirror;
-		this.anim = anim;
-		this.jump = jump;
-		this.frame = frame;
-		this.body = document.getElementById(this.id);
+        this.id = id;
+	this.vida = vida;
+        this.gravidade = gravidade;
+        this.velocidade = velocidade;
+        this.massa = massa;
+        this.di = di;
+        this.up = up;
+        this.mirror = mirror;
+        this.anim = anim;
+        this.jump = jump;
+        this.frame = frame;
+        this.body = document.getElementById(this.id);
 
     }
     static create_sprite(id, camadas, img1, img2, img3, img4, img5, width, height, boxl, boxh, left, top) {
@@ -168,8 +168,8 @@ class Nandraki {
     }
 
     static version() {
-        console.log("Version[1.4.7]");
-        alert("Version[1.4.7]");
+        console.log("Version[1.5.0]");
+        alert("Version[1.5.0]");
 
     }
 
@@ -179,32 +179,40 @@ class Nandraki {
 game = {
 
     canvas_start: function(id, width, height) {
-        document.body.innerHTML += "<canvas id='canvas' width=" + width + " height=" + height + ">";
-        canvas = document.getElementById(id);
-        return nandraki = canvas.getContext('2d');
+        document.body.innerHTML += "<canvas id='"+id+"' width=" + width + " height=" + height + ">";
+         
     },
     canvas_text: function(text, font, cor, x, y) {
         if (font == null || font == " ") {
-            nandraki.font = '10px Times New Roman';
+            Nandraki.font = '10px Times New Roman';
         } else {
-            nandraki.font = font;
+            Nandraki.font = font;
         }
-        nandraki.fillStyle = cor;
-        nandraki.fillText(text, x, y);
+        Nandraki.fillStyle = cor;
+        Nandraki.fillText(text, x, y);
 
     },
+    context:function(id){
+        canvas = document.getElementById(id);
+        Nandraki = canvas.getContext('2d');
+        return Nandraki;
+    },
+    canvas_arc: function(obj,x, y, font, b, p) {
 
-    canvas_arc: function(x, y, font, b, p) {
-
-        nandraki.arc(x, y, font, b, p);
+        obj.arc(x, y, font, b, p);
 
     },
+    canvas_rect: function(obj,x,y,height,width){
+   
+        obj.rect(x,y,height,width);
+
+	},
     obj: function(){
         let obj ={};
         return obj;
     },
     canvas_clear: function() {
-        nandraki.clearRect(0, 0, canvas.width, canvas.height);
+        Nandraki.clearRect(0, 0, canvas.width, canvas.height);
     },
     background_add: function(id, img, arg) {
         let element = document.getElementById(id);
@@ -227,6 +235,13 @@ game = {
 
         clearTimeout(mylet);
 
+    },
+    get_tecla:function(e){
+    
+    
+            console.log(e.code)
+ 
+      
     },
     click_som: function(id, link_som) {
         if(game.check_id(id) == true){
@@ -971,12 +986,12 @@ game = {
     },
     camera: function(specto, x, y,xLimit,yLimit) {
         if (specto == "2d" || specto == "2D") {
-            if(x >=xLimit || y >= yLimit){
+            if(x >=xLimit  || y >= yLimit){
 
             }else{
 
               window.scroll(x, y); 
-
+              
             }
          
         
@@ -1512,5 +1527,9 @@ game = {
         return obj.getBoundingClientRect();
 		}	
     },
+
+    rest:(game,canvas) => requestAnimationFrame(game,canvas),
+    loop:(game,canvas) => requestAnimationFrame(game,canvas),
     update: (jogo, fps) => setInterval(jogo, fps),
+	
 }
