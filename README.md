@@ -37,7 +37,7 @@ In the engine folder contains demo test file]
 <p>
   Playground canvas 2D: https://tironan.000webhostapp.com/test.html
 <p>
-  Playground canvas 3D: 🚧  Em construção...  🚧	
+  Playground canvas 3D: 🚧 [OFF] 🚧	
 <p>
   Playground CodePen: https://codepen.io/ronan-varella/pen/xxPeeEM
 <br>
@@ -88,9 +88,7 @@ In the engine folder contains demo test file]
 <h2>Funcionalidades e Metas</h2>
 
 - [x] Criar interface completa<br>
-- [x] Export html<br>
-- [ ] Pre-renderização de frame<br>
-- [ ] Visulização de arquivos do projeto<<br>	
+- [x] Export html<br>	
 - [x] Criar interface da engine html<br>
 - [x] Export html<br>
 - [x] Manipulação de elemento Dom<br>
@@ -99,14 +97,16 @@ In the engine folder contains demo test file]
 - [x] Manipulação de css e js<br>
 - [x] Criar event Gamepad touch<br>
 - [x] Manipulação de animação<br>		
-- [ ] Manipulação de canvas<br>
+- [x] Manipulação de canvas<br>
+- [x] Verficador de estados animação<br>	
 - [ ] Criar event Gamepad<br>
-- [ ] Verficador de estados animação<br>
+- [ ] Pre-renderização de frame<br>
+- [ ] Visulização de arquivos do projeto<<br>	
 - [ ] Import Apps Android<br>
 	
 <br>	
 # projeto Electron
-  Aqui: --
+  Aqui: 🚧 [OFF] 🚧	
 <br>
 # Autor 
 Projeto esta sendo feito por mim @RonanBasto,caso queria ajudar pode entra conta comigo.<p>
