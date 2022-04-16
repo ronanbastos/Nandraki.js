@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<head>
+		<script src="Nandraki.js"></script>
+		<script src="player.js"></script>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>		
+<style>
+	body{
+	  margin:0px;
+	}
+	canvas { 
+	
+	border: solid 1px;	
+	margin-left: 5px;
+	
+	}
+</style>
+</head>
+<body>
+
+debug:
+<br>
+
+<script>
+
+game.canvas_start("canvas",800,500)	
+game.context("canvas")
+
+
+game.log_key;
+game.log_down(logKey1);
+
+
+ function logKey1(e) {
+		
+	   if( e.code == "ArrowRight") {
+			x+=5
+			anim="run1"
+		}
+		if( e.code == "ArrowLeft") {
+			x-=5
+			anim="run2"
+		}
+
+		if( e.code == "ArrowUp"   ) {
+			anim="pulo"	
+		
+
+			if(pulo==1 ){
+				gravitySpeed = -(gravitySpeed * 1);
+				pulo=pulo-1
+				
+			}
+		
+		
+		}
+		if( e.code == "ArrowDown") {
+			
+			anim="atacar"
+			
+			
+			
+		
+		
+		}
+		
+  }
+
+game.log_up(logKey2);	
+
+function logKey2(e) {
+	
+		if( e.code == "ArrowRight") {
+			anim="parado1";
+		}
+		if( e.code == "ArrowLeft") {
+		
+			anim="parado2";
+
+		}
+		if( e.code == "ArrowUp") {
+			anim="parado1";
+		}
+		if( e.code == "ArrowDown") {
+
+			anim="parado1";
+		}
+}
+
+player={
+	vida:10,
+	parado1:  game.frame_sprite("player","player.png",Nandraki,64,64,0,0,0,5,7),
+	parado2:  game.frame_sprite("player","player.png",Nandraki,64,64,0,1,0,5,7),
+	correndo1:game.frame_sprite("player","player.png",Nandraki,64,64,0,2,0,5,7),
+	correndo2:game.frame_sprite("player","player.png",Nandraki,64,64,0,3,0,5,7),
+	pulo:     game.frame_sprite("player","player.png",Nandraki,64,64,0,4,0,5,7),
+	atacar:   game.frame_sprite("player","player.png",Nandraki,64,64,0,5,0,5,5)
+}
+fruta={
+	x:250,
+	y:390,
+	ative:true,
+	animar:game.frame_sprite("fruta","coin.png",Nandraki,32,32,0,0,0,15,10)
+}
+
+function jogo(){
+		
+	
+
+		y += gravitySpeed;
+		fruta.y=rockbottom
+        if (y >= rockbottom ) {
+		
+            y = rockbottom
+			gravitySpeed=5
+			pulo=1
+		
+		
+			//gravitySpeed = -(gravitySpeed * bounce);
+
+        }else{
+		
+			gravitySpeed += gravity
+		
+		}
+
+		Nandraki.clearRect(0, 0, canvas.width, canvas.height);	
+		Nandraki.beginPath();
+
+		if(fruta.ative==true){
+			game.render_sprite(fruta.animar,Nandraki,fruta.x,fruta.y)
+
+		}	
+	
+
+	
+		if(y == fruta.y && fruta.x == x ){
+			console.log("colidiu: true")
+			fruta.ative=false
+			
+		}
+
+		playerAnimar();
+	    Nandraki.stroke();
+	    game.rest(jogo,canvas);
+		
+	}
+
+	game.loop(jogo,canvas)
+
+
+
+
+</script>
+
+</body>
+</html>
+
