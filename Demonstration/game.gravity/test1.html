@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+		<script src="Nandraki.js"></script>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>		
+<style>
+	body{
+	  margin:0px;
+	}
+	canvas { 
+	
+	border: solid 1px;	
+	margin-left: 5px;
+	
+	}
+	
+</style>
+</head>
+<body>
+
+debug:
+<br>
+
+<script>
+
+Nandraki.create_sprite("bloco",1,"bloco.png", null, null, null,null ,40,40,40,40,20,20)
+fps=15
+obj={
+up:0,
+velocidade:0,
+gravidade:0.05
+
+}
+x = 0;
+y = 0;
+pulo=1;
+gravity = 0.05;
+gravitySpeed = 0;
+bounce=0.6
+
+game.log_key;
+game.log_down(logKey1);
+
+ function logKey1(e) {
+	
+	   if( e.code == "ArrowRight") {
+			x+=5
+			
+		}
+		if( e.code == "ArrowLeft") {
+			x-=5
+				
+		}
+
+		if( e.code == "ArrowUp" && pulo==1) {
+		
+			gravitySpeed = -(gravitySpeed * 0.8);
+			pulo=pulo-1
+			
+			 obj.velocidade  =  -( obj.velocidade * 0.8);
+			
+		}
+		if( e.code == "ArrowDown") {
+			
+		}
+		
+  }
+
+game.log_up(logKey2);	
+
+function logKey2(e) {
+	
+		if( e.code == "ArrowRight") {
+		
+		}
+		if( e.code == "ArrowLeft") {
+			
+		}
+		if( e.code == "ArrowUp") {
+		
+		}
+		if( e.code == "ArrowDown") {
+			
+		}
+}
+
+
+
+function jogo(){
+	
+		
+	    game.force_obj("bloco",x,obj.up,false)
+			
+		game.gravity(obj,500,false,0.5)
+		
+	    game.rest(jogo,window.self)
+	}
+
+	game.loop(jogo,window.self)
+
+	//game.update(jogo,fps)
+
+
+</script>
+
+</body>
+</html>
+
