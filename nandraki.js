@@ -143,8 +143,8 @@ class Nandraki {
     }
 
     static version() {
-        console.log("Version[1.5.0]");
-        alert("Version[1.5.0]");
+        console.log("Version[2.0.0]");
+        alert("Version[2.0.0]");
 
     }
 
