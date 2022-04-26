@@ -61,14 +61,14 @@ In the engine folder contains demo test file]
 	<body>
 
 		<script>
-		        
+		       Nandraki.create_ui("text_id","[hello world]")
 		       myjogo = {
 
 
 			 start : function(){
 
 
-			   Nandraki.create_ui("text_id","hello world")	
+			  // Nandraki.create_ui("text_id","hello world")	
 
 
 			 },	
