@@ -75,7 +75,7 @@ In the engine folder contains demo test file]
 		       }
 
 		       fps=60;	
-		       game.update(myjogo.start(),fps);  
+		       game.update(myjogo.start,fps);  
 
 	</script>
 	</body>
