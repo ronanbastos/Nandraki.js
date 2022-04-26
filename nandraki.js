@@ -1,18 +1,18 @@
 class Nandraki {
 
     constructor(id, vida, gravidade, velocidade, massa, di, up, mirror, anim, jump, frame) {
-        this.id = id;
-        this.vida = vida;
-        this.gravidade = gravidade;
-        this.velocidade = velocidade;
-        this.massa = massa;
-        this.di = di;
-        this.up = up;
-        this.mirror = mirror;
-        this.anim = anim;
-        this.jump = jump;
-        this.frame = frame;
-        this.body = document.getElementById(this.id);
+        obj.id = id;
+        obj.vida = vida;
+        obj.gravidade = gravidade;
+        obj.velocidade = velocidade;
+        obj.massa = massa;
+        obj.di = di;
+        obj.up = up;
+        obj.mirror = mirror;
+        obj.anim = anim;
+        obj.jump = jump;
+        obj.frame = frame;
+        obj.body = document.getElementById(obj.id);
 
     }
     static create_sprite(id, camadas, img1, img2, img3, img4, img5, width, height, boxl, boxh, left, top) {
@@ -143,8 +143,8 @@ class Nandraki {
     }
 
     static version() {
-        console.log("Version[2.0.0]");
-        alert("Version[2.0.0]");
+        console.log("Version[2.1.0]");
+        alert("Version[2.1.0]");
 
     }
 
@@ -204,7 +204,12 @@ game = {
         clearInterval(mylet);
     },
     start_interval: function (mylet, time) {
-        setInterval(mylet, time);
+              
+        setInterval(function () {
+            
+            mylet
+          
+        }, time)
     },
     stop_time: function (mylet) {
 
@@ -1005,6 +1010,15 @@ game = {
         document.body.innerHTML += '<' + obj + ' id="' + id + '">' + '</' + obj + '>';
 
     },
+    fpsFrame: function(obj,func,fps){
+        
+        obj.fpsFrame++
+        if(obj.fpsFrame == fps){
+                func
+                obj.fpsFrame=-1
+        }
+ 
+    },
     frame_sprite: function (name, src, context, width, height, frameIndex, row, tickCount, ticksPerFrame, frames) {
 
         name = {
@@ -1080,7 +1094,7 @@ game = {
        return obj
     },
     obj_in_obj: function (obj, id) {
-        document.getElementById(obj).appendChild(document.getElementById(add));
+        document.getElementById(obj).appendChild(document.getElementById(id));
     },
     remove_class: function (id, obj) {
         let element = document.getElementById(id);
@@ -1093,6 +1107,23 @@ game = {
     get_window_h: function () {
 
         return window.innerHeight;
+    },
+    responsive_img: function (id) {
+
+        return game.img_size(id,game.get_window_w(),game.get_window_h())
+    },
+    bar: function(id,height,cor){
+
+        let html = `<div id="bar_${id}" style=" width: 1%;height:${height}px;background-color:${cor};">
+        </div> `;
+        document.body.innerHTML += html;
+        
+    },
+    bar_update:function(id,size){
+
+        var elem = document.getElementById(id);
+        return elem.style.width = size+"px";
+
     },
     class_in_obj: function (obj, add) {
         let element = document.getElementById(obj);
@@ -1273,8 +1304,8 @@ game = {
 
     get_text: function (id) {
 
-        let get_text = document.getElementById(id).textContent;
-        return get_text;
+        let get_text =  parseInt(document.getElementById(id).textContent);
+        return parseInt(get_text);
 
     },
     set_text: function (id, txt) {
