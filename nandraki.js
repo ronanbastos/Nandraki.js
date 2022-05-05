@@ -143,8 +143,8 @@ class Nandraki {
     }
 
     static version() {
-        console.log("Version[2.1.0]");
-        alert("Version[2.1.0]");
+        console.log("Version[1.5.0]");
+        alert("Version[1.5.0]");
 
     }
 
@@ -282,7 +282,11 @@ game = {
         document.getElementById(id).style.position = "fixed";
     },
     start_time: function (func, time) {
-        setTimeout(func, time);
+        setInterval(function () {
+            
+            func
+          
+        }, time);
     },
 
     bd_save: function (speed, value) {
@@ -1111,6 +1115,10 @@ game = {
     responsive_img: function (id) {
 
         return game.img_size(id,game.get_window_w(),game.get_window_h())
+    },
+    move_responsive(id,x,y){
+
+        Nandraki.move_obj(id,game.get_window_w()/2/5+x,game.get_window_h()/2+y,true)
     },
     bar: function(id,height,cor){
 
