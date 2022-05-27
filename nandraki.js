@@ -960,6 +960,13 @@ game = {
         let obj = document.getElementById(id);
         obj.style.cursor = type;
     },
+    get_input:function(id){
+		
+		let input = document.getElementById(id);
+		let texto = input. value;
+		return texto;
+		
+    },
     fixed_body: function (zoom) {
         document.body.style.width = "100%";
         document.body.style.height = "100%";
