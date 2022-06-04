@@ -1,0 +1,39 @@
+
+parti 1 canto{
+
+game.spawn_sprite("o","o.png",50,50)
+
+game.spawn_sprite("o","o.png",50,225)
+
+game.spawn_sprite("o","o.png",50,400)
+
+
+}
+
+parti 2 meio{
+
+
+
+game.spawn_sprite("o","o.png",50*4.5,50)
+
+game.spawn_sprite("o","o.png",50*4.5,225)
+
+game.spawn_sprite("o","o.png",50*4.5,400)
+
+
+
+}
+
+parti 3 final{
+
+
+
+
+game.spawn_sprite("x","x.png",50*4.5*1.75,50)
+
+game.spawn_sprite("x","x.png",50*4.5*1.75,225)
+
+game.spawn_sprite("x","x.png",50*4.5*1.75,400)
+
+
+}

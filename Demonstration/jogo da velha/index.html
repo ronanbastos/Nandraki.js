@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+		<script src="Nandraki.js"></script>
+        <script src="logicaO.js"></script>
+        <script src="logicaX.js"></script>
+		<meta name="viewport" content="width=device-width, initial-scale=0.1"/>		
+</head>
+<body style="background-color: cadetblue;">
+<script>
+
+vez="x";
+contMapo=0;
+contMapx=0;
+mapsX=[];
+mapsO=[];
+
+game.spawn_sprite("mapa","mapa.png",0,0)
+
+
+game.spawn_sprite("camada0","check.png",50,50)
+
+game.spawn_sprite("camada1","check.png",50,225)
+
+game.spawn_sprite("camada2","check.png",50,400)
+
+
+game.spawn_sprite("camada3","check.png",50*4.5,50)
+
+game.spawn_sprite("camada4","check.png",50*4.5,225)
+
+game.spawn_sprite("camada5","check.png",50*4.5,400)
+
+
+game.spawn_sprite("camada6","check.png",50*4.5*1.75,50)
+
+game.spawn_sprite("camada7","check.png",50*4.5*1.75,225)
+
+game.spawn_sprite("camada8","check.png",50*4.5*1.75,400)
+
+
+
+
+
+function check(){
+    
+    img=game.get_obj(this.id);
+    img.src=vez+".png"
+ 
+   if(vez=="o"){
+    mapsO[contMapo]=this.id+"/"+vez;
+    vez="x"
+    contMapo++
+   }else{
+        mapsX[contMapx]=this.id+"/"+vez;
+        vez="o"
+        contMapx++ 
+  }
+   
+    
+}
+
+game.click("camada0",check)
+game.click("camada1",check)
+game.click("camada2",check)
+game.click("camada3",check)
+game.click("camada4",check)
+game.click("camada5",check)
+game.click("camada6",check)
+game.click("camada7",check)
+game.click("camada8",check)
+
+function loop(){
+    
+fimWinX()
+fimWinO()
+
+}
+
+
+game.update(loop,60);
+
+</script>
+
+</body>
+</html>
+
