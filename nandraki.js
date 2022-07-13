@@ -530,7 +530,17 @@ game = {
         return x;
 
     },
+    get_tx: function(id){
+        const style =  window.getComputedStyle(document.getElementById(id))
+        let matrix = new WebKitCSSMatrix(style.transform)
+        return matrix.m41
 
+    },
+    get_ty:function(id){
+        const style =  window.getComputedStyle(document.getElementById(id))
+        let matrix = new WebKitCSSMatrix(style.transform)
+        return matrix.m42
+    },
     get_top: function (id) {
 
 
@@ -608,6 +618,7 @@ game = {
 
 
     },
+    
     force_obj: function (id, x, y, rotate) {
         if (game.check_id(id) == true) {
             let element = document.getElementById(id);
@@ -1461,7 +1472,7 @@ game = {
 
 
             obj.velocidade += obj.gravidade;
-
+            
 
         }
 
