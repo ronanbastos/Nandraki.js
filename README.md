@@ -101,7 +101,8 @@ In the engine folder contains demo test file]
 - [ ] Pre-renderização de frame<br>
 - [ ] Visulização de arquivos do projeto<<br>	
 - [ ] Import Apps Android<br>
-	
+- [ ] Import Apps Exe<br>
+- [ ] Import Apps deb<br>
 <br>	
 # projeto Electron
   Aqui: 🚧 [OFF] 🚧	
