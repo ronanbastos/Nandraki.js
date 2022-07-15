@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+  <html>
+  <head>
+      <script src="nandraki.js"></script>
+    
+  </head>
+  <body>
+
+      <script>
+       player={
+        id:"player",
+        vida:5,
+        y:0,
+        x:0,
+        png:"player.png",
+        tiroPng:"tiro.png",
+        tiroNum:0,
+        tiroy:0,
+        kill:false
+
+       }
+       bol={
+        id:"bol",
+        up:0,
+        x:0,
+        png:"player.png",
+        velocidade:10,
+        gravidade:1,
+        ai:0,
+        kill:false
+
+       } 
+
+      game.spawn_sprite("base","base.png",0,150)
+      game.spawn_sprite(player.id,player.png,0,450)
+      Nandraki.create_sprite(bol.id,1,'inim.png',null,null,null,null,64,64,32,32,0,0)
+   
+       
+     
+      function loop() {
+       
+       if(game.check_id("bol")==true){
+       
+         bol.x+=5
+
+       }
+
+        game.responsive_img("base")
+        game.force_obj(player.id,player.x,0,false)
+        game.force_obj(bol.id,bol.x,bol.up,false)
+        game.gravity(bol,450,true,5.5)
+
+        if(player.tiroNum>=1){
+          game.force_obj("tiro",game.get_tx("tiro"),player.tiroy-=25,false)
+       
+        }
+       
+       
+        if(player.tiroy==-500){
+          game.kill_free("tiro")
+          player.tiroy=0;
+          player.tiroNum=0
+        }
+
+        if(bol.x== 1500){
+
+          bol.x=-150
+          
+        }
+      
+       
+        if(game.check_colidir(player.id,bol.id)==true){
+
+          game.kill_free(player.id);
+
+        }
+        if(game.check_colidir("tiro",bol.id)==true){
+
+        bol.ai+=1
+         if(bol.ai==1){
+          game.img_frame("bol", "img[1]bol",64, 64,8,1,8,1)
+
+         }
+         if(bol.ai==2){
+          game.img_frame("bol", "img[1]bol",64, 64,8,2,8,1)
+
+         }
+         if(bol.ai==3){
+          game.img_frame("bol", "img[1]bol",64, 64,8,3,8,1)
+
+         }
+         if(bol.ai==5){
+          game.img_frame("bol", "img[1]bol",64, 64,8,4,8,1)
+          game.img_frame("bol", "img[1]bol",64, 64,8,5,8,1)
+          game.img_frame("bol", "img[1]bol",64, 64,8,6,8,1)
+          game.img_frame("bol", "img[1]bol",64, 64,8,7,8,1)
+          game.img_frame("bol", "img[1]bol",64, 64,8,8,8,1)
+          game.kill_free('bol')
+         }
+      
+
+        }
+
+
+      }
+
+   game.update(loop,60)
+
+
+    game.log_key;
+    game.log_down(logKey1);
+    function logKey1(e) {
+      if(game.check_id("player")==true){
+
+        if( e.code == "KeyD") {
+          
+          player.x+=5
+
+        } 
+        if( e.code == "KeyA") {
+          player.x-=5
+        }
+      
+
+          if( e.code == "KeyW") {
+          player.tiroNum+=1
+          if(player.tiroNum==1 && game.check_id("tiro")==false){
+            game.spawn_sprite("tiro",player.tiroPng,game.get_tx("player")+15,440)
+            player.tiroNum=1
+          }
+        
+
+        }
+
+
+        }
+      
+      }
+
+      </script>
+
+  </body>
+  </html>
