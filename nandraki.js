@@ -143,8 +143,8 @@ class Nandraki {
     }
 
     static version() {
-        console.log("Version[1.5.0]");
-        alert("Version[1.5.0]");
+        console.log("Version[2.5.0]");
+        alert("Version[2.5.0]");
 
     }
 
@@ -172,16 +172,22 @@ game = {
         Nandraki = canvas.getContext('2d');
         return Nandraki;
     },
-    canvas_arc: function (obj, x, y, font, b, p) {
+    canvas_arc: function (x, y, font, b, p) {
 
-        obj.arc(x, y, font, b, p);
-
-    },
-    canvas_rect: function (obj, x, y, height, width) {
-
-        obj.rect(x, y, height, width);
+        Nandraki.arc(x, y, font, b, p);
 
     },
+    canvas_rect: function ( x, y, height, width) {
+
+        Nandraki.rect(x, y, height, width);
+
+    },
+    canvas_click: function(func){
+
+        this.canvas.addEventListener("click", func , false);
+
+
+    }, 
     obj: function () {
         let obj = {};
         return obj;
@@ -198,6 +204,12 @@ game = {
     reload: function (ative) {
 
         return document.location.reload(ative);
+
+    },
+    flow: function (id,valor) {
+
+        let element = document.getElementById(id);
+        element.style.overflow=valor;
 
     },
     stop_interval: function (mylet) {
@@ -272,6 +284,12 @@ game = {
         document.body.innerHTML += html;
 
     },
+    camera_move:function(id,x){
+
+     document.getElementById(id).style.transform  = `translateX(${x}px)` ;
+  
+    },
+
     img_size: function (id, sizeX, sizeY) {
         document.getElementById(id).style.width = sizeX + "px";
         document.getElementById(id).style.height = sizeY + "px";
@@ -525,28 +543,32 @@ game = {
     },
     get_left: function (id) {
 
-
+        if (game.check_id(id) == true) {
         let x = document.getElementById(id).offsetLeft;
         return x;
-
+        } 
     },
     get_tx: function(id){
+        if (game.check_id(id) == true) {
         const style =  window.getComputedStyle(document.getElementById(id))
         let matrix = new WebKitCSSMatrix(style.transform)
         return matrix.m41
+        }
 
     },
     get_ty:function(id){
+        if (game.check_id(id) == true) {
         const style =  window.getComputedStyle(document.getElementById(id))
         let matrix = new WebKitCSSMatrix(style.transform)
         return matrix.m42
+        }
     },
     get_top: function (id) {
 
-
+        if (game.check_id(id) == true) {
         let y = document.getElementById(id).offsetTop;
         return y;
-
+        }    
     },
     moveX_rest: function (a, rest, id) {
 
@@ -1585,5 +1607,4 @@ game = {
     rest: (game, canvas) => requestAnimationFrame(game, canvas),
     loop: (game, canvas) => requestAnimationFrame(game, canvas),
     update: (jogo, fps) => setInterval(jogo, fps),
-
 }
