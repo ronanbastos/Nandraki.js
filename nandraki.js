@@ -276,7 +276,7 @@ game = {
 
 
     },
-    spawn_sprite: function (id, img, left, top) {
+    new_sprite: function (id, img, left, top) {
 
         let html = `				  		
         <img id="${id}" style="position:absolute;left:${left}px;top:${top}px;" src="${img}" />
@@ -1607,4 +1607,5 @@ game = {
     rest: (game, canvas) => requestAnimationFrame(game, canvas),
     loop: (game, canvas) => requestAnimationFrame(game, canvas),
     update: (jogo, fps) => setInterval(jogo, fps),
+
 }
