@@ -940,6 +940,23 @@ game = {
 
 
     },
+    remove_id: function (id) {
+
+        let box = document.getElementById(id);
+        box.removeAttribute('id');
+        
+
+        
+
+    },
+    add_id: function (id,name) {
+
+        let box = document.getElementById(id);
+
+         box.setAttribute('id',name);
+        
+
+    },
     block_all: function (selector) {
 
         let myObj = document.querySelectorAll(selector),
