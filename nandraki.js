@@ -957,7 +957,7 @@ game = {
         
 
     },
-    in$string: function(string1,string2){
+    inclui: function(string1,string2){
 
         return string1.includes(string2) == true
     },
