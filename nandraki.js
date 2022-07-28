@@ -957,7 +957,7 @@ game = {
         
 
     },
-    inclui: function(string1,string2){
+    incluid: function(string1,string2){
 
         return string1.includes(string2) == true
     },
@@ -1624,9 +1624,7 @@ game = {
             return obj.getBoundingClientRect();
         }
     },
-
     rest: (game, canvas) => requestAnimationFrame(game, canvas),
     loop: (game, canvas) => requestAnimationFrame(game, canvas),
     update: (jogo, fps) => setInterval(jogo, fps),
-
 }
