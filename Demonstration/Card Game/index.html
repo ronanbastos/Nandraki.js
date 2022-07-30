@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nandraki card game</title>
+    <script  src="Nandraki.js"></script>
+    <script  src="logica.js"></script>
+    <style>
+
+        #bagdiv { 
+            background-color: rgb(50, 50, 50); 
+            float:left;
+            border: 2px rgb(3, 3, 3); 
+            margin-left: 10px; 
+            height: 100px;
+            width: 800px;
+            position: fixed;
+         
+        }
+        #contentTooti {
+            background-color: rgb(50, 50, 50);
+            border: 10px rgb(3, 3, 3); 
+            width: 90px;
+            height: 100px;
+            position:absolute;
+            
+        }
+        #hp {
+        
+            width:50px;
+	         height:50px;
+	         background-color:red;
+	        border-radius: 100px;
+            position:absolute;
+            
+        }
+        #soma {
+        
+        width:50px;
+         height:50px;
+         background-color:rgb(255, 255, 255);
+        border-radius: 50px;
+        position:absolute;
+        
+    }
+        #hp_txt{
+            margin-top: 10px;
+            margin-left: 10px;
+            font-size: 25px;
+            border: 5px rgb(3, 3, 3); 
+           
+        }
+        #btn_soma{
+            margin-top: 10px;
+            margin-left: 5px;
+            font-size: 15px;
+            border: 5px rgb(3, 3, 3); 
+            text-align: center;
+
+        }
+        #hp_txt_soma{
+      
+            font-size: 25px;
+            background-color: rgb(184, 184, 185);
+            border: 5px rgb(3, 3, 3); 
+            width:50px;
+            height:50px;
+            border-radius: 50px;
+            text-align: center;
+        }
+        body{
+            background-color: #505050;
+
+
+        }
+    </style>
+
+</head>
+<body id="campo">
+
+    <div id="contentTooti">
+    </div>
+
+<div id="bagdiv">   
+        <img id="card1"       onmousedown=" moveCard(this.id)"  onclick=" clickCard(this.id)"     src="mana_verde.png"          />          
+        <img id="card2"       onmousedown=" moveCard(this.id)"  onclick=" clickCard(this.id)"     src="mana_verde.png"      />
+        <img id="card3"       onmousedown=" moveCard(this.id)"  onclick=" clickCard(this.id)"     src="mana_verde.png"      />
+        <img id="player1"     onmousedown=" moveCard(this.id)"  onclick=" clickCard(this.id)"     src="mana_verde.png"  />  
+        <img id="player2"     onmousedown=" moveCard(this.id)"  onclick=" clickCard(this.id)"     src="mana_verde.png"  />        
+        <img id="ab1"         onmousedown=" moveCard(this.id)"  onclick=" clickCard(this.id)"     src="mana_verde.png"     />
+        <img id="ab2"         onmousedown=" moveCard(this.id)"  onclick=" clickCard(this.id)"     src="mana_verde.png"     />          
+</div> 
+    <div id="hp"   >
+    <div id="hp_txt">
+     
+     </div>
+    
+    </div>
+    <div id="hp_txt_soma" contentEditable="true">
+        0
+    </div>
+
+
+
+ <div id="soma"  onclick=" soma()"  >
+    <div id="btn_soma">
+        Somar
+    </div>
+     
+ </div>
+
+    <script >
+   
+    game.new_sprite("cartas","ui/cartas.png",0,0)
+    game.new_sprite("lixo","ui/lixeira.png",0,0)
+    game.new_sprite("bag","ui/bag.png",0,0)   
+    game.flow("bagdiv","scroll")
+ 
+   
+        game.type_curso("cartas","copy")
+        game.type_curso("soma"," pointer")
+        game.type_curso("bag"," pointer")
+    
+     function loop(){
+       
+        game.move_responsive("bag",-130,-20)
+        game.move_responsive("bagdiv",-115,150)
+        game.move_responsive("cartas",750,150)
+        game.move_responsive("contentTooti",330,-50)
+        game.move_responsive("hp",420,-80)
+        game.move_responsive("hp_txt_soma",-25,-260)
+        game.move_responsive("lixo",750,-80)
+        game.click("bag",ocutarCard)
+        game.click("cartas",createCard)
+     }  
+    game.update(loop,100)
+    </script>
+ 
+</body>
+</html>
