@@ -143,8 +143,8 @@ class Nandraki {
     }
 
     static version() {
-        console.log("Version[2.5.0]");
-        alert("Version[2.5.0]");
+        console.log("Version[1.5.0]");
+        alert("Version[1.5.0]");
 
     }
 
@@ -177,17 +177,17 @@ game = {
         Nandraki.arc(x, y, font, b, p);
 
     },
-    canvas_rect: function ( x, y, height, width) {
+    canvas_rect: function (x, y, height, width) {
 
         Nandraki.rect(x, y, height, width);
 
     },
-    canvas_click: function(func){
+    canvas_click: function (func) {
 
-        this.canvas.addEventListener("click", func , false);
+        this.canvas.addEventListener("click", func, false);
 
 
-    }, 
+    },
     obj: function () {
         let obj = {};
         return obj;
@@ -206,21 +206,15 @@ game = {
         return document.location.reload(ative);
 
     },
-    flow: function (id,valor) {
-
-        let element = document.getElementById(id);
-        element.style.overflow=valor;
-
-    },
     stop_interval: function (mylet) {
         clearInterval(mylet);
     },
     start_interval: function (mylet, time) {
-              
+
         setInterval(function () {
-            
+
             mylet
-          
+
         }, time)
     },
     stop_time: function (mylet) {
@@ -276,7 +270,7 @@ game = {
 
 
     },
-    new_sprite: function (id, img, left, top) {
+    spawn_sprite: function (id, img, left, top) {
 
         let html = `				  		
         <img id="${id}" style="position:absolute;left:${left}px;top:${top}px;" src="${img}" />
@@ -284,12 +278,29 @@ game = {
         document.body.innerHTML += html;
 
     },
-    camera_move:function(id,x){
+    camera_move: function (id, x, endX, endY) {
 
-     document.getElementById(id).style.transform  = `translateX(${x}px)` ;
-  
+        document.getElementById(id).style.transform = `translateX(${x}px)`;
+       
     },
+    camera: function (id,specto, xLimit, yLimit) {
+        let x = game.get_tx(id)
+        let y = game.get_ty(id)
+        if (specto == "2d" || specto == "2D") {
+            if (x >= xLimit || y >= yLimit) {
 
+            } else {
+                window.scroll(x, y);
+            }
+        } else {
+            console.log("Erro:specto");
+        }
+        if (specto == "canvas:2d" || specto == "canvas:2D") {
+
+        } else {
+            console.log("Erro:specto");
+        }
+    },
     img_size: function (id, sizeX, sizeY) {
         document.getElementById(id).style.width = sizeX + "px";
         document.getElementById(id).style.height = sizeY + "px";
@@ -301,9 +312,9 @@ game = {
     },
     start_time: function (func, time) {
         setInterval(function () {
-            
+
             func
-          
+
         }, time);
     },
 
@@ -544,31 +555,31 @@ game = {
     get_left: function (id) {
 
         if (game.check_id(id) == true) {
-        let x = document.getElementById(id).offsetLeft;
-        return x;
-        } 
+            let x = document.getElementById(id).offsetLeft;
+            return x;
+        }
     },
-    get_tx: function(id){
+    get_tx: function (id) {
         if (game.check_id(id) == true) {
-        const style =  window.getComputedStyle(document.getElementById(id))
-        let matrix = new WebKitCSSMatrix(style.transform)
-        return matrix.m41
+            const style = window.getComputedStyle(document.getElementById(id))
+            let matrix = new WebKitCSSMatrix(style.transform)
+            return matrix.m41
         }
 
     },
-    get_ty:function(id){
+    get_ty: function (id) {
         if (game.check_id(id) == true) {
-        const style =  window.getComputedStyle(document.getElementById(id))
-        let matrix = new WebKitCSSMatrix(style.transform)
-        return matrix.m42
+            const style = window.getComputedStyle(document.getElementById(id))
+            let matrix = new WebKitCSSMatrix(style.transform)
+            return matrix.m42
         }
     },
     get_top: function (id) {
 
         if (game.check_id(id) == true) {
-        let y = document.getElementById(id).offsetTop;
-        return y;
-        }    
+            let y = document.getElementById(id).offsetTop;
+            return y;
+        }
     },
     moveX_rest: function (a, rest, id) {
 
@@ -640,7 +651,7 @@ game = {
 
 
     },
-    
+
     force_obj: function (id, x, y, rotate) {
         if (game.check_id(id) == true) {
             let element = document.getElementById(id);
@@ -940,27 +951,6 @@ game = {
 
 
     },
-    remove_id: function (id) {
-
-        let box = document.getElementById(id);
-        box.removeAttribute('id');
-        
-
-        
-
-    },
-    add_id: function (id,name) {
-
-        let box = document.getElementById(id);
-
-         box.setAttribute('id',name);
-        
-
-    },
-    incluid: function(string1,string2){
-
-        return string1.includes(string2) == true
-    },
     block_all: function (selector) {
 
         let myObj = document.querySelectorAll(selector),
@@ -1014,12 +1004,12 @@ game = {
         let obj = document.getElementById(id);
         obj.style.cursor = type;
     },
-    get_input:function(id){
-		
-		let input = document.getElementById(id);
-		let texto = input. value;
-		return texto;
-		
+    get_input: function (id) {
+
+        let input = document.getElementById(id);
+        let texto = input.value;
+        return texto;
+
     },
     fixed_body: function (zoom) {
         document.body.style.width = "100%";
@@ -1029,32 +1019,7 @@ game = {
         document.body.style.zoom = zoom;
         document.body.style.scrollBehavior = "smooth";
     },
-    camera: function (specto, x, y, xLimit, yLimit) {
-        if (specto == "2d" || specto == "2D") {
 
-            if (x >= xLimit || y >= yLimit) {
-
-            } else {
-
-                window.scroll(x, y);
-
-            }
-
-        } else {
-
-            console.log("Erro:specto");
-        }
-
-        if (specto == "canvas:2d" || specto == "canvas:2D") {
-
-
-
-        } else {
-
-            console.log("Erro:specto");
-        }
-
-    },
     print: function (p) {
 
         return alert(p);
@@ -1075,14 +1040,14 @@ game = {
         document.body.innerHTML += '<' + obj + ' id="' + id + '">' + '</' + obj + '>';
 
     },
-    fpsFrame: function(obj,func,fps){
-        
+    fpsFrame: function (obj, func, fps) {
+
         obj.fpsFrame++
-        if(obj.fpsFrame == fps){
-                func
-                obj.fpsFrame=-1
+        if (obj.fpsFrame == fps) {
+            func
+            obj.fpsFrame = -1
         }
- 
+
     },
     frame_sprite: function (name, src, context, width, height, frameIndex, row, tickCount, ticksPerFrame, frames) {
 
@@ -1096,11 +1061,11 @@ game = {
             tickCount: tickCount,
             ticksPerFrame: ticksPerFrame,
             frames: frames,
-            ative:true
+            ative: true
         }
-	
-        
-	 
+
+
+
 
         return name;
 
@@ -1109,20 +1074,20 @@ game = {
     },
     update_sprite: function (obj) {
 
-       
+
         if (obj.tickCount > obj.ticksPerFrame) {
             obj.tickCount = 0;
             if (obj.frameIndex < obj.frames - 1) {
-                obj.frameIndex ++;
+                obj.frameIndex++;
             } else {
                 obj.frameIndex = 0;
             }
         }
-        
-        obj.tickCount ++ ;
+
+        obj.tickCount++;
 
     },
-    render_sprite: function (obj,context,x,y) {
+    render_sprite: function (obj, context, x, y) {
 
         const image = new Image();
         image.src = obj.src;
@@ -1136,27 +1101,27 @@ game = {
             y,// The y coordinate
             obj.width, // The width to draw the image
             obj.height // The width to draw the image
-          
+
         );
-        game.update_sprite(obj) 
+        game.update_sprite(obj)
     },
-    img_canvas: function(context,obj,src,x,y,width,height,ative){
-    
-    obj={
-            x:x,
-            y:y,
-            ative:ative
-       }
-       if(obj.ative==true){
-        
-        obj = new Image()
-        obj.src=src
-        // imagem,XiniRecorte,YiniRecorte,LRecorte,Arecorte,posX,posY,LarguraImagem,AlturaImagem // 
-        context.drawImage(obj,x,y,width,height);
+    img_canvas: function (context, obj, src, x, y, width, height, ative) {
 
-       }
+        obj = {
+            x: x,
+            y: y,
+            ative: ative
+        }
+        if (obj.ative == true) {
 
-       return obj
+            obj = new Image()
+            obj.src = src
+            // imagem,XiniRecorte,YiniRecorte,LRecorte,Arecorte,posX,posY,LarguraImagem,AlturaImagem // 
+            context.drawImage(obj, x, y, width, height);
+
+        }
+
+        return obj
     },
     obj_in_obj: function (obj, id) {
         document.getElementById(obj).appendChild(document.getElementById(id));
@@ -1175,23 +1140,23 @@ game = {
     },
     responsive_img: function (id) {
 
-        return game.img_size(id,game.get_window_w(),game.get_window_h())
+        return game.img_size(id, game.get_window_w(), game.get_window_h())
     },
-    move_responsive(id,x,y){
+    move_responsive(id, x, y) {
 
-        Nandraki.move_obj(id,game.get_window_w()/2/5+x,game.get_window_h()/2+y,true)
+        Nandraki.move_obj(id, game.get_window_w() / 2 / 5 + x, game.get_window_h() / 2 + y, true)
     },
-    bar: function(id,height,cor){
+    bar: function (id, height, cor) {
 
         let html = `<div id="bar_${id}" style=" width: 1%;height:${height}px;background-color:${cor};">
         </div> `;
         document.body.innerHTML += html;
-        
+
     },
-    bar_update:function(id,size){
+    bar_update: function (id, size) {
 
         var elem = document.getElementById(id);
-        return elem.style.width = size+"px";
+        return elem.style.width = size + "px";
 
     },
     class_in_obj: function (obj, add) {
@@ -1373,7 +1338,7 @@ game = {
 
     get_text: function (id) {
 
-        let get_text =  parseInt(document.getElementById(id).textContent);
+        let get_text = parseInt(document.getElementById(id).textContent);
         return parseInt(get_text);
 
     },
@@ -1504,7 +1469,7 @@ game = {
         if (obj.up >= rockbottom) {
 
             obj.up = rockbottom;
-            obj.velocidade = 5
+            obj.velocidade = 10
             pulo = 1
             if (bounce == true) {
                 obj.velocidade = -(obj.velocidade * velue);
@@ -1515,7 +1480,7 @@ game = {
 
 
             obj.velocidade += obj.gravidade;
-            
+
 
         }
 
@@ -1548,23 +1513,24 @@ game = {
     },
     right_check: function (id1, id2) {
         if (game.check_id(id1) == true && game.check_id(id2) == true) {
+
             let obj1 = document.getElementById(id1);
             let obj2 = document.getElementById(id2);
-            let local1 = game.coord(obj1);
-            let local2 = game.coord(obj2);
+            let local1 = game.coord(id1);
+            let local2 = game.coord(id2);
             let check_r = local1.offsetRight < local2.offsetRight;
+            return check_r;
         }
-        return check_r;
+
     },
     top_up_check: function (id1, id2) {
         if (game.check_id(id1) == true && game.check_id(id2) == true) {
-            let obj1 = document.getElementById(id1);
-            let obj2 = document.getElementById(id2);
             let local1 = game.coord(obj1);
             let local2 = game.coord(obj2);
             let check_t = local1.offsetTop >= local2.offsetTop;
+            return check_t;
         }
-        return check_t;
+
     },
 
     top_down_check: function (id1, id2) {
@@ -1624,7 +1590,9 @@ game = {
             return obj.getBoundingClientRect();
         }
     },
+
     rest: (game, canvas) => requestAnimationFrame(game, canvas),
     loop: (game, canvas) => requestAnimationFrame(game, canvas),
     update: (jogo, fps) => setInterval(jogo, fps),
+
 }
