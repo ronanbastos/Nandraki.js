@@ -3,7 +3,7 @@
 <br>
 <h1 align="center"><img src="https://img.shields.io/badge/Lincense-MIT-green" alt="index-html" border="0"> 
 <img src="https://img.shields.io/badge/2.5.0-blue" alt="index-html" >     
- <img src="https://img.shields.io/badge/Projeto-Ativo-success" alt="index-html" border="0"><img src="https://img.shields.io/badge/Ultima%20Att-28/08/2022-green" alt="index-html" >     
+ <img src="https://img.shields.io/badge/Projeto-Ativo-success" alt="index-html" border="0"><img src="https://img.shields.io/badge/Ultima%20Att-08/09/2022-green" alt="index-html" >     
 
 <br>
 <h3>Sobre o projeto / 
@@ -49,6 +49,10 @@ In the engine folder contains demo test file]
 	<script src="https://unpkg.com/nandraki@2.1.0/nandraki.js" ></script>
 <p>
 
+#help channel
+
+	1 => youtube:https://www.youtube.com/channel/UCmffxA2ppF1zL9SEU22_7AA
+	
 # Testar o script 
 [Testar sem inteface da engine... Crie um arquivo chamado index.html e cole o seguinte código nele]
 
@@ -97,6 +101,9 @@ In the engine folder contains demo test file]
 - [x] Manipulação de canvas<br>
 - [x] Verficador de estados animação<br>	
 - [ ] Criar event Gamepad<br>
+- [ ] ATT camada 3D game<br>
+- [ ] ATT camada Web3<br>
+- [ ] ATT camada Webgl<br>
 - [ ] Pre-renderização de frame<br>
 - [ ] Visulização de arquivos do projeto<<br>	
 - [ ] Import Apps Android<br>
@@ -108,13 +115,15 @@ In the engine folder contains demo test file]
 <br>
 # Autor 
 Projeto esta sendo feito por mim @RonanBasto,caso queria ajudar pode entra conta comigo.<p>
-Email:ronanbatos@hotmail.com	
+Email:ronanbatos@hotmail.com
+
 <h4> Doar:<a href="https://www.paypal.com/donate?business=4KJAVYQLQDMHA&no_recurring=0&item_name=Ajudar+a+engine&currency_code=BRL">Aqui!</a></h4>
 	
-# Npmjs
-	
+# Npmjs	
 https://www.npmjs.com/package/nandraki
 	
 # Documentation.md
  Aqui:https://ronanbastos.github.io/Documentation-Nandraki.js/ 
+
+
 
