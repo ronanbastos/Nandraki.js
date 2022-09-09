@@ -278,29 +278,8 @@ game = {
         document.body.innerHTML += html;
 
     },
-    camera_move: function (id, x, endX, endY) {
 
-        document.getElementById(id).style.transform = `translateX(${x}px)`;
-       
-    },
-    camera: function (id,specto, xLimit, yLimit) {
-        let x = game.get_tx(id)
-        let y = game.get_ty(id)
-        if (specto == "2d" || specto == "2D") {
-            if (x >= xLimit || y >= yLimit) {
 
-            } else {
-                window.scroll(x, y);
-            }
-        } else {
-            console.log("Erro:specto");
-        }
-        if (specto == "canvas:2d" || specto == "canvas:2D") {
-
-        } else {
-            console.log("Erro:specto");
-        }
-    },
     img_size: function (id, sizeX, sizeY) {
         document.getElementById(id).style.width = sizeX + "px";
         document.getElementById(id).style.height = sizeY + "px";
@@ -1019,7 +998,37 @@ game = {
         document.body.style.zoom = zoom;
         document.body.style.scrollBehavior = "smooth";
     },
+    camera: function (specto, x, y, xLimit, yLimit) {
+        if (specto == "2d" || specto == "2D") {
 
+            if (x >= xLimit || y >= yLimit) {
+
+            } else {
+
+                window.scroll(x, y);
+
+            }
+
+        } else if (specto == "canvas:2d" || specto == "canvas:2D") {
+
+            if (x >= xLimit || y >= yLimit) {
+
+            }
+
+        } else {
+
+            console.log("alerta_size:specto");
+        }
+
+
+
+    },
+    camera_move: function (id=[], x) {
+        id.forEach(myFunction);
+        function myFunction(item) {
+        document.getElementById(item).style.transform = `translateX(${x}px)`;
+        } 
+    },
     print: function (p) {
 
         return alert(p);
@@ -1418,6 +1427,12 @@ game = {
             return false;
         }
     },
+    objH: function (id) {
+        return parseInt(game.get_obj(id).style.height)
+    },
+    objW: function (id) {
+        return parseInt(game.get_obj(id).style.width)
+    },
     move_parent: function (id) {
         let div_p = document.getElementById(id);
         div_p.appendChild(obj.parentElement);
@@ -1462,17 +1477,61 @@ game = {
 
 
     },
-    gravity: function (obj, fim, bounce, velue) {
+    gravity: function (obj = { up: 0, velocidade: 0, gravidade: 0.05, id: "player_id" }, target_id = [], force_jump = 5, bonce_bool = false, bounce_value = 0.8) {
+        target_id.forEach(myFunction);
+        function myFunction(item) {
+            const colidir = game.check_colidir(obj.id, item)
+            if (colidir == true) {
+                if(game.get_top(item)>=game.get_ty(obj.id)){
+                    obj.up = game.get_top(item) - game.objH(obj.id)
+                   
+                }else if(game.get_top(item)<game.get_ty(obj.id) && game.get_left(item)<game.get_tx(obj.id)  ){
+                    pulo -= 1;     
+                    obj.up -= 50+game.get_top(item) - game.objH(obj.id)
+                    x-=game.objw(item)/game.get_tx(obj.id) 
+                    obj.dir-=game.objw(item)/game.get_tx(obj.id) 
+                }
+               
+                obj.velocidade = force_jump;
+                pulo = 2;
+                if (bonce_bool == true) {
+                    obj.velocidade = -(obj.velocidade * bounce_value);
+                }
 
+            } else {
+
+                game.force_gravity(obj, target_id)
+
+
+            }
+        }
+
+
+    },
+    force_gravity: function (obj = { up: 0, velocidade: 0.50 }, target_arry = []) {
         obj.up += obj.velocidade;
-        var rockbottom = fim;
+        target_arry.forEach(myFunction);
+        function myFunction(item) {
+            if (game.check_colidir(obj.id, item) == false) {
+                obj.velocidade += obj.gravidade*0.5;
+
+            }
+
+
+        }
+
+    },
+    gravity_targetM: function (obj, target, bounce,force) {
+    
+        obj.up += obj.velocidade;
+        var rockbottom = target;
         if (obj.up >= rockbottom) {
 
             obj.up = rockbottom;
-            obj.velocidade = 10
+            obj.velocidade = 5
             pulo = 1
             if (bounce == true) {
-                obj.velocidade = -(obj.velocidade * velue);
+                obj.velocidade = -(obj.velocidade * force);
             }
 
 
@@ -1485,9 +1544,37 @@ game = {
         }
 
     },
+    gravity_targetF: function (obj, target, bounce, force, func) {
+
+        obj.up += obj.velocidade;
+        var rockbottom = target;
+        if (obj.up >= rockbottom) {
+
+            obj.up = rockbottom;
+            obj.velocidade = 5;
+            pulo = 1;
+            if (bounce == true) {
+                obj.velocidade = -(obj.velocidade * force);
+            }
+
+            return func;
+
+        } else {
 
 
-    colidir_obj: function (id1, id2) {
+            obj.velocidade += obj.gravidade;
+
+
+        }
+
+    },
+    jump: function (obj = { up: 0, velocidade: 0.50,gravitySpeed:0.5 },force=25,gravidade=1) {
+        obj.up -= force+obj.velocidade*2;
+        obj.gravitySpeed = -(obj.gravitySpeed + obj.velocidade* gravidade);
+        obj.velocidade  =  -( obj.velocidade - obj.gravitySpeed  * gravidade);
+        
+    },
+    colidir_obj: function (id1 = "obj_id", id2 = "obj_id") {
 
         if (game.check_id(id1) == true && game.check_id(id2) == true) {
             if (game.check_colidir(id1, id2) == true) {
@@ -1502,7 +1589,6 @@ game = {
         }
 
     },
-
     colidir_aq: function (id1, id2, valor, pulo, check) {
         if (game.check_id(id1) == true && game.check_id(id2) == true) {
             let obj1 = document.getElementById(id1);
@@ -1513,24 +1599,23 @@ game = {
     },
     right_check: function (id1, id2) {
         if (game.check_id(id1) == true && game.check_id(id2) == true) {
-
             let obj1 = document.getElementById(id1);
             let obj2 = document.getElementById(id2);
-            let local1 = game.coord(id1);
-            let local2 = game.coord(id2);
+            let local1 = game.coord(obj1);
+            let local2 = game.coord(obj2);
             let check_r = local1.offsetRight < local2.offsetRight;
-            return check_r;
         }
-
+        return check_r;
     },
     top_up_check: function (id1, id2) {
         if (game.check_id(id1) == true && game.check_id(id2) == true) {
+            let obj1 = document.getElementById(id1);
+            let obj2 = document.getElementById(id2);
             let local1 = game.coord(obj1);
             let local2 = game.coord(obj2);
             let check_t = local1.offsetTop >= local2.offsetTop;
-            return check_t;
         }
-
+        return check_t;
     },
 
     top_down_check: function (id1, id2) {
