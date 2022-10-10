@@ -319,6 +319,18 @@ game = {
         localStorage.clear();
 
     },
+    call_modal: function(id,text1,text2,text3,func){
+
+        let text = text1;
+        if (confirm(text) == true) {
+          text =text2;
+          func
+        } else {
+          text = text3;
+        }
+        document.getElementById(id).innerHTML = text;
+
+    },
     img_frame: function (id, img_id, width, height, fm, fis, ffe, fr) {
         if (game.check_id(id) == true) {
             if ("img[1]" + id == img_id) {
