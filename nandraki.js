@@ -1601,6 +1601,20 @@ game = {
         }
 
     },
+    Rel_distanica: function (x1, y1, x2, y2, v, t,erro) {
+  
+			  //d é a distância relativa
+			  //dx é a diferença de posição entre os objetos
+			  //dy é a diferença de posição entre os objetos
+			  //v é a velocidade
+			  //t é o tempo decorrido
+			 
+			  const dx = x2 - x1;
+			  const dy = y2 - y1;
+			  const vt = v * t;
+			  return Math.sqrt((dx - vt)*(dx - vt) + dy*dy)-erro;
+
+    },
     colidir_aq: function (id1, id2, valor, pulo, check) {
         if (game.check_id(id1) == true && game.check_id(id2) == true) {
             let obj1 = document.getElementById(id1);
