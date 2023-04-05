@@ -278,8 +278,12 @@ game = {
         document.body.innerHTML += html;
 
     },
+    set_src: function (obj,link) {
 
+         return obj.srcset=link
 
+    },	
+	
     img_size: function (id, sizeX, sizeY) {
         document.getElementById(id).style.width = sizeX + "px";
         document.getElementById(id).style.height = sizeY + "px";
