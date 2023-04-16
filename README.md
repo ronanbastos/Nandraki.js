@@ -33,16 +33,16 @@ In the engine folder contains demo test file]
 	
 # Playground
 <p>
-  Playground Dom : https://tironan.000webhostapp.com/test2.html
+  Playground Dom : https://ronanbastos.github.io/Nandraki.js/   //Use o console para pegar variaves da Nandraki e game
 <p>
-  Playground canvas 2D: https://tironan.000webhostapp.com/test.html
+  Playground canvas 2D: 🚧 [OFF] 🚧 
 <p>
   Playground canvas 3D: 🚧 [OFF] 🚧	
 <p>
   Playground CodePen: https://codepen.io/ronan-varella/pen/xxPeeEM
 <br>
 	
-  Playground Site : https://tironan.000webhostapp.com/nandraki.html	
+  Playground Site :  🚧 [OFF] 🚧	
 	
 # CDN 
 
