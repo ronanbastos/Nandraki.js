@@ -49,10 +49,10 @@ In the engine folder contains demo test file]
 	<script src="https://unpkg.com/nandraki@2.1.0/nandraki.js" ></script>
 <p>
 
-#Help channel / Canal de ajuda
+# Help channel / Canal de ajuda
 
-	1 => @RonanTI: https://www.youtube.com/channel/UCmffxA2ppF1zL9SEU22_7AA
-	2 => @BrazilianDev: https://www.youtube.com/watch?v=zQ6_a0LRHsU&list=PL-R1FQNkywO7cyBnd-vmF1ufCoaMcAa9k&ab_channel=BrazilianDev
+1 => @RonanTI:      https://www.youtube.com/channel/UCmffxA2ppF1zL9SEU22_7AA
+2 => @BrazilianDev: https://www.youtube.com/watch?v=zQ6_a0LRHsU&list=PL-R1FQNkywO7cyBnd-vmF1ufCoaMcAa9k&ab_channel=BrazilianDev
 	
 # Testar o script 
 [Testar sem inteface da engine... Crie um arquivo chamado index.html e cole o seguinte código nele]
