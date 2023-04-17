@@ -1,7 +1,9 @@
 <h1 align="center"> <img src="https://i.ibb.co/n3BMNKM/logo.png" alt="mascote"  border="0"></h1>
 
 <br>
-<h1 align="center"><img src="https://img.shields.io/badge/Lincense-MIT-green" alt="index-html" border="0"> <img src="https://img.shields.io/badge/Version-2.1.5 [next:05/03/2023]-blue" alt="index-html" border="0"> <img src="https://img.shields.io/badge/Projeto-Ativo-success" alt="index-html" border="0"><img src="https://img.shields.io/badge/Ultima%20Att-17/03/2022-green" alt="index-html" >     
+<h1 align="center"><img src="https://img.shields.io/badge/Lincense-MIT-green" alt="index-html" border="0"> 
+<img src="https://img.shields.io/badge/2.5.0-blue" alt="index-html" >     
+ <img src="https://img.shields.io/badge/Projeto-Ativo-success" alt="index-html" border="0"><img src="https://img.shields.io/badge/Ultima%20Att-10/10/2022-green" alt="index-html" >     
 
 <br>
 <h3>Sobre o projeto / 
@@ -14,6 +16,7 @@ Em processo alfa aqui em baixo tem links de exemplos de projetos feitos na engin
 In alpha process below, there are links to examples of projects made in the engine
 
 <br>
+<br>	
  [Demostração test e test2]
 <br> 
 Nota:[Na pasta da engine contém arquivo test de demostração/
@@ -30,44 +33,47 @@ In the engine folder contains demo test file]
 	
 # Playground
 <p>
-  Playground Dom : 
+  Playground Dom : https://ronanbastos.github.io/Nandraki.js/   //Use o console para pegar variaves da Nandraki e game
 <p>
-  Playground canvas 2D:  🚧  Em construção...  🚧	
+  Playground canvas 2D: 🚧 [OFF] 🚧 
 <p>
-  Playground canvas 3D: 🚧  Em construção...  🚧	
+  Playground canvas 3D: 🚧 [OFF] 🚧	
 <p>
   Playground CodePen: https://codepen.io/ronan-varella/pen/xxPeeEM
 <br>
 	
-  Playground Site : https://tironan.000webhostapp.com/nandraki.html	
+  Playground Site :  🚧 [OFF] 🚧	
 	
 # CDN 
 
-
-	<script src="https://unpkg.com/nandraki@1.4.5/nandraki.js" ></script>
-	<script src="https://unpkg.com/nandraki@1.4.6/nandraki.js" ></script>
+	<script src="https://unpkg.com/nandraki@2.1.0/nandraki.js" ></script>
 <p>
 
+# Help channel / Canal de ajuda
+
+1 => @RonanTI:      https://www.youtube.com/channel/UCmffxA2ppF1zL9SEU22_7AA  <p>
+2 => @BrazilianDev: https://www.youtube.com/watch?v=zQ6_a0LRHsU&list=PL-R1FQNkywO7cyBnd-vmF1ufCoaMcAa9k&ab_channel=BrazilianDev
+	
 # Testar o script 
 [Testar sem inteface da engine... Crie um arquivo chamado index.html e cole o seguinte código nele]
 
 	<!DOCTYPE html>
 	<html>
 	<head>
-		<script src="nandraki.js"></script>
-		<script src="https://unpkg.com/nandraki@1.4.6/nandraki.js" ></script>
+		
+		<script src="https://unpkg.com/nandraki@2.1.0/nandraki.js" ></script>
 	</head>
 	<body>
 
 		<script>
-		        
+		       Nandraki.create_ui("text_id","[hello world]")
 		       myjogo = {
 
 
 			 start : function(){
 
 
-			   Nandraki.create_ui("text_id","hello world")	
+			  // Nandraki.create_ui("text_id","hello world")	
 
 
 			 },	
@@ -85,31 +91,40 @@ In the engine folder contains demo test file]
 <h2>Funcionalidades e Metas</h2>
 
 - [x] Criar interface completa<br>
-- [x] Export html<br>
-- [ ] Pre-renderização de frame<br>
-- [ ] Visulização de arquivos do projeto<<br>	
+- [x] Export html<br>	
 - [x] Criar interface da engine html<br>
-- [x] Export html<br>
 - [x] Manipulação de elemento Dom<br>
 - [x] Key event down e up<br>
 - [x] Event touch,click,move<br>
 - [x] Manipulação de css e js<br>
 - [x] Criar event Gamepad touch<br>
 - [x] Manipulação de animação<br>		
-- [ ] Manipulação de canvas<br>
+- [x] Manipulação de canvas<br>
+- [x] Verficador de estados animação<br>	
 - [ ] Criar event Gamepad<br>
-- [ ] Verficador de estados animação<br>
+- [ ] ATT camada 3D game<br>
+- [ ] ATT camada Web3<br>
+- [ ] ATT camada Webgl<br>
+- [ ] Pre-renderização de frame<br>
+- [ ] Visulização de arquivos do projeto<<br>	
 - [ ] Import Apps Android<br>
-	
+- [ ] Import Apps Exe<br>
+- [ ] Import Apps deb<br>
 <br>	
 # projeto Electron
-  Aqui: --
+  Aqui: 🚧 [OFF] 🚧	
 <br>
 # Autor 
 Projeto esta sendo feito por mim @RonanBasto,caso queria ajudar pode entra conta comigo.<p>
-Email:ronanbatos@hotmail.com	
-<h4> Doar:<a href="https://www.paypal.com/donate?business=4KJAVYQLQDMHA&no_recurring=0&item_name=Ajudar+a+engine&currency_code=BRL">Aqui!</a></h4>
+Email:ronanbatos@hotmail.com
 
+<h4>[Paypal] Doar:<a href="https://www.paypal.com/donate?business=4KJAVYQLQDMHA&no_recurring=0&item_name=Ajudar+a+engine&currency_code=BRL">Aqui!</a></h4>
+	
+# Npmjs	
+https://www.npmjs.com/package/nandraki
+	
 # Documentation.md
  Aqui:https://ronanbastos.github.io/Documentation-Nandraki.js/ 
+
+
 
