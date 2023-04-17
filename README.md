@@ -49,7 +49,7 @@ In the engine folder contains demo test file]
 	<script src="https://unpkg.com/nandraki@2.1.0/nandraki.js" ></script>
 <p>
 
-#help channel
+#Help channel / Canal de ajuda
 
 	1 => @RonanTI: https://www.youtube.com/channel/UCmffxA2ppF1zL9SEU22_7AA
 	2 => @BrazilianDev: https://www.youtube.com/watch?v=zQ6_a0LRHsU&list=PL-R1FQNkywO7cyBnd-vmF1ufCoaMcAa9k&ab_channel=BrazilianDev
