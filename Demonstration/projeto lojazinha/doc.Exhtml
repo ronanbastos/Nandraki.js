@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+		<script src="Nandraki.js"></script>
+		<meta name="viewport" content="width=device-width, initial-scale=0.1"/>		
+</head>
+<body style="background-color: cadetblue;">
+<script>
+    cano={
+    x:0,
+    up:game.get_window_h()/2-115
+}
+clouds={
+    x:1000,
+    up:game.get_window_h()/2-480
+}
+player={
+    x:0,
+    up:0,
+    velocidade:0,
+    gravidade:1.5,
+    frame:0,
+    framePos:0,
+    anim:"",
+    pontos:0
+
+}
+Nandraki.create_sprite("player",1,"mario.png",null,null,null,null,64,64,15,32,50,10)
+Nandraki.ative_box("box_player",false)
+game.spawn_sprite("bg","bg.png",0,0)
+game.spawn_sprite("clouds","clouds.png",clouds.x,clouds.up)
+game.spawn_sprite("pipe","pipe.png",game.get_window_w()+50,cano.up)
+game.img_size("bg",game.get_window_w(),game.get_window_h())
+game.camada("bg",-50)
+game.camada("player",10)
+game.camada("pipe",-10)
+Nandraki.move_obj("box_player",20,15,false)
+pulo=1
+
+
+function click(){
+    if(pulo>=1){
+
+    player.anim="pulando"
+    player.velocidade=-15
+
+    }
+    pulo-=1
+}
+cron=3;
+function loop(){
+
+    game.force_obj("pipe",cano.x-=20,cano.up)
+    game.force_obj("clouds",clouds.x-=2,cano.up)
+ colid=game.colidir_obj("box_player","pipe")
+
+ if(colid==true){
+    player.anim="morte"
+    cron-=1
+    if(cron==1){
+        game.kill_free("player")  
+    }
+    
+ }
+
+if(cano.x<=-2500){
+
+    cano.x=10
+}
+
+if(clouds.x<=-2500){
+
+    clouds.x=1000
+}
+
+if(player.anim=="pulando"){
+    game.img_frame("player","img[1]player",64,64,5,3,3,3)
+}
+
+if(player.anim=="morte"){
+    game.img_frame("player","img[1]player",64,64,5,4,4,4)
+}
+
+if(player.anim=="correndo"){
+    player.framePos++
+    if( player.framePos==2){
+        game.img_frame("player","img[1]player",64,64,5,player.frame++,0,2)
+        if(player.frame==2)player.frame=0
+        player.framePos=0
+    }
+
+
+}
+
+if(player.up>=385){
+    pulo=1
+    player.anim="correndo"
+}
+game.click("player",click)
+game.force_obj("player",player.x,player.up,false)
+game.gravity(player,game.get_window_h()/2+100,0,false)
+
+}
+
+
+
+
+game.log_key;
+game.log_down(logKey1);
+function logKey1(e) {
+   
+ if( e.code == "Space") {
+   if(pulo==1){
+
+    player.anim="pulando"
+    player.velocidade=-10
+
+   }
+  
+    pulo-=1
+}
+ }
+game.log_up(logKey2);
+function logKey2(e) {
+if( e.code == "Space") {
+    player.anim="correndo"
+}
+}
+
+
+game.update(loop,60);
+
+</script>
+
+</body>
+</html>
+

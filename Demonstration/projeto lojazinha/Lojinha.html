@@ -1,0 +1,91 @@
+
+<!DOCTYPE html>
+<script src="Nandraki.js"></script>
+<script src="manager.js"></script>
+<script src="player.js"></script>
+<script src="cavalo.js"></script>
+<script src="controle.js"></script>
+
+<html lang="pt-br">
+<head>
+	<meta charset="UTF-8" name="viewport" content="width=device-width,initial-scale=5">
+
+	<title>Minha Loja</title>
+	<link rel="stylesheet" href="style.css">
+
+	
+</head>
+<body id="map_game" >
+
+	<script>
+	
+	 jogo.ObjectCreate();
+	 jogo.Start;
+	 
+	</script>
+	<header>
+	    <img id="casa" src="img/casa.png"></img>
+	    <h1>Minha Loja Rpg</h1>
+		<h3>wixi.com</h3>
+
+	</header>
+	<nav id="navbar" >
+		<a href="#">Home</a>
+		<a >Produtos</a>
+		<a >Status</a>
+		<a >Itens</a>
+		<a   onclick="game.display('navbar','none')" >[X]</a>
+		<h4 id="saldo">Saldo: 165,00 R$ </h4>
+	</nav>
+
+	<div class="container">
+		
+		<div id="celular_prod" class="product">
+			<img id="img_celular" src="img/produto2.jpg" alt="Produto 2">
+			<h2 id="celular_txt">iphone 14</h2>
+			<p id="celular_preço">R$ 7.500,00</p>
+			<button  id="cp_celular" class="close-cart" type="button">coloca no carrinho<i class="fas fa-times"></i></button>
+			
+		</div>
+		<div id="placa_prod" class="product">
+			<img src="img/produto3.jpg" alt="Produto 3">
+			<h2>Gtx 9075 Ultra Ti </h2>
+			[load cena]
+			<p>R$ 90.500,00</p>
+			<button id="cp_placa" class="close-cart" type="button">coloca no carrinho<i class="fas fa-times"></i></button>
+			
+		</div>
+		<div id="cavalo_prod" class="product">
+			<img id="cp_cavalo" src="img/produto1.jpg" alt="Produto 1">
+			<h2>Quadro Decorativo - Cavalo Craudio</h2>
+			<p>‎R$ 850,00</p>
+			
+		</div>
+		<div class="product">
+			<img src="img/produto4.png" alt="Produto 1">
+			<h2>Varinha Magic</h2>
+			<p id="valor_varinha">‎R$ 165,00</p>
+			<button id="cp_varinha" class="close-cart" type="button">coloca no carrinho<i class="fas fa-times"></i></button>
+		</div>
+	</div>
+	<div class="cart-overlay"></div>
+
+	<div class="cart" id="div_car">
+		<div  class="product">
+			<h3>Carrinho de Compras</h3>
+			
+			
+			
+			
+			<div  id="toque" class="product">
+				<div class="cart-total-container">
+					<span id="total_item">Total itens: 0</span>
+				</div>
+				
+			</div>
+		</div>
+		</div>
+		
+	
+</body>
+</html>
