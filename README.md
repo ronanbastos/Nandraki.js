@@ -1,7 +1,7 @@
 <h1 align="center"> <img src="https://i.ibb.co/n3BMNKM/logo.png" alt="mascote"  border="0"></h1>
 
 <br>
-<h1 align="center"><img src="https://img.shields.io/badge/Lincense-MIT-green" alt="index-html" border="0"> <img src="https://img.shields.io/badge/Version-1.4.7 [next:05/05/2022]-blue" alt="index-html" border="0"> <img src="https://img.shields.io/badge/Projeto-Ativo-success" alt="index-html" border="0"><img src="https://img.shields.io/badge/Ultima%20Att-17/03/2022-green" alt="index-html" >     
+<h1 align="center"><img src="https://img.shields.io/badge/Lincense-MIT-green" alt="index-html" border="0"> <img src="https://img.shields.io/badge/Version-2.1.5 [next:05/03/2023]-blue" alt="index-html" border="0"> <img src="https://img.shields.io/badge/Projeto-Ativo-success" alt="index-html" border="0"><img src="https://img.shields.io/badge/Ultima%20Att-17/03/2022-green" alt="index-html" >     
 
 <br>
 <h3>Sobre o projeto / 
