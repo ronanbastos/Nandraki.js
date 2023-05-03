@@ -15,6 +15,18 @@ class Nandraki {
         this.body = document.getElementById(this.id);
 
     }
+	static drop_sprite(id, width, height, left, top, boxl, boxh, imgs) {
+		
+		  let img = '';
+		  
+		  for (let i = 0; i < imgs.length; i++) {
+			const display = i === 0 ? 'block' : 'none';
+			img += `<img id="img[${i}]${id}" style="position:absolute;display:${display}" src="${imgs[i]}" alt=""/>`;
+		  }
+		  const element = `<div id="${id}" style="width:${width}px;height:${height}px;overflow:hidden;position:absolute;left:${left}px;top:${top}px;">${img}<div id="box_${id}" style="width:${boxl}px;height:${boxh}px;position:absolute;"></div></div>`;
+		  document.body.insertAdjacentHTML('beforeend', element);
+		
+	}
     static create_sprite(id, camadas, img1, img2, img3, img4, img5, width, height, boxl, boxh, left, top) {
 
         const expr = camadas;
@@ -80,6 +92,7 @@ class Nandraki {
 
 
     }
+
     static move_obj(id, left, top, fixed) {
         let body = document.getElementById(id);
         if (fixed == true) {
@@ -278,6 +291,35 @@ game = {
         document.body.innerHTML += html;
 
     },
+	maps: function(id, map, Size, customCases) {
+	
+	canvas=game.get_obj(id)
+    let obj = canvas.getContext("2d");
+
+    canvas.width = map[0].length * Size;
+    canvas.height = map.length * Size;
+
+    // Loop pelo mapa
+    map.forEach(function(row, rowIndex) {
+      
+      row.split("").forEach(function(cell, cellIndex) {
+      
+        let x = cellIndex * Size;
+        let y = rowIndex * Size;
+      
+        if (customCases[cell]) {
+          /
+          customCases[cell](obj, x, y, Size);
+        } else {
+        
+          obj.fillStyle = "white";
+          obj.fillRect(x, y, Size, Size);
+        }
+      });
+    });
+	
+	},
+
     set_src: function (obj,link) {
 
          return obj.srcset=link
@@ -918,10 +960,6 @@ game = {
                 }
             }
         }
-
-
-
-
     },
     remove_all: function (selector) {
 
