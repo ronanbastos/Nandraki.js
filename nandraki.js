@@ -291,7 +291,7 @@ game = {
         document.body.innerHTML += html;
 
     },
-	maps: function(id, map, Size, customCases) {
+	maps_canvas: function(id, map, Size, customCases) {
 	
 	canvas=game.get_obj(id)
     let obj = canvas.getContext("2d");
@@ -308,7 +308,7 @@ game = {
         let y = rowIndex * Size;
       
         if (customCases[cell]) {
-          /
+         
           customCases[cell](obj, x, y, Size);
         } else {
         
@@ -960,6 +960,10 @@ game = {
                 }
             }
         }
+
+
+
+
     },
     remove_all: function (selector) {
 
