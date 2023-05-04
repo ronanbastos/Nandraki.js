@@ -42,7 +42,6 @@ In the engine folder contains demo test file]
   Playground CodePen: https://codepen.io/ronan-varella/pen/xxPeeEM
 <br>
 	
-  Playground Site :  🚧 [OFF] 🚧	
 	
 # CDN 
 
