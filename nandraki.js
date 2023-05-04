@@ -291,7 +291,7 @@ game = {
         document.body.innerHTML += html;
 
     },
-	maps_canvas: function(id, map, Size, customCases) {
+    maps_canvas: function(id, map, Size, customCases) {
 	
 	canvas=game.get_obj(id)
     let obj = canvas.getContext("2d");
