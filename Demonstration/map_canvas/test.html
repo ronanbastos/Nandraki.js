@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+<head>
+		<script src="Nandraki.js"></script>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>		
+<style>
+	body{
+	  margin:0px;
+	}
+	canvas { 
+	
+	border: solid 1px;	
+	margin-left: 5px;
+	
+	}
+</style>
+</head>
+<body>
+
+debug:
+<br>
+
+<script>
+game.spawn_sprite("img","dica.png",600,25)
+game.canvas_start("canvas",950,500)	
+Nandraki = game.context("canvas")
+
+map = [
+    "================",
+    "=              =",
+    "=              =",
+    "=   x      x   =",
+    "=   x      x   =",
+    "=              =",
+    "= x          x =",
+    "= x          x =",
+    "= xxxxxxxxxxxx =",
+	"=              =",
+    "================",
+];
+
+map1 = [
+    "================",
+    "=              =",
+    "=              =",
+    "=     x   x    =",
+    "=     x   x    =",
+    "=              =",
+    "= x          x =",
+    "= x          x =",
+    "= xxxxxxxxxxxx =",
+    "=              =",
+    "================",
+];
+
+map2 = [
+    "================",
+    "=              =",
+    "=              =",
+    "=   x      x   =",
+    "=   x      x   =",
+    "=              =",
+    "= x          x =",
+    "= x          x =",
+    "= xxxxxxxxxxxx =",
+	"=              =",
+    "================",
+];
+map3 = [
+    "=================",
+    "= xx        x   =",
+    "=   x      x    =",
+    "=    x    x     =",
+    "=   x x  x x    =",
+    "=   x      x    =",
+    "=               =",
+	"=               =",
+    "=               =",
+    "= xxxxxxxxxxxx  =",
+	"=               =",
+	"=               =",
+    "=================",
+];
+map4 = [
+    "================",
+    "=              =",
+    "=   x      x   =",
+    "=   x      x   =",
+    "=              =",
+    "= x          x =",
+    "= x          x =",
+    "= xxxxxxxxxxxx =",
+	"=              =",
+    "================",
+];
+let blockSize = 32;
+
+// Define as ações customizadas para cada tipo de célula
+let customCases = {
+  "=": function(obj, x, y, size) {
+    obj.fillStyle = "gray";
+    obj.fillRect(x, y, size, size);
+  },
+  "$": function(obj, x, y, size) {
+    obj.fillStyle = "yellow";
+    obj.fillRect(x, y, size, size);
+  },
+  "x": function(obj, x, y, size) {
+    obj.fillStyle = "red";
+    obj.fillRect(x, y, size, size);
+  }
+};
+
+// Chama a função "maps" do objeto "game"
+game.maps_canvas("canvas",map, blockSize, customCases);
+
+game.log_key;
+game.log_down(logKey1);
+x=0
+y=0
+
+
+ function logKey1(e) {
+		
+	   if( e.code == "ArrowRight") {
+			x+=5
+			game.maps_canvas("canvas",map1, blockSize, customCases);
+		}
+		if( e.code == "ArrowLeft") {
+			x-=5
+			game.maps_canvas("canvas",map2, blockSize, customCases);
+		}
+
+		if( e.code == "ArrowUp"   ) {
+			anim="pulo"	
+			y-=5
+			
+		 game.maps_canvas("canvas",map4, blockSize, customCases);
+		
+		}
+		if( e.code == "ArrowDown") {
+		
+			y+=5
+			game.maps_canvas("canvas",map3, blockSize, customCases);
+		}
+		
+  }
+
+function jogo(){
+		
+	
+
+	
+		Nandraki.beginPath();
+	    Nandraki.stroke();
+		game.rest(jogo,Nandraki);
+		
+	}
+
+	game.loop(jogo,Nandraki)
+
+
+
+
+
+</script>
+
+</body>
+</html>
