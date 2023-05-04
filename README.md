@@ -32,12 +32,12 @@ In the engine folder contains demo test file]
 <p>
 	
 # Playground
-<p>
-  Playground Dom : https://ronanbastos.github.io/Nandraki.js/   //Use o console para pegar variaves da Nandraki e game
-<p>
+
   Playground canvas 2D: 🚧 [OFF] 🚧 
 <p>
-  Playground canvas 3D: 🚧 [OFF] 🚧	
+  Playground canvas 3D: 🚧 [OFF] 🚧
+<p>
+  Playground Dom : https://ronanbastos.github.io/Nandraki.js/   //Use o console para pegar variaves da Nandraki e game
 <p>
   Playground CodePen: https://codepen.io/ronan-varella/pen/xxPeeEM
 <br>
