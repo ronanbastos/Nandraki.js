@@ -291,7 +291,7 @@ game = {
         document.body.innerHTML += html;
 
     },
-    maps_canvas: function(id, map, Size, customCases) {
+	maps_canvas: function(id, map, Size, customCases) {
 	
 	canvas=game.get_obj(id)
     let obj = canvas.getContext("2d");
@@ -319,7 +319,7 @@ game = {
     });
 	
 	},
-
+	
     set_src: function (obj,link) {
 
          return obj.srcset=link
@@ -488,6 +488,39 @@ game = {
             img_frame.style.marginLeft = -coluna + 'px';
         }
     },
+	drop_frame: function (id, img_id,layers,width, height, fm, fis, ffe, fr,) {
+		if (game.check_id(id) == true) {
+			let num_layers = layers; // número total de camadas de imagem
+			for (let i = 1; i <= num_layers; i++) {
+				let layer_id = "img[" + i + "]" + id;
+				let layer_elem = document.getElementById(layer_id);
+				if (layer_elem) { // verifique se a camada de imagem existe
+					if (layer_id == img_id) {
+						// se esta for a camada de imagem atual, mostre-a
+						layer_elem.style.display = "block";
+					} else {
+						// se não for a camada de imagem atual, oculte-a
+						layer_elem.style.display = "none";
+					}
+				}
+			}
+
+			// cálculo de linha e coluna para exibição do quadro da imagem
+			let img_frame = document.getElementById(img_id);
+			let frame_inicio = fis; //10 	
+			let frame_math = fm; //6	
+			let largura = width; //64	
+			let altura = height; //64
+			let frame_final = ffe; //15
+			let frame_rest = fr; //10
+
+			let linha = Math.floor(frame_inicio / frame_math) * altura;
+			let coluna = frame_inicio % frame_math * largura;
+
+			img_frame.style.marginTop = -linha + 'px';
+			img_frame.style.marginLeft = -coluna + 'px';
+		}
+	},
     animar_left: function (id, mi, ma, time) {
 
         document.getElementById(id).animate([{
