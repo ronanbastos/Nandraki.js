@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+		<script src="Nandraki.js"></script>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>		
+<style>
+	body{
+	  margin:0px;
+	}
+	canvas { 
+	
+	border: solid 1px;	
+	margin-left: 5px;
+	
+	}
+</style>
+</head>
+<body>
+
+debug:
+<br>
+
+<script>
+
+
+game.log_key;
+game.log_down(logKey1);
+x=0
+y=0
+
+
+ function logKey1(e) {
+		
+	   if( e.code == "ArrowRight") {
+			x+=5
+		
+			
+		}
+		if( e.code == "ArrowLeft") {
+			x-=5
+		
+		}
+
+		if( e.code == "ArrowUp"   ) {
+			anim="pulo"	
+			y-=5
+			
+	
+		
+		}
+		if( e.code == "ArrowDown") {
+		
+			y+=5
+			
+		}
+		
+  }
+  
+
+map = [
+    "===================",
+    "=                 =",
+    "=                 =",
+    "=     $ $         =",
+    "=  @ $$$x         =",
+    "=  xxxxxxx   $    =",
+    "=  x         x    =",
+    "=  x  $      x    #",
+    "= xxxxxxxxxxxx    =",
+    "===================",
+];
+
+
+let blockSize = 64;
+
+
+
+customCases = {
+  "=": function(x, y, size) {
+   
+	obj=game.sprite_body("solido","bloco.png", x, y, size);
+	
+    return  obj
+
+  },
+  "$": function(x, y, size) {
+	
+    return  game.sprite_body("dinheiro","bloco1.png", x, y, size);
+	
+  },
+  
+  "@": function(x, y, size) {
+	
+    return  game.sprite_body("player","player.png", x, y,32);
+	
+  },
+   "#": function(x, y, size) {
+	
+    return  game.sprite_body("saida","bloco3.png", x, y, size);
+	
+  },
+  "x": function(x, y, size) {
+	
+    obj=game.sprite_body("solido","bloco2.png", x, y, size);
+	
+    return  obj
+  }
+};
+
+// Chama a função "maps" do objeto "game"
+game.maps_body(map, blockSize, customCases);
+
+function jogo(){
+		
+	
+	
+		
+		
+	
+	
+	
+	   
+		
+}
+
+game.update(jogo,60)
+
+
+
+
+
+</script>
+
+</body>
+</html>
