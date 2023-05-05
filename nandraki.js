@@ -292,31 +292,53 @@ game = {
 
     },
 	maps_canvas: function(id, map, Size, customCases) {
+			
+			canvas=game.get_obj(id)
+			let obj = canvas.getContext("2d");
+
+			canvas.width = map[0].length * Size;
+			canvas.height = map.length * Size;
+
+			// Loop pelo mapa
+			map.forEach(function(row, rowIndex) {
+			  
+			  row.split("").forEach(function(cell, cellIndex) {
+			  
+				let x = cellIndex * Size;
+				let y = rowIndex * Size;
+			  
+				if (customCases[cell]) {
+				 
+				  customCases[cell](obj, x, y, Size);
+				  
+				} else {
+				
+				  obj.fillStyle = "white";
+				  obj.fillRect(x, y, Size, Size);
+				}
+			  });
+			});
 	
-	canvas=game.get_obj(id)
-    let obj = canvas.getContext("2d");
+	},
+	maps_body: function( map, Size, customCases) {
+	
+		// Loop pelo mapa
+		map.forEach(function(row, rowIndex) {
+		  row.split("").forEach(function(cell, cellIndex) {
+			let x = cellIndex * Size;
+			let y = rowIndex * Size;
 
-    canvas.width = map[0].length * Size;
-    canvas.height = map.length * Size;
-
-    // Loop pelo mapa
-    map.forEach(function(row, rowIndex) {
-      
-      row.split("").forEach(function(cell, cellIndex) {
-      
-        let x = cellIndex * Size;
-        let y = rowIndex * Size;
-      
-        if (customCases[cell]) {
-         
-          customCases[cell](obj, x, y, Size);
-        } else {
-        
-          obj.fillStyle = "white";
-          obj.fillRect(x, y, Size, Size);
-        }
-      });
-    });
+			if (customCases[cell]) {
+			  let imgTag = customCases[cell](x, y, Size);
+			  document.body.innerHTML += imgTag;
+			} 
+		  });
+		});
+	
+	},
+	sprite_body: function(id, src, x, y, size){
+		
+		return `<img id="${id}" style="position:absolute;left:${x}px;top:${y}px;" src="${src}" width="${size}" height="${size}" />`;
 	
 	},
 	
