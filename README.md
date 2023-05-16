@@ -101,7 +101,8 @@ In the engine folder contains demo test file]
 - [x] Manipulação de canvas<br>
 - [x] Verficador de estados animação<br>	
 - [x] Criar event Gamepad<br>
-- [x] Criador de mapas canvas e sprite png<br>	
+- [x] Criador de mapas canvas e sprite png<br>
+- [ ] ATT camada lib js externa <br>	
 - [ ] ATT camada 3D game Webgl<br>
 - [ ] ATT camada Web3<br>
 - [ ] Interface da engine android,web e desktop<br>
