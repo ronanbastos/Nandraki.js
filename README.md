@@ -87,7 +87,7 @@ In the engine folder contains demo test file]
 
 
 
-<h2>Funcionalidades e Metas</h2>
+<h2>Funcionalidades e Metas  [Features] </h2>
 
 - [x] Criar interface completa<br>
 - [x] Export html<br>	
