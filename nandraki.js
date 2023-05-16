@@ -242,6 +242,75 @@ game = {
 
 
     },
+	pad: function() {
+		return {
+		  id: {},
+		  btn: {}
+		};
+	  },
+
+	  gamepad_start: function() {
+		const pad = game.pad();
+
+		// Função para mapear os valores das setas do controle
+		function mapid(axes) {
+		  pad.id = {
+			"X": axes[0].toFixed(2),
+			"Y": axes[1].toFixed(2),
+		  };
+		}
+
+		// Função para mapear o estado dos botões do controle
+		function mapbtn(buttons) {
+		  const buttonMap = {
+			0: 'A',
+			1: 'B',
+			2: 'X',
+			3: 'Y',
+			// Mapeie outros botões conforme necessário
+		  };
+
+		  pad.btn = {};
+
+		  for (let i = 0; i < buttons.length; i++) {
+			const buttonName = buttonMap[i];
+			const pressed = buttons[i].pressed;
+			pad.btn[buttonName] = pressed;
+		  }
+		}
+
+		// Função de atualização para verificar o estado das setas e dos botões do controle
+		function updateGamepad(gamepad) {
+		  mapid(gamepad.axes);
+		  mapbtn(gamepad.buttons);
+		}
+
+		// Event listener para o evento 'gamepadconnected'
+		window.addEventListener('gamepadconnected', (event) => {
+		  const gamepad = event.gamepad;
+		  updateGamepad(gamepad);
+		});
+
+		// Event listener para o evento 'gamepaddisconnected'
+		window.addEventListener('gamepaddisconnected', () => {
+		  // Limpe o estado das setas e dos botões ou execute outras ações necessárias
+		});
+
+		const gamepads = navigator.getGamepads();
+
+		for (let i = 0; i < gamepads.length; i++) {
+		  const gamepad = gamepads[i];
+
+		  if (gamepad) {
+			updateGamepad(gamepad);
+			// console.log('Valores das setas:', pad.id);
+			// console.log('Estado dos botões:', pad.btn);
+			return pad;
+		  }
+		}
+	  },
+	
+
     click_som: function (id, link_som) {
         if (game.check_id(id) == true) {
             function play() {
