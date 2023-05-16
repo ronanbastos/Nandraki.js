@@ -243,7 +243,8 @@ game = {
 
     },
 	gamepad_info:function(){
-	  window.addEventListener("gamepadconnected", (e) => {
+	 
+        window.addEventListener("gamepadconnected", (e) => {
 	  console.log(
 		"Gamepad connected at index %d: %s. %d buttons, %d axes.",
 		e.gamepad.index,
