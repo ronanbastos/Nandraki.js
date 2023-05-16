@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+		<script src="nandraki.js"></script>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>		
+<style>
+	body{
+	  margin:0px;
+	}
+	canvas { 
+	
+	border: solid 1px;	
+	margin-left: 5px;
+	
+	}
+</style>
+</head>
+<body>
+debug:
+<br>
+
+<script>
+
+
+game.canvas_start("canvas",800,500)	
+Nandraki = game.context("canvas")
+
+
+game.log_key;
+game.log_down(logKey1);
+x=0
+y=0
+
+
+ function logKey1(e) {
+		
+	   if( e.code == "ArrowRight") {
+			x+=5
+		
+		}
+		if( e.code == "ArrowLeft") {
+			x-=5
+			
+		}
+
+		if( e.code == "ArrowUp"   ) {
+			anim="pulo"	
+			y-=5
+
+			if(pulo==1 ){
+				
+				pulo=pulo-1
+				
+			}
+		
+		}
+		if( e.code == "ArrowDown") {
+		
+			y+=5
+
+		}
+		
+  }
+
+function jogo(){
+		
+	
+	pad=game.gamepad_start()
+
+  if (pad && pad.id.X == 1) {
+    x += 5;
+  }
+  if (pad && pad.id.X == -1) {
+    x -= 5;
+  }
+  if (pad && pad.id.Y == 1) {
+    y += 5;
+  }
+  if (pad && pad.id.Y == -1) {
+    y -= 5;
+  }
+  if (pad && pad.btn.A) {
+    y += 10;
+  }
+  if (pad && pad.btn.B) {
+      y -= 10;
+  }
+  if (pad && pad.btn.X) {
+      x += 20;
+  }
+  if (pad && pad.btn.Y) {
+     x -= 20;
+  }
+		Nandraki.clearRect(0, 0,canvas.width,canvas.height);	
+		Nandraki.beginPath();
+	    Nandraki.stroke();
+		Nandraki.fillRect(x,y,50,50);	
+	    game.rest(jogo,Nandraki);
+		
+	}
+
+	game.loop(jogo,Nandraki)
+
+
+</script>
+
+</body>
+</html>
