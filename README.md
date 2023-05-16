@@ -97,10 +97,10 @@ In the engine folder contains demo test file]
 - [x] Event touch,click,move<br>
 - [x] Manipulação de css e js<br>
 - [x] Criar event Gamepad touch<br>
+- [x] Criar event Gamepad joystick<br>	
 - [x] Manipulação de animação<br>		
 - [x] Manipulação de canvas<br>
 - [x] Verficador de estados animação<br>	
-- [x] Criar event Gamepad<br>
 - [x] Criador de mapas canvas e sprite png<br>
 - [ ] ATT camada lib js externa <br>	
 - [ ] ATT camada 3D game Webgl<br>
