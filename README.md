@@ -106,7 +106,7 @@ In the engine folder contains demo test file]
 - [ ] ATT camada 3D game Webgl<br>
 - [ ] ATT camada Web3<br>
 - [ ] Interface da engine android,web e desktop<br>
-- [ ] Visulização de arquivos do projeto<<br>	
+	~ [ ] Visulização de arquivos do projeto<<br>	
 - [ ] Import Apps Android<br>
 - [ ] Import Apps Exe<br>
 - [ ] Import Apps deb<br>
