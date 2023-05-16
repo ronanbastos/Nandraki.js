@@ -709,5 +709,224 @@ function component(width, height, color, x, y) {
 
 </body>
 
+	// Função para mapear os botões do controle
+function mapButtons(buttons) {
+  const buttonMap = {
+    0: 'A',
+    1: 'B',
+    2: 'X',
+    3: 'Y',
+    // Mapeie outros botões conforme necessário
+  };
+  
+  const mappedButtons = [];
+  
+  for (let i = 0; i < buttons.length; i++) {
+    if (buttons[i].pressed) {
+      const buttonName = buttonMap[i];
+      mappedButtons.push(buttonName);
+    }
+  }
+  
+  return mappedButtons;
+}
+
+// Função para mapear os eixos do controle
+function mapAxes(axes) {
+  const axisMap = {
+    0: 'LeftStickX',
+    1: 'LeftStickY',
+    2: 'RightStickX',
+    3: 'RightStickY',
+    // Mapeie outros eixos conforme necessário
+  };
+  
+  const mappedAxes = {};
+  
+  for (let i = 0; i < axes.length; i++) {
+    const axisName = axisMap[i];
+    const axisValue = axes[i].toFixed(2); // Arredonda o valor para duas casas decimais
+    
+    mappedAxes[axisName] = axisValue;
+  }
+  
+  return mappedAxes;
+}
+
+// Função de atualização para verificar o estado dos controles
+function updateGamepadState() {
+  const gamepads = navigator.getGamepads();
+  
+  for (let i = 0; i < gamepads.length; i++) {
+    const gamepad = gamepads[i];
+    
+    if (gamepad) {
+      const buttons = mapButtons(gamepad.buttons);
+      const axes = mapAxes(gamepad.axes);
+
+      // Faça o processamento necessário com os botões e eixos mapeados
+	   console.log('Eixos:', mappedAxes);
+	  game.set_text("txts"," Eixos " +  axes.LeftStickX);
+	  game.set_text("txtb"," botão " + buttons);
+	 
+    }
+  }
+  
+  requestAnimationFrame(updateGamepadState);
+}
+
+// Inicia a atualização do estado dos controles
+requestAnimationFrame(updateGamepadState);
+
+<!DOCTYPE html>
+<html>
+<head>
+		<script src="Nandraki.js"></script>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>		
+<style>
+	body{
+	  margin:0px;
+	}
+	canvas { 
+	
+	border: solid 1px;	
+	margin-left: 5px;
+	
+	}
+</style>
+</head>
+<body>
+
+debug:
+<br>
+
+<script>
+
+// Função para atualizar os estados dos botões do gamepad
+// Função para atualizar o estado dos botões e eixos do gamepad
+function updateGamepadStatus(gamepad) {
+  updateGamepadButtons(gamepad.buttons);
+
+  const axes = gamepad.axes;
+  const xAxis = axes[0];
+  const yAxis = axes[1];
+
+  // Verifica o estado dos eixos
+  if (xAxis > 0.5) {
+    console.log('Eixo X para a direita');
+    // Adicione ação correspondente
+  } else if (xAxis < -0.5) {
+    console.log('Eixo X para a esquerda');
+    // Adicione ação correspondente
+  }
+
+  if (yAxis > 0.5) {
+    console.log('Eixo Y para baixo');
+    // Adicione ação correspondente
+  } else if (yAxis < -0.5) {
+    console.log('Eixo Y para cima');
+    // Adicione ação correspondente
+  }
+}
+
+// Função para atualizar o estado dos botões do gamepad
+function updateGamepadButtons(buttons) {
+  for (let i = 0; i < buttons.length; i++) {
+    const button = buttons[i];
+    const buttonPressed = button.pressed;
+
+    // Verifica o estado do botão
+    if (buttonPressed) {
+      console.log(`Botão ${i} pressionado`);
+      // Adicione ação correspondente
+    }
+  }
+}
+
+// Função para verificar o estado dos gamepads
+function checkGamepadStatus() {
+  const gamepads = navigator.getGamepads();
+  for (let i = 0; i < gamepads.length; i++) {
+    const gamepad = gamepads[i];
+    if (gamepad) {
+      updateGamepadStatus(gamepad);
+    }
+  }
+}
+
+// Função de animação para verificar o estado dos gamepads continuamente
+function animate() {
+  checkGamepadStatus();
+  requestAnimationFrame(animate);
+}
+
+// Inicia a animação
+animate();
+
+
+
+game.canvas_start("canvas",800,500)	
+Nandraki = game.context("canvas")
+
+
+game.log_key;
+game.log_down(logKey1);
+x=0
+y=0
+
+
+ function logKey1(e) {
+		
+	   if( e.code == "ArrowRight") {
+			x+=5
+		
+		}
+		if( e.code == "ArrowLeft") {
+			x-=5
+			
+		}
+
+		if( e.code == "ArrowUp"   ) {
+			anim="pulo"	
+			y-=5
+
+			if(pulo==1 ){
+				
+				pulo=pulo-1
+				
+			}
+		
+		}
+		if( e.code == "ArrowDown") {
+		
+			y+=5
+
+		}
+		
+  }
+
+function jogo(){
+		
+	
+
+		Nandraki.clearRect(0, 0,canvas.width,canvas.height);	
+		Nandraki.beginPath();
+	    Nandraki.stroke();
+		Nandraki.fillRect(x,y,50,50);	
+	    game.rest(jogo,Nandraki);
+		
+	}
+
+	game.loop(jogo,Nandraki)
+
+
+
+
+
+
+</script>
+
+</body>
+</html>
 
 
