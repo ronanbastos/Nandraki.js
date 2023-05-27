@@ -33,7 +33,6 @@ In the engine folder contains demo test file]
 	
 # Playground
 
-  Playground canvas 2D: 🚧 [OFF] 🚧 
 <p>
   Playground canvas 3D: 🚧 [OFF] 🚧
 <p>
