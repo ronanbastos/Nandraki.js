@@ -113,7 +113,50 @@ class Nandraki {
         document.body.innerHTML += `<h5 id="${id}"> ${txt}</h5>`;
         game.color(id, cor);
     }
+    static drakinos (str) {
+		  /*
+			script 
+			const string = `
+			[player]:url:"player.png",id:"player",x:30,y:50, 
+			| 
+			[inimigo]: url:"inimigo.png",id:"inimi",x:80,y:70
+  			
+			`;	
+		  */
+		  const values = {};
 
+		  // Divide a string em substrings separadas por "|"
+		  const substrings = str.split('|');
+
+		  // Para cada substring, extrai os valores correspondentes
+		  substrings.forEach(substring => {
+			// Extrai o nome entre colchetes como a chave do objeto
+			const name = substring.substring(substring.indexOf('[') + 1, substring.indexOf(']'));
+
+			// Cria um objeto com base no nome extraído
+			const obj = {};
+
+			// Extrai os pares chave-valor da substring
+			const pairs = substring.match(/\w+:"[^"]+"/g);
+
+			// Armazena os valores no objeto
+			pairs.forEach(pair => {
+			  const [property, value] = pair.split(':');
+			  obj[property] = value.replace(/"/g, '');
+			});
+
+			// Extrai as coordenadas x e y
+			const coordinates = substring.match(/x:\d+,y:\d+/)[0];
+			const [x, y] = coordinates.match(/\d+/g);
+
+			obj.x = parseInt(x);
+			obj.y = parseInt(y);
+
+			values[name] = obj;
+		  });
+
+		  return values;
+    }	
     static move_ui(id, left, top, fixed) {
 
         let body = document.getElementById(id);
@@ -205,6 +248,7 @@ game = {
         let obj = {};
         return obj;
     },
+    
     canvas_clear: function () {
         Nandraki.clearRect(0, 0, canvas.width, canvas.height);
     },
