@@ -62,7 +62,6 @@ In the engine folder contains demo test file]
 [Testar sem inteface da engine... Crie um arquivo chamado index.html e cole o seguinte código nele]
 
 	<!DOCTYPE html>
-	<html>
 	<head>
 		
 		<script src="https://raw.githubusercontent.com/ronanbastos/Nandraki.js/main/nandraki.js"></script>
