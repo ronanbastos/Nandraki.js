@@ -113,15 +113,16 @@ class Nandraki {
         document.body.innerHTML += `<h5 id="${id}"> ${txt}</h5>`;
         game.color(id, cor);
     }
-    static drakinos (str) {
+    static drakinos (script) {
 		  /*
-			script 
-			const string = `
+			const script = `
 			[player]:url:"player.png",id:"player",x:30,y:50, 
-			| 
+			 | 
 			[inimigo]: url:"inimigo.png",id:"inimi",x:80,y:70
   			
-			`;	
+			`;
+			obj = drakinos(script)
+			console.log(obj.player.x)
 		  */
 		  const values = {};
 
