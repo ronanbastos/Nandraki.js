@@ -44,7 +44,7 @@ In the engine folder contains demo test file]
 	
 # CDN 
 
-	<script src="https://unpkg.com/nandraki@2.5.5/nandraki.js" ></script>
+	<script src="https://unpkg.com/nandraki@2.5.6/nandraki.js" ></script>
 <p>
 
 # Help channel / Canal de ajuda
