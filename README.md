@@ -110,7 +110,6 @@ In the engine folder contains demo test file]
 - [ ] ATT camada lib js externa <br>	
 - [ ] ATT camada 3D game Webgl<br>
 - [ ] ATT camada Web3<br>
-- [ ] Visulização de arquivos do projeto<<br>	
 - [ ] Import Apps Android<br>
 - [ ] Import Apps Exe<br>
 - [ ] Import Apps deb<br>
