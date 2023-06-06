@@ -2,8 +2,8 @@
 
 <br>
 <h1 align="center"><img src="https://img.shields.io/badge/Lincense-MIT-green" alt="index-html" border="0"> 
-<img src="https://img.shields.io/badge/2.5.5-blue" alt="index-html" >     
- <img src="https://img.shields.io/badge/Projeto-Ativo-success" alt="index-html" border="0"><img src="https://img.shields.io/badge/Ultima%20Att-25/05/2023-green" alt="index-html" >     
+<img src="https://img.shields.io/badge/2.5.7-blue" alt="index-html" >     
+ <img src="https://img.shields.io/badge/Projeto-Ativo-success" alt="index-html" border="0"><img src="https://img.shields.io/badge/Ultima%20Att-06/06/2023-green" alt="index-html" >     
 
 <br>
 <h3>Sobre o projeto / 
@@ -106,10 +106,10 @@ In the engine folder contains demo test file]
 - [x] Manipulação de canvas<br>
 - [x] Verficador de estados animação<br>	
 - [x] Criador de mapas canvas e sprite png<br>
+- [x] Interface da engine android,web e desktop<br>
 - [ ] ATT camada lib js externa <br>	
 - [ ] ATT camada 3D game Webgl<br>
 - [ ] ATT camada Web3<br>
-- [ ] Interface da engine android,web e desktop<br>
 - [ ] Visulização de arquivos do projeto<<br>	
 - [ ] Import Apps Android<br>
 - [ ] Import Apps Exe<br>
