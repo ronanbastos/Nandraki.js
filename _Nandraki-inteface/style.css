@@ -1,0 +1,471 @@
+body {
+  background-color: #ccc;
+  font-family: sans-serif;
+
+}
+
+
+.toolbar {
+  display: flex;
+  justify-content: space-between;
+  padding: 5px;
+  background-color: #444;
+  color: #fff;
+}
+
+.toolbar button {
+  background-color: transparent;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.content {
+  display: flex;
+  flex: 1;
+}
+
+.sidebar {
+  width: 10%;
+  padding: 10%;
+  background-color: #222;
+  color: #fff;
+}
+
+.sidebar h2 {
+  margin-top: 0;
+  font-size: 18px;
+}
+
+.sidebar p {
+  margin-top: 10px;
+}
+
+.main {
+  flex: 1;
+  padding: 10px;
+}
+
+.main h1 {
+  font-size: 24px;
+  margin-top: 0;
+  margin-bottom: 20px;
+  
+}
+.main h2 {
+  font-size: 24px;
+  margin-top: 0;
+
+}
+
+#sceneView {
+  width: 100%;
+  height: 360%;
+  background-color: #111;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#sceneView img {
+  max-width: 100%;
+  max-height: 100%;
+}
+/* Adiciona CSS para estilizar o elemento textarea */
+#codeEditor {
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 14px;
+  width: 50%;
+  height: 50px;
+  padding: 10px;
+  margin-top: 10px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+  float:left;
+}
+
+#container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+#sceneView {
+  flex: 1;
+}
+
+#codeEditorContainer {
+  height: 300px;
+  margin-top: 10px;
+   border-radius: 5px;
+  border: 5px solid #777;
+  
+}
+
+#codeEditor {
+  width: 100%;
+  height:100%;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 15px;
+  padding: 10px;
+
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+  box-sizing: border-box;
+  
+  
+}
+textarea .keyword {
+			color: blue;
+			font-weight: bold;
+		}
+		
+#iframe {
+  width: 200px;
+  height: 200px;
+  border: none;
+ 
+}
+iframe {
+ 
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+  border-radius: 5px;
+  padding-top: -50px;
+  float:left;
+}
+
+#editor{
+  display: none;	
+  width: 500px;
+  height: 500px;
+	
+}
+input[type="file"] {
+  display: block;
+  font-size: 16px;
+  padding: 10px;
+  border: none;
+  border-radius: 50px;
+  background-color: #202020;
+  color: #fff;
+  box-shadow: none;
+  transition: background-color 0.3s ease-in-out;
+}
+
+input[type="file"]::-webkit-file-upload-button {
+  background-color: #4CAF50;
+  color: #fff;
+  border: none;
+  border-radius: 50px;
+  padding: 15px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease-in-out;
+}
+input[type="file"]{
+  outline: none;
+}
+input[type="file"]::-webkit-file-upload-button:hover {
+  background-color: #2E8B57;
+}
+
+input[type="file"]::-webkit-file-upload-button:focus {
+  outline: none;
+}
+
+input[type="file"]::-webkit-file-upload-button:active {
+  box-shadow: none;
+  transform: translateY(2px);
+}
+#tree ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 16px;
+}
+
+#tree ul li {
+  position: relative;
+  margin: 0;
+  padding: 0;
+  line-height: 2em;
+}
+.grid-container {
+  display: grid;
+  grid-template-areas: 
+    'iframe sobreObj';
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 20px;
+}
+
+#iframe {
+  grid-area: iframe;
+}
+
+#sobreObj {
+  grid-area: sobreObj;
+}
+
+#tree ul li ul {
+  display: none;
+}
+
+#tree ul li a {
+  display: block;
+  padding: 0 0 0 1em;
+  text-decoration: none;
+  color: #fff;
+  background-color: #202020;
+  transition: background-color 0.3s ease-in-out;
+}
+
+#tree ul li a:hover {
+  background-color: #3D3D3D;
+}
+
+#tree ul li a:focus {
+  outline: none;
+}
+
+#tree ul li span.tree-toggler {
+  position: absolute;
+  left: 0;
+  top: 0;
+  cursor: pointer;
+  height: 100%;
+  width: 1em;
+  background-color: transparent;
+}
+
+#tree ul li span.tree-toggler:hover {
+  background-color: #008080;
+}
+
+#tree ul li span.tree-toggler:focus {
+  outline: none;
+}
+
+#tree ul li span.tree-toggler:before {
+  position: absolute;
+  top: 50%;
+  left: 0.2em;
+  display: inline-block;
+  width: 0;
+  height: 0;
+  margin-top: -0.5em;
+  content: "";
+  border-top: 0.5em solid transparent;
+  border-bottom: 0.5em solid transparent;
+  border-right: 0.5em solid #fff;
+}
+
+#tree ul li.open > span.tree-toggler:before {
+  transform: rotate(90deg);
+}
+
+#tree ul li > ul.tree {
+  margin: 0 0 0 1em;
+  padding: 0;
+  display: none;
+}
+
+#tree ul li.open > ul.tree {
+  display: block;
+}
+
+#tree ul li > ul.tree > li {
+  margin: 0;
+  padding: 0;
+  line-height: 2em;
+}
+
+#tree ul li > ul.tree > li > a {
+  padding: 0 0 0 1em;
+  background-color: #202020;
+  transition: background-color 0.3s ease-in-out;
+}
+
+#tree ul li > ul.tree > li > a:hover {
+  background-color: #3D3D3D;
+}
+
+#tree ul li > ul.tree > li > a:focus {
+  outline: none;
+}
+
+/* Adicionando o estilo quando o mouse é passado sobre os elementos */
+#tree ul li a:hover,
+#tree ul li span.tree-toggler:hover,
+#tree ul li > ul.tree > li > a:hover {
+  background-color: #008080;
+}
+
+/* Adicionando a classe 'open' para abrir o primeiro nível de 'tree' */
+#tree ul li.open > ul.tree {
+  display: block;
+}
+.btn {
+  display: inline-block;
+  padding: 0.5em 1em;
+  margin: 0.5em;
+  border: 2px solid #008080;
+  border-radius: 2em;
+  background-color: #202020;
+  color: #fff;
+  font-size: 1em;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  border-radius: 20px;
+}
+
+.btn:hover {
+  background-color: #008080;
+  border-color: #008080;
+}
+
+.btn:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px #008080;
+}
+
+.btn:active {
+  transform: scale(0.95);
+}
+
+#saveButton {
+  /* Adicione estilos específicos para o botão com ID "saveButton" */
+  color: #fff;
+  background-color: #202020;
+  border-color: #008080;
+}
+
+#saveButton:hover {
+  /* Adicione estilos específicos para o botão com ID "saveButton" quando o mouse passar sobre ele */
+  background-color: #008080;
+  border-color: #008080;
+}
+
+#newButton {
+  /* Adicione estilos específicos para o botão com ID "saveButton" */
+  color: #fff;
+  background-color: #202020;
+  border-color: #008080;
+}
+
+#newButton:hover {
+  /* Adicione estilos específicos para o botão com ID "saveButton" quando o mouse passar sobre ele */
+  background-color: #008080;
+  border-color: #008080;
+}
+.btn:hover,
+.btn:active,
+.btn[ontouchstart] {
+  background-color: #3D3D3D;
+  
+}
+
+.letras {
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 48px;
+  font-weight: bold;
+  color: #fff;
+  text-shadow: 0 0 10px #3D3D3D, 0 0 20px #3D3D3D, 0 0 30px #3D3D3D, 0 0 40px #3D3D3D;
+}
+.sidebar {
+  background-color: #3d3d3d;
+  padding: 16px;
+  margin-bottom: 15px;
+  border-radius: 5px;
+  border: 5px solid #777;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 5);
+}
+
+.sidebar h2 {
+  color: #fff;
+  font-size: 20px;
+  font-weight: bold;
+  margin-top: 0;
+  margin-bottom: 16px;
+}
+
+.sidebar ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.sidebar li {
+  margin-bottom: 8px;
+  color: #fff;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+#obj-type {
+  color: #f44336;
+}
+
+#obj-id {
+  color: #9c27b0;
+}
+
+#obj-position {
+  color: #2196f3;
+}
+
+#obj-rotation {
+  color: #4caf50;
+}
+
+#obj-scale {
+  color: #ffeb3b;
+}
+
+#obj-var {
+  color: #ff9800;
+  font-weight: normal;
+}
+.logo {
+  font-family: Arial, sans-serif;
+  font-weight: bold;
+  font-size: 20px;
+  background: linear-gradient(to bottom, #333, #555);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 2px 2px #666;
+}
+#playButton {
+  background-color: #3D3D3D;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 0px;
+  transition: background-color 0.3s ease-in-out;
+   border-radius: 20px;
+}
+#sobreObj{
+	
+	float:left;
+}
+
+#playButton:hover {
+  background-color: #484848;
+}
+#stopButton {
+  background-color: #3D3D3D;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 0px;
+  transition: background-color 0.3s ease-in-out;
+  border-radius: 20px;
+}
+
+#stopButton:hover {
+  background-color: #484848;
+}

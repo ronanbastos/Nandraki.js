@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #111111;
+  font-family: Arial, sans-serif;
+}
+
+h1 {
+  margin: 0;
+  padding: 20px;
+  text-align: center;
+}
+
+.close {
+  cursor: pointer;
+  font-size: 25px;
+  margin-left: 5px;
+  color: #ffffff;
+  margin-top: -10px;
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100vh;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+  background-color: #222222;
+  margin: 0 auto;
+  padding: 0;
+  border: 1px solid #888;
+  width: 100%;
+  max-width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  overflow: auto;
+}
+
+.editor {
+  height: calc(100vh - 40px);
+}
+
+textarea {
+  width: 100%;
+  height: 70%;
+  border: none;
+  padding: 10px;
+  box-sizing: border-box;
+  background-color: #333333;
+  color: #ffffff;
+}
+
+button {
+  margin-top: 15px;
+  background-color: #00b2ff;
+  border: none;
+  color: #ffffff;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 18px;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #00e6ff;
+}
+
+#previewFrame {
+  width: 100%;
+  height: 100%;
+  border: 1px solid #000;
+    background-color: #ffffff;
+  color: #ffffff;
+}
+</style>
+</head>
+<body>
+  <h1> <img src="https://i.ibb.co/n3BMNKM/logo.png" alt="mascote"  border="0"></h1>
+  <div class="editor">
+    <button id="salvarButton">💾</button>
+    <button id="runButton">▶</button>
+    <textarea id="htmlCode" placeholder="Enter HTML code here..."></textarea>
+  </div>
+
+  <div id="myModal" class="modal">
+    <div class="modal-content">
+      <button class="close">⏸</button>
+      <iframe id="previewFrame"></iframe>
+    </div>
+  </div>
+
+  <script>
+    const htmlCodeTextarea = document.getElementById('htmlCode');
+    const runButton = document.getElementById('runButton');
+    const modal = document.getElementById('myModal');
+    const previewFrame = document.getElementById('previewFrame');
+    const salvarButton = document.getElementById('salvarButton');
+
+    runButton.addEventListener('click', (event) => {
+      event.stopPropagation(); // Impede que o evento de clique se propague para o modal
+      const htmlCode = htmlCodeTextarea.value;
+      const previewDoc = previewFrame.contentDocument || previewFrame.contentWindow.document;
+      previewDoc.open();
+      previewDoc.write(htmlCode);
+      previewDoc.close();
+      modal.style.display = 'block';
+    });
+
+    const closeModal = () => {
+      modal.style.display = 'none';
+      previewFrame.src = 'about:blank';
+    };
+
+    const closeSpan = document.getElementsByClassName('close')[0];
+    closeSpan.addEventListener('click', closeModal);
+
+    window.addEventListener('click', (event) => {
+      if (event.target === modal) {
+        closeModal();
+      }
+    });
+
+    salvarButton.addEventListener('click', () => {
+      const htmlCode = htmlCodeTextarea.value;
+      const downloadLink = document.createElement('a');
+      downloadLink.setAttribute('href', 'data:text/html;charset=utf-8,' + encodeURIComponent(htmlCode));
+      downloadLink.setAttribute('download', 'meu_html.html');
+      downloadLink.style.display = 'none';
+      document.body.appendChild(downloadLink);
+      downloadLink.click();
+      document.body.removeChild(downloadLink);
+    });
+  </script>
+</body>
+</html>

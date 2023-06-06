@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Game Engine Interface</title>
+    <link rel="stylesheet" href="style.css"/>
+  </head>
+  <body onload="init()">
+    <script src="script.js"></script>
+    <!-- Game engine interface -->
+	 
+    <div class="game-engine">
+      <div class="toolbar">
+	  <label  class="btn">Arquivo
+        <input type="file" id="file-input-one" style="display:none">
+			</label>
+        <label for="folder-selector" class="btn">Pasta
+		<input type="file" id="folder-selector" directory webkitdirectory style="display:none">
+		</label>
+		 <h2 class="logo">Nandraki.js</h2>
+          <button class="btn" id="playButton">Play</button>
+          <button class="btn" id="stopButton">Pause</button>
+		  <button class="btn" id="saveButton">Save</button>
+		  <button class="btn" id="newButton">Help</button>
+		  <button class="btn" id="f5">F5</button>
+		
+      </div>
+
+      <div class="content">
+        <div class="sidebar">
+          <h2 class="letras">Inspector</h2>
+          <p id="arquivos-pasta-que-vem-da-pasta">
+            <p id="arquivos-pasta-que-vem-da-pasta">
+				
+			
+          </p>
+        </div>
+        <div class="main">
+         <h2 class="letras">Scene</h2>
+          <div style="padding-bottom:56.25%; position:relative; display:block; width: 100%">
+            <iframe id="frame" width="100%" height="100%"
+              src="" 
+              frameborder="0" allowfullscreen="" style="position:absolute; top:0; left: 0">
+            </iframe>
+          
+		  </div>
+         <!-- Sidebar -->
+   
+          <button class="btn" id="editorButton" >Editor codigo</button>
+         
+        </div>
+		 <div id="editor">
+            <textarea id="codeEditor" placeholder="coloque seu codigo aqui"></textarea>
+		
+
+          </div>
+      </div>
+    </div>
+
+     <div id="sobreObj" class="sidebar">
+      <div class="sidebar-content">
+        <h2>Atributos do objeto</h2>
+        <ul>
+          <li>Tipo: <span id="obj-type"></span></li>
+          <li>id: <span id="obj-id"></span></li>
+          <li>Posição: <span id="obj-position"></span></li>
+          <li>Rotação: <span id="obj-rotation"></span></li>
+          <li>Escala: <span id="obj-scale"></span></li>
+          <li>variaveis: <span id="obj-var"></span></li> 
+        </ul>
+      </div>
+    </div>
+  </body>
+</html>
