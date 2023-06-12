@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+  <html>
+  <head>
+      	<script src="nandraki.js"></script>
+    
+  </head>
+  <body>
+
+      <script>
+x=0 
+y=0
+
+touchD=false
+touchE=false
+sub=false
+function clickDtrue (){
+     return touchD=true
+}
+function clickDfalse (){
+game.img_frame("player","img[2]player",32,32,0,0, 0, 0);
+     return touchD=false
+     
+}
+function clickEtrue (){
+      return touchE=true
+}
+function clickEfalse (){
+      return touchE=false
+}
+function clickSub (){
+	     
+      if (sub==false){
+          sub=true
+      	
+      }else {
+      	
+       sub=false
+      }
+     
+}
+
+
+myjogo = {
+
+
+	 loop : function(){
+      game.move_touch ("player")
+      game.force_obj("player",x,y,false)
+      
+      game.touch_start("btnD",clickDtrue)
+      game.touch_end("btnD",clickDfalse)
+      
+      game.touch_start("btnE",clickEtrue)
+      game.touch_end("btnE",clickEfalse)
+      
+      game.touch_start("rever",clickSub)
+      
+      game.camera ("2d","player",y,x,8000,8000)
+     
+      if(touchD != false){
+       if (sub==true){
+       	
+        x=x+5
+        y=y-5
+       	
+       }else {
+         x=x+5
+        y=y+5
+       }
+      }
+        
+    
+   // game.img_frame("player","img[1]player",32,32,0,0, 0, 0);
+     
+      
+      if(touchE != false){
+         if(sub==true){
+        x=x-5
+        y=y-5
+      }else {
+        x=x-5
+        y=y+5
+      	
+      }
+      }
+	 },
+	 create:function(){
+	   
+    		const player=Nandraki.create_sprite("player",2,"player02.png","player01.png",null,null,null,32,32,9,14,28,25);
+        game.spawn_sprite("btnD","setaD.png",300,500)
+game.spawn_sprite("rever","reverse.png",300,500)
+        
+        game.spawn_sprite("btnE","setaE.png",0,500);
+        game.img_size("btnD",50,50)
+        game.img_size("btnE",50,50)
+game.img_size("rever",50,50)
+        Nandraki.move_ui ("btnE",0,500,"fixed")
+        Nandraki.move_ui ("btnD",300,500,"fixed")
+Nandraki.move_ui ("rever",165,500,"fixed")
+	 },
+       }
+
+     fps=60;
+     myjogo.create();
+     game.update(myjogo.loop,fps);
+
+      </script>
+
+  </body>
+  </html>

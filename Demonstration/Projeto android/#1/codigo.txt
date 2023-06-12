@@ -1,0 +1,38 @@
+game.spawn_sprite(id,img,left,top);
+
+game.spawn_sprite("btnD","setaD.png",200,500);
+game.spawn_sprite("btnE","setaE.png",100,500);
+game.img_size("btnD",50,50)
+game.img_size("btnE",50,50)
+
+
+      game.touch_start("btnD",clickDtrue)
+      game.touch_end("btnD",clickDfalse)
+      
+      game.touch_start("btnE",clickEtrue)
+      game.touch_end("btnE",clickEfalse)
+      
+      if(touchD != false){
+        x=x+5
+      }
+      
+      if(touchE != false){
+        x=x-5
+      }
+      
+      
+touchD=false
+touchE=false
+
+function clickDtrue (){
+     return touchD=true
+}
+function clickDfalse (){
+     return touchD=false
+}
+function clickEtrue (){
+      return touchE=true
+}
+function clickEfalse (){
+      return touchE=false
+}

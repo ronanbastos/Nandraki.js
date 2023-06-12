@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+  <html>
+  <head>
+      	<script src="nandraki.js"></script>
+    
+  </head>
+  <body>
+
+      <script>
+x=0 
+y=0
+
+myjogo = {
+
+
+	 loop:function(){
+      game.move_touch ("player")
+      game.force_obj("player",x,y,false)
+      
+	 },
+	 create:function(){
+	   
+    		const player=Nandraki.create_sprite("player",1,"player01.png","player02.png",null,null,null,32,32,9,14,28,25);
+        
+	 },
+       }
+
+     fps=60;
+     myjogo.create();
+     game.update(myjogo.loop,fps);
+
+      </script>
+
+  </body>
+  </html>
