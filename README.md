@@ -2,7 +2,7 @@
 
 <br>
 <h1 align="center"><img src="https://img.shields.io/badge/Lincense-MIT-green" alt="index-html" border="0"> 
-<img src="https://img.shields.io/badge/2.5.7-blue" alt="index-html" >     
+<img src="https://img.shields.io/badge/2.5.8-blue" alt="index-html" >     
  <img src="https://img.shields.io/badge/Projeto-Ativo-success" alt="index-html" border="0"><img src="https://img.shields.io/badge/Ultima%20Att-06/06/2023-green" alt="index-html" >     
 
 <br>
