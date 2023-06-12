@@ -121,7 +121,7 @@ class Nandraki {
 			[inimigo]: url:"inimigo.png",id:"inimi",x:80,y:70
   			
 			`;
-			obj = drakinos(script)
+			obj = Nandraki.drakinos(script)
 			console.log(obj.player.x)
 		  */
 		  const values = {};
