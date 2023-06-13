@@ -133,13 +133,20 @@ button:hover {
 
     salvarButton.addEventListener('click', () => {
       const htmlCode = htmlCodeTextarea.value;
-      const downloadLink = document.createElement('a');
-      downloadLink.setAttribute('href', 'data:text/html;charset=utf-8,' + encodeURIComponent(htmlCode));
-      downloadLink.setAttribute('download', 'meu_html.html');
-      downloadLink.style.display = 'none';
-      document.body.appendChild(downloadLink);
-      downloadLink.click();
-      document.body.removeChild(downloadLink);
+      // Verificar se a plataforma é Android e a função de comunicação nativa está disponível
+      if (/Android/i.test(navigator.userAgent) && window.webkit && window.webkit.messageHandlers) {
+        // Enviar mensagem para o aplicativo nativo solicitar o download
+        window.webkit.messageHandlers.download.postMessage(htmlCode);
+      } else {
+        // Fallback para download padrão no navegador
+        const downloadLink = document.createElement('a');
+        downloadLink.setAttribute('href', 'data:text/html;charset=utf-8,' + encodeURIComponent(htmlCode));
+        downloadLink.setAttribute('download', 'meu_html.html');
+        downloadLink.style.display = 'none';
+        document.body.appendChild(downloadLink);
+        downloadLink.click();
+        document.body.removeChild(downloadLink);
+      }
     });
   </script>
 </body>
