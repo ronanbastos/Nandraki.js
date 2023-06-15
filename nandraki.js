@@ -114,50 +114,43 @@ class Nandraki {
         game.color(id, cor);
     }
     static drakinos(script) {
-		  /*
-			const script = `
-			[player]:url:"player.png",id:"player",x:30,y:50, 
-			 | 
-			[inimigo]: url:"inimigo.png",id:"inimi",x:80,y:70
-  			
-			`;
-			obj = Nandraki.drakinos(script)
-			console.log(obj.player.x)
-		  */
-		  const values = {};
+  const values = {};
 
-		  // Divide a string em substrings separadas por "|"
-		  const substrings = script.split('|');
+  const substrings = script.split('|');
 
-		  // Para cada substring, extrai os valores correspondentes
-		  substrings.forEach(substring => {
-			// Extrai o nome entre colchetes como a chave do objeto
-			const name = substring.substring(substring.indexOf('[') + 1, substring.indexOf(']'));
+  substrings.forEach(substring => {
+    const name = substring.substring(substring.indexOf('[') + 1, substring.indexOf(']'));
 
-			// Cria um objeto com base no nome extraído
-			const obj = {};
+    const obj = {};
 
-			// Extrai os pares chave-valor da substring
-			const pairs = substring.match(/\w+:"[^"]+"/g);
+    const pairs = substring.match(/\w+:"[^"]+"/g);
 
-			// Armazena os valores no objeto
-			pairs.forEach(pair => {
-			  const [property, value] = pair.split(':');
-			  obj[property] = value.replace(/"/g, '');
-			});
+    pairs.forEach(pair => {
+      const [property, value] = pair.split(':');
+      const parsedValue = value.replace(/"/g, '');
 
-			// Extrai as coordenadas x e y
-			const coordinates = substring.match(/x:\d+,y:\d+/)[0];
-			const [x, y] = coordinates.match(/\d+/g);
+      if (parsedValue.endsWith('=> int')) {
+        const intValue = parseInt(parsedValue.slice(0, -7));
+        if (!isNaN(intValue)) {
+          obj[property] = intValue;
+        }
+      } else {
+        obj[property] = parsedValue;
+      }
+    });
 
-			obj.x = parseInt(x);
-			obj.y = parseInt(y);
+    const coordinates = substring.match(/x:\d+,y:\d+/)[0];
+    const [x, y] = coordinates.match(/\d+/g);
 
-			values[name] = obj;
-		  });
+    obj.x = parseInt(x);
+    obj.y = parseInt(y);
 
-		  return values;
-    }	
+    values[name] = obj;
+  });
+
+  return values;
+}
+
     static move_ui(id, left, top, fixed) {
 
         let body = document.getElementById(id);
