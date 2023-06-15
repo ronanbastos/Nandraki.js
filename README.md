@@ -48,7 +48,7 @@ In the engine folder contains demo test file]
 <p>
 
 # Help channel / Canal de ajuda 
-	Seja um apoidor de conteudo / Be a content supporter
+	Seja um apoidor de conteudo / Be a content supporter contato:21980834274
 	
 
 1 => @RonanTI:      https://www.youtube.com/channel/UCmffxA2ppF1zL9SEU22_7AA  <p>
