@@ -127,7 +127,7 @@ class Nandraki {
 		  const values = {};
 
 		  // Divide a string em substrings separadas por "|"
-		  const substrings = str.split('|');
+		  const substrings = script.split('|');
 
 		  // Para cada substring, extrai os valores correspondentes
 		  substrings.forEach(substring => {
