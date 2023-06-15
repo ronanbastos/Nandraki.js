@@ -113,7 +113,7 @@ class Nandraki {
         document.body.innerHTML += `<h5 id="${id}"> ${txt}</h5>`;
         game.color(id, cor);
     }
-    static drakinos (script) {
+    static drakinos(script) {
 		  /*
 			const script = `
 			[player]:url:"player.png",id:"player",x:30,y:50, 
@@ -1445,6 +1445,8 @@ game = {
         }
 
     },
+	
+
     animar_obj: function (id, css, time) {
         let obj = document.getElementById(id);
         x = css;
@@ -1595,6 +1597,12 @@ game = {
     set_text: function (id, txt) {
         let h = document.getElementById(id);
         return h.innerHTML = txt;
+    },
+	set_scale: function (id, scaleX, scaleY) {
+		
+		document.getElementById(id).style.transform = `scale(${scaleX}, ${scaleY})`;
+  
+  
     },
     edite_text: function (id, text) {
 
