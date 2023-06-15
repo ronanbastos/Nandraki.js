@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+		<script src="Nandraki.js"></script>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>		
+<style>
+	body{
+	  margin:0px;
+	}
+	canvas { 
+	
+	border: solid 1px;	
+	margin-left: 5px;
+	
+	}
+	
+</style>
+</head>
+<body>
+
+debug:
+<br>
+
+<script>
+game.spawn_sprite("fundo","fundo.png",0,600)
+game.spawn_sprite("item","item.png",50,500)
+game.spawn_sprite("item1","item.png",250,450)
+Nandraki.create_sprite("bola",1,["circulo.png"], null, null, null,null ,85,75,40,40,game.get_window_w()/2,550)
+Nandraki.create_sprite("bloco",1,["bloco.png"], null, null, null,null ,40,40,40,40,game.get_window_w()/2,20)
+
+
+obj={
+up:0,
+dir:0,
+velocidade:0,
+gravitySpeed:0,
+gravidade:0.05,
+id:"bloco"
+}
+x = 0;
+y = 0;
+pulo=2;
+gravity = 0.05;
+gravitySpeed = 0;
+bounce=0.6
+x=obj.dir
+bol=0
+function jogo(){
+		    
+		game.force_obj("bloco",0,obj.up,false)
+	
+		game.camera("2d",game.get_tx(obj.id),game.get_ty(obj.id),30000,-50000)
+	
+		game.gravity(obj,["fundo","item","item1","bola"],3,false,1.5)	
+
+		
+
+	}
+
+
+
+	game.update(jogo,60)
+
+game.log_key;
+game.log_down(logKey1);
+
+ function logKey1(e) {
+	
+	   if( e.code == "KeyA") {
+	
+		
+			
+				x+=10+gravitySpeed*2
+				game.camera_move(["item","item1"],x)
+		
+			
+
+		}
+		if( e.code == "KeyD") {
+		
+				x-=10+gravitySpeed*2
+				game.camera_move(["item","item1"],x)	
+			
+			
+		
+
+				
+		}
+
+		if( e.code == "KeyW" && pulo>=2) {
+			
+		
+		
+
+		
+		}
+		if( e.code == "ArrowDown") {
+			
+		}
+		
+  }
+
+game.log_up(logKey2);	
+
+function logKey2(e) {
+	
+		if( e.code == "ArrowRight") {
+		
+		}
+		if( e.code == "ArrowLeft") {
+			
+		}
+		if( e.code == "KeyW" && pulo>=2) {
+			pulo-=5
+			game.jump(obj,25,0.8);
+		}
+		if( e.code == "ArrowDown") {
+			
+		}
+}
+</script>
+
+</body>
+</html>
+
