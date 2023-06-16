@@ -774,6 +774,15 @@ game = {
         }
 
     },
+   body_scale: function(valor){
+	    let scale = `scale(${valor})`;
+		document.body.style.webkitTransform =  scale;    // Chrome, Opera, Safari
+		document.body.style.msTransform =   scale;       // IE 9
+		document.body.style.transform = scale;  
+	
+	
+	
+    },
     get_left: function (id) {
 
         if (game.check_id(id) == true) {
