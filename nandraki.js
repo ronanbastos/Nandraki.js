@@ -118,7 +118,7 @@ class Nandraki {
          //const script = `
 	 // [player01]:forca:"10 => int",url:"sprite/player1-1.png",,x:10,y:550, 
 	 // | 	
-	 //[player02]:url1:"sprite/player2-1.png",url2:"sprite/player2-2.png",url3:"sprite/player2-3.png",url4:"sprite/player2-4.png",url5:"sprite/player2-5.png",id:"player02",x:350,y:550,		
+	 //[player02]:url:"sprite/player2-1.png",id:"player02",x:350,y:550,		
          //`;
 	 //obj = Nandraki.drakinos(script)
  
