@@ -3,7 +3,7 @@
 <br>
 <h1 align="center"><img src="https://img.shields.io/badge/Lincense-MIT-green" alt="index-html" border="0"> 
 <img src="https://img.shields.io/badge/2.5.8-blue" alt="index-html" >     
- <img src="https://img.shields.io/badge/Projeto-Ativo-success" alt="index-html" border="0"><img src="https://img.shields.io/badge/Ultima%20Att-06/06/2023-green" alt="index-html" >     
+ <img src="https://img.shields.io/badge/Projeto-Ativo-success" alt="index-html" border="0"><img src="https://img.shields.io/badge/Ultima%20Att-21/06/2023-green" alt="index-html" >     
 
 <br>
 <h3>Sobre o projeto / 
@@ -36,7 +36,8 @@ In the engine folder contains demo test file]
 <p>
   Playground canvas 3D: 🚧 [OFF] 🚧
 <p>
-  Playground Dom : https://ronanbastos.github.io/Nandraki.js/   //Use o console para pegar variaves da Nandraki e game
+  Playground Dom : https://ronanbastos.github.io/Nandraki.js/ //Use o console para pegar variaves da Nandraki e game
+	           https://ronanbastos.github.io/Nandraki-Inteface/ 
 <p>
   Playground CodePen: https://codepen.io/ronan-varella/pen/xxPeeEM
 <br>
