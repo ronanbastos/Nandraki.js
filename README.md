@@ -37,7 +37,7 @@ In the engine folder contains demo test file]
   Playground canvas 3D: 🚧 [OFF] 🚧
 <p>
   Playground Dom : https://ronanbastos.github.io/Nandraki.js/ //Use o console para pegar variaves da Nandraki e game
-	           https://ronanbastos.github.io/Nandraki-Inteface/ 
+  Playground Js :  https://ronanbastos.github.io/Nandraki-Inteface/ 
 <p>
   Playground CodePen: https://codepen.io/ronan-varella/pen/xxPeeEM
 <br>
