@@ -1,11 +1,8 @@
 
 Welcome to the Nandraki.js!
 
-|Alfa documentação 1.4.5 ultima versão ante do hard rest do codigo para Beta
+|Beta documentação 2.5.8 ultima versão ante do hard rest do codigo para Beta
 
-|1.4.5 colocamos camada de animação de sprite
-
-|Beta tem previsão para 2023 com versão 3.0
       
        
 Verficar Version
