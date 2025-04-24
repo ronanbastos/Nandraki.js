@@ -1,0 +1,13 @@
+
+Objeto de Mapeamento: Criamos um objeto objects que mapeia os tipos de objetos ('cube', 'camera', 'light') para as suas respectivas instâncias criadas pelo ThreeFactory.
+
+Acesso Rápido: Agora, ao chamar Game.create(type), o código retorna o objeto correspondente diretamente. Se o tipo não existir no objeto objects, será lançado um erro.
+
+Simples e Eficiente: A criação dos objetos é feita de forma bem simples, sem a necessidade de uma estrutura switch.
+
+Benefícios:
+O código fica mais enxuto e fácil de entender.
+
+A escalabilidade fica mais fácil: basta adicionar novos tipos de objetos no array objects e a funcionalidade estará pronta para ser utilizada.
+
+Evitamos a complexidade do switch, tornando a leitura do código mais fluida.
