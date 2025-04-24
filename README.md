@@ -34,7 +34,7 @@ In the engine folder contains demo test file]
 # Playground
 
 <p>
-  Playground canvas 3D: 🚧 [OFF] 🚧
+  Playground canvas 3D: inicialização do processo de produção do  framework draki  
 <p>
   Playground Dom : https://ronanbastos.github.io/Nandraki.js/ //Use o console para pegar variaves da Nandraki e game
 	<p>
