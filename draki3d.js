@@ -52,7 +52,7 @@ class ThreeFactory {
   // Cria uma câmera com perspectiva. Defina os parâmetros reais onde estão os "..."
   createCamera() {
     return new THREE.PerspectiveCamera(
-      75, window.innerWidth / window.innerHeight, 0.1, 1000
+      50, window.innerWidth / window.innerHeight, 0.1, 1000
     );
   }
 }
@@ -98,4 +98,19 @@ class PrototypeFactory {
   }
 }
 
+class Game {
+  static create(type) {
+    const factory = new ThreeFactory();
+    const objects = {
+      cube: factory.createCube(),
+      camera: factory.createCamera(),
+      light: factory.createLight(),
+    };
 
+    // Retorna o objeto correspondente ou lança um erro se não encontrado
+    if (!objects[type]) {
+      throw new Error('Tipo de objeto desconhecido');
+    }
+    return objects[type];
+  }
+}
