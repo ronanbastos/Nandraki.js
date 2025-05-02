@@ -3,53 +3,51 @@
 // Singleton responsável por configurar e manter a cena 3D principal com Three.js
 class ThreeCore {
   constructor() {
-    // Garante que apenas uma instância de ThreeCore exista (Singleton)
     if (ThreeCore.instance) return ThreeCore.instance;
 
-    // Cria uma nova cena 3D
     this.scene = new THREE.Scene();
 
-    // Câmera com perspectiva. Defina os parâmetros reais onde estão os "..."
     this.camera = new THREE.PerspectiveCamera(
       75, window.innerWidth / window.innerHeight, 0.1, 1000
     );
 
-    // Renderizador com fundo transparente (ideal para sobrepor ao DOM 2D da Nandraki.js)
     this.renderer = new THREE.WebGLRenderer({ alpha: true });
     this.renderer.setSize(window.innerWidth, window.innerHeight);
 
-    // Armazena a instância como Singleton
     ThreeCore.instance = this;
   }
 
-  // Inicializa a cena dentro de um container HTML e começa o loop de renderização
   init(container) {
     container.appendChild(this.renderer.domElement);
     this.animate();
   }
 
-  // Loop de animação que mantém a renderização ativa
   animate() {
     requestAnimationFrame(() => this.animate());
+
+    // Executa scripts anexados aos objetos
+    this.scene.traverse(obj => {
+      if (obj.userData.scripts) {
+        obj.userData.scripts.forEach(fn => fn(obj));
+      }
+    });
+
     this.renderer.render(this.scene, this.camera);
   }
 }
 
-// Abstract Factory para criar componentes básicos do Three.js
+// Abstract Factory
 class ThreeFactory {
-  // Cria uma luz pontual branca
   createLight() {
     return new THREE.PointLight(0xffffff, 1);
   }
 
-  // Cria um cubo verde com material padrão
   createCube() {
     const geometry = new THREE.BoxGeometry();
     const material = new THREE.MeshStandardMaterial({ color: 0x00ff00 });
     return new THREE.Mesh(geometry, material);
   }
 
-  // Cria uma câmera com perspectiva. Defina os parâmetros reais onde estão os "..."
   createCamera() {
     return new THREE.PerspectiveCamera(
       50, window.innerWidth / window.innerHeight, 0.1, 1000
@@ -57,49 +55,45 @@ class ThreeFactory {
   }
 }
 
-// Builder Pattern para construir entidades compostas (agrupamento de objetos)
+// Builder para criar entidades compostas
 class EntityBuilder {
   constructor() {
-    this.entity = new THREE.Object3D(); // Entidade base que pode conter vários elementos
+    this.entity = new THREE.Object3D();
   }
 
-  // Adiciona uma malha (mesh) à entidade
   addMesh(mesh) {
     this.entity.add(mesh);
-    return this; // Permite encadeamento de chamadas
+    return this;
   }
 
-  // Define a posição da entidade no espaço 3D
   setPosition(x, y, z) {
     this.entity.position.set(x, y, z);
     return this;
   }
 
-  // Finaliza a construção e retorna a entidade
   build() {
     return this.entity;
   }
 }
 
-// Fábrica de Protótipos: permite registrar e clonar objetos facilmente
+// Fábrica de Protótipos
 class PrototypeFactory {
   constructor() {
-    this.prototypes = {}; // Dicionário de objetos registrados por nome
+    this.prototypes = {};
   }
 
-  // Registra um objeto 3D com um nome específico
   register(name, object3D) {
     this.prototypes[name] = object3D;
   }
 
-  // Retorna uma cópia/clonagem do objeto registrado
   clone(name) {
     return this.prototypes[name]?.clone() ?? null;
   }
 }
 
+// Factory com nome automático (opcional)
 class Game {
-  static create(type) {
+  static create(type, name = null) {
     const factory = new ThreeFactory();
     const objects = {
       cube: factory.createCube(),
@@ -107,10 +101,42 @@ class Game {
       light: factory.createLight(),
     };
 
-    // Retorna o objeto correspondente ou lança um erro se não encontrado
-    if (!objects[type]) {
-      throw new Error('Tipo de objeto desconhecido');
-    }
-    return objects[type];
+    const obj = objects[type];
+    if (!obj) throw new Error('Tipo de objeto desconhecido');
+    if (name) obj.name = name;
+    return obj;
   }
+}
+
+// Ferramenta de acesso dinâmico a objetos na cena
+function drak(objectName) {
+  const core = new ThreeCore();
+  const target = core.scene.getObjectByName(objectName);
+  if (!target) {
+    console.warn(`Objeto "${objectName}" não encontrado`);
+    return null;
+  }
+
+  return {
+    set(path, value) {
+      const parts = path.split('.');
+      let obj = target;
+      while (parts.length > 1) obj = obj[parts.shift()];
+      obj[parts[0]] = value;
+    },
+
+    get(path) {
+      const parts = path.split('.');
+      let obj = target;
+      for (let part of parts) obj = obj[part];
+      return obj;
+    },
+
+    script(fn) {
+      if (!target.userData.scripts) {
+        target.userData.scripts = [];
+      }
+      target.userData.scripts.push(fn);
+    }
+  };
 }
