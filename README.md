@@ -117,7 +117,98 @@ In the engine folder contains demo test file]
 - [ ] Import Apps Android<br>
 - [ ] Import Apps Exe<br>
 - [ ] Import Apps deb<br>
-<br>	
+- [ ] Finalizar sistema de Scene Singleton (ThreeCore)<br>
+- [ ] Implementar sistema de hierarquia de objetos na cena<br>
+- [ ] Adicionar suporte completo a componentes via script (drak().set/get/script)<br>
+- [ ] Criar módulo de física básica (colisores, gravidade simples)<br>
+- [ ] Desenvolver sistema de câmera com controle de movimento<br>
+- [ ] Adicionar suporte a importação de modelos externos (GLTF/OBJ)<br>
+- [ ] Implementar sistema de materiais personalizados<br>
+- [ ] Criar GUI mínima para visualização e depuração da cena<br>
+- [ ] Sistema de exportação da cena como JSON<br>
+- [ ] Criar sistema de carregamento de cenas (load/save)<br>
+- [ ] Adicionar sistema de input (teclado, mouse, toque)<br>
+- [ ] Implementar módulo de áudio 3D<br>
+- [ ] Adicionar sistema de animações básicas (keyframes)<br>
+- [ ] Criar módulo de iluminação avançada (ambient, direcional, sombras)<br>
+- [ ] Integrar com Nandraki.js para sobreposição de UI 2D<br>
+- [ ] Sistema de entidades baseadas em componentes (ECS simplificado)<br>
+- [ ] Modo de build/exportação para Web (embed fácil)<br>
+- [ ] Criar documentação básica da engine<br>
+- [ ] Subir repositório com exemplo de jogo funcional<br>
+- [ ] Criar sistema de plugin para usuários extenderem a engine<br>
+<br>
+ Metas da Engine Draki3D
+✅ Fase 1 — Núcleo funcional
+ Implementar sistema Singleton da cena principal
+
+ Adicionar suporte a câmera, malhas e luzes via Abstract Factory
+
+ Criar sistema EntityBuilder para compor objetos
+
+ Adicionar suporte a clonagem via protótipos (PrototypeFactory)
+
+ Suporte a Game.create('tipo') para construção simplificada
+
+ Sistema de nomeação e busca de objetos na cena (.name)
+
+ Função drak() para acessar e alterar dinamicamente propriedades (set, get)
+
+ Sistema de scripts dentro dos objetos via script(fn)
+
+🚧 Fase 2 — Scripting e lógica de jogo
+ Loop de update central com execução automática dos scripts registrados
+
+ Sistema de GameLoop com controle de start, stop e deltaTime
+
+ Suporte a eventos (como onClick, onEnterFrame)
+
+ Sistema de Tags e camadas para lógica de jogo
+
+ Controle básico de colisão por bounding box
+
+🧱 Fase 3 — Estrutura de projeto
+ Sistema de hierarquia de objetos (parent/child navegável)
+
+ Carregador de cenas (.loadScene(), .saveScene())
+
+ Editor visual básico (via DOM ou canvas overlay)
+
+ Módulo de inspector para inspecionar objetos no browser
+
+📦 Fase 4 — Assets e importação
+ Suporte à importação de .glb, .gltf, .obj
+
+ Gerenciador de texturas e materiais
+
+ Sistema de animações por esqueleto (Skeleton Animation)
+
+ Pré-carregador de assets (loading screen)
+
+🚀 Fase 5 — Exportação e build
+ Exportar o jogo final como standalone HTML + JS
+
+ Empacotar assets e scripts para distribuição
+
+ Sistema de build para exportar para WebGL / Electron (modo desktop)
+
+🎮 Fase 6 — Suporte a gameplay
+ Módulo de física leve (com integração futura opcional com cannon.js)
+
+ Suporte a controle de personagem (câmera FPS ou TPS)
+
+ Sistema de input (mouse, teclado, touch)
+
+ HUD básico via DOM ou canvas2D
+
+🌐 Fase 7 — Ferramentas extras
+ Integração com Nandraki.js para HUD e menus 2D
+
+ Console de comandos embutido no jogo
+
+ Editor de script online
+
+ Sistema de plugins para extensões da engine
 # projeto Electron
   Aqui: 🚧 [OFF] 🚧	
 <br>
