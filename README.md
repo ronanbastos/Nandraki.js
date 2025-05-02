@@ -154,7 +154,9 @@ In the engine folder contains demo test file]
 🚧 Fase 5 — Exportação e build<br>
 🚧 Fase 6 — Suporte a gameplay<br>
 🚧 Fase 7 — Ferramentas extras<br>
- Sistema de plugins para extensões da engine
+
+
+ Sistema de plugins para extensões da engine<br>
 # projeto Electron
   Aqui: 🚧 [OFF] 🚧	
 <br>
