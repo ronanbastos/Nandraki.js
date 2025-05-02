@@ -111,12 +111,16 @@ In the engine folder contains demo test file]
 - [x] Verficador de estados animação<br>	
 - [x] Criador de mapas canvas e sprite png<br>
 - [x] Interface da engine android,web e desktop<br>
-- [ ] ATT camada lib js externa <br>	
-- [ ] ATT camada 3D game Webgl<br>
-- [ ] ATT camada Web3<br>
-- [ ] Import Apps Android<br>
-- [ ] Import Apps Exe<br>
-- [ ] Import Apps deb<br>
+- [x] Implementar sistema Singleton da cena principal
+- [x] Adicionar suporte a câmera, malhas e luzes via Abstract Factory
+- [x] Criar sistema EntityBuilder para compor objetos
+- [x] Adicionar suporte a clonagem via protótipos (PrototypeFactory)
+- [x] Suporte a Game.create('tipo') para construção simplificada
+- [x] Sistema de nomeação e busca de objetos na cena (.name)
+- [x] Função drak() para acessar e alterar dinamicamente propriedades (set, get)
+- [x] Sistema de scripts dentro dos objetos via script(fn)
+- [x] ATT camada lib js externa <br>	
+- [x] ATT camada 3D game Webgl<br>
 - [ ] Finalizar sistema de Scene Singleton (ThreeCore)<br>
 - [ ] Implementar sistema de hierarquia de objetos na cena<br>
 - [ ] Adicionar suporte completo a componentes via script (drak().set/get/script)<br>
@@ -137,6 +141,10 @@ In the engine folder contains demo test file]
 - [ ] Criar documentação básica da engine<br>
 - [ ] Subir repositório com exemplo de jogo funcional<br>
 - [ ] Criar sistema de plugin para usuários extenderem a engine<br>
+- [ ] ATT camada Web3<br>
+- [ ] Import Apps Android<br>
+- [ ] Import Apps Exe<br>
+- [ ] Import Apps deb<br>
 <br>
  Metas da Engine Draki3D
 ✅ Fase 1 — Núcleo funcional
