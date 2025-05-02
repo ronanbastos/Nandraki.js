@@ -146,7 +146,8 @@ In the engine folder contains demo test file]
 - [ ] Import Apps Exe<br>
 - [ ] Import Apps deb<br>
 <br>
-  Metas da Engine Draki3D
+# Metas da Engine Draki3D<br>
+
 ✅ Fase 1 — Núcleo funcional<br>
 🚧 Fase 2 — Scripting e lógica de jogo<br>
 🚧 Fase 3 — Estrutura de projeto<br>
