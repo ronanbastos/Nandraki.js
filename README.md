@@ -2,7 +2,7 @@
 
 <br>
 <h1 align="center"><img src="https://img.shields.io/badge/Lincense-MIT-green" alt="index-html" border="0"> 
-<img src="https://img.shields.io/badge/2.5.8-blue" alt="index-html" >     
+<img src="https://img.shields.io/badge/2.6.0-blue" alt="index-html" >     
  <img src="https://img.shields.io/badge/Projeto-Ativo-success" alt="index-html" border="0"><img src="https://img.shields.io/badge/Ultima%20Att-10/10/2024-green" alt="index-html" >     
 
 <br>
@@ -17,7 +17,7 @@ In alpha process below, there are links to examples of projects made in the engi
 
 <br>
 <br>	
- [Demostração test e test2]
+ [Demostração test ,test1 e test2]
 <br> 
 Nota:[Na pasta da engine contém arquivo test de demostração/
 In the engine folder contains demo test file]
@@ -34,7 +34,7 @@ In the engine folder contains demo test file]
 # Playground
 
 <p>
-  Playground canvas 3D: inicialização do processo de produção do  framework draki  
+  Playground canvas 3D:https://websim.ai/@ronan1995/drakiJs/60
 <p>
   Playground Dom : https://ronanbastos.github.io/Nandraki.js/ //Use o console para pegar variaves da Nandraki e game
 	<p>
