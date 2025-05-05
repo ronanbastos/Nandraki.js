@@ -50,9 +50,7 @@ In the engine folder contains demo test file]
 	<script src="https://unpkg.com/nandraki@2.5.8/nandraki.js" ></script>
 <p>
 
-# Help channel / Canal de ajuda 
-	Seja um apoidor de conteudo / Be a content supporter contato:21935050123
-	
+# Help channel 
 
 1 => @RonanTI:      https://www.youtube.com/channel/UCmffxA2ppF1zL9SEU22_7AA  <p>
 2 => @BrazilianDev: https://www.youtube.com/watch?v=zQ6_a0LRHsU&list=PL-R1FQNkywO7cyBnd-vmF1ufCoaMcAa9k&ab_channel=BrazilianDev
