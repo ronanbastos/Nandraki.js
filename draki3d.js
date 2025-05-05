@@ -25,10 +25,19 @@ class ThreeCore {
   animate() {
     requestAnimationFrame(() => this.animate());
 
-    // Executa scripts anexados aos objetos
     this.scene.traverse(obj => {
+      // Executa scripts simples
       if (obj.userData.scripts) {
         obj.userData.scripts.forEach(fn => fn(obj));
+      }
+
+      // Executa componentes com método update
+      const comps = obj.userData.components || {};
+      for (let key in comps) {
+        const comp = comps[key];
+        if (typeof comp.update === 'function') {
+          comp.update(obj);
+        }
       }
     });
 
@@ -142,6 +151,10 @@ function drak(objectName) {
         target.userData.scripts = [];
       }
       target.userData.scripts.push(fn);
+    },
+
+    component(name) {
+      return target.userData.components?.[name] || null;
     }
   };
 }
