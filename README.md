@@ -2,8 +2,8 @@
 
 <br>
 <h1 align="center"><img src="https://img.shields.io/badge/Lincense-MIT-green" alt="index-html" border="0"> 
-<img src="https://img.shields.io/badge/2.6.0-blue" alt="index-html" >     
- <img src="https://img.shields.io/badge/Projeto-Ativo-success" alt="index-html" border="0"><img src="https://img.shields.io/badge/Ultima%20Att-2/5/2025-green" alt="index-html" >     
+<img src="https://img.shields.io/badge/2.6.1-blue" alt="index-html" >     
+ <img src="https://img.shields.io/badge/Projeto-Ativo-success" alt="index-html" border="0"><img src="https://img.shields.io/badge/Ultima%20Att-04/05/2025-green" alt="index-html" >     
 
 <br>
 <h3>Sobre o projeto / 
@@ -35,7 +35,7 @@ In the engine folder contains demo test file]
 # Playground
 
 <p>
-  Playground 3D Draki.js : https://drakijs--ronan1995.on.websim.ai/?v=70
+  Playground 3D Draki.js : https://drakijs--ronan1995.on.websim.ai/?v=83
 <p>
   Playground Dom : https://ronanbastos.github.io/Nandraki.js/   //Use o console para pegar variaves da Nandraki e game
 	<p>
