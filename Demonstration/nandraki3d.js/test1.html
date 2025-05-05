@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cubo em Three.js</title>
+    <style>
+        body { margin: 0; overflow: hidden; }
+        canvas { display: block; }
+    </style>
+</head>
+<body>
+    <script src="draki3d.js"></script>
+    <script>
+
+// Exemplo de como o usuário pode interagir diretamente
+const draki = new ThreeCore();
+draki.init(document.body);
+
+// Criação de objetos
+let cubo = Game.create("cube", "Player");
+let luz = Game.create("light", "Sol");
+let camera = Game.create("camera", "MainCam");
+
+// Posições
+cubo.position.set(0, 0, 0);
+luz.position.set(0, 5, 10);
+camera.position.set(5, 0, 5);
+
+// Adiciona à cena
+draki.scene.add(cubo);
+draki.scene.add(luz);
+draki.scene.add(camera);
+
+// Define câmera principal
+draki.camera = camera;
+
+
+// Scripts dinâmicos
+drak("Player").script(obj => {
+  obj.rotation.y += 0.005;
+  obj.rotation.x += 0.005;
+});
+
+// Mudança de posição dinâmica
+drak("Player").set("position.x", 2);
+console.log(drak("Player").get("position.x")); // Deve retornar 2
+
+
+    </script>
+</body>
+</html>

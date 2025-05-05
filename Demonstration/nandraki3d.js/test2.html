@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cubo em Three.js</title>
+    <style>
+        body { margin: 0; overflow: hidden; }
+        canvas { display: block; }
+    </style>
+</head>
+<body>
+    <script src="draki3d.js"></script>
+    <script>
+// Exemplo de como o usuário pode interagir diretamente
+const draki = new ThreeCore();
+draki.init(document.body);
+
+// Criação de objetos
+let cubo = Game.create("cube", "Player");
+let luz = Game.create("light", "Sol");
+let camera = Game.create("camera", "MainCam");
+
+// Posições
+cubo.position.set(5, 0, 0);
+luz.position.set(0, 5, 10);
+camera.position.set(5, 0, 5);
+
+// Adiciona à cena
+draki.scene.add(cubo);
+draki.scene.add(luz);
+draki.scene.add(camera);
+
+// Define câmera principal
+draki.camera = camera;
+
+// Componente com update automático com class
+class Rotator {
+  update(obj) {
+    obj.rotation.y += 0.01;
+	obj.rotation.x += 0.01;
+	obj.rotation.z += 0.005;
+  }
+}
+
+drak("Player").addComponent("Rotator", new Rotator());
+//drak("Player").removeComponent("Rotator"); // remover componente
+
+/*
+// Componente com update automático com function
+function createRotator(speed = 0.01) {
+  return {
+    update(obj) {
+      obj.rotation.y += speed;
+    }
+  };
+}
+
+
+// Acessando componente via drak
+drak("Player").addComponent("Rotator",  createRotator(speed = 0.01));
+/// drak("Player").removeComponent("Rotator"); //remover componente
+*/
+
+    </script>
+</body>
+</html>
