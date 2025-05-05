@@ -100,6 +100,47 @@ class PrototypeFactory {
   }
 }
 
+// Registro global de componentes reutilizáveis
+class ComponentRegistry {
+  static components = {};
+
+  static register(name, ComponentClass) {
+    this.components[name] = ComponentClass;
+  }
+
+  static instantiate(name, ...args) {
+    const Comp = this.components[name];
+    return Comp ? new Comp(...args) : null;
+  }
+}
+
+// Sistema de Tags
+const TagSystem = {
+  add(object, tag) {
+    if (!object.userData.tags) object.userData.tags = new Set();
+    object.userData.tags.add(tag);
+  },
+
+  has(object, tag) {
+    return object.userData.tags?.has(tag) ?? false;
+  },
+
+  remove(object, tag) {
+    object.userData.tags?.delete(tag);
+  },
+
+  getAll(tag) {
+    const core = new ThreeCore();
+    const found = [];
+    core.scene.traverse(obj => {
+      if (obj.userData.tags?.has(tag)) {
+        found.push(obj);
+      }
+    });
+    return found;
+  }
+};
+
 // Factory com nome automático 
 class Game {
   static create(type, name = null) {
@@ -154,7 +195,36 @@ function drak(objectName) {
     },
 
     component(name) {
-      return target.userData.components?.[name] || null;
+      return target.userData?.components?.[name] ?? null;
+    },
+
+    addComponent(name, instance) {
+      if (!target.userData.components) {
+        target.userData.components = {};
+      }
+      target.userData.components[name] = instance;
+    },
+
+    removeComponent(name) {
+      if (target.userData.components) {
+        delete target.userData.components[name];
+      }
+    },
+
+    addTag(tag) {
+      TagSystem.add(target, tag);
+    },
+
+    removeTag(tag) {
+      TagSystem.remove(target, tag);
+    },
+
+    hasTag(tag) {
+      return TagSystem.has(target, tag);
     }
   };
+}
+// Acesso global por tag
+function getByTag(tag) {
+  return TagSystem.getAll(tag);
 }
