@@ -122,8 +122,8 @@ In the engine folder contains demo test file]
 - [x] Sistema de scripts dentro dos objetos via script(fn)
 - [x] ATT camada lib js externa <br>	
 - [x] ATT camada 3D game Webgl<br>
-- [ ] Finalizar sistema de Scene Singleton (ThreeCore)<br>
-- [ ] Implementar sistema de hierarquia de objetos na cena<br>
+- [x] Finalizar sistema de Scene Singleton (ThreeCore)<br>
+- [x] Implementar sistema de hierarquia de objetos na cena<br>
 - [ ] Adicionar suporte completo a componentes via script (drak().set/get/script)<br>
 - [ ] Criar módulo de física básica (colisores, gravidade simples)<br>
 - [ ] Desenvolver sistema de câmera com controle de movimento<br>
