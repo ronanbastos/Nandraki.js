@@ -11,3 +11,24 @@ O código fica mais enxuto e fácil de entender.
 A escalabilidade fica mais fácil: basta adicionar novos tipos de objetos no array objects e a funcionalidade estará pronta para ser utilizada.
 
 Evitamos a complexidade do switch, tornando a leitura do código mais fluida.
+
+
+drak() — O método oficial da engine (ex: drak("Inimigo").set("vida", 10);)
+
+echo() — Puxa e ecoa os dados do objeto
+
+eye() — "Olha" para um objeto
+
+callTo() — Chama outro objeto da cena
+
+touch() — Toca/interage com outro objeto
+
+bind() — Ex: bind("Player").position.set(0, 1, 0);
+
+ref() — Puxa uma referência (tipo "referência cruzada")
+
+link() — Liga o script a um objeto
+
+pointTo() — Aponta para um objeto na hierarquia
+
+hook() — Ganchos para manipulação de outros objetos
