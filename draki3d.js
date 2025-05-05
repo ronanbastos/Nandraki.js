@@ -91,18 +91,23 @@ class PrototypeFactory {
   }
 }
 
-// Factory com nome automático (opcional)
+// Factory com nome automático 
 class Game {
   static create(type, name = null) {
     const factory = new ThreeFactory();
-    const objects = {
-      cube: factory.createCube(),
-      camera: factory.createCamera(),
-      light: factory.createLight(),
+
+    const methodMap = {
+      cube: 'createCube',
+      camera: 'createCamera',
+      light: 'createLight',
     };
 
-    const obj = objects[type];
-    if (!obj) throw new Error('Tipo de objeto desconhecido');
+    const methodName = methodMap[type];
+    if (!methodName || typeof factory[methodName] !== 'function') {
+      throw new Error(`Tipo de objeto desconhecido: "${type}"`);
+    }
+
+    const obj = factory[methodName]();
     if (name) obj.name = name;
     return obj;
   }
