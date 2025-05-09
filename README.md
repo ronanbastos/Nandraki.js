@@ -92,7 +92,49 @@ In the engine folder contains demo test file]
 	</body>
 	</html>
 
-
+	[draki 3d]
+ 
+ 	<html>
+	<head>
+		
+		<script src="draki3d.js"></script>
+	</head>
+	<body>
+ 	 
+	    <script>
+	
+	// Exemplo de como o usuário pode interagir diretamente
+	const draki = new ThreeCore();
+	draki.init(document.body);
+	
+	// Criação dos objetos diretamente
+	let cubo = Game.create('cube');
+	cubo.position.set(5,0, 0);
+	
+	
+	let camera = Game.create('camera');
+	camera.position.set(5,0,5);
+	
+	
+	let luz = Game.create('light');
+	luz.position.set(0,5,10);
+	
+	
+	// Animando o cubo
+	draki.animate = function () {
+	  cubo.rotation.y += 0.05;
+	  cubo.rotation.x += 0.01;
+	  draki.renderer.render(draki.scene, camera);
+	  requestAnimationFrame(draki.animate);
+	};
+	
+	draki.scene.add(camera);
+	draki.scene.add(cubo);
+	draki.scene.add(luz);
+	
+	    </script>
+	</body>
+	</html>
 
 <h2>Funcionalidades e Metas  [Features] </h2>
 
