@@ -930,3 +930,37 @@ function jogo(){
 </html>
 
 
+Objeto de Mapeamento: Criamos um objeto objects que mapeia os tipos de objetos ('cube', 'camera', 'light') para as suas respectivas instâncias criadas pelo ThreeFactory.
+
+Acesso Rápido: Agora, ao chamar Game.create(type), o código retorna o objeto correspondente diretamente. Se o tipo não existir no objeto objects, será lançado um erro.
+
+Simples e Eficiente: A criação dos objetos é feita de forma bem simples, sem a necessidade de uma estrutura switch.
+
+Benefícios:
+O código fica mais enxuto e fácil de entender.
+
+A escalabilidade fica mais fácil: basta adicionar novos tipos de objetos no array objects e a funcionalidade estará pronta para ser utilizada.
+
+Evitamos a complexidade do switch, tornando a leitura do código mais fluida.
+
+
+drak() — O método oficial da engine (ex: drak("Inimigo").set("vida", 10);)
+
+echo() — Puxa e ecoa os dados do objeto
+
+eye() — "Olha" para um objeto
+
+callTo() — Chama outro objeto da cena
+
+touch() — Toca/interage com outro objeto
+
+bind() — Ex: bind("Player").position.set(0, 1, 0);
+
+ref() — Puxa uma referência (tipo "referência cruzada")
+
+link() — Liga o script a um objeto
+
+pointTo() — Aponta para um objeto na hierarquia
+
+hook() — Ganchos para manipulação de outros objetos
+
