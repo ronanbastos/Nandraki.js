@@ -2040,9 +2040,30 @@ game = {
             return obj.getBoundingClientRect();
         }
     },
-
     rest: (game, canvas) => requestAnimationFrame(game, canvas),
-    loop: (game, canvas) => requestAnimationFrame(game, canvas),
+    loop: function (jogo, tipo = "canvas", fps = 60) {
+		  if (tipo === "canvas") {
+			const frame = (self.window && self.window.requestAnimationFrame)
+					   || (self.window && self.window.webkitRequestAnimationFrame)
+					   || (self.window && self.window.mozRequestAnimationFrame)
+					   || function (cb) { return setTimeout(cb, 1000 / 60); };
+
+			function loopInterno() {
+			  jogo();
+			  frame(loopInterno);
+			}
+
+			loopInterno(); // inicia
+		  }
+
+		  else if (tipo === "set") {
+			return setInterval(jogo, 1000 / fps);
+		  }
+
+		  else {
+			console.warn("Tipo de loop inválido. Use 'canvas' ou 'set'.");
+		  }
+		},
     update: (jogo, fps) => setInterval(jogo, fps),
 
 }
