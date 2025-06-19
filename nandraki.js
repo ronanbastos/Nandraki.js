@@ -999,6 +999,97 @@ game = {
         return document.getElementById(id).style.wordWrap = "break-word";
 
     },
+    camera_play: function (mundoId = "mundo", playerId = "player", x = 400, y = 300, modo = "suave", opcoesControles = {}) {
+	    const mundo = document.getElementById(mundoId);
+	    const player = document.getElementById(playerId);
+	
+	    let playerX = x;
+	    let playerY = y;
+	    let playerVisX = x;
+	    let playerVisY = y;
+	
+	    let cameraX = 0, cameraY = 0;
+	    let targetX = 0, targetY = 0;
+	
+	    let cameraMode = modo;
+	    let shakeFrame = 0;
+	
+	    function lerp(a, b, t) {
+	      return a + (b - a) * t;
+	    }
+	
+	    function mover(dx, dy) {
+	      playerX += dx;
+	      playerY += dy;
+	
+	      targetX = playerX - window.innerWidth / 2 + 25;
+	      targetY = playerY - window.innerHeight / 2 + 25;
+	
+	      if (cameraMode === "shake") shakeFrame = 10;
+	    }
+	
+	    function atualizar_camera() {
+	      playerVisX = lerp(playerVisX, playerX, 0.3);
+	      playerVisY = lerp(playerVisY, playerY, 0.3);
+	      player.style.left = playerVisX + "px";
+	      player.style.top = playerVisY + "px";
+	
+	      if (cameraMode === "suave") {
+	        cameraX = lerp(cameraX, targetX, 0.1);
+	        cameraY = lerp(cameraY, targetY, 0.1);
+	      }
+	      else if (cameraMode === "instante") {
+	        cameraX = targetX;
+	        cameraY = targetY;
+	      }
+	      else if (cameraMode === "shake") {
+	        cameraX = lerp(cameraX, targetX, 0.1);
+	        cameraY = lerp(cameraY, targetY, 0.1);
+	        if (shakeFrame > 0) {
+	          cameraX += (Math.random() - 0.5) * 10;
+	          cameraY += (Math.random() - 0.5) * 10;
+	          shakeFrame--;
+	        }
+	      }
+	
+	      mundo.style.transform = `translate(${-cameraX}px, ${-cameraY}px)`;
+	    }
+	
+	    // Controles configuráveis
+	    const keys = opcoesControles.keys || ["ArrowRight", "ArrowLeft", "ArrowUp", "ArrowDown"];
+	    const usarWSAD = opcoesControles.usarWSAD || false;
+	
+	    if (keys !== null) {
+	      document.addEventListener("keydown", e => {
+	        if (usarWSAD) {
+	          if (e.key === "d") mover(10, 0);
+	          else if (e.key === "a") mover(-10, 0);
+	          else if (e.key === "w") mover(0, -10);
+	          else if (e.key === "s") mover(0, 10);
+	        } else {
+	          if (e.key === keys[0]) mover(10, 0);
+	          else if (e.key === keys[1]) mover(-10, 0);
+	          else if (e.key === keys[2]) mover(0, -10);
+	          else if (e.key === keys[3]) mover(0, 10);
+	        }
+	
+	        if (e.key === "c") {
+	          if (cameraMode === "suave") cameraMode = "instante";
+	          else if (cameraMode === "instante") cameraMode = "shake";
+	          else cameraMode = "suave";
+	          console.log("modo de câmera:", cameraMode);
+	        }
+	      });
+	    }
+	
+	    return {
+	      atualizar: atualizar_camera,
+	      mover: mover,
+	      set_modo: function (novoModo) {
+	        cameraMode = novoModo;
+	      }
+	    };
+  },
     touch_long: function (id, func, t) {
 
         let onlongtouch;
