@@ -1,4 +1,488 @@
-  _________________________________________
+_________________________________________3d notas da ideias
+
+(Próximo) Integração real do salvamento/carregamento em localStorage
+
+(Próximo) Painel de Console & Diagnóstico embutido na interface
+
+(Próximo) Filtro e tags dinâmicas nos scripts da Cena
+
+(Próximo) Persistência automática dos scripts entre recarregamentos
+
+( ) Criar módulo de física básica (colisores, gravidade simples)
+
+( ) Desenvolver sistema de câmera com controle de movimento
+
+( ) Adicionar suporte a importação de modelos externos (GLTF/OBJ)
+
+( ) Implementar sistema de materiais personalizados
+
+( ) Criar GUI mínima para visualização e depuração da cena
+
+( ) Sistema de exportação da cena como JSON
+
+( ) Criar sistema de carregamento de cenas (load/save)
+
+( ) Adicionar sistema de input (teclado, mouse, toque)
+
+( ) Implementar módulo de áudio 3D
+
+( ) Adicionar sistema de animações básicas (keyframes)
+
+( ) Criar módulo de iluminação avançada (ambient, direcional, sombras)
+
+( ) Integrar com Nandraki.js para sobreposição de UI 2D
+
+( ) Sistema de entidades baseadas em componentes (ECS simplificado)
+
+( ) Modo de build/exportação para Web (embed fácil)
+
+( ) Criar módulo de física básica (colisores, gravidade simples)
+
+( ) Desenvolver sistema de câmera com controle de movimento
+
+( ) Adicionar suporte a importação de modelos externos (GLTF/OBJ)
+
+( ) Implementar sistema de materiais personalizados
+
+( ) Criar GUI mínima para visualização e depuração da cena
+
+( ) Sistema de exportação da cena como JSON
+
+( ) Criar sistema de carregamento de cenas (load/save)
+
+( ) Adicionar sistema de input (teclado, mouse, toque)
+
+( ) Implementar módulo de áudio 3D
+
+( ) Adicionar sistema de animações básicas (keyframes)
+
+( ) Criar módulo de iluminação avançada (ambient, direcional, sombras)
+
+( ) Integrar com Nandraki.js para sobreposição de UI 2D
+
+( ) Sistema de entidades baseadas em componentes (ECS simplificado)
+
+( ) Modo de build/exportação para Web (embed fácil)
+
+() echo — Puxa e ecoa os dados do objeto
+
+() eye — "Olha" para um objeto
+
+() callTo — Chama outro objeto da cena
+
+()  touch Toca/interage com outro objeto
+
+() ref — Puxa uma referência (tipo "referência cruzada")
+
+()  link— Liga o script a um objeto
+
+() pointTo — Aponta para um objeto na hierarquia
+
+() hook — Ganchos para manipulação de outros objetos
+
+_________________________________________2d notas sobre coisa ja feitas
+ThreeCore (Singleton) – configuração de cena, câmera, renderer e loop principal que executa scripts e componentes
+
+ ThreeFactory (Abstract Factory) – métodos createLight(), createCube(), createCamera()
+
+ EntityBuilder (Builder) – construção encadeada de entidades com addMesh() e setPosition()
+
+ PrototypeFactory (Prototype) – registro (register) e clonagem (clone) de protótipos de objetos
+
+ ComponentRegistry – registro global e instanciação de classes de componente reutilizáveis
+
+ TagSystem – adição, remoção e consulta de tags em objetos, e busca global por tag
+
+ Game.create() (Factory Naming) – criação de objetos (cube, camera, light) com mapeamento automático de nome
+
+ drak() (Dynamic Accessor) – acesso a objetos por nome e manipulação via métodos set, get, script, addComponent, removeComponent, addTag etc.
+
+ getByTag() – função utilitária para buscar todos os objetos com uma tag específica
+ 
+1. Classe ThreeCore
+A ThreeCore é a classe que gerencia o núcleo da cena 3D, como o ambiente, a câmera e o
+renderizador. Ela também garante que apenas uma instância de ThreeCore seja criada, usando o
+padrão Singleton. Isso significa que, mesmo se você tentar criar várias instâncias dessa classe, você
+só terá uma instância em toda a aplicação.
+Construtor ( constructor ):
+Cena 3D: A cena é onde todos os objetos 3D são colocados e renderizados.
+Câmera: A câmera é responsável por exibir o que está na cena. Aqui, usamos uma câmera
+de perspectiva, que simula como vemos o mundo em 3D, com distâncias variáveis.
+Renderizador: É o motor que desenha a cena 3D na tela. O alpha: true é utilizado para
+que o fundo da cena tenha transparência, o que pode ser útil para integrações com outras
+camadas (como a integração com um jogo 2D).
+Singleton: ThreeCore.instance = this garante que apenas uma instância da classe seja
+criada. Se já houver uma instância, ele retorna a instância existente.
+Métodos:
+init(container) : Inicializa a cena, adiciona o renderizador ao container da página HTML
+e começa o loop de animação.
+animate() : Este método é chamado repetidamente através de requestAnimationFrame , o
+que permite a animação contínua. Ele renderiza a cena a cada quadro.
+
+2. Classe ThreeFactory
+A ThreeFactory é responsável por criar os objetos 3D fundamentais, como luzes, cubos e câmeras.
+Esse é um exemplo de Abstract Factory, já que ela centraliza a criação desses objetos.
+Métodos:
+createLight() : Cria uma luz pontual (uma luz que emite de um ponto em todas as
+direções).
+createCube() : Cria um cubo 3D com uma cor verde usando BoxGeometry (geometria do
+cubo) e MeshStandardMaterial (material com sombreamento adequado para
+renderização realista).
+createCamera() : Cria uma câmera de perspectiva.
+O padrão Abstract Factory ajuda a abstrair a criação de diferentes tipos de objetos 3D sem que o
+código do cliente precise saber como esses objetos são criados internamente.
+
+3. Classe EntityBuilder
+A EntityBuilder é uma implementação do padrão Builder. Ela permite construir entidades
+compostas de forma mais flexível, adicionando diferentes componentes a uma única entidade,
+como malhas (meshes) e posições.
+Métodos:
+addMesh(mesh) : Adiciona um mesh (malha 3D, como um cubo) à entidade.
+setPosition(x, y, z) : Define a posição da entidade no espaço 3D.
+build() : Finaliza a construção e retorna a entidade 3D.
+O objetivo da classe EntityBuilder é proporcionar uma maneira fácil de criar objetos mais
+complexos, ao adicionar diferentes componentes (como malhas) e personalizar atributos de forma
+fluida.
+
+4. Classe PrototypeFactory
+A PrototypeFactory segue o padrão Prototype. Ela permite registrar e clonar objetos 3D, o que é
+útil quando você deseja criar cópias de objetos sem precisar recriá-los do zero, economizando
+recursos e tempo de processamento.
+
+Métodos:
+register(name, object3D) : Registra um objeto 3D com um nome para que ele possa ser
+clonado mais tarde.
+clone(name) : Clona um objeto registrado anteriormente, retornando uma cópia exata
+dele.
+
+5. Classe Game
+A classe Game utiliza a ThreeFactory para criar objetos de forma simplificada. Ao chamar o
+método Game.create(type) , ele cria um objeto do tipo especificado (como cube , camera ,
+ou light ).
+Método create(type) :
+Cria os objetos 3D usando a ThreeFactory .
+O type pode ser cube , camera ou light , e o método retorna o objeto correspondente.
+Se um tipo desconhecido for passado, o código lança um erro.
+Resumo de como funciona:
+ThreeCore gerencia o ciclo de vida da cena, a câmera e o renderizador.
+ThreeFactory cria objetos 3D, como luzes, cubos e câmeras.
+EntityBuilder ajuda a construir entidades 3D compostas (como adicionar malhas e definir
+posições).
+PrototypeFactory permite clonar objetos registrados.
+Game é a interface simplificada para criar objetos e interagir com a cena 3D de maneira fácil e
+rápida.
+
+Objeto de Mapeamento: Criamos um objeto objects que mapeia os tipos de objetos ('cube', 'camera', 'light') para as suas respectivas instâncias criadas pelo ThreeFactory.
+
+Acesso Rápido: Agora, ao chamar Game.create(type), o código retorna o objeto correspondente diretamente. Se o tipo não existir no objeto objects, será lançado um erro.
+
+Simples e Eficiente: A criação dos objetos é feita de forma bem simples, sem a necessidade de uma estrutura switch.
+
+Benefícios:
+O código fica mais enxuto e fácil de entender.
+
+A escalabilidade fica mais fácil: basta adicionar novos tipos de objetos no array objects e a funcionalidade estará pronta para ser utilizada.
+
+Evitamos a complexidade do switch, tornando a leitura do código mais fluida.
+
+
+_________________________________________3d notas de prazos
+🚀 Curto Prazo (1–2 dias)
+Painel de Console & Diagnóstico
+
+Integrar o HTML/CSS/JS do painel que mostra:
+
+Logs internos (logToConsole) com timestamp.
+
+Status do loop (rodando/pausado e FPS aproximado).
+
+Captura de erros isolados de cada componente.
+
+Botões de “🛑” para pausar/despausar componentes individualmente.
+
+Filtro e Tags nos Scripts da Cena
+
+Implementar input de busca para filtrar por nome do objeto, nome do script ou trecho de código.
+
+Suporte a “tags” (por exemplo: enemy, player, ui) para agrupar e esconder/grupar seções rapidamente.
+
+Persistência Local dos Scripts
+
+Salvar Automático em localStorage (ou IndexedDB):
+
+draki.preload, draki.fixload e scripts da Cena.
+
+Carregar ao abrir o modal, mantendo o estado entre recarregamentos.
+
+🔧 Médio Prazo (1–2 semanas)
+Editor de Código Avançado
+
+Substituir textareas básicas por um editor leve (ex: CodeMirror ou Monaco).
+
+Syntax highlighting e autocompletar básico de APIs DrakiJs (drak(), addComponent, etc.).
+
+Sistema de Ciclo de Vida de Componentes
+
+Adicionar hooks: onStart(), onUpdate(), onDestroy().
+
+Gerenciamento automático de destruição ao remover objetos da cena.
+
+Exportação/Importação Avançada de JSON
+
+Permitir exportar presets de scripts (preload/fixload/cena) como arquivos .drakijs.
+
+UI para importar múltiplos presets, mesclar ou substituir cenas inteiras.
+
+Colapsáveis e Organização Hierárquica
+
+Tornar os grupos de scripts totalmente expansíveis/colapsáveis.
+
+Suporte “expandir tudo” / “recolher tudo” e salvar estado de expansão.
+
+🌐 Longo Prazo (1–2 meses)
+Plugin System & Marketplace
+
+Criar um sistema de plugins onde usuários possam empacotar e compartilhar componentes e scripts.
+
+Interface para instalar/remover plugins diretamente no Loop Viewer.
+
+Debug Visual & Perfil de Performance
+
+Gráfico simples de tempo gasto por componente (profile de cada update()).
+
+Heatmap de FPS da cena e memory leak detection.
+
+Colaboração em Tempo Real
+
+Sincronizar edição de scripts entre múltiplos usuários via WebSocket ou WebRTC.
+
+Chat integrado e change tracking nos scripts.
+
+Exportação de Build e CLI
+
+Ferramenta de linha de comando para gerar builds estáticos da cena (incluindo scripts).
+
+Output otimizado para produção (minificação e tree-shaking).
+
+Documentação Interativa
+
+Gerador automático de docs para componentes e métodos (a partir de JSDoc nos seus scripts).
+
+Playground interativo no WebSim para experimentar APIs em tempo real.
+
+👉 Recomendações Imediatas
+Escolha uma iniciativa de Curto Prazo (console ou filtro) e finalize-a antes de pular para recursos maiores.
+
+Mantenha o foco na modularidade: cada painel ou funcionalidade deve poder existir isoladamente e ser “plugável” no ThreeCore.
+
+Teste constantes: crie uma pequena suíte de testes manuais (ou automatizados com Jasmine/Mocha) para garantir que Preload, Fixload e Loop Viewer não quebrem conforme novas features entram.
+🚀 Curto Prazo (1–2 dias)
+Painel de Console & Diagnóstico
+
+Integrar o HTML/CSS/JS do painel que mostra:
+
+Logs internos (logToConsole) com timestamp.
+
+Status do loop (rodando/pausado e FPS aproximado).
+
+Captura de erros isolados de cada componente.
+
+Botões de “🛑” para pausar/despausar componentes individualmente.
+
+Filtro e Tags nos Scripts da Cena
+
+Implementar input de busca para filtrar por nome do objeto, nome do script ou trecho de código.
+
+Suporte a “tags” (por exemplo: enemy, player, ui) para agrupar e esconder/grupar seções rapidamente.
+
+Persistência Local dos Scripts
+
+Salvar Automático em localStorage (ou IndexedDB):
+
+draki.preload, draki.fixload e scripts da Cena.
+
+Carregar ao abrir o modal, mantendo o estado entre recarregamentos.
+
+🔧 Médio Prazo (1–2 semanas)
+Editor de Código Avançado
+
+Substituir textareas básicas por um editor leve (ex: CodeMirror ou Monaco).
+
+Syntax highlighting e autocompletar básico de APIs DrakiJs (drak(), addComponent, etc.).
+
+Sistema de Ciclo de Vida de Componentes
+
+Adicionar hooks: onStart(), onUpdate(), onDestroy().
+
+Gerenciamento automático de destruição ao remover objetos da cena.
+
+Exportação/Importação Avançada de JSON
+
+Permitir exportar presets de scripts (preload/fixload/cena) como arquivos .drakijs.
+
+UI para importar múltiplos presets, mesclar ou substituir cenas inteiras.
+
+Colapsáveis e Organização Hierárquica
+
+Tornar os grupos de scripts totalmente expansíveis/colapsáveis.
+
+Suporte “expandir tudo” / “recolher tudo” e salvar estado de expansão.
+
+🌐 Longo Prazo (1–2 meses)
+Plugin System & Marketplace
+
+Criar um sistema de plugins onde usuários possam empacotar e compartilhar componentes e scripts.
+
+Interface para instalar/remover plugins diretamente no Loop Viewer.
+
+Debug Visual & Perfil de Performance
+
+Gráfico simples de tempo gasto por componente (profile de cada update()).
+
+Heatmap de FPS da cena e memory leak detection.
+
+Colaboração em Tempo Real
+
+Sincronizar edição de scripts entre múltiplos usuários via WebSocket ou WebRTC.
+
+Chat integrado e change tracking nos scripts.
+
+Exportação de Build e CLI
+
+Ferramenta de linha de comando para gerar builds estáticos da cena (incluindo scripts).
+
+Output otimizado para produção (minificação e tree-shaking).
+
+Documentação Interativa
+
+Gerador automático de docs para componentes e métodos (a partir de JSDoc nos seus scripts).
+
+Playground interativo no WebSim para experimentar APIs em tempo real.
+
+👉 Recomendações Imediatas
+Escolha uma iniciativa de Curto Prazo (console ou filtro) e finalize-a antes de pular para recursos maiores.
+
+Mantenha o foco na modularidade: cada painel ou funcionalidade deve poder existir isoladamente e ser “plugável” no ThreeCore.
+
+Teste constantes: crie uma pequena suíte de testes manuais (ou automatizados com Jasmine/Mocha) para garantir que Preload, Fixload e Loop Viewer não quebrem conforme novas features entram.
+drak() — O método oficial da engine (ex: drak("Inimigo").set("vida", 10);)
+
+
+  _________________________________________2d notas da engine 
+
+[camera do game modelo]
+ const game = {
+    camera_play: function (mundoId = "mundo", playerId = "player", x = 400, y = 300, modo = "suave", opcoesControles = {}) {
+      const mundo = document.getElementById(mundoId);
+      const player = document.getElementById(playerId);
+
+      let playerX = x;
+      let playerY = y;
+      let playerVisX = x;
+      let playerVisY = y;
+
+      let cameraX = 0, cameraY = 0;
+      let targetX = 0, targetY = 0;
+
+      let cameraMode = modo;
+      let shakeFrame = 0;
+
+      function lerp(a, b, t) {
+        return a + (b - a) * t;
+      }
+
+      function mover(dx, dy) {
+        playerX += dx;
+        playerY += dy;
+
+        targetX = playerX - window.innerWidth / 2 + 25;
+        targetY = playerY - window.innerHeight / 2 + 25;
+
+        if (cameraMode === "shake") shakeFrame = 10;
+      }
+
+      function atualizar_camera() {
+        playerVisX = lerp(playerVisX, playerX, 0.3);
+        playerVisY = lerp(playerVisY, playerY, 0.3);
+        player.style.left = playerVisX + "px";
+        player.style.top = playerVisY + "px";
+
+        if (cameraMode === "suave") {
+          cameraX = lerp(cameraX, targetX, 0.1);
+          cameraY = lerp(cameraY, targetY, 0.1);
+        }
+        else if (cameraMode === "instante") {
+          cameraX = targetX;
+          cameraY = targetY;
+        }
+        else if (cameraMode === "shake") {
+          cameraX = lerp(cameraX, targetX, 0.1);
+          cameraY = lerp(cameraY, targetY, 0.1);
+          if (shakeFrame > 0) {
+            cameraX += (Math.random() - 0.5) * 10;
+            cameraY += (Math.random() - 0.5) * 10;
+            shakeFrame--;
+          }
+        }
+
+        mundo.style.transform = `translate(${-cameraX}px, ${-cameraY}px)`;
+      }
+
+      const keys = opcoesControles.keys || ["ArrowRight", "ArrowLeft", "ArrowUp", "ArrowDown"];
+      const usarWSAD = opcoesControles.usarWSAD || false;
+
+      if (keys !== null) {
+        document.addEventListener("keydown", e => {
+          if (usarWSAD) {
+            if (e.key === "d") mover(10, 0);
+            else if (e.key === "a") mover(-10, 0);
+            else if (e.key === "w") mover(0, -10);
+            else if (e.key === "s") mover(0, 10);
+          } else {
+            if (e.key === keys[0]) mover(10, 0);
+            else if (e.key === keys[1]) mover(-10, 0);
+            else if (e.key === keys[2]) mover(0, -10);
+            else if (e.key === keys[3]) mover(0, 10);
+          }
+          if (e.key === "c") {
+            if (cameraMode === "suave") cameraMode = "instante";
+            else if (cameraMode === "instante") cameraMode = "shake";
+            else cameraMode = "suave";
+            console.log("modo de câmera:", cameraMode);
+          }
+        });
+      }
+
+      return {
+        atualizar: atualizar_camera,
+        mover: mover,
+        set_modo: function (novoModo) {
+          cameraMode = novoModo;
+        }
+      };
+    }
+  };
+
+  // Criar objetos verdes aleatórios no mundo
+  const mundoEl = document.getElementById("mundo");
+  for(let i=0; i<30; i++){
+    const obj = document.createElement("div");
+    obj.className = "objeto";
+    obj.style.left = Math.random()*2800 + "px";
+    obj.style.top = Math.random()*1800 + "px";
+    mundoEl.appendChild(obj);
+  }
+
+  // Iniciar câmera com controles WSAD (pode trocar para padrão setas removendo opcoes)
+  const camera = game.camera_play("mundo", "player", 400, 300, "suave", { usarWSAD: true });
+
+  function loop() {
+    camera.atualizar();
+    requestAnimationFrame(loop);
+  }
+  loop();
+
+  
   [ative anim inimigo]
   
   if (inimigo.mirror == 0) {
@@ -929,370 +1413,3 @@ function jogo(){
 </body>
 </html>
 
-1. Classe ThreeCore
-A ThreeCore é a classe que gerencia o núcleo da cena 3D, como o ambiente, a câmera e o
-renderizador. Ela também garante que apenas uma instância de ThreeCore seja criada, usando o
-padrão Singleton. Isso significa que, mesmo se você tentar criar várias instâncias dessa classe, você
-só terá uma instância em toda a aplicação.
-Construtor ( constructor ):
-Cena 3D: A cena é onde todos os objetos 3D são colocados e renderizados.
-Câmera: A câmera é responsável por exibir o que está na cena. Aqui, usamos uma câmera
-de perspectiva, que simula como vemos o mundo em 3D, com distâncias variáveis.
-Renderizador: É o motor que desenha a cena 3D na tela. O alpha: true é utilizado para
-que o fundo da cena tenha transparência, o que pode ser útil para integrações com outras
-camadas (como a integração com um jogo 2D).
-Singleton: ThreeCore.instance = this garante que apenas uma instância da classe seja
-criada. Se já houver uma instância, ele retorna a instância existente.
-Métodos:
-init(container) : Inicializa a cena, adiciona o renderizador ao container da página HTML
-e começa o loop de animação.
-animate() : Este método é chamado repetidamente através de requestAnimationFrame , o
-que permite a animação contínua. Ele renderiza a cena a cada quadro.
-
-2. Classe ThreeFactory
-A ThreeFactory é responsável por criar os objetos 3D fundamentais, como luzes, cubos e câmeras.
-Esse é um exemplo de Abstract Factory, já que ela centraliza a criação desses objetos.
-Métodos:
-createLight() : Cria uma luz pontual (uma luz que emite de um ponto em todas as
-direções).
-createCube() : Cria um cubo 3D com uma cor verde usando BoxGeometry (geometria do
-cubo) e MeshStandardMaterial (material com sombreamento adequado para
-renderização realista).
-createCamera() : Cria uma câmera de perspectiva.
-O padrão Abstract Factory ajuda a abstrair a criação de diferentes tipos de objetos 3D sem que o
-código do cliente precise saber como esses objetos são criados internamente.
-
-3. Classe EntityBuilder
-A EntityBuilder é uma implementação do padrão Builder. Ela permite construir entidades
-compostas de forma mais flexível, adicionando diferentes componentes a uma única entidade,
-como malhas (meshes) e posições.
-Métodos:
-addMesh(mesh) : Adiciona um mesh (malha 3D, como um cubo) à entidade.
-setPosition(x, y, z) : Define a posição da entidade no espaço 3D.
-build() : Finaliza a construção e retorna a entidade 3D.
-O objetivo da classe EntityBuilder é proporcionar uma maneira fácil de criar objetos mais
-complexos, ao adicionar diferentes componentes (como malhas) e personalizar atributos de forma
-fluida.
-
-4. Classe PrototypeFactory
-A PrototypeFactory segue o padrão Prototype. Ela permite registrar e clonar objetos 3D, o que é
-útil quando você deseja criar cópias de objetos sem precisar recriá-los do zero, economizando
-recursos e tempo de processamento.
-
-Métodos:
-register(name, object3D) : Registra um objeto 3D com um nome para que ele possa ser
-clonado mais tarde.
-clone(name) : Clona um objeto registrado anteriormente, retornando uma cópia exata
-dele.
-
-5. Classe Game
-A classe Game utiliza a ThreeFactory para criar objetos de forma simplificada. Ao chamar o
-método Game.create(type) , ele cria um objeto do tipo especificado (como cube , camera ,
-ou light ).
-Método create(type) :
-Cria os objetos 3D usando a ThreeFactory .
-O type pode ser cube , camera ou light , e o método retorna o objeto correspondente.
-Se um tipo desconhecido for passado, o código lança um erro.
-Resumo de como funciona:
-ThreeCore gerencia o ciclo de vida da cena, a câmera e o renderizador.
-ThreeFactory cria objetos 3D, como luzes, cubos e câmeras.
-EntityBuilder ajuda a construir entidades 3D compostas (como adicionar malhas e definir
-posições).
-PrototypeFactory permite clonar objetos registrados.
-Game é a interface simplificada para criar objetos e interagir com a cena 3D de maneira fácil e
-rápida.
-
-Objeto de Mapeamento: Criamos um objeto objects que mapeia os tipos de objetos ('cube', 'camera', 'light') para as suas respectivas instâncias criadas pelo ThreeFactory.
-
-Acesso Rápido: Agora, ao chamar Game.create(type), o código retorna o objeto correspondente diretamente. Se o tipo não existir no objeto objects, será lançado um erro.
-
-Simples e Eficiente: A criação dos objetos é feita de forma bem simples, sem a necessidade de uma estrutura switch.
-
-Benefícios:
-O código fica mais enxuto e fácil de entender.
-
-A escalabilidade fica mais fácil: basta adicionar novos tipos de objetos no array objects e a funcionalidade estará pronta para ser utilizada.
-
-Evitamos a complexidade do switch, tornando a leitura do código mais fluida.
-
-(Próximo) Integração real do salvamento/carregamento em localStorage
-
-(Próximo) Painel de Console & Diagnóstico embutido na interface
-
-(Próximo) Filtro e tags dinâmicas nos scripts da Cena
-
-(Próximo) Persistência automática dos scripts entre recarregamentos
-
-( ) Criar módulo de física básica (colisores, gravidade simples)
-
-( ) Desenvolver sistema de câmera com controle de movimento
-
-( ) Adicionar suporte a importação de modelos externos (GLTF/OBJ)
-
-( ) Implementar sistema de materiais personalizados
-
-( ) Criar GUI mínima para visualização e depuração da cena
-
-( ) Sistema de exportação da cena como JSON
-
-( ) Criar sistema de carregamento de cenas (load/save)
-
-( ) Adicionar sistema de input (teclado, mouse, toque)
-
-( ) Implementar módulo de áudio 3D
-
-( ) Adicionar sistema de animações básicas (keyframes)
-
-( ) Criar módulo de iluminação avançada (ambient, direcional, sombras)
-
-( ) Integrar com Nandraki.js para sobreposição de UI 2D
-
-( ) Sistema de entidades baseadas em componentes (ECS simplificado)
-
-( ) Modo de build/exportação para Web (embed fácil)
-
-
-🚀 Curto Prazo (1–2 dias)
-Painel de Console & Diagnóstico
-
-Integrar o HTML/CSS/JS do painel que mostra:
-
-Logs internos (logToConsole) com timestamp.
-
-Status do loop (rodando/pausado e FPS aproximado).
-
-Captura de erros isolados de cada componente.
-
-Botões de “🛑” para pausar/despausar componentes individualmente.
-
-Filtro e Tags nos Scripts da Cena
-
-Implementar input de busca para filtrar por nome do objeto, nome do script ou trecho de código.
-
-Suporte a “tags” (por exemplo: enemy, player, ui) para agrupar e esconder/grupar seções rapidamente.
-
-Persistência Local dos Scripts
-
-Salvar Automático em localStorage (ou IndexedDB):
-
-draki.preload, draki.fixload e scripts da Cena.
-
-Carregar ao abrir o modal, mantendo o estado entre recarregamentos.
-
-🔧 Médio Prazo (1–2 semanas)
-Editor de Código Avançado
-
-Substituir textareas básicas por um editor leve (ex: CodeMirror ou Monaco).
-
-Syntax highlighting e autocompletar básico de APIs DrakiJs (drak(), addComponent, etc.).
-
-Sistema de Ciclo de Vida de Componentes
-
-Adicionar hooks: onStart(), onUpdate(), onDestroy().
-
-Gerenciamento automático de destruição ao remover objetos da cena.
-
-Exportação/Importação Avançada de JSON
-
-Permitir exportar presets de scripts (preload/fixload/cena) como arquivos .drakijs.
-
-UI para importar múltiplos presets, mesclar ou substituir cenas inteiras.
-
-Colapsáveis e Organização Hierárquica
-
-Tornar os grupos de scripts totalmente expansíveis/colapsáveis.
-
-Suporte “expandir tudo” / “recolher tudo” e salvar estado de expansão.
-
-🌐 Longo Prazo (1–2 meses)
-Plugin System & Marketplace
-
-Criar um sistema de plugins onde usuários possam empacotar e compartilhar componentes e scripts.
-
-Interface para instalar/remover plugins diretamente no Loop Viewer.
-
-Debug Visual & Perfil de Performance
-
-Gráfico simples de tempo gasto por componente (profile de cada update()).
-
-Heatmap de FPS da cena e memory leak detection.
-
-Colaboração em Tempo Real
-
-Sincronizar edição de scripts entre múltiplos usuários via WebSocket ou WebRTC.
-
-Chat integrado e change tracking nos scripts.
-
-Exportação de Build e CLI
-
-Ferramenta de linha de comando para gerar builds estáticos da cena (incluindo scripts).
-
-Output otimizado para produção (minificação e tree-shaking).
-
-Documentação Interativa
-
-Gerador automático de docs para componentes e métodos (a partir de JSDoc nos seus scripts).
-
-Playground interativo no WebSim para experimentar APIs em tempo real.
-
-👉 Recomendações Imediatas
-Escolha uma iniciativa de Curto Prazo (console ou filtro) e finalize-a antes de pular para recursos maiores.
-
-Mantenha o foco na modularidade: cada painel ou funcionalidade deve poder existir isoladamente e ser “plugável” no ThreeCore.
-
-Teste constantes: crie uma pequena suíte de testes manuais (ou automatizados com Jasmine/Mocha) para garantir que Preload, Fixload e Loop Viewer não quebrem conforme novas features entram.
-🚀 Curto Prazo (1–2 dias)
-Painel de Console & Diagnóstico
-
-Integrar o HTML/CSS/JS do painel que mostra:
-
-Logs internos (logToConsole) com timestamp.
-
-Status do loop (rodando/pausado e FPS aproximado).
-
-Captura de erros isolados de cada componente.
-
-Botões de “🛑” para pausar/despausar componentes individualmente.
-
-Filtro e Tags nos Scripts da Cena
-
-Implementar input de busca para filtrar por nome do objeto, nome do script ou trecho de código.
-
-Suporte a “tags” (por exemplo: enemy, player, ui) para agrupar e esconder/grupar seções rapidamente.
-
-Persistência Local dos Scripts
-
-Salvar Automático em localStorage (ou IndexedDB):
-
-draki.preload, draki.fixload e scripts da Cena.
-
-Carregar ao abrir o modal, mantendo o estado entre recarregamentos.
-
-🔧 Médio Prazo (1–2 semanas)
-Editor de Código Avançado
-
-Substituir textareas básicas por um editor leve (ex: CodeMirror ou Monaco).
-
-Syntax highlighting e autocompletar básico de APIs DrakiJs (drak(), addComponent, etc.).
-
-Sistema de Ciclo de Vida de Componentes
-
-Adicionar hooks: onStart(), onUpdate(), onDestroy().
-
-Gerenciamento automático de destruição ao remover objetos da cena.
-
-Exportação/Importação Avançada de JSON
-
-Permitir exportar presets de scripts (preload/fixload/cena) como arquivos .drakijs.
-
-UI para importar múltiplos presets, mesclar ou substituir cenas inteiras.
-
-Colapsáveis e Organização Hierárquica
-
-Tornar os grupos de scripts totalmente expansíveis/colapsáveis.
-
-Suporte “expandir tudo” / “recolher tudo” e salvar estado de expansão.
-
-🌐 Longo Prazo (1–2 meses)
-Plugin System & Marketplace
-
-Criar um sistema de plugins onde usuários possam empacotar e compartilhar componentes e scripts.
-
-Interface para instalar/remover plugins diretamente no Loop Viewer.
-
-Debug Visual & Perfil de Performance
-
-Gráfico simples de tempo gasto por componente (profile de cada update()).
-
-Heatmap de FPS da cena e memory leak detection.
-
-Colaboração em Tempo Real
-
-Sincronizar edição de scripts entre múltiplos usuários via WebSocket ou WebRTC.
-
-Chat integrado e change tracking nos scripts.
-
-Exportação de Build e CLI
-
-Ferramenta de linha de comando para gerar builds estáticos da cena (incluindo scripts).
-
-Output otimizado para produção (minificação e tree-shaking).
-
-Documentação Interativa
-
-Gerador automático de docs para componentes e métodos (a partir de JSDoc nos seus scripts).
-
-Playground interativo no WebSim para experimentar APIs em tempo real.
-
-👉 Recomendações Imediatas
-Escolha uma iniciativa de Curto Prazo (console ou filtro) e finalize-a antes de pular para recursos maiores.
-
-Mantenha o foco na modularidade: cada painel ou funcionalidade deve poder existir isoladamente e ser “plugável” no ThreeCore.
-
-Teste constantes: crie uma pequena suíte de testes manuais (ou automatizados com Jasmine/Mocha) para garantir que Preload, Fixload e Loop Viewer não quebrem conforme novas features entram.
-drak() — O método oficial da engine (ex: drak("Inimigo").set("vida", 10);)
-
-echo() — Puxa e ecoa os dados do objeto
-
-eye() — "Olha" para um objeto
-
-callTo() — Chama outro objeto da cena
-
-touch() — Toca/interage com outro objeto
-
-bind() — Ex: bind("Player").position.set(0, 1, 0);
-
-ref() — Puxa uma referência (tipo "referência cruzada")
-
-link() — Liga o script a um objeto
-
-pointTo() — Aponta para um objeto na hierarquia
-
-hook() — Ganchos para manipulação de outros objetos
-
-ThreeCore (Singleton) – configuração de cena, câmera, renderer e loop principal que executa scripts e componentes
-
- ThreeFactory (Abstract Factory) – métodos createLight(), createCube(), createCamera()
-
- EntityBuilder (Builder) – construção encadeada de entidades com addMesh() e setPosition()
-
- PrototypeFactory (Prototype) – registro (register) e clonagem (clone) de protótipos de objetos
-
- ComponentRegistry – registro global e instanciação de classes de componente reutilizáveis
-
- TagSystem – adição, remoção e consulta de tags em objetos, e busca global por tag
-
- Game.create() (Factory Naming) – criação de objetos (cube, camera, light) com mapeamento automático de nome
-
- drak() (Dynamic Accessor) – acesso a objetos por nome e manipulação via métodos set, get, script, addComponent, removeComponent, addTag etc.
-
- getByTag() – função utilitária para buscar todos os objetos com uma tag específica
-
- 
-( ) Criar módulo de física básica (colisores, gravidade simples)
-
-( ) Desenvolver sistema de câmera com controle de movimento
-
-( ) Adicionar suporte a importação de modelos externos (GLTF/OBJ)
-
-( ) Implementar sistema de materiais personalizados
-
-( ) Criar GUI mínima para visualização e depuração da cena
-
-( ) Sistema de exportação da cena como JSON
-
-( ) Criar sistema de carregamento de cenas (load/save)
-
-( ) Adicionar sistema de input (teclado, mouse, toque)
-
-( ) Implementar módulo de áudio 3D
-
-( ) Adicionar sistema de animações básicas (keyframes)
-
-( ) Criar módulo de iluminação avançada (ambient, direcional, sombras)
-
-( ) Integrar com Nandraki.js para sobreposição de UI 2D
-
-( ) Sistema de entidades baseadas em componentes (ECS simplificado)
-
-( ) Modo de build/exportação para Web (embed fácil)
