@@ -1015,7 +1015,221 @@ A escalabilidade fica mais fácil: basta adicionar novos tipos de objetos no arr
 
 Evitamos a complexidade do switch, tornando a leitura do código mais fluida.
 
+(Próximo) Integração real do salvamento/carregamento em localStorage
 
+(Próximo) Painel de Console & Diagnóstico embutido na interface
+
+(Próximo) Filtro e tags dinâmicas nos scripts da Cena
+
+(Próximo) Persistência automática dos scripts entre recarregamentos
+
+( ) Criar módulo de física básica (colisores, gravidade simples)
+
+( ) Desenvolver sistema de câmera com controle de movimento
+
+( ) Adicionar suporte a importação de modelos externos (GLTF/OBJ)
+
+( ) Implementar sistema de materiais personalizados
+
+( ) Criar GUI mínima para visualização e depuração da cena
+
+( ) Sistema de exportação da cena como JSON
+
+( ) Criar sistema de carregamento de cenas (load/save)
+
+( ) Adicionar sistema de input (teclado, mouse, toque)
+
+( ) Implementar módulo de áudio 3D
+
+( ) Adicionar sistema de animações básicas (keyframes)
+
+( ) Criar módulo de iluminação avançada (ambient, direcional, sombras)
+
+( ) Integrar com Nandraki.js para sobreposição de UI 2D
+
+( ) Sistema de entidades baseadas em componentes (ECS simplificado)
+
+( ) Modo de build/exportação para Web (embed fácil)
+
+
+🚀 Curto Prazo (1–2 dias)
+Painel de Console & Diagnóstico
+
+Integrar o HTML/CSS/JS do painel que mostra:
+
+Logs internos (logToConsole) com timestamp.
+
+Status do loop (rodando/pausado e FPS aproximado).
+
+Captura de erros isolados de cada componente.
+
+Botões de “🛑” para pausar/despausar componentes individualmente.
+
+Filtro e Tags nos Scripts da Cena
+
+Implementar input de busca para filtrar por nome do objeto, nome do script ou trecho de código.
+
+Suporte a “tags” (por exemplo: enemy, player, ui) para agrupar e esconder/grupar seções rapidamente.
+
+Persistência Local dos Scripts
+
+Salvar Automático em localStorage (ou IndexedDB):
+
+draki.preload, draki.fixload e scripts da Cena.
+
+Carregar ao abrir o modal, mantendo o estado entre recarregamentos.
+
+🔧 Médio Prazo (1–2 semanas)
+Editor de Código Avançado
+
+Substituir textareas básicas por um editor leve (ex: CodeMirror ou Monaco).
+
+Syntax highlighting e autocompletar básico de APIs DrakiJs (drak(), addComponent, etc.).
+
+Sistema de Ciclo de Vida de Componentes
+
+Adicionar hooks: onStart(), onUpdate(), onDestroy().
+
+Gerenciamento automático de destruição ao remover objetos da cena.
+
+Exportação/Importação Avançada de JSON
+
+Permitir exportar presets de scripts (preload/fixload/cena) como arquivos .drakijs.
+
+UI para importar múltiplos presets, mesclar ou substituir cenas inteiras.
+
+Colapsáveis e Organização Hierárquica
+
+Tornar os grupos de scripts totalmente expansíveis/colapsáveis.
+
+Suporte “expandir tudo” / “recolher tudo” e salvar estado de expansão.
+
+🌐 Longo Prazo (1–2 meses)
+Plugin System & Marketplace
+
+Criar um sistema de plugins onde usuários possam empacotar e compartilhar componentes e scripts.
+
+Interface para instalar/remover plugins diretamente no Loop Viewer.
+
+Debug Visual & Perfil de Performance
+
+Gráfico simples de tempo gasto por componente (profile de cada update()).
+
+Heatmap de FPS da cena e memory leak detection.
+
+Colaboração em Tempo Real
+
+Sincronizar edição de scripts entre múltiplos usuários via WebSocket ou WebRTC.
+
+Chat integrado e change tracking nos scripts.
+
+Exportação de Build e CLI
+
+Ferramenta de linha de comando para gerar builds estáticos da cena (incluindo scripts).
+
+Output otimizado para produção (minificação e tree-shaking).
+
+Documentação Interativa
+
+Gerador automático de docs para componentes e métodos (a partir de JSDoc nos seus scripts).
+
+Playground interativo no WebSim para experimentar APIs em tempo real.
+
+👉 Recomendações Imediatas
+Escolha uma iniciativa de Curto Prazo (console ou filtro) e finalize-a antes de pular para recursos maiores.
+
+Mantenha o foco na modularidade: cada painel ou funcionalidade deve poder existir isoladamente e ser “plugável” no ThreeCore.
+
+Teste constantes: crie uma pequena suíte de testes manuais (ou automatizados com Jasmine/Mocha) para garantir que Preload, Fixload e Loop Viewer não quebrem conforme novas features entram.
+🚀 Curto Prazo (1–2 dias)
+Painel de Console & Diagnóstico
+
+Integrar o HTML/CSS/JS do painel que mostra:
+
+Logs internos (logToConsole) com timestamp.
+
+Status do loop (rodando/pausado e FPS aproximado).
+
+Captura de erros isolados de cada componente.
+
+Botões de “🛑” para pausar/despausar componentes individualmente.
+
+Filtro e Tags nos Scripts da Cena
+
+Implementar input de busca para filtrar por nome do objeto, nome do script ou trecho de código.
+
+Suporte a “tags” (por exemplo: enemy, player, ui) para agrupar e esconder/grupar seções rapidamente.
+
+Persistência Local dos Scripts
+
+Salvar Automático em localStorage (ou IndexedDB):
+
+draki.preload, draki.fixload e scripts da Cena.
+
+Carregar ao abrir o modal, mantendo o estado entre recarregamentos.
+
+🔧 Médio Prazo (1–2 semanas)
+Editor de Código Avançado
+
+Substituir textareas básicas por um editor leve (ex: CodeMirror ou Monaco).
+
+Syntax highlighting e autocompletar básico de APIs DrakiJs (drak(), addComponent, etc.).
+
+Sistema de Ciclo de Vida de Componentes
+
+Adicionar hooks: onStart(), onUpdate(), onDestroy().
+
+Gerenciamento automático de destruição ao remover objetos da cena.
+
+Exportação/Importação Avançada de JSON
+
+Permitir exportar presets de scripts (preload/fixload/cena) como arquivos .drakijs.
+
+UI para importar múltiplos presets, mesclar ou substituir cenas inteiras.
+
+Colapsáveis e Organização Hierárquica
+
+Tornar os grupos de scripts totalmente expansíveis/colapsáveis.
+
+Suporte “expandir tudo” / “recolher tudo” e salvar estado de expansão.
+
+🌐 Longo Prazo (1–2 meses)
+Plugin System & Marketplace
+
+Criar um sistema de plugins onde usuários possam empacotar e compartilhar componentes e scripts.
+
+Interface para instalar/remover plugins diretamente no Loop Viewer.
+
+Debug Visual & Perfil de Performance
+
+Gráfico simples de tempo gasto por componente (profile de cada update()).
+
+Heatmap de FPS da cena e memory leak detection.
+
+Colaboração em Tempo Real
+
+Sincronizar edição de scripts entre múltiplos usuários via WebSocket ou WebRTC.
+
+Chat integrado e change tracking nos scripts.
+
+Exportação de Build e CLI
+
+Ferramenta de linha de comando para gerar builds estáticos da cena (incluindo scripts).
+
+Output otimizado para produção (minificação e tree-shaking).
+
+Documentação Interativa
+
+Gerador automático de docs para componentes e métodos (a partir de JSDoc nos seus scripts).
+
+Playground interativo no WebSim para experimentar APIs em tempo real.
+
+👉 Recomendações Imediatas
+Escolha uma iniciativa de Curto Prazo (console ou filtro) e finalize-a antes de pular para recursos maiores.
+
+Mantenha o foco na modularidade: cada painel ou funcionalidade deve poder existir isoladamente e ser “plugável” no ThreeCore.
+
+Teste constantes: crie uma pequena suíte de testes manuais (ou automatizados com Jasmine/Mocha) para garantir que Preload, Fixload e Loop Viewer não quebrem conforme novas features entram.
 drak() — O método oficial da engine (ex: drak("Inimigo").set("vida", 10);)
 
 echo() — Puxa e ecoa os dados do objeto
@@ -1036,3 +1250,49 @@ pointTo() — Aponta para um objeto na hierarquia
 
 hook() — Ganchos para manipulação de outros objetos
 
+ThreeCore (Singleton) – configuração de cena, câmera, renderer e loop principal que executa scripts e componentes
+
+ ThreeFactory (Abstract Factory) – métodos createLight(), createCube(), createCamera()
+
+ EntityBuilder (Builder) – construção encadeada de entidades com addMesh() e setPosition()
+
+ PrototypeFactory (Prototype) – registro (register) e clonagem (clone) de protótipos de objetos
+
+ ComponentRegistry – registro global e instanciação de classes de componente reutilizáveis
+
+ TagSystem – adição, remoção e consulta de tags em objetos, e busca global por tag
+
+ Game.create() (Factory Naming) – criação de objetos (cube, camera, light) com mapeamento automático de nome
+
+ drak() (Dynamic Accessor) – acesso a objetos por nome e manipulação via métodos set, get, script, addComponent, removeComponent, addTag etc.
+
+ getByTag() – função utilitária para buscar todos os objetos com uma tag específica
+
+ 
+( ) Criar módulo de física básica (colisores, gravidade simples)
+
+( ) Desenvolver sistema de câmera com controle de movimento
+
+( ) Adicionar suporte a importação de modelos externos (GLTF/OBJ)
+
+( ) Implementar sistema de materiais personalizados
+
+( ) Criar GUI mínima para visualização e depuração da cena
+
+( ) Sistema de exportação da cena como JSON
+
+( ) Criar sistema de carregamento de cenas (load/save)
+
+( ) Adicionar sistema de input (teclado, mouse, toque)
+
+( ) Implementar módulo de áudio 3D
+
+( ) Adicionar sistema de animações básicas (keyframes)
+
+( ) Criar módulo de iluminação avançada (ambient, direcional, sombras)
+
+( ) Integrar com Nandraki.js para sobreposição de UI 2D
+
+( ) Sistema de entidades baseadas em componentes (ECS simplificado)
+
+( ) Modo de build/exportação para Web (embed fácil)
