@@ -163,9 +163,24 @@ class Game {
   }
 }
 
-// Ferramenta de acesso dinâmico a objetos na cena
-function drak(objectName) {
+function drak(objectName = null) {
   const core = new ThreeCore();
+
+  // Se não passar nome, retornar objeto com só o método byTag
+  if (!objectName) {
+    return {
+      byTag(tag) {
+        const found = [];
+        core.scene.traverse(obj => {
+          if (obj.userData.tags?.has(tag)) {
+            found.push(drak(obj.name));  // Retorna wrapper drak
+          }
+        });
+        return found;
+      }
+    };
+  }
+
   const target = core.scene.getObjectByName(objectName);
   if (!target) {
     console.warn(`Objeto "${objectName}" não encontrado`);
@@ -212,19 +227,75 @@ function drak(objectName) {
     },
 
     addTag(tag) {
-      TagSystem.add(target, tag);
+      if (!target.userData.tags) target.userData.tags = new Set();
+      target.userData.tags.add(tag);
     },
 
     removeTag(tag) {
-      TagSystem.remove(target, tag);
+      target.userData.tags?.delete(tag);
     },
 
     hasTag(tag) {
-      return TagSystem.has(target, tag);
+      return target.userData.tags?.has(tag) ?? false;
+    },
+
+    echo() {
+      console.log(target);
+    },
+
+    eye() {
+      if (target.material && target.material.color) {
+        if (!target.userData.originalColor) {
+          target.userData.originalColor = target.material.color.clone();
+        }
+        target.material.color.set(0xffff00);
+        setTimeout(() => {
+          if (target.material && target.userData.originalColor) {
+            target.material.color.copy(target.userData.originalColor);
+          }
+        }, 1000);
+      }
+    },
+
+    callTo(name) {
+      const obj = core.scene.getObjectByName(name);
+      if (obj) console.log(`Chamado:`, obj);
+    },
+
+    touch(name) {
+      const obj = core.scene.getObjectByName(name);
+      if (obj?.userData.scripts) {
+        obj.userData.scripts.forEach(fn => fn(obj));
+      }
+    },
+
+    ref(key) {
+      return target.userData?.[key] ?? null;
+    },
+
+    link(name) {
+      const obj = core.scene.getObjectByName(name);
+      if (obj) obj.add(target);
+    },
+
+    pointTo(name) {
+      const obj = core.scene.getObjectByName(name);
+      if (obj && typeof target.lookAt === 'function') {
+        target.lookAt(obj.position);
+      }
+    },
+
+    hook(fn) {
+      if (typeof fn !== 'function') {
+        console.warn(`hook: argumento não é uma função válida`);
+        return;
+      }
+      try {
+        return fn(target);
+      } catch (e) {
+        console.error(`hook: erro ao executar função para "${target.name}"`, e);
+      }
     }
   };
 }
-// Acesso global por tag
-function getByTag(tag) {
-  return TagSystem.getAll(tag);
-}
+
