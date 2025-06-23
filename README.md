@@ -44,7 +44,7 @@ In the engine folder contains demo test file]
   Playground CodePen: https://codepen.io/ronan-varella/pen/xxPeeEM
 <br>
 <p>
- Novidades map geral:https://github.com/ronanbastos/Nandraki.js/blob/main/Note.text
+ Novidades map geral:https://github.com/ronanbastos/Nandraki.js/blob/main/Note.txt
 	
 	
 # CDN 
