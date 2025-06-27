@@ -35,9 +35,7 @@ In the engine folder contains demo test file]
 # Playground
 
 <p>
-  Playground 3D Draki.js :
-	Link 1 https://drakijs--ronan1995.on.websim.ai
-	| Link 2 https://drakijs.on.websim.com/
+  Playground 3D Draki.js : https://drakijs.on.websim.com/
 <p>
   Playground Dom : https://ronanbastos.github.io/Nandraki.js/   //Use o console para pegar variaves da Nandraki e game
 	<p>
