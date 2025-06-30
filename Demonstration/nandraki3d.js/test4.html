@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cubo em Three.js</title>
+    <style>
+        body { margin: 0; overflow: hidden; }
+        canvas { display: block; }
+    </style>
+</head>
+<body>
+    <script src="draki3d.js"></script>
+    <script>
+
+// Exemplo de como o usuário pode interagir diretamente
+const draki = new ThreeCore();
+draki.init(document.body);
+
+// Criação de objetos
+let cubo = Game.create("cube", "Player");
+let luz = Game.create("light", "Sol");
+let camera = Game.create("camera", "MainCam");
+move=0;
+
+// Posições
+cubo.position.set(5, 0, 0);
+luz.position.set(0, 5, 10);
+camera.position.set(5, 0, 5);
+
+// Adiciona à cena
+draki.scene.add(cubo);
+draki.scene.add(luz);
+draki.scene.add(camera);
+
+// Define câmera principal
+draki.camera = camera;
+
+drak("Player").addTag("inimigo");
+// Buscar todos com tag "inimigo"
+const inimigos = drak().byTag("inimigo");
+
+console.log(inimigos[0])
+// Rotacionar todos eles
+inimigos.forEach(o => {
+  o.set("rotation.y", o.get("rotation.y") + 0.75);
+});
+
+
+
+
+/*
+document.addEventListener("keydown", function (e) {
+	
+	
+    if (e.key === "ArrowRight") {
+		move+=0.1
+		drak("Player").set("position.x", move);
+	}
+      
+	if (e.key === "ArrowLeft") {
+		  move-=0.1
+	   drak("Player").set("position.x", move);
+	}
+
+    });
+*/
+
+let pos = { x: 0, y: 0, z: 0 };
+let velocity = { x: 0, y: 0, z: 0 };
+let speed = 0.05;
+let friction = 0.9;
+
+let keys = {
+  left: false, right: false,
+  up: false, down: false,
+  forward: false, back: false
+};
+
+// Mapeia teclas pressionadas
+document.addEventListener("keydown", function (e) {
+  if (e.key === "ArrowLeft" || e.key === "a") keys.left = true;
+  if (e.key === "ArrowRight" || e.key === "d") keys.right = true;
+  if (e.key === "ArrowUp" || e.key === "w") keys.forward = true;
+  if (e.key === "ArrowDown" || e.key === "s") keys.back = true;
+  if (e.key === "q") keys.up = true;
+  if (e.key === "e") keys.down = true;
+});
+
+// Mapeia teclas soltas
+document.addEventListener("keyup", function (e) {
+  if (e.key === "ArrowLeft" || e.key === "a") keys.left = false;
+  if (e.key === "ArrowRight" || e.key === "d") keys.right = false;
+  if (e.key === "ArrowUp" || e.key === "w") keys.forward = false;
+  if (e.key === "ArrowDown" || e.key === "s") keys.back = false;
+  if (e.key === "q") keys.up = false;
+  if (e.key === "e") keys.down = false;
+});
+
+// Loop de movimento
+function updateMovement() {
+  if (keys.left) velocity.x -= speed;
+  if (keys.right) velocity.x += speed;
+  if (keys.forward) velocity.z -= speed;
+  if (keys.back) velocity.z += speed;
+  if (keys.up) velocity.y += speed;
+  if (keys.down) velocity.y -= speed;
+
+  // Aplica atrito
+  velocity.x *= friction;
+  velocity.y *= friction;
+  velocity.z *= friction;
+
+  // Atualiza posição
+  pos.x += velocity.x;
+  pos.y += velocity.y;
+  pos.z += velocity.z;
+
+  // Envia posição para o objeto
+  drak("Player").set("position.x", pos.x);
+  drak("Player").set("position.y", pos.y);
+  drak("Player").set("position.z", pos.z);
+
+  requestAnimationFrame(updateMovement);
+}
+
+updateMovement();
+
+    </script>
+</body>
+</html>
