@@ -1298,31 +1298,48 @@ game = {
         document.body.style.zoom = zoom;
         document.body.style.scrollBehavior = "smooth";
     },
-    camera: function (specto, x, y, xLimit, yLimit) {
-        if (specto == "2d" || specto == "2D") {
+    camera_scroll: function (
+  playerId,
+  distanciaX = 100, // distância horizontal entre player e parede
+  distanciaY = 100, // distância vertical entre player e parede
+  moverX = true,
+  moverY = true
+) {
+  const player = document.getElementById(playerId);
+  if (!player) return console.warn("camera_scroll: player não encontrado");
 
-            if (x >= xLimit || y >= yLimit) {
+  // Criar parede invisível se não existir
+  let parede = document.getElementById("__parede_scroll");
+  if (!parede) {
+    parede = document.createElement("div");
+    parede.id = "__parede_scroll";
+    parede.style.position = "absolute";
+    parede.style.width = "1px";
+    parede.style.height = "1px";
+    parede.style.opacity = "0";
+    document.body.appendChild(parede);
+  }
 
-            } else {
+  function atualizarParede() {
+    const rect = player.getBoundingClientRect();
+    const scrollX = window.scrollX;
+    const scrollY = window.scrollY;
 
-                window.scroll(x, y);
+    const playerX = rect.left + scrollX;
+    const playerY = rect.top + scrollY;
 
-            }
+    const paredeX = moverX ? playerX + distanciaX : scrollX;
+    const paredeY = moverY ? playerY + distanciaY : scrollY;
 
-        } else if (specto == "canvas:2d" || specto == "canvas:2D") {
+    parede.style.left = paredeX + "px";
+    parede.style.top = paredeY + "px";
 
-            if (x >= xLimit || y >= yLimit) {
+    window.scrollTo(paredeX - window.innerWidth / 2, paredeY - window.innerHeight / 2);
 
-            }
+  }
 
-        } else {
-
-            console.log("alerta_size:specto");
-        }
-
-
-
-    },
+  atualizarParede();
+},
     camera_move: function (id=[], x) {
         id.forEach(myFunction);
         function myFunction(item) {
