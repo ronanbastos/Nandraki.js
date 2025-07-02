@@ -27,71 +27,28 @@ class Nandraki {
 		  document.body.insertAdjacentHTML('beforeend', element);
 		
 	}
-    static create_sprite(id, camadas, img1, img2, img3, img4, img5, width, height, boxl, boxh, left, top) {
-
-        const expr = camadas;
-        switch (expr) {
-            case 1:
-                let html1 = `							  
-					<div id="${id}" style="width:${width}px;height:${height}px;overflow: hidden;position:absolute;left:${left}px;top:${top}px;">		
-					<img id="img[1]${id}" style="position:absolute;" src="${img1}" alt=""/>
-					<div id="box_${id}" style="width:${boxl}px;height:${boxh}px;position:absolute;">
-					</div>
-					</div> `;
-                document.body.innerHTML += html1;
-                break;
-            case 2:
-                let html2 = `			  
-					<div id="${id}" style="width:${width}px;height:${height}px;overflow: hidden;position:absolute;">		
-					<img id="img[1]${id}" style="position:absolute;" src="${img1}" alt=""/>
-					<img id="img[2]${id}" style="position:absolute;" src="${img2}" alt=""/>
-					<div id="box_${id}" style="width:${boxl}px;height:${boxh}px;position:absolute;left:${left}px;top:${top}px;">
-					</div>
-					</div> `;
-                document.body.innerHTML += html2;
-                break;
-            case 3:
-                let html3 = `						  
-					<div id="${id}" style="width:${width}px;height:${height}px;overflow: hidden;position:absolute;">		
-					<img id="img[1]${id}" style="position:absolute;" src="${img1}" alt=""/>
-					<img id="img[2]${id}" style="position:absolute;" src="${img2}" alt=""/>
-					<img id="img[3]${id}" style="position:absolute;" src="${img3}" alt=""/>
-					<div id="box_${id}" style="width:${boxl}px;height:${boxh}px;position:absolute;left:${left}px;top:${top}px;">
-					</div>
-					</div> `;
-                document.body.innerHTML += html3;
-                break;
-            case 4:
-                let html4 = `	  
-					<div id="${id}" style="width:${width}px;height:${height}px;overflow: hidden;position:absolute;">		
-					<img id="img[1]${id}" style="position:absolute;" src="${img1}" alt=""/>
-					<img id="img[2]${id}" style="position:absolute;" src="${img2}" alt=""/>
-					<img id="img[3]${id}" style="position:absolute;" src="${img3}" alt=""/>
-					<img id="img[4]${id}" style="position:absolute;" src="${img4}" alt=""/>
-					<div id="box_${id}" style="width:${boxl}px;height:${boxh}px;position:absolute;left:${left}px;top:${top}px;">
-					</div>
-					</div> `;
-                document.body.innerHTML += html4;
-                break;
-            case 5:
-                let html5 = `
-					<div id="${id}" style="width:${width}px;height:${height}px;overflow: hidden;position:absolute;">		
-					<img id="img[1]${id}" style="position:absolute;" src="${img1}" alt=""/>
-					<img id="img[2]${id}" style="position:absolute;" src="${img2}" alt=""/>
-					<img id="img[3]${id}" style="position:absolute;" src="${img3}" alt=""/>
-					<img id="img[4]${id}" style="position:absolute;" src="${img4}" alt=""/>
-					<img id="img[5]${id}" style="position:absolute;" src="${img5}" alt=""/>
-					<div id="box_${id}" style="width:${boxl}px;height:${boxh}px;position:absolute;left:${left}px;top:${top}px;">
-					</div>
-					</div> `;
-                document.body.innerHTML += html5;
-                break;
-            default:
-                console.log(`Erro, camada não encontrada: ${expr}.`);
-        }
-
-
+    static create_sprite(  id, camadas, img1, img2, img3, img4, img5, width, height, boxl, boxh,  offsetX = 0, offsetY = 0,  containerId = null) {
+		  const container = containerId ? document.getElementById(containerId) : document.body;		
+		  let html = `<div id="${id}" data-offset-x="${offsetX}" data-offset-y="${offsetY}" style="
+		    width:${width}px;
+		    height:${height}px;
+		    overflow:hidden;
+		    position:absolute;
+		    left:${offsetX}px;
+		    top:${offsetY}px;
+		  ">`;
+	
+		  if (camadas >= 1) html += `<img id="img[1]${id}" style="position:absolute;" src="${img1}" alt=""/>`;
+		  if (camadas >= 2) html += `<img id="img[2]${id}" style="position:absolute;" src="${img2}" alt=""/>`;
+		  if (camadas >= 3) html += `<img id="img[3]${id}" style="position:absolute;" src="${img3}" alt=""/>`;
+		  if (camadas >= 4) html += `<img id="img[4]${id}" style="position:absolute;" src="${img4}" alt=""/>`;
+		  if (camadas >= 5) html += `<img id="img[5]${id}" style="position:absolute;" src="${img5}" alt=""/>`;
+		
+		  html += `<div id="box_${id}" style="width:${boxl}px;height:${boxh}px;position:absolute;"></div></div>`;
+		
+		  container.insertAdjacentHTML("beforeend", html);
     }
+
 
     static move_obj(id, left, top, fixed) {
         let body = document.getElementById(id);
