@@ -27,27 +27,19 @@ class Nandraki {
 		  document.body.insertAdjacentHTML('beforeend', element);
 		
 	}
-    static create_sprite(  id, camadas, img1, img2, img3, img4, img5, width, height, boxl, boxh,  offsetX = 0, offsetY = 0,  containerId = null) {
-		  const container = containerId ? document.getElementById(containerId) : document.body;		
-		  let html = `<div id="${id}" data-offset-x="${offsetX}" data-offset-y="${offsetY}" style="
-		    width:${width}px;
-		    height:${height}px;
-		    overflow:hidden;
-		    position:absolute;
-		    left:${offsetX}px;
-		    top:${offsetY}px;
-		  ">`;
-	
-		  if (camadas >= 1) html += `<img id="img[1]${id}" style="position:absolute;" src="${img1}" alt=""/>`;
-		  if (camadas >= 2) html += `<img id="img[2]${id}" style="position:absolute;" src="${img2}" alt=""/>`;
-		  if (camadas >= 3) html += `<img id="img[3]${id}" style="position:absolute;" src="${img3}" alt=""/>`;
-		  if (camadas >= 4) html += `<img id="img[4]${id}" style="position:absolute;" src="${img4}" alt=""/>`;
-		  if (camadas >= 5) html += `<img id="img[5]${id}" style="position:absolute;" src="${img5}" alt=""/>`;
-		
-		  html += `<div id="box_${id}" style="width:${boxl}px;height:${boxh}px;position:absolute;"></div></div>`;
-		
-		  container.insertAdjacentHTML("beforeend", html);
-    }
+  static create_sprite(id, camadas, img1, img2, img3, img4, img5, width, height, boxl, boxh, offsetX = 0, offsetY = 0) {
+    let html = `<div id="${id}" data-offset-x="${offsetX}" data-offset-y="${offsetY}" style="width:${width}px;height:${height}px;overflow:hidden;position:absolute;">`;
+
+    if (camadas >= 1) html += `<img id="img[1]${id}" style="position:absolute;" src="${img1}" alt=""/>`;
+    if (camadas >= 2) html += `<img id="img[2]${id}" style="position:absolute;" src="${img2}" alt=""/>`;
+    if (camadas >= 3) html += `<img id="img[3]${id}" style="position:absolute;" src="${img3}" alt=""/>`;
+    if (camadas >= 4) html += `<img id="img[4]${id}" style="position:absolute;" src="${img4}" alt=""/>`;
+    if (camadas >= 5) html += `<img id="img[5]${id}" style="position:absolute;" src="${img5}" alt=""/>`;
+
+    html += `<div id="box_${id}" style="width:${boxl}px;height:${boxh}px;position:absolute;"></div></div>`;
+
+    document.body.innerHTML += html;
+}
 
 
     static move_obj(id, left, top, fixed) {
@@ -159,8 +151,8 @@ class Nandraki {
     }
 
     static version() {
-        console.log("Version[2.6.5]");
-        alert("Version[2.6.5]");
+        console.log("Version[2.5.8]");
+        alert("Version[2.5.8]");
 
     }
 
@@ -956,97 +948,124 @@ game = {
         return document.getElementById(id).style.wordWrap = "break-word";
 
     },
-    camera_play: function (mundoId = "mundo", playerId = "player", x = 400, y = 300, modo = "suave", opcoesControles = {}) {
-	    const mundo = document.getElementById(mundoId);
-	    const player = document.getElementById(playerId);
-	
-	    let playerX = x;
-	    let playerY = y;
-	    let playerVisX = x;
-	    let playerVisY = y;
-	
-	    let cameraX = 0, cameraY = 0;
-	    let targetX = 0, targetY = 0;
-	
-	    let cameraMode = modo;
-	    let shakeFrame = 0;
-	
-	    function lerp(a, b, t) {
-	      return a + (b - a) * t;
-	    }
-	
-	    function mover(dx, dy) {
-	      playerX += dx;
-	      playerY += dy;
-	
-	      targetX = playerX - window.innerWidth / 2 + 25;
-	      targetY = playerY - window.innerHeight / 2 + 25;
-	
-	      if (cameraMode === "shake") shakeFrame = 10;
-	    }
-	
-	    function atualizar_camera() {
-	      playerVisX = lerp(playerVisX, playerX, 0.3);
-	      playerVisY = lerp(playerVisY, playerY, 0.3);
-	      player.style.left = playerVisX + "px";
-	      player.style.top = playerVisY + "px";
-	
-	      if (cameraMode === "suave") {
-	        cameraX = lerp(cameraX, targetX, 0.1);
-	        cameraY = lerp(cameraY, targetY, 0.1);
-	      }
-	      else if (cameraMode === "instante") {
-	        cameraX = targetX;
-	        cameraY = targetY;
-	      }
-	      else if (cameraMode === "shake") {
-	        cameraX = lerp(cameraX, targetX, 0.1);
-	        cameraY = lerp(cameraY, targetY, 0.1);
-	        if (shakeFrame > 0) {
-	          cameraX += (Math.random() - 0.5) * 10;
-	          cameraY += (Math.random() - 0.5) * 10;
-	          shakeFrame--;
-	        }
-	      }
-	
-	      mundo.style.transform = `translate(${-cameraX}px, ${-cameraY}px)`;
-	    }
-	
-	    // Controles configuráveis
-	    const keys = opcoesControles.keys || ["ArrowRight", "ArrowLeft", "ArrowUp", "ArrowDown"];
-	    const usarWSAD = opcoesControles.usarWSAD || false;
-	
-	    if (keys !== null) {
-	      document.addEventListener("keydown", e => {
-	        if (usarWSAD) {
-	          if (e.key === "d") mover(10, 0);
-	          else if (e.key === "a") mover(-10, 0);
-	          else if (e.key === "w") mover(0, -10);
-	          else if (e.key === "s") mover(0, 10);
-	        } else {
-	          if (e.key === keys[0]) mover(10, 0);
-	          else if (e.key === keys[1]) mover(-10, 0);
-	          else if (e.key === keys[2]) mover(0, -10);
-	          else if (e.key === keys[3]) mover(0, 10);
-	        }
-	
-	        if (e.key === "c") {
-	          if (cameraMode === "suave") cameraMode = "instante";
-	          else if (cameraMode === "instante") cameraMode = "shake";
-	          else cameraMode = "suave";
-	          console.log("modo de câmera:", cameraMode);
-	        }
-	      });
-	    }
-	
-	    return {
-	      atualizar: atualizar_camera,
-	      mover: mover,
-	      set_modo: function (novoModo) {
-	        cameraMode = novoModo;
-	      }
-	    };
-  },
+   camera_play: function (
+  mundoId = "mundo",
+  playerId = "player",
+  x = 400,
+  y = 300,
+  modo = "suave",
+  opcoesControles = {},
+  spriteImage = null,
+  spriteWidth = 64,
+  spriteHeight = 64
+) {
+  const mundo = document.getElementById(mundoId);
+  const player = document.getElementById(playerId);
+
+  let playerX = x;
+  let playerY = y;
+  let playerVisX = x;
+  let playerVisY = y;
+
+  let cameraX = 0, cameraY = 0;
+  let targetX = 0, targetY = 0;
+
+  let cameraMode = modo;
+  let shakeFrame = 0;
+
+  // ← Estilo base para o player
+  player.style.position = "absolute";
+  player.style.width = spriteWidth + "px";
+  player.style.height = spriteHeight + "px";
+
+  // ← Verifica se tem imagem
+  if (spriteImage) {
+    player.style.backgroundImage = `url('${spriteImage}')`;
+    player.style.backgroundRepeat = "no-repeat";
+    player.style.backgroundPosition = "0px 0px";
+  } else {
+    // ← Fallback: bloco vermelho
+    player.style.background = "red";
+    player.style.outline = "2px solid black";
+  }
+
+  function lerp(a, b, t) {
+    return a + (b - a) * t;
+  }
+
+  function mover(dx, dy) {
+    playerX += dx;
+    playerY += dy;
+
+    targetX = playerX - window.innerWidth / 2 + 25;
+    targetY = playerY - window.innerHeight / 2 + 25;
+
+    if (cameraMode === "shake") shakeFrame = 10;
+  }
+
+  function atualizar_camera() {
+    playerVisX = lerp(playerVisX, playerX, 0.3);
+    playerVisY = lerp(playerVisY, playerY, 0.3);
+
+    // Posicionamento absoluto
+    player.style.left = playerVisX + "px";
+    player.style.top = playerVisY + "px";
+
+    // Modo de câmera
+    if (cameraMode === "suave") {
+      cameraX = lerp(cameraX, targetX, 0.1);
+      cameraY = lerp(cameraY, targetY, 0.1);
+    } else if (cameraMode === "instante") {
+      cameraX = targetX;
+      cameraY = targetY;
+    } else if (cameraMode === "shake") {
+      cameraX = lerp(cameraX, targetX, 0.1);
+      cameraY = lerp(cameraY, targetY, 0.1);
+      if (shakeFrame > 0) {
+        cameraX += (Math.random() - 0.5) * 10;
+        cameraY += (Math.random() - 0.5) * 10;
+        shakeFrame--;
+      }
+    }
+
+    mundo.style.transform = `translate(${-cameraX}px, ${-cameraY}px)`;
+  }
+
+  const keys = opcoesControles.keys || ["ArrowRight", "ArrowLeft", "ArrowUp", "ArrowDown"];
+  const wsad = opcoesControles.wsad || false;
+
+  if (keys !== null) {
+    document.addEventListener("keydown", e => {
+      if (wsad) {
+        if (e.key === "d") mover(10, 0);
+        else if (e.key === "a") mover(-10, 0);
+        else if (e.key === "w") mover(0, -10);
+        else if (e.key === "s") mover(0, 10);
+      } else {
+        if (e.key === keys[0]) mover(10, 0);
+        else if (e.key === keys[1]) mover(-10, 0);
+        else if (e.key === keys[2]) mover(0, -10);
+        else if (e.key === keys[3]) mover(0, 10);
+      }
+
+      if (e.key === "c") {
+        if (cameraMode === "suave") cameraMode = "instante";
+        else if (cameraMode === "instante") cameraMode = "shake";
+        else cameraMode = "suave";
+        console.log("modo de câmera:", cameraMode);
+      }
+    });
+  }
+
+  return {
+    atualizar: atualizar_camera,
+    mover: mover,
+    set_modo: function (novoModo) {
+      cameraMode = novoModo;
+    }
+  };
+},
+
     touch_long: function (id, func, t) {
 
         let onlongtouch;
@@ -1298,48 +1317,31 @@ game = {
         document.body.style.zoom = zoom;
         document.body.style.scrollBehavior = "smooth";
     },
-    camera_scroll: function (
-  playerId,
-  distanciaX = 100, // distância horizontal entre player e parede
-  distanciaY = 100, // distância vertical entre player e parede
-  moverX = true,
-  moverY = true
-) {
-  const player = document.getElementById(playerId);
-  if (!player) return console.warn("camera_scroll: player não encontrado");
+    camera: function (specto, x, y, xLimit, yLimit) {
+        if (specto == "2d" || specto == "2D") {
 
-  // Criar parede invisível se não existir
-  let parede = document.getElementById("__parede_scroll");
-  if (!parede) {
-    parede = document.createElement("div");
-    parede.id = "__parede_scroll";
-    parede.style.position = "absolute";
-    parede.style.width = "1px";
-    parede.style.height = "1px";
-    parede.style.opacity = "0";
-    document.body.appendChild(parede);
-  }
+            if (x >= xLimit || y >= yLimit) {
 
-  function atualizarParede() {
-    const rect = player.getBoundingClientRect();
-    const scrollX = window.scrollX;
-    const scrollY = window.scrollY;
+            } else {
 
-    const playerX = rect.left + scrollX;
-    const playerY = rect.top + scrollY;
+                window.scroll(x, y);
 
-    const paredeX = moverX ? playerX + distanciaX : scrollX;
-    const paredeY = moverY ? playerY + distanciaY : scrollY;
+            }
 
-    parede.style.left = paredeX + "px";
-    parede.style.top = paredeY + "px";
+        } else if (specto == "canvas:2d" || specto == "canvas:2D") {
 
-    window.scrollTo(paredeX - window.innerWidth / 2, paredeY - window.innerHeight / 2);
+            if (x >= xLimit || y >= yLimit) {
 
-  }
+            }
 
-  atualizarParede();
-},
+        } else {
+
+            console.log("alerta_size:specto");
+        }
+
+
+
+    },
     camera_move: function (id=[], x) {
         id.forEach(myFunction);
         function myFunction(item) {
@@ -1449,6 +1451,61 @@ game = {
 
         return obj
     },
+	animax_bg: function(  id,  estilo = "horizontal",  largura = 64,  altura = 64,  inicio = 0,  fim = 0,  velocidade = 6,
+  loop = true,
+  callbackFim = null
+) {
+  const el = document.getElementById(id);
+  if (!el) {
+    console.warn("animax_img: elemento não encontrado:", id);
+    return;
+  }
+
+  let frameAtual = inicio;
+  let contador = 0;
+  let ativo = true;
+
+  function atualizar() {
+    if (!ativo) return;
+
+    contador++;
+    if (contador >= velocidade) {
+      contador = 0;
+      frameAtual++;
+      if (frameAtual > fim) {
+        if (loop) {
+          frameAtual = inicio;
+        } else {
+          frameAtual = fim;
+          ativo = false;
+          if (typeof callbackFim === "function") callbackFim();
+          return;
+        }
+      }
+
+      const posX = estilo === "horizontal" ? -frameAtual * largura : 0;
+      const posY = estilo === "vertical" ? -frameAtual * altura : 0;
+      el.style.backgroundPosition = `${posX}px ${posY}px`;
+    }
+  }
+
+  return {
+    atualizar, // chamar no loop
+    reiniciar: () => {
+      frameAtual = inicio;
+      contador = 0;
+      ativo = true;
+    },
+    parar: () => { ativo = false; },
+    play: () => { ativo = true; },
+    setFrame: f => {
+      frameAtual = f;
+      const posX = estilo === "horizontal" ? -frameAtual * largura : 0;
+      const posY = estilo === "vertical" ? -frameAtual * altura : 0;
+      el.style.backgroundPosition = `${posX}px ${posY}px`;
+    }
+  };
+},
     obj_in_obj: function (obj, id) {
         document.getElementById(obj).appendChild(document.getElementById(id));
     },
@@ -2014,6 +2071,7 @@ game = {
             return obj.getBoundingClientRect();
         }
     },
+
     rest: (game, canvas) => requestAnimationFrame(game, canvas),
     loop: function (jogo, tipo = "canvas", fps = 60) {
 		  if (tipo === "canvas") {
