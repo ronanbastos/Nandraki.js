@@ -1,0 +1,1296 @@
+<!DOCTYPE html><html><head><style>
+  :root {
+    --dark-gray: #1a1a2e;    /* Slightly darker base */
+    --mid-gray: #262640;     /* More saturated mid tone */
+    --light-gray: #333355;   /* Richer light tone */
+    --text-color: #ffffff;   
+    --accent-color: #3498db; /* Bright blue */
+    --accent-hover: #2980b9; /* Deeper blue */
+    --success-color: #2ecc71;
+    --error-color: #e74c3c;
+  }
+
+  * {
+    box-sizing: border-box;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;     /* Firefox */
+  }
+
+  *::-webkit-scrollbar { display: none; }
+
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background: var(--dark-gray);
+    color: var(--text-color);
+    display: flex;
+    height: 100vh;
+    overflow: hidden;
+  }
+
+  .main-container {
+    display: flex;
+    flex: 1;
+    height: 100%;
+  }
+
+  .sidebar {
+    width: 250px;
+    background: var(--mid-gray);
+    border-right: 1px solid #000;
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+  }
+
+  .sidebar-content {
+      overflow-y: auto;
+      flex: 1;
+  }
+  
+  /* --- Responsive Scene View & Assets Panel --- */
+  .scene-view {
+    flex: 1;
+    background: #000;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden; /* Important for containing children */
+  }
+  
+  #gameCanvas {
+    flex: 1; /* Allows canvas to grow and shrink */
+    min-height: 150px; /* Prevents canvas from disappearing */
+    width: 100%;
+    background-color: #000;
+  }
+
+  .project-panel {
+    background: var(--mid-gray);
+    border-top: 1px solid var(--light-gray);
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+    /* Height is controlled by its content and flex properties */
+    max-height: 60%; /* Prevent it from taking too much space */
+  }
+
+  .project-panel .section-content {
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto; /* This section will handle overflow */
+    min-height: 0; /* Crucial for flex child sizing */
+  }
+  
+  .assets-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+    gap: 16px;
+    padding: 16px;
+    background: var(--dark-gray);
+  }
+  /* --- End of Responsive Adjustments --- */
+
+
+  .engine-title {
+    font-size: 24px;
+    font-weight: bold;
+    color: var(--accent-color);
+    padding: 16px 16px 8px;
+    text-align: center;
+    border-bottom: 1px solid var(--light-gray);
+  }
+
+  .engine-subtitle {
+    font-size: 14px;
+    color: var(--text-color);
+    opacity: 0.7;
+    text-align: center;
+    padding: 0 16px 16px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid var(--light-gray);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  .scene-controls {
+    padding: 16px;
+    display: flex;
+    gap: 8px;
+    border-bottom: 1px solid var(--light-gray);
+  }
+
+  .scene-controls button {
+    flex: 1;
+    background: var(--accent-color);
+    border: none;
+    color: var(--text-color);
+    padding: 8px 16px;
+    cursor: pointer;
+    border-radius: 4px;
+    font-weight: bold;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+
+  .scene-controls button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  }
+
+  .scene-controls button#stopBtn {
+    display: none;
+    background: var(--error-color);
+  }
+  .scene-controls button#stopBtn:hover {
+    background: #c0392b;
+  }
+
+  .section-header {
+    cursor: pointer;
+    user-select: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 16px;
+    transition: all 0.3s ease;
+    background: var(--mid-gray);
+    border-bottom: 1px solid var(--light-gray);
+    flex-shrink: 0;
+  }
+
+  .section-header:hover {
+    background: var(--light-gray);
+  }
+
+  .section-header .dropdown-arrow {
+    transition: transform 0.3s ease;
+  }
+
+  .section-header.collapsed .dropdown-arrow {
+    transform: rotate(-90deg);
+  }
+
+  .section-content {
+    transition: all 0.3s ease;
+    overflow: hidden;
+    max-height: 1000px; /* high value for animation */
+  }
+
+  .section-content.collapsed {
+    max-height: 0;
+    opacity: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+    border-width: 0;
+  }
+  
+  .hierarchy-title {
+    color: var(--accent-color);
+  }
+  
+  .add-hierarchy-btn {
+    background: var(--accent-color);
+    color: white;
+    border: none;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    cursor: pointer;
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    font-weight: bold;
+    line-height: 1;
+    flex-shrink: 0;
+  }
+  
+  #mixButton {
+      margin-left: 8px;
+      font-size: 12px;
+  }
+
+  .add-hierarchy-btn:hover {
+    background: var(--accent-hover);
+    transform: scale(1.1);
+  }
+
+  .tree-view {
+    color: var(--text-color);
+    padding: 8px;
+  }
+
+  .tree-item {
+    padding: 8px 12px;
+    background: rgba(52, 152, 219, 0.05);
+    border-radius: 6px;
+    margin: 4px 0;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+  }
+
+  .tree-item.main-scene {
+    border: 2px solid var(--accent-color);
+    background: rgba(52, 152, 219, 0.15);
+  }
+
+  .tree-item:hover {
+    background: rgba(52, 152, 219, 0.2);
+    transform: translateX(4px);
+  }
+
+  .tree-item .icon {
+    width: 24px;
+    height: 24px;
+    margin-right: 8px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+  }
+
+  .project-panel .panel-header {
+      padding: 10px 16px;
+      border-bottom: 1px solid var(--light-gray);
+      background: linear-gradient(90deg, var(--mid-gray), var(--dark-gray));
+      justify-content: space-between;
+  }
+
+  .project-title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 18px;
+    font-weight: bold;
+    color: var(--accent-color);
+  }
+
+  .upload-btn {
+    background: var(--accent-color);
+    color: white;
+    padding: 8px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    border: none;
+  }
+
+  .upload-btn:hover {
+    background: var(--accent-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  }
+
+  .asset-item {
+    text-align: center;
+    padding: 12px;
+    cursor: pointer;
+    background: var(--mid-gray);
+    border-radius: 8px;
+    border: 1px solid var(--light-gray);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+
+  .asset-item:hover {
+    transform: translateY(-4px) scale(1.02);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+    border-color: var(--accent-color);
+  }
+
+  .assets-empty-state {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 40px 20px;
+    color: var(--text-color);
+    border: 2px dashed var(--light-gray);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+  }
+
+  .assets-empty-state .icon {
+    font-size: 48px;
+    margin-bottom: 16px;
+    opacity: 0.7;
+  }
+
+  .assets-empty-state .title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 8px;
+  }
+
+  .assets-empty-state .subtitle {
+    font-size: 14px;
+    opacity: 0.7;
+  }
+
+  .modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.7);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .modal.show {
+      display: flex;
+  }
+
+  .modal-content {
+    background: var(--mid-gray);
+    width: 90%;
+    max-width: 500px;
+    padding: 25px;
+    border: 1px solid var(--accent-color);
+    border-radius: 8px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+  }
+  
+  .modal-content h2 {
+    color: var(--text-color);
+    text-align: center;
+    margin-top: 0;
+    margin-bottom: 25px;
+  }
+
+  .form-group {
+    margin-bottom: 15px;
+  }
+
+  .form-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: var(--accent-color);
+    font-weight: bold;
+  }
+
+  .form-group input, .form-group textarea, .form-group select {
+    width: 100%;
+    padding: 10px;
+    background: var(--dark-gray);
+    border: 1px solid var(--light-gray);
+    color: var(--text-color);
+    border-radius: 4px;
+  }
+  
+  .form-group input:focus, .form-group textarea:focus, .form-group select:focus {
+      outline: none;
+      border-color: var(--accent-color);
+      box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.3);
+  }
+
+  .crud-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 20px;
+  }
+  
+  .crud-buttons.row-layout {
+      flex-direction: row;
+      justify-content: center;
+  }
+
+  .crud-buttons button {
+    width: 100%;
+    padding: 10px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  .crud-buttons button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  }
+  
+  .crud-buttons .btn-primary { background: var(--accent-color); color: white; }
+  .crud-buttons .btn-primary:hover { background: var(--accent-hover); }
+  .crud-buttons .btn-danger { background: var(--error-color); color: white; }
+  .crud-buttons .btn-danger:hover { background: #c0392b; }
+  .crud-buttons .btn-success { background: var(--success-color); color: white; }
+  .crud-buttons .btn-success:hover { background: #27ae60; }
+  .crud-buttons .btn-secondary { background: var(--light-gray); color: var(--text-color); }
+  .crud-buttons .btn-secondary:hover { background: var(--dark-gray); }
+
+  .success-message {
+    color: var(--success-color);
+    text-align: center;
+    padding: 10px;
+    display: none;
+  }
+  
+  .code-editor-modal .modal-content {
+    width: 95%;
+    max-width: 1400px;
+    height: 90vh;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .editor-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 24px;
+    background: var(--mid-gray);
+    border-bottom: 1px solid var(--accent-color);
+    flex-shrink: 0;
+  }
+
+  .editor-header h2 {
+    color: var(--text-color);
+    font-size: 18px;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .editor-header .editor-actions { display: flex; gap: 12px; }
+
+  .editor-header button {
+    background: var(--light-gray);
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .editor-header button:hover {
+    background: var(--accent-hover);
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  }
+  
+  .editor-header button.primary { background: var(--accent-color); }
+  .editor-header button.close-btn { background: transparent; }
+  .editor-header button.close-btn:hover { background: rgba(231, 76, 60, 0.2); color: #e74c3c; }
+
+  .editor-main { display: flex; height: 100%; overflow: hidden; }
+  
+  #codeEditor {
+    flex: 1;
+    background: var(--dark-gray);
+    color: #fff;
+    border: none;
+    padding: 12px 16px;
+    resize: none;
+    outline: none;
+    tab-size: 2;
+    font-family: 'Consolas', 'Menlo', 'Monaco', monospace;
+    font-size: 14px;
+    line-height: 1.6;
+    white-space: pre;
+  }
+
+  .editor-footer {
+      padding: 8px 16px;
+      background: var(--mid-gray);
+      border-top: 1px solid var(--light-gray);
+      font-size: 12px;
+      color: var(--light-gray);
+      flex-shrink: 0;
+  }
+
+  .console-modal .modal-content {
+    background: var(--dark-gray);
+    width: 95%;
+    max-width: 1200px;
+    height: 80vh;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .console-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 24px;
+    background: var(--mid-gray);
+    border-bottom: 2px solid var(--accent-color);
+    color: var(--text-color);
+  }
+
+  .console-header span {
+    font-size: 18px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--accent-color);
+  }
+
+  .console-header button { background: transparent; border: none; color: var(--text-color); font-size: 20px; cursor: pointer; opacity: 0.7; }
+  .console-header button:hover { opacity: 1; }
+
+  .console-output { overflow:auto; flex: 1; padding: 8px 16px; background: rgba(0,0,0,0.2); font-family: 'Consolas', monospace; line-height: 1.5; }
+  .console-line { padding: 4px 8px; border-radius: 4px; display: flex; gap: 12px; }
+  .console-timestamp { color: var(--accent-color); opacity: 0.7; font-size: 12px; }
+  .console-line.console-error { color: #ff6b6b; }
+  .console-line.console-warn { color: #ffd93d; }
+  .console-line.console-info { color: #6c5ce7; }
+
+  .console-input {
+    padding: 16px;
+    background: var(--mid-gray);
+    border-top: 1px solid var(--light-gray);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .console-input input {
+    flex: 1;
+    background: var(--dark-gray);
+    border: 1px solid var(--accent-color);
+    border-radius: 4px;
+    padding: 8px 12px;
+    color: #50fa7b;
+    font-family: 'Consolas', monospace;
+    font-size: 14px;
+  }
+  .console-input input:focus { outline: none; box-shadow: 0 0 0 2px rgba(80,250,123,0.2); }
+  .console-input span { color: #50fa7b; font-family: 'Consolas', monospace; }
+
+  .clear-btn { background: var(--accent-color); color: white; border: none; padding: 4px 8px; border-radius: 4px; cursor: pointer; display: flex; align-items: center; gap: 4px; }
+  .clear-btn:hover { background: var(--accent-hover); }
+
+  #cdnModal .modal-content { max-width: 700px; }
+  
+  #dependenciesList .dependency-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px;
+      background: var(--dark-gray);
+      border-radius: 4px;
+      margin-bottom: 8px;
+  }
+  #dependenciesList input { flex: 1; background: transparent; border: none; }
+  #dependenciesList button { padding: 6px 12px; background: var(--error-color); color: white; border-radius: 4px; border: none; cursor: pointer; }
+
+  @media (max-width: 768px) {
+    body { overflow: auto; }
+    .main-container { flex-direction: column; height: auto; }
+    .sidebar { width: 100%; border-right: none; border-bottom: 1px solid #000; max-height: 45vh; }
+    .scene-view { min-height: 55vh; }
+    .project-panel { height: 35vh; max-height: 35vh; }
+    .editor-header { flex-direction: column; gap: 12px; padding: 16px; }
+    .editor-header h2 { font-size: 16px; }
+    .editor-actions button span { display: none; }
+    .editor-actions button { padding: 8px; }
+  }
+
+  @media (max-width: 480px) {
+    .scene-controls { flex-wrap: wrap; }
+    .scene-controls button { flex-basis: calc(50% - 4px); }
+    .modal-content { width: 95%; padding: 15px; }
+    .crud-buttons.row-layout { flex-direction: column; }
+    .assets-grid { grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); }
+  }
+</style>
+<script src="https://unpkg.com/nandraki@2.5.8/nandraki.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/js-beautify/1.14.7/beautify.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/js-beautify/1.14.7/beautify-html.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/js-beautify/1.14.7/beautify-css.min.js"></script></head><body>
+  <div class="main-container">
+    <div class="sidebar">
+        <div class="engine-title">Nandraki.js</div>
+	    <div class="engine-subtitle">Game Engine 3.0</div>
+        <div class="sidebar-content">
+            <div class="scene-controls">
+                <button id="playBtn">▶ Play</button>
+                <button id="stopBtn">⏹ Stop</button>
+                <button id="consoleBtn">🖥 Console</button>
+                <button id="cdnBtn">📦 CDN</button>
+            </div>
+            <div class="section-header hierarchy-title" onclick="toggleSection('hierarchy')">
+                <span class="dropdown-arrow">▼</span>
+                <span>📁 Hierarchy</span>
+                <button id="mixButton" class="add-hierarchy-btn" onclick="openMixModal(); event.stopPropagation();">Mix</button>
+                <button onclick="openHierarchyModal(); event.stopPropagation();" class="add-hierarchy-btn">+</button>
+            </div>
+            <div class="section-content" id="hierarchy-content">
+                <div class="tree-view"></div>
+            </div>
+      </div>
+    </div>
+
+    <div class="scene-view">
+        <canvas id="gameCanvas"></canvas>
+        <div class="project-panel">
+            <div class="panel-header section-header" onclick="toggleSection('assets')">
+                <div class="project-title">
+                    <span class="dropdown-arrow">▼</span>
+                    <span>🎮 Project Assets</span>
+                </div>
+                <label for="fileUpload" class="upload-btn">
+                    Import
+                    <input type="file" id="fileUpload" multiple accept=".js,.html,.css,.png,.jpg,.jpeg,.gif,.svg,.nans" style="display:none">
+                </label>
+            </div>
+            <div class="section-content" id="assets-content">
+                <div class="assets-grid" id="assetsGrid">
+                    <div class="assets-empty-state">
+                        <div class="icon">📥</div>
+                        <div class="title">No Assets</div>
+                        <div class="subtitle">Import files to get started</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+
+  <!-- All Modals Below -->
+  <div id="hierarchyModal" class="modal">
+    <div class="modal-content">
+      <h2>Create Hierarchy Item</h2>
+      <form id="hierarchyForm">
+        <div class="form-group">
+          <label>Name:</label>
+          <input type="text" id="itemName" required>
+        </div>
+        <div class="form-group">
+          <label>Type:</label>
+          <select id="itemType" required>
+              <option value="js">JavaScript (.js)</option>
+              <option value="html">HTML (.html)</option>
+              <option value="css">CSS (.css)</option>
+              <option value="nans">Nandraki Scene (.nans)</option>
+          </select>
+        </div>
+        <div class="crud-buttons row-layout"> 	
+            <button type="submit" class="btn-primary">Create</button>
+            <button type="button" class="btn-secondary" onclick="closeModal('hierarchyModal')">Cancel</button>
+        </div>
+      </form>
+      <div id="hierarchySuccess" class="success-message">Item created successfully!</div>
+    </div>
+  </div>
+
+  <div id="hierarchyItemModal" class="modal">
+    <div class="modal-content">
+      <h2 id="itemOptionsTitle">Item Options</h2>
+      <div id="itemOptionsButtons" class="crud-buttons">
+        <!-- Buttons are dynamically inserted here -->
+      </div>
+    </div>
+  </div>
+
+  <div id="cdnModal" class="modal">
+    <div class="modal-content">
+      <h2>Manage Dependencies</h2>
+      <div class="form-group"> 
+        <label>Nandraki.js CDN:</label>
+        <input type="text" id="cdnInput" value="https://unpkg.com/nandraki@2.5.8/nandraki.js">
+      </div>
+      <div class="form-group">
+          <label>Additional Dependencies</label>
+          <div id="dependenciesList"></div>
+      </div>
+      <div class="form-group">
+          <label>New Dependency URL:</label>
+          <input type="text" id="newDependencyInput" placeholder="Enter CDN URL or <script> tag">
+          <button onclick="addDependency()" class="btn-primary" style="width:auto; margin-top:10px;">Add Dependency</button>
+      </div>
+       <div class="crud-buttons row-layout">
+           <button onclick="updateCDN()" class="btn-primary">Update All</button>
+           <button onclick="closeModal('cdnModal')" class="btn-secondary">Close</button>
+       </div>
+    </div>
+  </div>
+
+  <div id="dialogModal" class="modal">
+    <div class="modal-content" style="max-width: 400px;">
+      <h2 id="dialogTitle">Confirmation</h2>
+      <p id="dialogMessage" style="text-align: center; margin-bottom: 25px;"></p>
+      <div class="crud-buttons row-layout">
+        <button id="dialogConfirm" class="btn-primary">Confirm</button>
+        <button onclick="closeModal('dialogModal')" class="btn-secondary">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="consoleModal" class="modal console-modal">
+    <div class="modal-content">
+      <div class="console-header">
+        <span>🖥️ Game Engine Console</span>
+        <div>
+          <button onclick="console.clear()" class="clear-btn"><span>🧹</span> Clear</button>
+          <button onclick="closeModal('consoleModal')">✕</button>
+        </div>
+      </div>
+      <div class="console-output" id="consoleOutput"></div>
+      <div class="console-input">
+        <span>></span>
+        <input type="text" id="consoleInput" placeholder=">>>" onkeypress="handleConsoleInput(event)">
+      </div>
+    </div>
+  </div>
+
+  <div id="codeEditorModal" class="modal code-editor-modal">
+    <div class="modal-content">
+      <div class="editor-header">
+        <h2 id="editorFileName">📝 Edit File</h2>
+        <div class="editor-actions">
+          <button onclick="indentCode()" title="Format Code (Ctrl+Shift+F)"><span>💅</span> <span>Format</span></button>
+          <button id="saveCode" class="primary" title="Save (Ctrl+S)"><span>💾</span> <span>Save</span></button>
+          <button onclick="closeModal('codeEditorModal')" class="close-btn" title="Close (Esc)"><span>✕</span></button>
+        </div>
+      </div>
+      <div class="editor-main">
+        <textarea id="codeEditor" spellcheck="false"></textarea>
+      </div>
+      <div class="editor-footer">
+        <span class="editor-position">Line: 1, Col: 1</span>
+      </div>
+    </div>
+  </div>
+
+  <div id="mixModal" class="modal">
+      <div class="modal-content">
+          <h2>Mix Files</h2>
+          <p style="text-align: center; opacity: 0.8; margin-top: -15px; margin-bottom: 25px;">Combine HTML, CSS, and JS files into a single runnable HTML file.</p>
+          <div class="form-group">
+              <label for="htmlSelect">HTML File:</label>
+              <select id="htmlSelect"></select>
+          </div>
+          <div class="form-group">
+              <label for="cssSelect">CSS File:</label>
+              <select id="cssSelect"></select>
+          </div>
+          <div class="form-group">
+              <label for="jsSelect">JavaScript File:</label>
+              <select id="jsSelect"></select>
+          </div>
+          <div class="crud-buttons row-layout">
+              <button id="generateMixBtn" class="btn-primary">Generate & Download</button>
+              <button onclick="closeModal('mixModal')" class="btn-secondary">Close</button>
+          </div>
+      </div>
+  </div>
+
+<script>
+// Nandraki.js Engine & UI Management Script
+
+// --- Global UI Functions ---
+
+function openModal(modalId) {
+    document.getElementById(modalId).classList.add('show');
+}
+
+function closeModal(modalId) {
+    document.getElementById(modalId).classList.remove('show');
+}
+
+function toggleSection(sectionId) {
+  const content = document.getElementById(`${sectionId}-content`);
+  const header = content.previousElementSibling;
+  
+  if (content && header) {
+    content.classList.toggle('collapsed');
+    header.classList.toggle('collapsed');
+  }
+}
+
+function showDialog(title, message, onConfirm) {
+  document.getElementById('dialogTitle').textContent = title;
+  document.getElementById('dialogMessage').textContent = message;
+
+  const confirmBtn = document.getElementById('dialogConfirm');
+  confirmBtn.onclick = () => {
+    onConfirm();
+    closeModal('dialogModal');
+  };
+
+  openModal('dialogModal');
+}
+
+// --- Mix Modal Logic ---
+function openMixModal() {
+    const { items } = window.hierarchyManager;
+
+    const populateSelect = (selectId, fileType) => {
+        const select = document.getElementById(selectId);
+        select.innerHTML = '<option value="">None</option>';
+        const filteredItems = items.filter(item => item.type === fileType);
+        if (filteredItems.length > 0) {
+            select.innerHTML += filteredItems
+                .map(item => `<option value="${item.name}">${item.name}</option>`)
+                .join("");
+        } else {
+            select.innerHTML += `<option value="" disabled>No ${fileType.toUpperCase()} files</option>`;
+        }
+    };
+    
+    populateSelect('htmlSelect', 'html');
+    populateSelect('cssSelect', 'css');
+    populateSelect('jsSelect', 'js');
+    
+    openModal('mixModal');
+}
+
+document.getElementById("generateMixBtn").addEventListener("click", () => {
+    const htmlName = document.getElementById("htmlSelect").value;
+    const cssName = document.getElementById("cssSelect").value;
+    const jsName = document.getElementById("jsSelect").value;
+
+    const htmlItem = htmlName ? window.hierarchyManager.findItemInHierarchy(htmlName) : { content: '' };
+    const cssItem = cssName ? window.hierarchyManager.findItemInHierarchy(cssName) : { content: '' };
+    const jsItem = jsName ? window.hierarchyManager.findItemInHierarchy(jsName) : { content: '' };
+
+    if (!htmlName && !cssName && !jsName) {
+        alert("Please select at least one file to mix.");
+        return;
+    }
+
+    const finalHtml = `<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nandraki Mix</title>
+  <style>${cssItem.content || ''}</style>
+</head>
+<body>
+  ${htmlItem.content || ''}
+  <script>${jsItem.content || ''}<\/script>
+</body>
+</html>`;
+
+    const blob = new Blob([finalHtml], { type: "text/html" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "mix.html";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    
+    closeModal('mixModal');
+});
+
+// --- Dependency Management ---
+
+class DependencyManager {
+  constructor() {
+    this.dependencies = [];
+    this.loadDependencies();
+  }
+
+  loadDependencies() {
+    const saved = localStorage.getItem('dependencies');
+    this.dependencies = saved ? JSON.parse(saved) : [];
+    this.renderDependencies();
+  }
+
+  saveDependencies() {
+    localStorage.setItem('dependencies', JSON.stringify(this.dependencies));
+  }
+
+  addDependency(url) {
+    if (!url) return;
+    const newDependency = { id: Date.now(), url };
+    this.dependencies.push(newDependency);
+    this.saveDependencies();
+    this.renderDependencies();
+    const script = document.createElement('script');
+    script.src = url;
+    document.head.appendChild(script);
+  }
+
+  renderDependencies() {
+    const container = document.getElementById('dependenciesList');
+    if (!container) return;
+    container.innerHTML = this.dependencies.map(dep => `
+      <div class="dependency-item">
+        <input type="text" value="${dep.url}" readonly>
+        <button onclick="window.dependencyManager.removeDependency(${dep.id})">Remove</button>
+      </div>
+    `).join('');
+  }
+
+  removeDependency(id) {
+    this.dependencies = this.dependencies.filter(dep => dep.id !== id);
+    this.saveDependencies();
+    this.renderDependencies();
+  }
+}
+
+function openCdnModal() { openModal('cdnModal'); }
+function addDependency() {
+  const input = document.getElementById('newDependencyInput');
+  if (input.value.trim()) { window.dependencyManager.addDependency(input.value.trim()); }
+  input.value = '';
+}
+function updateCDN() {
+  const cdnUrl = document.getElementById('cdnInput').value;
+  const scriptElement = document.querySelector('script[src*="nandraki"]');
+  if (scriptElement) { scriptElement.src = cdnUrl; }
+  window.dependencyManager.saveDependencies();
+  closeModal('cdnModal');
+}
+
+// --- Game Engine Core ---
+
+class GameEngine {
+  constructor() {
+    this.canvas = document.getElementById('gameCanvas');
+    this.ctx = this.canvas.getContext('2d');
+    this.isPlaying = false;
+    this.iframe = null;
+
+    this.initializeControls();
+    this.setupConsoleInterceptor();
+    window.addEventListener('resize', () => this.resizeCanvas());
+  }
+
+  setupConsoleInterceptor() {
+    const originalConsole = { log: console.log, info: console.info, warn: console.warn, error: console.error, clear: console.clear };
+    Object.keys(originalConsole).forEach(method => {
+      console[method] = (...args) => {
+        originalConsole[method].apply(console, args);
+        if (method === 'clear') {
+          const consoleOutput = document.getElementById('consoleOutput');
+          if (consoleOutput) consoleOutput.innerHTML = '';
+          return;
+        }
+        this.logToConsole(method, args.map(arg => typeof arg === 'object' ? JSON.stringify(arg, null, 2) : String(arg)).join(' '));
+      };
+    });	
+    window.addEventListener('error', e => this.logToConsole('error', `${e.message} at ${e.filename}:${e.lineno}`));
+    window.addEventListener('unhandledrejection', e => this.logToConsole('error', `Unhandled Promise: ${e.reason}`));
+  }
+
+  initializeControls() {
+    document.getElementById('playBtn').addEventListener('click', () => this.play());
+    document.getElementById('stopBtn').addEventListener('click', () => this.stop());
+    document.getElementById('consoleBtn').addEventListener('click', () => this.toggleConsole());
+    document.getElementById('cdnBtn').addEventListener('click', () => openCdnModal());
+  }
+
+  resizeCanvas() {
+    // Canvas resizing is now handled by Flexbox. This can be used for WebGL viewport updates if needed.
+  }
+
+  play() {
+    if (this.isPlaying) return;
+    
+    if (!window.hierarchyManager.mainSceneId) {
+        showDialog('Execution Error', 'No main scene set. Right-click a .html or .nans file to set it.', () => {});
+        return;
+    }
+    
+    const mainScene = window.hierarchyManager.findItem(window.hierarchyManager.mainSceneId, window.hierarchyManager.items);
+
+    if (mainScene && mainScene.content !== undefined) {
+        this.isPlaying = true;
+        document.getElementById('playBtn').style.display = 'none'; 
+        document.getElementById('stopBtn').style.display = 'inline-flex';
+
+        const container = document.querySelector('.scene-view');
+        this.iframe = document.createElement('iframe');
+        this.iframe.style.width = '100%';
+        this.iframe.style.height = '100%'; 
+        this.iframe.style.border = 'none';
+        this.iframe.style.flex = '1';
+        
+        container.replaceChild(this.iframe, this.canvas);
+
+        let sceneContent = mainScene.content;
+        if (mainScene.name.toLowerCase().endsWith('.nans')) {
+            const cdnUrl = document.querySelector('script[src*="nandraki"]').src;
+            sceneContent = `<html><head><script src="${cdnUrl}"><\/script></head><body><script>myjogo = { start: function() { ${mainScene.content} } };game.update(myjogo.start, 60);<\/script></body></html>`;
+        }
+        
+        this.iframe.contentWindow.document.open();
+        this.iframe.contentWindow.document.write(sceneContent);
+        this.iframe.contentWindow.document.close();
+    } else {
+        showDialog('Execution Error', 'The main scene is empty or not found.', () => {});
+    }
+  }
+
+  stop() {
+    if (!this.isPlaying) return;
+    this.isPlaying = false;
+    document.getElementById('playBtn').style.display = 'inline-flex';
+    document.getElementById('stopBtn').style.display = 'none';
+
+    if (this.iframe) {
+        const container = document.querySelector('.scene-view');
+        container.replaceChild(this.canvas, this.iframe);
+        this.iframe = null;
+    }
+  }
+
+  toggleConsole() { openModal('consoleModal'); }
+
+  logToConsole(type, message) {
+    const consoleOutput = document.getElementById('consoleOutput');
+    if (!consoleOutput) return;
+    const line = document.createElement('div');
+    line.className = `console-line console-${type}`;
+    line.innerHTML = `<span class="console-timestamp">${new Date().toLocaleTimeString()}</span><span class="console-content">${message}</span>`;
+    consoleOutput.appendChild(line);
+    consoleOutput.scrollTop = consoleOutput.scrollHeight;
+  }
+}
+
+function handleConsoleInput(event) {
+  if (event.key === 'Enter') {
+    const input = event.target;
+    if (!input.value.trim()) return;
+    console.log(`> ${input.value}`);
+    try {
+      const result = eval(input.value);
+      if (result !== undefined) console.log(result);
+    } catch (error) {
+      console.error(error.message);
+    }
+    input.value = '';
+  }
+}
+
+// --- Asset & Hierarchy Management ---
+
+class AssetManager {
+  constructor() {
+    this.assets = [];
+    this.loadAssets();
+    document.getElementById('fileUpload').addEventListener('change', e => this.handleFileUpload(e.target.files));
+  }
+
+  handleFileUpload(files) {
+    for (let file of files) {
+        const reader = new FileReader();
+        reader.onload = e => {
+            const newAsset = { id: Date.now() + Math.random(), name: file.name, type: file.type, content: e.target.result };
+            this.assets.push(newAsset);
+            this.saveAssets();
+            this.renderAssets();
+            window.hierarchyManager.addFileToHierarchy(newAsset);
+        };
+        if (file.type.startsWith('image')) reader.readAsDataURL(file);
+        else reader.readAsText(file);
+    }
+  }
+
+  loadAssets() {
+    this.assets = JSON.parse(localStorage.getItem('gameAssets') || '[]');
+    this.renderAssets();
+  }
+
+  renderAssets() {
+    const grid = document.getElementById('assetsGrid');
+    if (!this.assets.length) {
+      grid.innerHTML = `<div class="assets-empty-state"><div class="icon">📥</div><div class="title">No Assets</div><div class="subtitle">Import files to get started</div></div>`;
+      return;
+    }
+    grid.innerHTML = this.assets.map(asset => `<div class="asset-item" draggable="true" data-id="${asset.id}"><div class="asset-name">${asset.name}</div></div>`).join('');
+  }
+
+  saveAssets() { localStorage.setItem('gameAssets', JSON.stringify(this.assets)); }
+}
+
+class HierarchyManager {
+  constructor() {
+    this.items = [];
+    this.selectedItemId = null;
+    this.mainSceneId = null;
+    this.loadHierarchy();
+    document.getElementById('hierarchyForm').addEventListener('submit', e => { e.preventDefault(); this.createItem(); });
+  }
+
+  loadHierarchy() {
+    const data = JSON.parse(localStorage.getItem('hierarchyData') || '{}');
+    this.items = data.items || [];
+    this.mainSceneId = data.mainSceneId || null;
+    this.renderHierarchy();
+  }
+
+  saveHierarchy() {
+      const data = { items: this.items, mainSceneId: this.mainSceneId };
+      localStorage.setItem('hierarchyData', JSON.stringify(data));
+  }
+
+  findItemInHierarchy(name) { return this.items.find(item => item.name === name); }
+  findItem(id, items) {
+    for (let item of items) {
+      if (item.id === id) return item;
+      if (item.children) {
+        const found = this.findItem(id, item.children);
+        if (found) return found;
+      }
+    }
+    return null;
+  }
+
+  showItemModal(id) {
+    this.selectedItemId = id;
+    const item = this.findItem(id, this.items);
+    if (!item) return;
+
+    document.getElementById('itemOptionsTitle').textContent = `Options: ${item.name}`;
+    const buttonsContainer = document.getElementById('itemOptionsButtons');
+    
+    let buttonsHTML = `<button onclick="hierarchyManager.editItemContent()" class="btn-primary"><span>📝</span> Edit</button>`;
+    if (item.type === 'html' || item.type === 'nans') {
+        buttonsHTML += `<button onclick="hierarchyManager.setMainScene()" class="btn-primary"><span>🎮</span> Set Main</button>`;
+    }
+    buttonsHTML += `<button onclick="hierarchyManager.exportGame()" class="btn-success"><span>📤</span> Export</button>`;
+    buttonsHTML += `<button onclick="hierarchyManager.deleteItem()" class="btn-danger"><span>🗑️</span> Delete</button>`;
+    buttonsHTML += `<button onclick="closeModal('hierarchyItemModal')" class="btn-secondary">Cancel</button>`;
+    
+    buttonsContainer.innerHTML = buttonsHTML;
+    openModal('hierarchyItemModal');
+  }
+  
+  setMainScene() {
+    this.mainSceneId = this.selectedItemId;
+    this.saveHierarchy();
+    this.renderHierarchy();
+    closeModal('hierarchyItemModal');
+  }
+
+  exportGame() {
+    const item = this.findItem(this.selectedItemId, this.items);
+    if (!item) return;
+    let content = item.content, filename = item.name, mimeType = 'text/plain';
+
+    if (item.name.toLowerCase().endsWith('.nans')) {
+      const cdnUrl = document.querySelector('script[src*="nandraki"]').src;
+      content = `<html><head><script src="${cdnUrl}"><\/script></head><body><script>myjogo={start:function(){${item.content}}};game.update(myjogo.start,60);<\/script></body></html>`;
+      filename = filename.replace('.nans', '.html');
+      mimeType = 'text/html';
+    } else { mimeType = `text/${item.type}`; }
+
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(new Blob([content], { type: mimeType }));
+    a.download = filename;
+    a.click();
+    URL.revokeObjectURL(a.href);
+    closeModal('hierarchyItemModal');
+  }
+
+  createItem() {
+    const nameInput = document.getElementById('itemName');
+    const type = document.getElementById('itemType').value;
+    let name = nameInput.value;
+    if (!name.endsWith(`.${type}`)) name += `.${type}`;
+
+    const newItem = { id: Date.now(), name, type, content: '', children: [] };
+    this.items.push(newItem);
+    this.saveHierarchy();
+    this.renderHierarchy();
+    closeModal('hierarchyModal');
+    nameInput.value = '';
+  }
+
+  addFileToHierarchy(asset) {
+    const fileExt = asset.name.split('.').pop().toLowerCase();
+    const newItem = { id: asset.id, name: asset.name, type: fileExt, content: asset.content };
+    if (!this.items.some(i => i.id === newItem.id)) {
+        this.items.push(newItem);
+        this.saveHierarchy();
+        this.renderHierarchy();
+    }
+  }
+
+  deleteItem() {
+    showDialog('Confirm Delete', 'Are you sure? This cannot be undone.', () => {
+        this.items = this.items.filter(item => item.id !== this.selectedItemId);
+        if (this.mainSceneId === this.selectedItemId) this.mainSceneId = null;
+        this.saveHierarchy();
+        this.renderHierarchy();
+        closeModal('hierarchyItemModal');
+    });
+  }
+
+  editItemContent() {
+    const item = this.findItem(this.selectedItemId, this.items);
+    if (!item) return;
+    closeModal('hierarchyItemModal');
+    const editor = document.getElementById('codeEditor');
+    document.getElementById('editorFileName').innerHTML = `📝 ${item.name}`;
+    editor.value = item.content || '';
+    document.getElementById('saveCode').onclick = () => this.saveItemContent(item.id, editor.value);
+    openModal('codeEditorModal');
+    editor.focus();
+  }
+
+  saveItemContent(id, newContent) {
+    const item = this.findItem(id, this.items);
+    if (item) { item.content = newContent; this.saveHierarchy(); }
+    closeModal('codeEditorModal');
+  }
+
+  renderHierarchy() {
+    const treeView = document.querySelector('.tree-view');
+    const iconMap = { js: '📜', html: '🌐', css: '🎨', nans: '✨', default: '📄' };
+    treeView.innerHTML = this.items.map(item => `
+        <div class="tree-item ${item.id === this.mainSceneId ? 'main-scene' : ''}" data-id="${item.id}" onclick="hierarchyManager.showItemModal(${item.id})">
+          <span class="icon">${iconMap[item.type] || iconMap.default}</span>
+          ${item.name}
+        </div>`).join('');
+  }
+}
+
+function openHierarchyModal() { openModal('hierarchyModal'); }
+
+// --- Code Editor ---
+function indentCode() {
+  const editor = document.getElementById('codeEditor');
+  const fileType = document.getElementById('editorFileName').textContent.split('.').pop().toLowerCase();
+  try {
+      if (fileType === 'js' && js_beautify) editor.value = js_beautify(editor.value, { indent_size: 2 });
+      else if (fileType === 'html' && html_beautify) editor.value = html_beautify(editor.value, { indent_size: 2 });
+      else if (fileType === 'css' && css_beautify) editor.value = css_beautify(editor.value, { indent_size: 2 });
+  } catch(e) { console.error('Formatting error:', e); }
+}
+
+document.getElementById('codeEditor').addEventListener('keydown', e => {
+    if (e.ctrlKey && e.key === 's') { e.preventDefault(); document.getElementById('saveCode').click(); }
+});
+
+// --- Initialization ---
+document.addEventListener('DOMContentLoaded', () => {
+  window.engine = new GameEngine();
+  window.assetManager = new AssetManager();
+  window.dependencyManager = new DependencyManager();
+  window.hierarchyManager = new HierarchyManager();
+});
+</script></body></html>
