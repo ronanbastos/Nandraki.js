@@ -11,13 +11,15 @@
   }
 
   * {
-    box-sizing: border-box;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     -ms-overflow-style: none;  /* IE and Edge */
     scrollbar-width: none;     /* Firefox */
   }
 
-  *::-webkit-scrollbar { display: none; }
+  /* Hide webkit scrollbars */
+  *::-webkit-scrollbar {
+    display: none;
+  }
 
   body {
     margin: 0;
@@ -27,92 +29,10 @@
     color: var(--text-color);
     display: flex;
     height: 100vh;
-    overflow: hidden;
   }
 
-  .main-container {
-    display: flex;
-    flex: 1;
-    height: 100%;
-  }
-
-  .sidebar {
-    width: 250px;
-    background: var(--mid-gray);
-    border-right: 1px solid #000;
-    display: flex;
-    flex-direction: column;
-    flex-shrink: 0;
-  }
-
-  .sidebar-content {
-      overflow-y: auto;
-      flex: 1;
-  }
-  
-  /* --- Responsive Scene View & Assets Panel --- */
-  .scene-view {
-    flex: 1;
-    background: #000;
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden; /* Important for containing children */
-  }
-  
-  #gameCanvas {
-    flex: 1; /* Allows canvas to grow and shrink */
-    min-height: 150px; /* Prevents canvas from disappearing */
-    width: 100%;
-    background-color: #000;
-  }
-
-  .project-panel {
-    background: var(--mid-gray);
-    border-top: 1px solid var(--light-gray);
-    display: flex;
-    flex-direction: column;
-    flex-shrink: 0;
-    /* Height is controlled by its content and flex properties */
-    max-height: 60%; /* Prevent it from taking too much space */
-  }
-
-  .project-panel .section-content {
-    display: flex;
-    flex-direction: column;
-    overflow-y: auto; /* This section will handle overflow */
-    min-height: 0; /* Crucial for flex child sizing */
-  }
-  
-  .assets-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
-    gap: 16px;
-    padding: 16px;
-    background: var(--dark-gray);
-  }
-  /* --- End of Responsive Adjustments --- */
-
-
-  .engine-title {
-    font-size: 24px;
-    font-weight: bold;
-    color: var(--accent-color);
-    padding: 16px 16px 8px;
-    text-align: center;
-    border-bottom: 1px solid var(--light-gray);
-  }
-
-  .engine-subtitle {
-    font-size: 14px;
-    color: var(--text-color);
-    opacity: 0.7;
-    text-align: center;
-    padding: 0 16px 16px;
-    margin-bottom: 10px;
-    border-bottom: 1px solid var(--light-gray);
-    letter-spacing: 1px;
-    text-transform: uppercase;
+  .toolbar {
+    display: none; /* Hide the old toolbar */
   }
 
   .scene-controls {
@@ -145,98 +65,39 @@
 
   .scene-controls button#stopBtn {
     display: none;
-    background: var(--error-color);
+    background: #e74c3c;
   }
+
   .scene-controls button#stopBtn:hover {
     background: #c0392b;
   }
 
-  .section-header {
-    cursor: pointer;
-    user-select: none;
+  .main-container {
     display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 12px 16px;
-    transition: all 0.3s ease;
+    flex: 1;
+  }
+
+  .sidebar {
+    width: 250px;
     background: var(--mid-gray);
-    border-bottom: 1px solid var(--light-gray);
-    flex-shrink: 0;
+    padding: 16px;
+    border-right: 1px solid #000;
   }
 
-  .section-header:hover {
-    background: var(--light-gray);
-  }
-
-  .section-header .dropdown-arrow {
-    transition: transform 0.3s ease;
-  }
-
-  .section-header.collapsed .dropdown-arrow {
-    transform: rotate(-90deg);
-  }
-
-  .section-content {
-    transition: all 0.3s ease;
-    overflow: hidden;
-    max-height: 1000px; /* high value for animation */
-  }
-
-  .section-content.collapsed {
-    max-height: 0;
-    opacity: 0;
-    padding-top: 0;
-    padding-bottom: 0;
-    margin-top: 0;
-    margin-bottom: 0;
-    border-width: 0;
-  }
-  
-  .hierarchy-title {
-    color: var(--accent-color);
-  }
-  
-  .add-hierarchy-btn {
-    background: var(--accent-color);
-    color: white;
-    border: none;
-    width: 24px;
-    height: 24px;
-    border-radius: 50%;
-    cursor: pointer;
-    margin-left: auto;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 16px;
-    font-weight: bold;
-    line-height: 1;
-    flex-shrink: 0;
-  }
-  
-  #mixButton {
-      margin-left: 8px;
-      font-size: 12px;
-  }
-
-  .add-hierarchy-btn:hover {
-    background: var(--accent-hover);
-    transform: scale(1.1);
+  .scene-view {
+    flex: 1;
+    background: #000;
+    position: relative;
   }
 
   .tree-view {
     color: var(--text-color);
-    padding: 8px;
   }
 
   .tree-item {
-    padding: 8px 12px;
     background: rgba(52, 152, 219, 0.05);
     border-radius: 6px;
     margin: 4px 0;
-    display: flex;
-    align-items: center;
-    cursor: pointer;
   }
 
   .tree-item.main-scene {
@@ -245,25 +106,47 @@
   }
 
   .tree-item:hover {
-    background: rgba(52, 152, 219, 0.2);
+    background: rgba(52, 152, 219, 0.1);
     transform: translateX(4px);
   }
 
   .tree-item .icon {
-    width: 24px;
-    height: 24px;
+    width: 16px;
+    height: 16px;
     margin-right: 8px;
+  }
+
+  .folder-icon {
+    color: #3498db;  /* Changed from gold to blue */
+  }
+
+  .file-icon {
+    color: #ffffff;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    font-size: 16px;
+    width: 24px;
+    height: 24px;
+    background: rgba(52, 152, 219, 0.1);
+    border-radius: 4px;
+    margin-right: 8px;
   }
 
-  .project-panel .panel-header {
-      padding: 10px 16px;
-      border-bottom: 1px solid var(--light-gray);
-      background: linear-gradient(90deg, var(--mid-gray), var(--dark-gray));
-      justify-content: space-between;
+  .project-panel {
+    background: var(--mid-gray);
+    padding: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(8px);
+  }
+
+  .panel-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    padding: 10px;
+    background: linear-gradient(90deg, var(--mid-gray), var(--dark-gray));
+    border-radius: 8px 8px 0 0;
   }
 
   .project-title {
@@ -278,10 +161,11 @@
   .upload-btn {
     background: var(--accent-color);
     color: white;
-    padding: 8px 16px;
+    padding: 10px 20px;
     border-radius: 6px;
     cursor: pointer;
     font-weight: bold;
+    transition: all 0.3s ease;
     display: inline-flex;
     align-items: center;
     gap: 8px;
@@ -294,12 +178,21 @@
     box-shadow: 0 2px 4px rgba(0,0,0,0.2);
   }
 
+  .assets-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 12px;
+    padding: 16px;
+    transition: all 0.3s ease;
+  }
+
   .asset-item {
     text-align: center;
     padding: 12px;
     cursor: pointer;
     background: var(--mid-gray);
     border-radius: 8px;
+    transition: all 0.3s ease;
     border: 1px solid var(--light-gray);
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
   }
@@ -310,17 +203,64 @@
     border-color: var(--accent-color);
   }
 
-  .assets-empty-state {
-    grid-column: 1 / -1;
-    text-align: center;
-    padding: 40px 20px;
-    color: var(--text-color);
-    border: 2px dashed var(--light-gray);
-    display: flex;
+  .file-preview {
+    width: 100%;
+    height: 80px;
+    object-fit: contain;
+    margin-bottom: 8px;
+    background: var(--dark-gray);
+    border-radius: 4px;
+    padding: 4px;
+  }
+
+  .file-icon {
+    font-size: 24px;
+    margin: 8px 0;
+    display: block;
+  }
+
+  .asset-item .crud-buttons {
+ 
     flex-direction: column;
+    margin-top: 8px;
+  }
+
+  .asset-item .crud-buttons button {
+    width: 100%;
+    padding: 6px 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+    transition: all 0.3s ease;
+    display: flex;
     align-items: center;
     justify-content: center;
-    height: 100%;
+    gap: 4px;
+  }
+
+  .asset-item .crud-buttons button:first-child {
+    background: var(--accent-color);
+    color: white;
+  }
+
+  .asset-item .crud-buttons button:last-child {
+    background: var(--error-color);
+    color: white;
+  }
+
+  .asset-item .crud-buttons button:hover {
+    transform: translateY(-1px);
+    filter: brightness(1.1);
+  }
+
+  /* Empty state styling */
+  .assets-empty-state {
+    text-align: center;
+    padding: 40px 20px;
+    background: var(--dark-gray);
+    border-radius: 8px;
+    color: var(--text-color);
   }
 
   .assets-empty-state .icon {
@@ -340,6 +280,47 @@
     opacity: 0.7;
   }
 
+  .project-panel {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: var(--mid-gray);
+    padding: 16px;
+    border-top: 1px solid #000;
+  }
+
+  .panel-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+
+  .panel-header button {
+    background: var(--accent-color);
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .panel-header button:hover {
+    background: var(--accent-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+  }
+
+  .panel-header button:last-of-type::before {
+    content: "📥";
+  }
+
   .modal {
     display: none;
     position: fixed;
@@ -349,76 +330,64 @@
     height: 100%;
     background: rgba(0,0,0,0.7);
     z-index: 1000;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .modal.show {
-      display: flex;
   }
 
   .modal-content {
     background: var(--mid-gray);
-    width: 90%;
-    max-width: 500px;
-    padding: 25px;
-    border: 1px solid var(--accent-color);
+    width: 50%;
+    max-width: 1200px;
+    height: 85vh;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    margin: 0;
+    border: 1px solid #3498db;
     border-radius: 8px;
     box-shadow: 0 8px 32px rgba(0,0,0,0.3);
-  }
-  
-  .modal-content h2 {
-    color: var(--text-color);
-    text-align: center;
-    margin-top: 0;
-    margin-bottom: 25px;
   }
 
   .form-group {
     margin-bottom: 15px;
+	margin-left:25px;
   }
 
   .form-group label {
     display: block;
-    margin-bottom: 8px;
-    color: var(--accent-color);
-    font-weight: bold;
+    margin-bottom: 5px;
   }
 
-  .form-group input, .form-group textarea, .form-group select {
+  .form-group input, .form-group textarea {
     width: 100%;
-    padding: 10px;
+    padding: 8px;
     background: var(--dark-gray);
     border: 1px solid var(--light-gray);
     color: var(--text-color);
-    border-radius: 4px;
-  }
-  
-  .form-group input:focus, .form-group textarea:focus, .form-group select:focus {
-      outline: none;
-      border-color: var(--accent-color);
-      box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.3);
   }
 
   .crud-buttons {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
+	text-align: center;
+	margin-left: auto;
+    margin-right: auto;
+    bottom: 0;
+    right: auto;
+    padding: 15px;
+    background: var(--mid-gray);
+    border-top: 1px solid var(--light-gray);
+    display:center;
+    justify-content: flex-end;
+    gap: 10px;
     margin-top: 20px;
-  }
-  
-  .crud-buttons.row-layout {
-      flex-direction: row;
-      justify-content: center;
+    z-index: 10;
   }
 
   .crud-buttons button {
-    width: 100%;
-    padding: 10px 16px;
+    min-width: 120px; /* Ensure minimum button width */
+    padding: 8px 16px;
     border-radius: 6px;
     cursor: pointer;
     font-weight: bold;
-    border: none;
+    transition: all 0.3s ease;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -429,61 +398,210 @@
     transform: translateY(-2px);
     box-shadow: 0 4px 8px rgba(0,0,0,0.2);
   }
-  
-  .crud-buttons .btn-primary { background: var(--accent-color); color: white; }
-  .crud-buttons .btn-primary:hover { background: var(--accent-hover); }
-  .crud-buttons .btn-danger { background: var(--error-color); color: white; }
-  .crud-buttons .btn-danger:hover { background: #c0392b; }
-  .crud-buttons .btn-success { background: var(--success-color); color: white; }
-  .crud-buttons .btn-success:hover { background: #27ae60; }
-  .crud-buttons .btn-secondary { background: var(--light-gray); color: var(--text-color); }
-  .crud-buttons .btn-secondary:hover { background: var(--dark-gray); }
 
   .success-message {
     color: var(--success-color);
-    text-align: center;
     padding: 10px;
     display: none;
   }
-  
-  .code-editor-modal .modal-content {
-    width: 95%;
-    max-width: 1400px;
-    height: 90vh;
-    padding: 0;
+
+  .section-title {
+    font-size: 18px;
+    font-weight: bold;
+    padding: 8px;
+    background: var(--mid-gray);
+    border-bottom: 1px solid var(--light-gray);
+    margin-bottom: 10px;
+  }
+
+  .hierarchy-title {
+    color: #3498db;  /* Changed from gold to blue */
+    margin-bottom: 10px;
+  }
+
+  .scene-title {
+    color: #3498db;  /* Changed from green to blue */
+    padding: 8px;
+    background: rgba(0,0,0,0.3);
+  }
+
+  .project-title {
     display: flex;
-    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    color: #3498db;  /* Keep consistent blue */
+  }
+
+  .section-header {
+    cursor: pointer;
+    user-select: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+  }
+
+  .section-header:hover {
+    background: rgba(52, 152, 219, 0.1);
+  }
+
+  .section-header .dropdown-arrow {
+    transition: transform 0.3s ease;
+    margin-right: 4px;
+  }
+
+  .section-header.collapsed .dropdown-arrow {
+    transform: rotate(-90deg);
+  }
+
+  .section-content {
+    transition: all 0.3s ease;
+    overflow: auto;
+    max-height: 1000px;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .section-content.collapsed {
+    max-height: 0;
+    opacity: 0;
+  }
+
+  .add-hierarchy-btn {
+    background: var(--accent-color);
+    color: white;
+    border: none;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    cursor: pointer;
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .add-hierarchy-btn:hover {
+    background: var(--accent-hover);
+    transform: scale(1.1);
+  }
+
+  .tree-item .crud-buttons {
+    position: absolute;
+    right: 4px;
+    display: none;
+    gap: 4px;
+  }
+
+  .tree-item .crud-buttons button {
+    background: transparent;
+    border: none;
+    color: #e74c3c;
+    padding: 4px 8px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .tree-item .crud-buttons button:hover {
+    background: rgba(231, 76, 60, 0.1);
+    transform: translateY(-1px);
+  }
+
+  .tree-item .crud-buttons button::before {
+    content: "🗑️";
+    font-size: 14px;
+  }
+
+  .engine-title {
+    font-size: 24px;
+    font-weight: bold;
+    color: var(--accent-color);
+    padding: 16px 16px 8px;
+    text-align: center;
+    border-bottom: 1px solid var(--light-gray);
+  }
+
+  .engine-subtitle {
+    font-size: 14px;
+    color: #666;
+    text-align: center;
+    padding: 0 16px 16px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid var(--light-gray);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  .hierarchy-collapse {
+    background: var(--accent-color);
+    color: white;
+    border: none;
+    width: 24px;
+    height: 24px;
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+  }
+
+  .hierarchy-collapse:hover {
+    background: var(--accent-hover);
+  }
+
+  .code-editor-modal .modal-content {
+    width: 90%;
+    max-width: 1200px;
+    height: 85vh;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #1a1a2e;
+    border: 1px solid #3498db;
+    border-radius: 8px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.3);
   }
 
   .editor-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 12px 24px;
+    padding: 16px 24px;
     background: var(--mid-gray);
-    border-bottom: 1px solid var(--accent-color);
-    flex-shrink: 0;
+    border-bottom: 2px solid var(--accent-color);
   }
 
   .editor-header h2 {
     color: var(--text-color);
-    font-size: 18px;
+    font-size: 20px;
     margin: 0;
+  }
+
+  .editor-header .editor-actions {
     display: flex;
-    align-items: center;
     gap: 12px;
   }
 
-  .editor-header .editor-actions { display: flex; gap: 12px; }
-
   .editor-header button {
-    background: var(--light-gray);
+    background: var(--accent-color);
     color: white;
     border: none;
     padding: 8px 16px;
     border-radius: 4px;
     cursor: pointer;
     font-weight: bold;
+    transition: all 0.3s ease;
     display: flex;
     align-items: center;
     gap: 6px;
@@ -494,45 +612,160 @@
     transform: translateY(-1px);
     box-shadow: 0 2px 4px rgba(0,0,0,0.2);
   }
-  
-  .editor-header button.primary { background: var(--accent-color); }
-  .editor-header button.close-btn { background: transparent; }
-  .editor-header button.close-btn:hover { background: rgba(231, 76, 60, 0.2); color: #e74c3c; }
 
-  .editor-main { display: flex; height: 100%; overflow: hidden; }
-  
+  .editor-header button#saveCode::before {
+    content: "💾";
+  }
+
+  .editor-header button:last-child::before {
+    content: "✕";
+  }
+
+  .editor-toolbar {
+    background: #1a1a2e;
+    border-bottom: 1px solid #3498db;
+    padding: 8px;
+    display: flex;
+    gap: 8px;
+  }
+
+  .editor-toolbar button {
+    background: #3498db;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 13px;
+  }
+
+  .editor-toolbar button:hover {
+    background: #2980b9;
+  }
+
+  .editor-container {
+    display: flex;
+    height: calc(100% - 100px);
+    font-family: 'Consolas', monospace;
+    font-size: 14px;
+    line-height: 1.5;
+    border-radius: 0 0 8px 8px;
+    overflow: auto;
+  }
+
+  .line-numbers {
+    padding: 8px 16px 8px 0;
+    background: rgba(52, 152, 219, 0.05);
+    color: #3498db;
+    text-align: right;
+    user-select: none;
+    border-right: 1px solid rgba(52, 152, 219, 0.2);
+    min-width: 45px;
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
   #codeEditor {
     flex: 1;
-    background: var(--dark-gray);
+    background: #1a1a2e;
     color: #fff;
     border: none;
-    padding: 12px 16px;
+    padding: 8px 16px;
     resize: none;
     outline: none;
     tab-size: 2;
-    font-family: 'Consolas', 'Menlo', 'Monaco', monospace;
+    font-family: 'Consolas', monospace;
     font-size: 14px;
-    line-height: 1.6;
+    line-height: 1.5;
     white-space: pre;
   }
 
-  .editor-footer {
-      padding: 8px 16px;
-      background: var(--mid-gray);
-      border-top: 1px solid var(--light-gray);
-      font-size: 12px;
-      color: var(--light-gray);
-      flex-shrink: 0;
+  /* Syntax highlighting classes */
+  .editor-highlight {
+    color: #d4d4d4;
   }
 
-  .console-modal .modal-content {
-    background: var(--dark-gray);
-    width: 95%;
-    max-width: 1200px;
-    height: 80vh;
-    padding: 0;
+  .editor-highlight .keyword { color: #569cd6; }
+  .editor-highlight .string { color: #ce9178; }
+  .editor-highlight .number { color: #b5cea8; }
+  .editor-highlight .comment { color: #6a9955; }
+  .editor-highlight .tag { color: #569cd6; }
+  .editor-highlight .attribute { color: #9cdcfe; }
+  .editor-highlight .function { color: #dcdcaa; }
+  .editor-highlight .built-in { color: #d19a66; }
+  .editor-highlight .selector { color: #c678dd; }
+  .editor-highlight .property { color: #56b6c2; }
+  .editor-highlight .at-rule { color: #d19a66; }
+  .editor-highlight .color { color: #ff6c6b; }
+  .editor-highlight .block { color: #d7afaf; }
+
+  @media (max-width: 768px) {
+    .main-container {
+      flex-direction: column;
+    }
+
+    .sidebar {
+      width: 100%;
+      border-right: none;
+      border-bottom: 1px solid #000;
+    }
+
+    .toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .toolbar button {
+      flex: 1;
+      min-width: 120px;
+      justify-content: center;
+    }
+
+    .project-panel {
+      height: 200px;
+      overflow-y: auto;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .toolbar button {
+      padding: 6px 12px;
+      font-size: 14px;
+      min-width: 100px;
+    }
+
+    .modal-content {
+      width: 50%;
+      margin: 50px auto;
+    }
+
+    .assets-grid {
+      grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+    }
+  }
+
+  /* Updated styles for hierarchyItemModal */
+  #hierarchyItemModal .modal-content {
+    max-width: 400px;
+    padding: 25px;
+  }
+
+  #hierarchyItemModal .crud-buttons {
     display: flex;
     flex-direction: column;
+    gap: 12px;
+    position: relative;
+    padding: 0;
+    background: none;
+    border: none;
+  }
+
+  /* Console styling */
+  .console-modal .modal-content {
+    background: var(--dark-gray);
+    border: 1px solid var(--accent-color);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.4);
   }
 
   .console-header {
@@ -554,20 +787,68 @@
     color: var(--accent-color);
   }
 
-  .console-header button { background: transparent; border: none; color: var(--text-color); font-size: 20px; cursor: pointer; opacity: 0.7; }
-  .console-header button:hover { opacity: 1; }
+  .console-header button {
+    background: transparent;
+    border: none;
+    color: var(--text-color);
+    font-size: 20px;
+    cursor: pointer;
+    opacity: 0.7;
+    transition: all 0.3s ease;
+  }
 
-  .console-output { overflow:auto; flex: 1; padding: 8px 16px; background: rgba(0,0,0,0.2); font-family: 'Consolas', monospace; line-height: 1.5; }
-  .console-line { padding: 4px 8px; border-radius: 4px; display: flex; gap: 12px; }
-  .console-timestamp { color: var(--accent-color); opacity: 0.7; font-size: 12px; }
-  .console-line.console-error { color: #ff6b6b; }
-  .console-line.console-warn { color: #ffd93d; }
-  .console-line.console-info { color: #6c5ce7; }
+  .console-header button:hover {
+    opacity: 1;
+    transform: scale(1.1);
+  }
+
+  .console-output {
+    overflow:auto; 
+	width: 100%;
+    height: calc(100% - 150px);
+    background: rgba(0,0,0,0.2);
+    font-family: 'Consolas', monospace;
+    line-height: 1;
+  }
+
+  .console-line {
+    margin: 4px 0;
+    padding: 4px 8px;
+    border-radius: 4px;
+    background: rgba(255,255,255,0.03);
+    display: flex;
+    gap: 12px;
+  }
+
+  .console-timestamp {
+    color: var(--accent-color);
+    opacity: 0.7;
+    font-size: 12px;
+  }
+
+  .console-line.console-error {
+    color: #ff6b6b;
+    background: rgba(255,107,107,0.1);
+  }
+
+  .console-line.console-warn {
+    color: #ffd93d;
+    background: rgba(255,217,61,0.1);
+  }
+
+  .console-line.console-info {
+    color: #6c5ce7;
+    background: rgba(108,92,231,0.1);
+  }
 
   .console-input {
     padding: 16px;
     background: var(--mid-gray);
-    border-top: 1px solid var(--light-gray);
+    border-top: 1px solid rgba(255,255,255,0.1);
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
     display: flex;
     align-items: center;
     gap: 8px;
@@ -575,7 +856,7 @@
 
   .console-input input {
     flex: 1;
-    background: var(--dark-gray);
+    background: rgba(0,0,0,0.2);
     border: 1px solid var(--accent-color);
     border-radius: 4px;
     padding: 8px 12px;
@@ -583,327 +864,1177 @@
     font-family: 'Consolas', monospace;
     font-size: 14px;
   }
-  .console-input input:focus { outline: none; box-shadow: 0 0 0 2px rgba(80,250,123,0.2); }
-  .console-input span { color: #50fa7b; font-family: 'Consolas', monospace; }
 
-  .clear-btn { background: var(--accent-color); color: white; border: none; padding: 4px 8px; border-radius: 4px; cursor: pointer; display: flex; align-items: center; gap: 4px; }
-  .clear-btn:hover { background: var(--accent-hover); }
-
-  #cdnModal .modal-content { max-width: 700px; }
-  
-  #dependenciesList .dependency-item {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 8px;
-      background: var(--dark-gray);
-      border-radius: 4px;
-      margin-bottom: 8px;
-  }
-  #dependenciesList input { flex: 1; background: transparent; border: none; }
-  #dependenciesList button { padding: 6px 12px; background: var(--error-color); color: white; border-radius: 4px; border: none; cursor: pointer; }
-
-  @media (max-width: 768px) {
-    body { overflow: auto; }
-    .main-container { flex-direction: column; height: auto; }
-    .sidebar { width: 100%; border-right: none; border-bottom: 1px solid #000; max-height: 45vh; }
-    .scene-view { min-height: 55vh; }
-    .project-panel { height: 35vh; max-height: 35vh; }
-    .editor-header { flex-direction: column; gap: 12px; padding: 16px; }
-    .editor-header h2 { font-size: 16px; }
-    .editor-actions button span { display: none; }
-    .editor-actions button { padding: 8px; }
+  .console-input input:focus {
+    outline: none;
+    border-color: #50fa7b;
+    box-shadow: 0 0 0 2px rgba(80,250,123,0.2);
   }
 
-  @media (max-width: 480px) {
-    .scene-controls { flex-wrap: wrap; }
-    .scene-controls button { flex-basis: calc(50% - 4px); }
-    .modal-content { width: 95%; padding: 15px; }
-    .crud-buttons.row-layout { flex-direction: column; }
-    .assets-grid { grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); }
+  .console-input span {
+    color: #50fa7b;
+    font-family: 'Consolas', monospace;
   }
+
+  .clear-btn {
+    background: var(--accent-color);
+    color: white;
+    border: none;
+    padding: 4px 8px;
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    transition: all 0.3s ease;
+  }
+
+  .clear-btn:hover {
+    background: var(--accent-hover);
+    transform: scale(1.05);
+  }
+
+  .clear-btn:active {
+    transform: scale(0.95);
+  }
+
+  .dropdown-arrow {
+    transition: transform 0.3s ease;
+  }
+
+  .section-content {
+    transition: max-height 0.3s ease;
+    overflow: auto;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .section-content.collapsed {
+    max-height: 0;
+  }
+
+  .crud-buttons button {
+    min-width: 120px;
+    padding: 8px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin: 4px 0;
+  }
+
+  .crud-buttons button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  }
+
+  .crud-buttons button[onclick*="exportGame"] {
+    background: var(--success-color);
+    color: white;
+  }
+
+  .crud-buttons button[onclick*="exportGame"]:hover {
+    background: #27ae60;
+  }
+   .editor-header {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding: 16px 24px;
+          background: var(--mid-gray);
+          border-bottom: 1px solid var(--accent-color);
+        }
+
+        .editor-header-left {
+          display: flex;
+          align-items: center;
+          gap: 16px;
+        }
+
+        .editor-actions {
+          display: flex;
+          gap: 8px;
+        }
+
+        .editor-btn {
+          display: flex;
+          align-items: center;
+          gap: 6px;
+          padding: 8px 12px;
+          border: none;
+          border-radius: 6px;
+          background: var(--mid-gray);
+          color: var(--text-color);
+          font-size: 14px;
+          cursor: pointer;
+          transition: all 0.2s ease;
+        }
+
+        .editor-btn:hover {
+          background: var(--light-gray);
+          transform: translateY(-1px);
+        }
+
+        .editor-btn.primary {
+          background: var(--accent-color);
+          color: white;
+        }
+
+        .editor-btn.primary:hover {
+          background: var(--accent-hover);
+        }
+
+        .editor-btn.close {
+          background: transparent;
+          color: var(--text-color);
+        }
+
+        .editor-btn.close:hover {
+          background: rgba(231, 76, 60, 0.2);
+          color: #e74c3c;
+        }
+
+        .editor-main {
+          display: flex;
+          flex: 1;
+          overflow: hidden;
+          background: var(--dark-gray);
+        }
+
+        .editor-gutter {
+          padding: 12px 0;
+          min-width: 60px;
+          background: rgba(0,0,0,0.2);
+          border-right: 1px solid var(--mid-gray);
+          user-select: none;
+        }
+
+        .line-numbers {
+          text-align: right;
+          padding-right: 12px;
+          color: var(--light-gray);
+          font-family: 'Consolas', monospace;
+          font-size: 14px;
+          line-height: 1.6;
+        }
+
+        .editor-content {
+          flex: 1;
+          overflow: auto;
+          position: relative;
+        }
+
+        .editor-content textarea {
+          caret-color: var(--accent-color);
+        }
+
+        .editor-footer {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding: 8px 16px;
+          background: var(--mid-gray);
+          border-top: 1px solid var(--light-gray);
+          font-size: 12px;
+        }
+
+        .editor-status {
+          display: flex;
+          gap: 16px;
+        }
+
+        .editor-hints {
+          display: flex;
+          gap: 16px;
+          color: var(--light-gray);
+        }
+
+        .editor-hints span {
+          display: flex;
+          align-items: center;
+          gap: 4px;
+        }
+
+        @media (max-width: 768px) {
+          .editor-hints {
+            display: none;
+          }
+          
+          .editor-actions {
+            gap: 4px;
+          }
+
+          .editor-btn span:last-child {
+            display: none;
+          }
+
+          .editor-btn {
+            padding: 8px;
+          }
+        }
+
+        @media (max-width: 480px) {
+          .editor-header {
+            flex-direction: column;
+            gap: 12px;
+          }
+
+          .editor-status {
+            flex-direction: column;
+            gap: 4px;
+          }
+        }
+
+        /* Syntax highlighting improvements */
+        .editor-highlight {
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          pointer-events: none;
+          padding: 12px 16px;
+          font-family: 'Consolas', monospace;
+          font-size: 14px;
+          line-height: 1.6;
+          white-space: pre;
+          color: #d4d4d4;
+        }
+
+        .editor-highlight .keyword { color: #569cd6; }
+        .editor-highlight .string { color: #ce9178; }
+        .editor-highlight .number { color: #b5cea8; }
+        .editor-highlight .comment { color: #6a9955; }
+        .editor-highlight .tag { color: #569cd6; }
+        .editor-highlight .attribute { color: #9cdcfe; }
+        .editor-highlight .function { color: #dcdcaa; }
+        .editor-highlight .built-in { color: #4ec9b0; }
+
+    /* --- New Mix Modal Styles --- */
+
+    /* Overlay for the mix modal */
+    .mix-modal-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(26, 26, 46, 0.8); /* Use a color from the theme */
+        backdrop-filter: blur(5px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 1050; /* Higher than other modals if needed */
+        animation: fadeIn 0.3s ease-out;
+    }
+
+    /* The modal window itself */
+    .mix-modal-content {
+        background: var(--mid-gray);
+        color: var(--text-color);
+        border: 1px solid var(--accent-color);
+        border-radius: 12px;
+        padding: 24px;
+        width: 90%;
+        max-width: 450px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        font-family: Arial, sans-serif;
+        animation: slideIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* Header inside the modal */
+    .mix-modal-content h2 {
+        color: var(--accent-color);
+        font-size: 1.5rem;
+        margin-top: 0;
+        margin-bottom: 20px;
+        text-align: center;
+        font-weight: bold;
+    }
+
+    /* Labels for select inputs */
+    .mix-modal-content label {
+        color: var(--text-color);
+        opacity: 0.9;
+        font-weight: bold;
+        display: block;
+        margin-bottom: 8px;
+        font-size: 0.9rem;
+    }
+
+    /* Select dropdowns */
+    .mix-modal-content select {
+        width: 100%;
+        padding: 12px;
+        margin-bottom: 16px;
+        border: 1px solid var(--light-gray);
+        border-radius: 6px;
+        font-size: 1rem;
+        background: var(--dark-gray);
+        color: var(--text-color);
+        cursor: pointer;
+        transition: border-color 0.3s, box-shadow 0.3s;
+    }
+
+    .mix-modal-content select:focus {
+        outline: none;
+        border-color: var(--accent-color);
+        box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.25);
+    }
+
+    /* Container for the buttons */
+    .mix-modal-buttons {
+        display: flex;
+        gap: 12px;
+        margin-top: 24px;
+        justify-content: space-between;
+    }
+
+    /* General button style within the modal */
+    .mix-modal-buttons button {
+        flex: 1;
+        background: var(--accent-color);
+        color: white;
+        border: none;
+        padding: 12px 15px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 1rem;
+        font-weight: bold;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+    }
+
+    .mix-modal-buttons button:hover {
+        background: var(--accent-hover);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+
+    /* Specific style for the "Close" button */
+    .mix-modal-buttons .close-btn {
+        background: var(--mid-gray);
+        border: 1px solid var(--light-gray);
+        color: var(--text-color);
+    }
+
+    .mix-modal-buttons .close-btn:hover {
+        background: var(--light-gray);
+        border-color: var(--accent-hover);
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 500px) {
+        .mix-modal-content {
+            padding: 20px;
+        }
+        .mix-modal-buttons {
+            flex-direction: column;
+        }
+    }
+
+    /* Keyframe animations */
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+
+    @keyframes slideIn {
+        from {
+            opacity: 0;
+            transform: translateY(-30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
 </style>
 <script src="https://unpkg.com/nandraki@2.5.8/nandraki.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/js-beautify/1.14.7/beautify.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/js-beautify/1.14.7/beautify-html.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/js-beautify/1.14.7/beautify-css.min.js"></script></head><body>
   <div class="main-container">
-    <div class="sidebar">
-        <div class="engine-title">Nandraki.js</div>
-	    <div class="engine-subtitle">Game Engine 3.0</div>
-        <div class="sidebar-content">
-            <div class="scene-controls">
-                <button id="playBtn">▶ Play</button>
-                <button id="stopBtn">⏹ Stop</button>
-                <button id="consoleBtn">🖥 Console</button>
-                <button id="cdnBtn">📦 CDN</button>
-            </div>
-            <div class="section-header hierarchy-title" onclick="toggleSection('hierarchy')">
-                <span class="dropdown-arrow">▼</span>
-                <span>📁 Hierarchy</span>
-                <button id="mixButton" class="add-hierarchy-btn" onclick="openMixModal(); event.stopPropagation();">Mix</button>
-                <button onclick="openHierarchyModal(); event.stopPropagation();" class="add-hierarchy-btn">+</button>
-            </div>
-            <div class="section-content" id="hierarchy-content">
-                <div class="tree-view"></div>
-            </div>
+    <div class="sidebar" style="overflow-y: auto; -webkit-overflow-scrolling: touch; scrollbar-width: thin; scrollbar-color: var(--accent-color) var(--dark-gray); max-height: 100vh;">
+      <div class="engine-title">
+        Nandraki.js 
+      </div>
+	    <div class="engine-subtitle">
+          Game Engine 3.0
+        </div>
+      <div class="scene-controls">
+        <button id="playBtn">▶ Play</button>
+        <button id="stopBtn">⏹ Stop</button>
+        <button id="consoleBtn">🖥 Console</button>
+        <button id="cdnBtn">📦 CDN</button>
+      </div>
+      <div class="section-title hierarchy-title section-header" onclick="toggleSection('hierarchy')">
+        <span class="dropdown-arrow">▼</span>
+        <span>📁 Hierarchy</span>
+		<button id="mixButton" onclick=" event.stopPropagation(); " class="add-hierarchy-btn">Mix</button>
+        <button onclick="openHierarchyModal(); event.stopPropagation();" class="add-hierarchy-btn">+</button>
+		
+        <button class="hierarchy-collapse" onclick="hierarchyManager.toggleHierarchy()">◀</button>
+      </div>
+      <div class="section-content" id="hierarchy-content" style="max-height: calc(500vh - 50px); overflow: auto;">
+        <div class="tree-view">
+</div>
       </div>
     </div>
 
     <div class="scene-view">
-        <canvas id="gameCanvas"></canvas>
-        <div class="project-panel">
-            <div class="panel-header section-header" onclick="toggleSection('assets')">
-                <div class="project-title">
-                    <span class="dropdown-arrow">▼</span>
-                    <span>🎮 Project Assets</span>
-                </div>
-                <label for="fileUpload" class="upload-btn">
-                    Import
-                    <input type="file" id="fileUpload" multiple accept=".js,.html,.css,.png,.jpg,.jpeg,.gif,.svg,.nans" style="display:none">
-                </label>
-            </div>
-            <div class="section-content" id="assets-content">
-                <div class="assets-grid" id="assetsGrid">
-                    <div class="assets-empty-state">
-                        <div class="icon">📥</div>
-                        <div class="title">No Assets</div>
-                        <div class="subtitle">Import files to get started</div>
-                    </div>
-                </div>
-            </div>
-        </div>
+  <canvas id="gameCanvas"></canvas>
+  
+  <div class="project-panel">
+    <div class="panel-header section-header" onclick="toggleSection('assets')">
+      <div class="project-title">
+        <span class="dropdown-arrow">▼</span>
+        <span>🎮 Project Assets</span>
+      </div>
+      <label for="fileUpload" class="upload-btn">
+        Import File
+        <input type="file" id="fileUpload" multiple="" accept=".js,.html,.css,.png,.jpg,.jpeg,.gif,.svg,.nans" style="display:none">
+      </label>
+    </div>
+    <div class="section-content" id="assets-content">
+      <div class="assets-grid" id="assetsGrid" style="max-height: 300px; overflow: auto; text-align: center;">
+  <style>
+    
+
+    
+
+    .asset-item:active {
+      transform: translateY(0) scale(0.98);
+    }
+
+    .file-preview {
+      width: 100%;
+      height: 80px;
+      object-fit: contain;
+      background: var(--dark-gray);
+      border-radius: 6px;
+      padding: 8px;
+      transition: transform 0.3s ease;
+    }
+
+    .asset-item:hover .file-preview {
+      transform: scale(1.05);
+    }
+
+    .file-icon {
+      font-size: 32px;
+      height: 80px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--dark-gray);
+      border-radius: 6px;
+      transition: all 0.3s ease;
+      width: 100%;
+    }
+
+    .asset-name {
+      font-size: 0.9em;
+      font-weight: 500;
+      text-align: center;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      min-height: 32px;
+    }
+
+    .crud-buttons {
+      display: flex;
+      opacity: 0;
+      transform: translateY(100%);
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 8px;
+      background: linear-gradient(to top, var(--mid-gray) 80%, transparent);
+      align-items: center;
+    }
+
+    .asset-item:hover .crud-buttons {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .crud-buttons button {
+      width: 90%;
+      padding: 6px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      transition: all 0.2s ease;
+      margin: 0 auto;
+    }
+
+    .crud-buttons button:first-child {
+      background: var(--accent-color);
+      color: white;
+    }
+
+    .crud-buttons button:last-child {
+      background: #e74c3c;
+      color: white;
+    }
+
+    .crud-buttons button:hover {
+      filter: brightness(1.1);
+      transform: scale(1.02);
+    }
+
+    .assets-empty-state {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 40px 20px;
+      background: var(--dark-gray);
+      border-radius: 8px;
+      border: 2px dashed var(--light-gray);
+    }
+
+    .assets-empty-state .icon {
+      font-size: 48px;
+      margin-bottom: 16px;
+      animation: bounce 2s infinite;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    @media (max-width: 768px) {
+      .assets-grid {
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      }
+    }
+
+    @media (max-width: 480px) {
+      .assets-grid {
+        grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+      }
+      
+      .asset-item {
+        min-height: 120px;
+      }
+      
+      .file-preview, .file-icon {
+        height: 60px;
+      }
+    }
+.Additional{
+
+   background: #0056b3;
+    color: #ffffff;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+ 
+}
+/* ==================================================================
+   CSS RESPONSIVO E MELHORIAS VISUAIS
+   Este bloco foi adicionado ao final para não alterar o CSS original.
+   ================================================================== */
+
+/* Regra geral para um cálculo de layout mais previsível */
+* {
+  box-sizing: border-box;
+}
+
+/* Melhora a legibilidade das fontes em todos os navegadores */
+html, body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* --- Para Telas de Tablets e Menores (até 900px) --- */
+@media (max-width: 900px) {
+
+  /* Permite que o corpo da página role verticalmente */
+  body {
+    height: auto;
+    min-height: 100vh;
+    flex-direction: column; /* Empilha os elementos principais */
+  }
+
+  /* Empilha a sidebar e a área principal */
+  .main-container {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  /* A sidebar ocupa toda a largura */
+  .sidebar {
+    width: 100%;
+    border-right: none;
+    border-bottom: 2px solid #000;
+    height: auto; /* Altura se ajusta ao conteúdo */
+    max-height: 50vh; /* Evita que o painel ocupe a tela toda */
+  }
+
+  .scene-view {
+    min-height: 50vh; /* Garante um espaço mínimo para a visualização da cena */
+    width: 100%;
+  }
+
+  /* Ajusta o painel de projetos para fluir com a página */
+  .project-panel {
+    position: relative; /* Remove o 'absolute' que quebra o layout móvel */
+    bottom: auto;
+    left: auto;
+    right: auto;
+    height: auto;
+    max-height: 50vh; /* Limita a altura e permite rolagem interna */
+  }
+  
+  /* Garante que o painel de assets seja rolável */
+  #assets-content {
+    max-height: 40vh;
+    overflow-y: auto;
+  }
+
+  /* Ajusta todos os modais para telas menores */
+  .modal-content {
+    width: 50%;
+    max-width: 500px;
+    max-height: 85vh; /* Permite rolagem dentro do modal */
+    overflow-y: auto;
+    padding: 20px;
+  }
+  
+  /* Garante que o conteúdo do editor de código seja rolável */
+  .code-editor-modal .modal-content {
+      height: 90vh;
+  }
+}
+
+
+/* --- Para Telas de Celulares (até 600px) --- */
+@media (max-width: 600px) {
+
+  /* Reduz o padding para economizar espaço */
+  .sidebar, .project-panel, .panel-header {
+    padding: 12px;
+  }
+  
+  .engine-title {
+    font-size: 20px;
+    padding: 12px;
+  }
+  
+  .engine-subtitle {
+    font-size: 12px;
+    padding-bottom: 12px;
+  }
+
+  /* Empilha os botões para facilitar o toque */
+  .scene-controls, .panel-header {
+    flex-direction: column;
+    align-items: stretch; /* Estica os botões na largura total */
+    gap: 10px;
+  }
+  
+  .project-title {
+    justify-content: center;
+    width: 100%;
+    margin-bottom: 10px;
+  }
+  
+  .upload-btn {
+    justify-content: center;
+  }
+
+  /* Ajusta a grade de assets para celulares */
+  .assets-grid {
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    gap: 10px;
+  }
+
+  .asset-item .file-preview, .asset-item .file-icon {
+    height: 60px; /* Reduz a altura das prévias */
+  }
+
+  /* Melhora a apresentação dos botões em modais */
+  .crud-buttons {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+    width: 100%;
+    background: none;
+    border: none;
+    padding: 0;
+  }
+
+  .crud-buttons button {
+    width: 100%; /* Botões ocupam a largura total */
+    justify-content: center;
+    margin: 0;
+  }
+  
+  /* Ajustes finos no editor de código para telas pequenas */
+  .editor-header {
+    padding: 12px;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .editor-actions {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Organiza os botões em 2 colunas */
+    gap: 8px;
+  }
+  
+  .editor-actions .editor-btn {
+    justify-content: center;
+  }
+
+  .editor-footer {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    padding: 8px 12px;
+  }
+
+  /* Esconde dicas do editor que não cabem */
+  .editor-hints {
+    display: none;
+  }
+}
+  </style>
+
+  <div class="assets-empty-state">
+    <div class="icon">📥</div>
+    <div class="title">No Assets</div>
+    <div class="subtitle">
+      Import files files here
     </div>
   </div>
+</div>
+    </div>
+  </div>
+</div>
+  </div>
 
-  <!-- All Modals Below -->
-  <div id="hierarchyModal" class="modal">
+  <div id="createModal" class="modal">
     <div class="modal-content">
-      <h2>Create Hierarchy Item</h2>
-      <form id="hierarchyForm">
+      <h2>Create New Asset</h2>
+      <form id="createForm">
         <div class="form-group">
           <label>Name:</label>
-          <input type="text" id="itemName" required>
+          <input type="text" id="assetName" required="">
         </div>
         <div class="form-group">
           <label>Type:</label>
-          <select id="itemType" required>
-              <option value="js">JavaScript (.js)</option>
-              <option value="html">HTML (.html)</option>
-              <option value="css">CSS (.css)</option>
-              <option value="nans">Nandraki Scene (.nans)</option>
-          </select>
+          <input type="text" id="assetType" required="">
         </div>
-        <div class="crud-buttons row-layout"> 	
-            <button type="submit" class="btn-primary">Create</button>
-            <button type="button" class="btn-secondary" onclick="closeModal('hierarchyModal')">Cancel</button>
+        <div class="form-group">
+          <label>Description:</label>
+          <textarea id="assetDescription"></textarea>
+        </div>
+      	<div class="form-group "> 	
+          <button type="submit " class="close-btn" style="float: left;background: linear-gradient(135deg, #3498db, #2980b9); color: white;">Create</button>
+          <button type="button" class="close-btn" onclick="closeModal('createModal')" style="background: linear-gradient(135deg, #3498db, #2980b9); color: white;">Cancel</button>
         </div>
       </form>
-      <div id="hierarchySuccess" class="success-message">Item created successfully!</div>
+      <div id="createSuccess" class="success-message">Asset created successfully!</div>
     </div>
+  </div>
+
+
+  <div id="hierarchyModal" class="modal">
+    <div class="modal-content" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center;">
+  <h2 style="margin-bottom: 20px; text-align: center;">Create Hierarchy Item</h2>
+  <form id="hierarchyForm" style="display: flex; flex-direction: column; align-items: center; gap: 16px;">
+    <div class="form-group" style="width: 100%; max-width: 300px;">
+      <label style="text-align: left; display: block;">Name:</label>
+      <input type="text" id="itemName" required="" style="width: 100%; max-width: 300px; padding: 10px; margin: 5px 0; border: 1px solid var(--accent-color); border-radius: 4px; background: var(--dark-gray); color: var(--text-color); font-size: 14px; box-sizing: border-box; transition: all 0.3s ease;">
+    </div>
+    <div class="form-group" style="width: 100%; max-width: 300px;">
+      <label style="text-align: left; display: block;">Type:</label>
+      <select id="itemType" required="" style="width: 100%; padding: 10px; border: 1px solid var(--accent-color); border-radius: 4px; background: var(--dark-gray); color: var(--text-color);">
+  <option value="js">JavaScript (.js)</option>
+  <option value="html">HTML (.html)</option>
+  <option value="css">CSS (.css)</option>
+  <option value="nans">Nandraki Scene (.nans)</option>
+
+     
+
+</select>
+ <button type="submit"  style="width: 100%; padding: 10px; margin-top:50px; border: 1px solid var(--accent-color); border-radius: 4px; background: var(--dark-gray); color: var(--text-color);float:left;" >Create</button>
+      <button type="button" onclick="closeModal('hierarchyModal')" style="width: 100%; padding: 10px; margin-top:20px; border: 1px solid var(--accent-color); border-radius: 4px; background: var(--dark-gray); color: var(--text-color);">Cancel</button>
+    </div>
+    
+  </form>
+  <div id="hierarchySuccess" class="success-message" style="text-align: center;">Item created successfully!</div>
+</div>
   </div>
 
   <div id="hierarchyItemModal" class="modal">
-    <div class="modal-content">
-      <h2 id="itemOptionsTitle">Item Options</h2>
-      <div id="itemOptionsButtons" class="crud-buttons">
-        <!-- Buttons are dynamically inserted here -->
+    <div class="modal-content" style="justify:center;">
+
+      <h2 style="margin-bottom: 20px;">Item Options</h2>
+      <div class="crud-buttons">
+        <button onclick="hierarchyManager.setMainScene()" style="background: var(--accent-color);">
+          <span style="margin-right:5px;">🎮</span>
+          Set as Main Scene
+        </button>
+        <button onclick="hierarchyManager.editItemContent()" style="background: var(--accent-color);">
+          <span style="margin-right: 5px;">📝</span>
+          Edit Content
+        </button>
+        <button onclick="hierarchyManager.exportGame(this.selectedItemId)" style="background: var(--success-color);">
+          <span style="margin-right: 5px;">📤</span>
+          Export Game
+        </button>
+        <button onclick="hierarchyManager.deleteItem(this.selectedItemId)" style="background: #e74c3c;">
+          <span style="margin-right: 5px;">🗑️</span>
+          Delete Item
+        </button>
+        <button onclick="closeModal('hierarchyItemModal')" style="background: var(--mid-gray);">
+          Cancel
+        </button>
+		
       </div>
     </div>
   </div>
+  
+  <div id="cdnModal" class="modal cdn-modal">
 
-  <div id="cdnModal" class="modal">
+	
+
     <div class="modal-content">
       <h2>Manage Dependencies</h2>
       <div class="form-group"> 
+	  	    
         <label>Nandraki.js CDN:</label>
-        <input type="text" id="cdnInput" value="https://unpkg.com/nandraki@2.5.8/nandraki.js">
+        <input type="text" id="cdnInput" value="https://unpkg.com/nandraki@2.5.8/nandraki.js" style="width:80%;   font-weight: bold; transition: all 0.3s ease; display: flex; align-items: center; gap: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.2); margin-top: 10px;">
       </div>
-      <div class="form-group">
-          <label>Additional Dependencies</label>
-          <div id="dependenciesList"></div>
-      </div>
-      <div class="form-group">
+      <div class="dependencies-list">
+       
+        <div class="form-group new-dependency-section">
+	
           <label>New Dependency URL:</label>
-          <input type="text" id="newDependencyInput" placeholder="Enter CDN URL or <script> tag">
-          <button onclick="addDependency()" class="btn-primary" style="width:auto; margin-top:10px;">Add Dependency</button>
+          <input type="text" id="newDependencyInput" placeholder="Enter CDN URL or <script> tag" style=" width:80%;   font-weight: bold; transition: all 0.3s ease; display: flex; align-items: center; gap: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.2); margin-top: 10px;">
+          <button onclick="addDependency()" style="background: linear-gradient(135deg, #3498db, #2980b9); color: white; border: none; padding: 12px 24px; border-radius: 8px; cursor: pointer; font-weight: bold; transition: all 0.3s ease; display: flex; align-items: center; gap: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.2); margin-top: 10px;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="12" y1="5" x2="12" y2="19"></line>
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+            </svg>
+            Add New Dependency
+          </button>
+		     <button onclick="updateCDN()" style="float: left;background: linear-gradient(135deg, #3498db, #2980b9); color: white;">Update All </button><button onclick="closeModal('cdnModal')" style="background: linear-gradient(135deg, #3498db, #2980b9); color: white;">Cancel</button>
+        
+        </div>
+		<div >
+ 
       </div>
-       <div class="crud-buttons row-layout">
-           <button onclick="updateCDN()" class="btn-primary">Update All</button>
-           <button onclick="closeModal('cdnModal')" class="btn-secondary">Close</button>
-       </div>
+      </div>
+      
     </div>
+	  <div>
+	 <h3  class="Additional">Additional Dependencies</h3>
+        <div id="dependenciesList"></div>
+		<br>
+		</div>
   </div>
 
   <div id="dialogModal" class="modal">
-    <div class="modal-content" style="max-width: 400px;">
-      <h2 id="dialogTitle">Confirmation</h2>
-      <p id="dialogMessage" style="text-align: center; margin-bottom: 25px;"></p>
-      <div class="crud-buttons row-layout">
-        <button id="dialogConfirm" class="btn-primary">Confirm</button>
-        <button onclick="closeModal('dialogModal')" class="btn-secondary">Cancel</button>
-      </div>
-    </div>
+    <div class="modal-content" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 300px; text-align: center; padding: 20px; border-radius: 12px; background: var(--mid-gray); border: 2px solid var(--accent-color); box-shadow: 0 4px 32px rgba(0,0,0,0.3);">
+  <h2 id="dialogTitle" style="margin-bottom: 15px; color: var(--text-color); font-size: 1.2em;">Confirmation</h2>
+  <p id="dialogMessage" style="margin-bottom: 20px; color: var(--text-color); font-size: 0.9em; line-height: 1.4;"></p>
+  <div class="crud-buttons" style="display: flex; gap: 10px; justify-content: center;">
+    <button id="dialogConfirm" style="background: var(--accent-color); min-width: 80px; padding: 8px 16px; border-radius: 6px; font-size: 0.9em;">Confirm</button>
+    <button onclick="closeModal('dialogModal')" style="background: var(--mid-gray); border: 1px solid var(--light-gray); min-width: 80px; padding: 8px 16px; border-radius: 6px; font-size: 0.9em;">Cancel</button>
+  </div>
+</div>
   </div>
 
   <div id="consoleModal" class="modal console-modal">
     <div class="modal-content">
       <div class="console-header">
         <span>🖥️ Game Engine Console</span>
-        <div>
-          <button onclick="console.clear()" class="clear-btn"><span>🧹</span> Clear</button>
-          <button onclick="closeModal('consoleModal')">✕</button>
+        <div style="display: flex; gap: 8px;">
+          <button onclick="console.clear()" class="clear-btn">
+            <span>🧹</span> Clear
+          </button>
+          <button onclick="closeModal('consoleModal')" style="background: none; border: none; color: #fff; cursor: pointer;">✕</button>
         </div>
       </div>
       <div class="console-output" id="consoleOutput"></div>
       <div class="console-input">
-        <span>></span>
-        <input type="text" id="consoleInput" placeholder=">>>" onkeypress="handleConsoleInput(event)">
+        <span style="color: #50fa7b;">></span>
+        <input type="text" id="consoleInput" placeholder=">>>" onkeypress="handleConsoleInput(event)" style="
+          width: calc(100% - 32px);
+          margin: 8px 16px;
+          padding: 8px;
+          font-family: 'Consolas', monospace;
+          font-size: 14px;
+          background: #1d1e22;
+          border: 1px solid #3d3e44;
+          border-radius: 4px;
+          color: #50fa7b;
+          outline: none;
+        ">
       </div>
     </div>
   </div>
 
   <div id="codeEditorModal" class="modal code-editor-modal">
-    <div class="modal-content">
+    <div class="modal-content" style="display: flex; flex-direction: column; height: 100%; width: 100%; max-width: 1400px; background: var(--dark-gray); border: 1px solid var(--accent-color); border-radius: 12px; box-shadow: 0 8px 32px rgba(0,0,0,0.4);">
       <div class="editor-header">
-        <h2 id="editorFileName">📝 Edit File</h2>
+        <div class="editor-header-left">
+          <h2 id="editorFileName" style="display: flex; align-items: center; gap: 12px; margin: 0;">
+            <span class="file-icon">📝</span>
+            <span class="file-name">Edit File</span>
+          </h2>
+        </div>
         <div class="editor-actions">
-          <button onclick="indentCode()" title="Format Code (Ctrl+Shift+F)"><span>💅</span> <span>Format</span></button>
-          <button id="saveCode" class="primary" title="Save (Ctrl+S)"><span>💾</span> <span>Save</span></button>
-          <button onclick="closeModal('codeEditorModal')" class="close-btn" title="Close (Esc)"><span>✕</span></button>
+          <button class="editor-btn" onclick="indentCode()" title="Format Code (Ctrl+Shift+F)">
+            <span>⚡</span> Format
+          </button>
+          <button class="editor-btn" onclick="searchInCode()" title="Search (Ctrl+F)">
+            <span>🔍</span> Find
+          </button>
+          <button class="editor-btn" onclick="replaceInCode()" title="Replace (Ctrl+H)" style="display: none;">
+  <span>🔄</span> Replace
+</button>
+          <button id="saveCode" class="editor-btn primary" title="Save (Ctrl+S)">
+            <span>💾</span> Save
+          </button>
+          <button onclick="closeModal('codeEditorModal')" class="editor-btn close" title="Close (Esc)">
+            <span>✕</span>
+          </button>
         </div>
       </div>
+
       <div class="editor-main">
-        <textarea id="codeEditor" spellcheck="false"></textarea>
+        <div class="editor-gutter" style="display: none;">
+  <div class="line-numbers"></div>
+</div>
+        <div class="editor-content">
+          <textarea id="codeEditor" spellcheck="false" placeholder="// Start coding here..." style="width: 100%; height: 100%; color: #fff; border: none; background: transparent; resize: none; outline: none; padding: 12px 16px; font-family: 'Consolas', monospace; font-size: 14px; line-height: 1.6; tab-size: 2;"></textarea>
+        </div>
       </div>
+
       <div class="editor-footer">
-        <span class="editor-position">Line: 1, Col: 1</span>
+        <div class="editor-status">
+          <span class="editor-position">Line: 1, Col: 1</span>
+          <span class="editor-file-info">
+            <span class="editor-language">JavaScript</span>
+            <span class="editor-encoding">UTF-8</span>
+          </span>
+        </div>
+        <div class="editor-hints">
+          <span>Ctrl+S to save</span>
+          <span>Ctrl+F to find</span>
+          <span>Ctrl+H to replace</span>
+          <span>Ctrl+Shift+F to format</span>
+        </div>
       </div>
+
+
+      <script>
+        // Add keyboard shortcuts
+        document.getElementById('codeEditor').addEventListener('keydown', (e) => {
+          if (e.ctrlKey && e.key === 's') {
+            e.preventDefault();
+            document.getElementById('saveCode').click();
+          }
+          else if (e.ctrlKey && e.key === 'f') {
+            e.preventDefault();
+            searchInCode();
+          }
+          else if (e.ctrlKey && e.key === 'h') {
+            e.preventDefault();
+            replaceInCode();
+          }
+          else if (e.ctrlKey && e.shiftKey && e.key === 'F') {
+            e.preventDefault();
+            indentCode();
+          }
+        });
+
+        // Update cursor position
+        document.getElementById('codeEditor').addEventListener('input', updateCursorPosition);
+        document.getElementById('codeEditor').addEventListener('click', updateCursorPosition);
+        document.getElementById('codeEditor').addEventListener('keyup', updateCursorPosition);
+
+        function updateCursorPosition(e) {
+          const editor = e.target;
+          const pos = editor.selectionStart;
+          const content = editor.value;
+          
+          let line = 1;
+          let col = 1;
+          
+          for(let i = 0; i < pos; i++) {
+            if(content[i] === '\n') {
+              line++;
+              col = 1;
+            } else {
+              col++;
+            }
+          }
+          
+          document.querySelector('.editor-position').textContent = 
+            `Line: ${line}, Col: ${col}`;
+        }
+      </script>
     </div>
   </div>
 
-  <div id="mixModal" class="modal">
-      <div class="modal-content">
-          <h2>Mix Files</h2>
-          <p style="text-align: center; opacity: 0.8; margin-top: -15px; margin-bottom: 25px;">Combine HTML, CSS, and JS files into a single runnable HTML file.</p>
-          <div class="form-group">
-              <label for="htmlSelect">HTML File:</label>
-              <select id="htmlSelect"></select>
-          </div>
-          <div class="form-group">
-              <label for="cssSelect">CSS File:</label>
-              <select id="cssSelect"></select>
-          </div>
-          <div class="form-group">
-              <label for="jsSelect">JavaScript File:</label>
-              <select id="jsSelect"></select>
-          </div>
-          <div class="crud-buttons row-layout">
-              <button id="generateMixBtn" class="btn-primary">Generate & Download</button>
-              <button onclick="closeModal('mixModal')" class="btn-secondary">Close</button>
-          </div>
-      </div>
-  </div>
-
 <script>
-// Nandraki.js Engine & UI Management Script
 
-// --- Global UI Functions ---
+document.getElementById("mixButton").addEventListener("click", () => {
+    // Create the overlay for the modal
+    const overlay = document.createElement("div");
+    overlay.className = "mix-modal-overlay";
 
-function openModal(modalId) {
-    document.getElementById(modalId).classList.add('show');
-}
+    // Create the modal content container
+    const modal = document.createElement("div");
+    modal.className = "mix-modal-content";
 
-function closeModal(modalId) {
-    document.getElementById(modalId).classList.remove('show');
-}
+    // Populate with the new responsive structure
+    modal.innerHTML = `
+        <h2>Build HTML from Files</h2>
+        <div>
+            <label for="htmlSelect">HTML File:</label>
+            <select id="htmlSelect">
+                <option value="">-- Select HTML --</option>
+                ${hierarchyManager.items
+                    .filter(item => item.type === "html")
+                    .map(item => `<option value="${item.name}">${item.name}</option>`)
+                    .join("")}
+            </select>
+        </div>
+        <div>
+            <label for="cssSelect">CSS File:</label>
+            <select id="cssSelect">
+                <option value="">-- Select CSS --</option>
+                ${hierarchyManager.items
+                    .filter(item => item.type === "css")
+                    .map(item => `<option value="${item.name}">${item.name}</option>`)
+                    .join("")}
+            </select>
+        </div>
+        <div>
+            <label for="jsSelect">JavaScript File:</label>
+            <select id="jsSelect">
+                <option value="">-- Select JS --</option>
+                ${hierarchyManager.items
+                    .filter(item => item.type === "js")
+                    .map(item => `<option value="${item.name}">${item.name}</option>`)
+                    .join("")}
+            </select>
+        </div>
+        <div class="mix-modal-buttons">
+            <button id="generateMix">
+                <span>⚙️</span> Generate & Download
+            </button>
+            <button id="closeMixModal" class="close-btn">
+                Close
+            </button>
+        </div>
+    `;
 
-function toggleSection(sectionId) {
-  const content = document.getElementById(`${sectionId}-content`);
-  const header = content.previousElementSibling;
-  
-  if (content && header) {
-    content.classList.toggle('collapsed');
-    header.classList.toggle('collapsed');
-  }
-}
+    // Append to the overlay, then to the body
+    overlay.appendChild(modal);
+    document.body.appendChild(overlay);
 
-function showDialog(title, message, onConfirm) {
-  document.getElementById('dialogTitle').textContent = title;
-  document.getElementById('dialogMessage').textContent = message;
-
-  const confirmBtn = document.getElementById('dialogConfirm');
-  confirmBtn.onclick = () => {
-    onConfirm();
-    closeModal('dialogModal');
-  };
-
-  openModal('dialogModal');
-}
-
-// --- Mix Modal Logic ---
-function openMixModal() {
-    const { items } = window.hierarchyManager;
-
-    const populateSelect = (selectId, fileType) => {
-        const select = document.getElementById(selectId);
-        select.innerHTML = '<option value="">None</option>';
-        const filteredItems = items.filter(item => item.type === fileType);
-        if (filteredItems.length > 0) {
-            select.innerHTML += filteredItems
-                .map(item => `<option value="${item.name}">${item.name}</option>`)
-                .join("");
-        } else {
-            select.innerHTML += `<option value="" disabled>No ${fileType.toUpperCase()} files</option>`;
+    // Function to close the modal
+    const closeModal = () => {
+        if (document.body.contains(overlay)) {
+            document.body.removeChild(overlay);
         }
     };
-    
-    populateSelect('htmlSelect', 'html');
-    populateSelect('cssSelect', 'css');
-    populateSelect('jsSelect', 'js');
-    
-    openModal('mixModal');
-}
 
-document.getElementById("generateMixBtn").addEventListener("click", () => {
-    const htmlName = document.getElementById("htmlSelect").value;
-    const cssName = document.getElementById("cssSelect").value;
-    const jsName = document.getElementById("jsSelect").value;
+    // Add event listeners
+    document.getElementById("closeMixModal").addEventListener("click", closeModal);
+    overlay.addEventListener('click', (e) => {
+        if (e.target === overlay) {
+            closeModal();
+        }
+    });
 
-    const htmlItem = htmlName ? window.hierarchyManager.findItemInHierarchy(htmlName) : { content: '' };
-    const cssItem = cssName ? window.hierarchyManager.findItemInHierarchy(cssName) : { content: '' };
-    const jsItem = jsName ? window.hierarchyManager.findItemInHierarchy(jsName) : { content: '' };
+    // Handle the mix generation
+    document.getElementById("generateMix").addEventListener("click", () => {
+        const htmlName = document.getElementById("htmlSelect").value;
+        const cssName = document.getElementById("cssSelect").value;
+        const jsName = document.getElementById("jsSelect").value;
+        
+        // Basic validation
+        if (!htmlName || !cssName || !jsName) {
+            alert("Please select one file of each type (HTML, CSS, JS).");
+            return;
+        }
 
-    if (!htmlName && !cssName && !jsName) {
-        alert("Please select at least one file to mix.");
-        return;
-    }
+        const htmlItem = hierarchyManager.findItemInHierarchy(htmlName);
+        const cssItem = hierarchyManager.findItemInHierarchy(cssName);
+        const jsItem = hierarchyManager.findItemInHierarchy(jsName);
+        
+        // Check if items were found
+        if (!htmlItem || !cssItem || !jsItem) {
+            alert("One or more selected files could not be found.");
+            return;
+        }
 
-    const finalHtml = `<!DOCTYPE html>
-<html>
+        const mixedHtml = `
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Nandraki Mix</title>
-  <style>${cssItem.content || ''}</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mixed File</title>
+    <style>
+${cssItem.content || '/* CSS content not found */'}
+    </style>
 </head>
 <body>
-  ${htmlItem.content || ''}
-  <script>${jsItem.content || ''}<\/script>
-</body>
-</html>`;
 
-    const blob = new Blob([finalHtml], { type: "text/html" });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = "mix.html";
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
-    
-    closeModal('mixModal');
+${htmlItem.content || '<!-- HTML content not found -->'}
+
+    <script>
+${jsItem.content || '// JavaScript content not found'}
+    <\/script>
+</body>
+</html>
+        `;
+
+        // Generate and trigger download
+        const blob = new Blob([mixedHtml], { type: "text/html" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "mixed-build.html";
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+
+        // Close modal after download
+        closeModal();
+    });
 });
 
-// --- Dependency Management ---
+
+
 
 class DependencyManager {
   constructor() {
@@ -921,24 +2052,38 @@ class DependencyManager {
     localStorage.setItem('dependencies', JSON.stringify(this.dependencies));
   }
 
-  addDependency(url) {
+  addDependency(url, integrity = null, crossorigin = null) {
     if (!url) return;
-    const newDependency = { id: Date.now(), url };
+
+    const newDependency = {
+      id: Date.now(),
+      url: url,
+      integrity: integrity,
+      crossorigin: crossorigin
+    };
+
     this.dependencies.push(newDependency);
     this.saveDependencies();
     this.renderDependencies();
+
     const script = document.createElement('script');
     script.src = url;
+    if (integrity) script.integrity = integrity;
+    if (crossorigin) script.crossorigin = crossorigin;
     document.head.appendChild(script);
   }
 
   renderDependencies() {
     const container = document.getElementById('dependenciesList');
     if (!container) return;
+
     container.innerHTML = this.dependencies.map(dep => `
-      <div class="dependency-item">
-        <input type="text" value="${dep.url}" readonly>
-        <button onclick="window.dependencyManager.removeDependency(${dep.id})">Remove</button>
+      <div class="dependency-item" >
+        <div style="flex: 1;">
+          <input type="text" value="${dep.url}" readonly>
+          ${dep.integrity ? `<input type="text" value="${dep.integrity}" readonly style="margin-top: 4px; font-size: 12px;">` : ''}
+        </div>
+        <button onclick="window.dependencyManager.removeDependency(${dep.id})" style="background: linear-gradient(135deg, #3498db, #2980b9); color: white; border: none; padding: 10px 10px; border-radius: 8px; cursor: pointer; font-weight: bold; transition: all 0.3s ease; display: flex; align-items: center; gap: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.2); margin-top: 10px;">Remove</button>
       </div>
     `).join('');
   }
@@ -950,180 +2095,477 @@ class DependencyManager {
   }
 }
 
-function openCdnModal() { openModal('cdnModal'); }
-function addDependency() {
-  const input = document.getElementById('newDependencyInput');
-  if (input.value.trim()) { window.dependencyManager.addDependency(input.value.trim()); }
-  input.value = '';
-}
-function updateCDN() {
-  const cdnUrl = document.getElementById('cdnInput').value;
-  const scriptElement = document.querySelector('script[src*="nandraki"]');
-  if (scriptElement) { scriptElement.src = cdnUrl; }
-  window.dependencyManager.saveDependencies();
-  closeModal('cdnModal');
-}
-
-// --- Game Engine Core ---
-
 class GameEngine {
   constructor() {
     this.canvas = document.getElementById('gameCanvas');
     this.ctx = this.canvas.getContext('2d');
     this.isPlaying = false;
-    this.iframe = null;
+    this.mainSceneContent = null;
 
     this.initializeControls();
+    this.resizeCanvas();
     this.setupConsoleInterceptor();
     window.addEventListener('resize', () => this.resizeCanvas());
   }
 
   setupConsoleInterceptor() {
-    const originalConsole = { log: console.log, info: console.info, warn: console.warn, error: console.error, clear: console.clear };
-    Object.keys(originalConsole).forEach(method => {
+    const originalConsole = {
+      log: console.log,
+      info: console.info, 
+      warn: console.warn,
+      error: console.error,
+      debug: console.debug,
+      clear: console.clear
+    };
+	
+	const arquivoBuild={
+	html:"",
+	js:"",
+	css:""
+	};
+	
+    ['log', 'info', 'warn', 'error', 'debug', 'clear'].forEach(method => {
       console[method] = (...args) => {
         originalConsole[method].apply(console, args);
+        
+	
+		
         if (method === 'clear') {
           const consoleOutput = document.getElementById('consoleOutput');
-          if (consoleOutput) consoleOutput.innerHTML = '';
+          if (consoleOutput) {
+            consoleOutput.innerHTML = '';
+           
+          }
           return;
         }
-        this.logToConsole(method, args.map(arg => typeof arg === 'object' ? JSON.stringify(arg, null, 2) : String(arg)).join(' '));
+		
+		
+		
+        this.logToConsole(method, args.map(arg => {
+          if (typeof arg === 'object') {
+            return JSON.stringify(arg, null, 2);
+          }
+          return String(arg);
+        }).join(' '));
       };
     });	
-    window.addEventListener('error', e => this.logToConsole('error', `${e.message} at ${e.filename}:${e.lineno}`));
-    window.addEventListener('unhandledrejection', e => this.logToConsole('error', `Unhandled Promise: ${e.reason}`));
+	
+    window.addEventListener('error', (event) => {
+      this.logToConsole('error', `${event.message} at ${event.filename}:${event.lineno}:${event.colno}`);
+    });
+
+    window.addEventListener('unhandledrejection', (event) => {
+      this.logToConsole('error', `Unhandled Promise Rejection: ${event.reason}`);
+    });
+	
+	//Função build no console 
+	
+    console.build = (itemName) => {
+        
+        if (itemName === "new html") {
+		     const cdnUrl = document.querySelector('script[src*="nandraki"]').src;
+			 const Html = `
+              <html>
+                <head>
+                  <style>
+				  
+                   ${arquivoBuild.css}
+				   
+                  </style>
+                  <script src="${cdnUrl}"><\/script>
+                </head>
+                <body>
+				
+				 ${arquivoBuild.html}
+				 
+                  <script>
+                        ${arquivoBuild.js}
+                  <\/script>
+                </body>
+              </html>
+            `;
+			const newItem = {
+				id: `new-${Date.now()}`,
+				name: `arquivo.html`,
+				type: "html",
+				content: Html,
+				children: []
+			};
+
+			  // Função para baixar o arquivo HTML
+		const blob = new Blob([Html], { type: "text/html" }); 
+		const url = URL.createObjectURL(blob);
+		const a = document.createElement("a"); 
+		a.href = url; 
+		a.download = "arquivo.html"; // Define o nome do arquivo para download
+		document.body.appendChild(a); // Adiciona o link ao DOM (necessário em alguns navegadores)
+		a.click(); // Aciona o clique para iniciar o download
+		document.body.removeChild(a); // Remove o link após o download
+		URL.revokeObjectURL(url); // Revoga a URL temporária
+			console.info("export sucesso!");
+			return
+		
+
+
+
+		
+		}else  if (itemName != "") {
+		    
+			const item = hierarchyManager.findItemInHierarchy(itemName);
+			if (!item) {
+					console.error(`Item "${itemName}" não encontrado na hierarquia.`);
+					return;
+			
+			}
+			
+			if (['html', 'css', 'js'].includes(item.type)) {
+				arquivoBuild[item.type] = item.content;
+				console.info(`ArquivoBuild.${item.type} foi configurado com sucesso!`);
+			} else {
+				console.error(`Tipo de item "${item.type}" não suportado.`);
+			}
+						   
+			
+        }else{
+		    
+			console.info("item vazio!");
+			
+		}
+		
+		
+	}
+	
+	console.arquivo = () => {
+		
+			console.info(arquivoBuild);   
+	}
+	
+	
   }
 
   initializeControls() {
-    document.getElementById('playBtn').addEventListener('click', () => this.play());
-    document.getElementById('stopBtn').addEventListener('click', () => this.stop());
+    const playBtn = document.getElementById('playBtn');
+    const stopBtn = document.getElementById('stopBtn');
+    
+    playBtn.addEventListener('click', () => {
+      this.play();
+    });
+    
+    stopBtn.addEventListener('click', () => {
+      this.stop();
+    });
+    
     document.getElementById('consoleBtn').addEventListener('click', () => this.toggleConsole());
     document.getElementById('cdnBtn').addEventListener('click', () => openCdnModal());
   }
 
   resizeCanvas() {
-    // Canvas resizing is now handled by Flexbox. This can be used for WebGL viewport updates if needed.
+    const container = this.canvas.parentElement;
+    this.canvas.width = container.clientWidth;
+    this.canvas.height = container.clientHeight - 100;
   }
 
   play() {
-    if (this.isPlaying) return;
-    
-    if (!window.hierarchyManager.mainSceneId) {
-        showDialog('Execution Error', 'No main scene set. Right-click a .html or .nans file to set it.', () => {});
-        return;
-    }
-    
-    const mainScene = window.hierarchyManager.findItem(window.hierarchyManager.mainSceneId, window.hierarchyManager.items);
+    if (!this.isPlaying) {
+      this.isPlaying = true;
+      document.getElementById('playBtn').style.display = 'none'; 
+      document.getElementById('stopBtn').style.display = 'inline-flex';
 
-    if (mainScene && mainScene.content !== undefined) {
-        this.isPlaying = true;
-        document.getElementById('playBtn').style.display = 'none'; 
-        document.getElementById('stopBtn').style.display = 'inline-flex';
+      if (window.hierarchyManager.mainSceneId) {
+        const mainScene = window.hierarchyManager.findItem(
+          window.hierarchyManager.mainSceneId, 
+          window.hierarchyManager.items
+        );
 
-        const container = document.querySelector('.scene-view');
-        this.iframe = document.createElement('iframe');
-        this.iframe.style.width = '100%';
-        this.iframe.style.height = '100%'; 
-        this.iframe.style.border = 'none';
-        this.iframe.style.flex = '1';
-        
-        container.replaceChild(this.iframe, this.canvas);
+        if (mainScene && mainScene.content) {
+          const container = this.canvas.parentElement;
+          container.innerHTML = '';
 
-        let sceneContent = mainScene.content;
-        if (mainScene.name.toLowerCase().endsWith('.nans')) {
+          if (mainScene.name.toLowerCase().endsWith('.nans')) {
+            // Create iframe for NANS execution with proper HTML structure
+            const iframe = document.createElement('iframe');
+            iframe.style.width = '100%';
+            iframe.style.height = '100%'; 
+            iframe.style.border = 'none';
+            container.appendChild(iframe);
+
+            // Get current CDN URL
             const cdnUrl = document.querySelector('script[src*="nandraki"]').src;
-            sceneContent = `<html><head><script src="${cdnUrl}"><\/script></head><body><script>myjogo = { start: function() { ${mainScene.content} } };game.update(myjogo.start, 60);<\/script></body></html>`;
+
+            // Create proper HTML structure for NANS with the requested pattern
+            const nansHtml = `
+              <html>
+                <head>
+                  <style>
+                    body {
+                      background-color: white;
+                    }
+                  </style>
+                  <script src="${cdnUrl}"><\/script>
+                </head>
+                <body>
+                  <script>
+                    myjogo = {
+                      start: function() {
+                        ${mainScene.content}
+                      },
+                    };
+
+                    fps = 60;
+                    game.update(myjogo.start, fps);
+                  <\/script>
+                </body>
+              </html>
+            `;
+
+            iframe.contentWindow.document.open();
+            iframe.contentWindow.document.write(nansHtml);
+            iframe.contentWindow.document.close();
+
+            console.log('Executing NANS scene:', mainScene.name);
+
+          } else {
+            // Handle regular HTML scenes as before
+            const iframe = document.createElement('iframe');
+            iframe.style.width = '100%';
+            iframe.style.height = '100%';
+            iframe.style.border = 'none';
+            container.appendChild(iframe);
+
+            iframe.contentWindow.document.open();
+            iframe.contentWindow.document.write(mainScene.content);
+            iframe.contentWindow.document.close();
+          }
+        } else {
+          console.warn('No content found for main scene');
+		  alert("No content found for main scene")
         }
-        
-        this.iframe.contentWindow.document.open();
-        this.iframe.contentWindow.document.write(sceneContent);
-        this.iframe.contentWindow.document.close();
-    } else {
-        showDialog('Execution Error', 'The main scene is empty or not found.', () => {});
+      } else {
+        console.warn('No main scene selected');
+		alert("No main scene selected")
+      }
     }
   }
 
   stop() {
-    if (!this.isPlaying) return;
-    this.isPlaying = false;
-    document.getElementById('playBtn').style.display = 'inline-flex';
-    document.getElementById('stopBtn').style.display = 'none';
+    if (this.isPlaying) {
+      this.isPlaying = false;
+      document.getElementById('playBtn').style.display = 'inline-flex';
+      document.getElementById('stopBtn').style.display = 'none';
 
-    if (this.iframe) {
-        const container = document.querySelector('.scene-view');
-        container.replaceChild(this.canvas, this.iframe);
-        this.iframe = null;
+      const container = document.querySelector('.scene-view');
+      if (container) {
+        // Clear the container
+        container.innerHTML = '';
+        
+        // Recreate canvas
+        const canvas = document.createElement('canvas');
+        canvas.id = 'gameCanvas';
+        container.appendChild(canvas);
+        this.canvas = canvas;
+        this.ctx = this.canvas.getContext('2d');
+        this.resizeCanvas();
+
+        // Recreate and restore project panel
+        const projectPanel = document.createElement('div');
+        projectPanel.className = 'project-panel';
+        projectPanel.innerHTML = `
+          <div class="panel-header section-header" onclick="toggleSection('assets')">
+            <div class="project-title">
+              <span class="dropdown-arrow">▼</span>
+              <span>🎮 Project Assets</span>
+            </div>
+            <label for="fileUpload" class="upload-btn">
+              Import File
+              <input type="file" id="fileUpload" multiple accept=".js,.html,.css,.png,.jpg,.jpeg,.gif,.svg,.nans" style="display:none">
+            </label>
+          </div>
+          <div class="section-content" id="assets-content">
+            <div class="assets-grid" id="assetsGrid"></div>
+          </div>
+        `;
+        container.appendChild(projectPanel);
+
+        // Restore file upload event listener
+        document.getElementById('fileUpload').addEventListener('change', (e) => {
+          window.assetManager.handleFileUpload(e.target.files);
+        });
+
+        // Re-render assets
+        window.assetManager.renderAssets();
+      }
+
+      console.log('Game Stopped');
     }
   }
 
-  toggleConsole() { openModal('consoleModal'); }
+  toggleConsole() {
+    const consoleModal = document.getElementById('consoleModal');
+    const consoleOutput = document.getElementById('consoleOutput');
+
+    consoleOutput.innerHTML = '';
+
+    consoleModal.style.display = 'block';
+
+    console.info('Console initialized. Type JavaScript code below to execute.');
+  }
 
   logToConsole(type, message) {
     const consoleOutput = document.getElementById('consoleOutput');
     if (!consoleOutput) return;
+
     const line = document.createElement('div');
     line.className = `console-line console-${type}`;
-    line.innerHTML = `<span class="console-timestamp">${new Date().toLocaleTimeString()}</span><span class="console-content">${message}</span>`;
+
+    const timestamp = new Date().toLocaleTimeString([], {
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit'
+    });
+
+    let formattedMessage = message;
+    if (typeof message === 'object') {
+      try {
+        formattedMessage = JSON.stringify(message, null, 2);
+      } catch(e) {
+        formattedMessage = message.toString();
+      }
+    }
+
+    line.innerHTML = `
+      <span class="console-timestamp">${timestamp}</span>
+      <span class="console-content">${formattedMessage}</span>
+    `;
+
     consoleOutput.appendChild(line);
     consoleOutput.scrollTop = consoleOutput.scrollHeight;
   }
 }
 
-function handleConsoleInput(event) {
-  if (event.key === 'Enter') {
-    const input = event.target;
-    if (!input.value.trim()) return;
-    console.log(`> ${input.value}`);
-    try {
-      const result = eval(input.value);
-      if (result !== undefined) console.log(result);
-    } catch (error) {
-      console.error(error.message);
-    }
-    input.value = '';
-  }
-}
-
-// --- Asset & Hierarchy Management ---
-
 class AssetManager {
   constructor() {
     this.assets = [];
     this.loadAssets();
-    document.getElementById('fileUpload').addEventListener('change', e => this.handleFileUpload(e.target.files));
+    this.setupEventListeners();
   }
 
-  handleFileUpload(files) {
+  setupEventListeners() {
+    document.getElementById('fileUpload').addEventListener('change', (e) => {
+      this.handleFileUpload(e.target.files);
+    });
+  }
+
+  async handleFileUpload(files) {
     for (let file of files) {
+      try {
         const reader = new FileReader();
-        reader.onload = e => {
-            const newAsset = { id: Date.now() + Math.random(), name: file.name, type: file.type, content: e.target.result };
-            this.assets.push(newAsset);
-            this.saveAssets();
-            this.renderAssets();
-            window.hierarchyManager.addFileToHierarchy(newAsset);
+        reader.onload = (e) => {
+          const newAsset = {
+            id: Date.now(),
+            name: file.name,
+            type: file.type,
+            size: file.size,
+            content: e.target.result,
+            dateAdded: new Date().toISOString()
+          };
+
+          this.assets.push(newAsset);
+          this.saveAssets();
+          this.renderAssets();
+
+          window.hierarchyManager.addFileToHierarchy(newAsset);
         };
-        if (file.type.startsWith('image')) reader.readAsDataURL(file);
-        else reader.readAsText(file);
+
+        if (file.type.includes('image')) {
+          reader.readAsDataURL(file);
+        } else {
+          reader.readAsText(file);
+        }
+      } catch (error) {
+        console.error('Error uploading file:', error);
+        showDialog(
+          'Upload Error',
+          `Error uploading file: ${file.name}`,
+          () => {}  // No action needed on confirm
+        );
+      }
     }
   }
 
   loadAssets() {
-    this.assets = JSON.parse(localStorage.getItem('gameAssets') || '[]');
+    const savedAssets = localStorage.getItem('gameAssets');
+    this.assets = savedAssets ? JSON.parse(savedAssets) : [];
     this.renderAssets();
   }
 
   renderAssets() {
     const grid = document.getElementById('assetsGrid');
+
     if (!this.assets.length) {
-      grid.innerHTML = `<div class="assets-empty-state"><div class="icon">📥</div><div class="title">No Assets</div><div class="subtitle">Import files to get started</div></div>`;
+      grid.innerHTML = `
+        <div class="assets-empty-state">
+          <div class="icon">📁</div>
+          <div class="title">No Assets</div>
+          <div class="subtitle">
+            Import files using the button above or drag and drop files here
+          </div>
+        </div>
+      `;
       return;
     }
-    grid.innerHTML = this.assets.map(asset => `<div class="asset-item" draggable="true" data-id="${asset.id}"><div class="asset-name">${asset.name}</div></div>`).join('');
+
+    grid.innerHTML = this.assets.map(asset => `
+      <div class="asset-item" draggable="true" data-id="${asset.id}">
+        <div class="asset-name">${asset.name}</div>
+        <div class="crud-buttons">
+          <button onclick="assetManager.sendToHierarchy(${asset.id})">
+            <span>📁</span> Add to Hierarchy
+          </button>
+          <button onclick="assetManager.deleteAsset(${asset.id})">
+            <span>🗑️</span> Delete
+          </button>
+        </div>
+      </div>
+    `).join('');
   }
 
-  saveAssets() { localStorage.setItem('gameAssets', JSON.stringify(this.assets)); }
+  getFileIcon(type) {
+    const iconMap = {
+      'js': '📜',
+      'html': '🌐',
+      'css': '🎨',
+      'nans': 'ꙮ',
+      'image':'🖼️',
+      'default': '🧬'
+    };
+    
+    const fileType = type.split('/')[1] || type;
+    return iconMap[fileType] || iconMap.default;
+  }
+
+  sendToHierarchy(id) {
+    const asset = this.assets.find(a => a.id === id);
+    if (asset) {
+      window.hierarchyManager.addFileToHierarchy(asset);
+      console.log('Asset sent to hierarchy:', asset.name);
+    }
+  }
+
+  deleteAsset(id) {
+    showDialog(
+      'Confirm Delete', 
+      'Are you sure you want to delete this asset?',
+      () => {
+        this.assets = this.assets.filter(asset => asset.id !== id);
+        this.saveAssets();
+        this.renderAssets();
+      }
+    );
+  }
+
+  saveAssets() {
+    localStorage.setItem('gameAssets', JSON.stringify(this.assets));
+  }
 }
 
 class HierarchyManager {
@@ -1132,26 +2574,462 @@ class HierarchyManager {
     this.selectedItemId = null;
     this.mainSceneId = null;
     this.loadHierarchy();
-    document.getElementById('hierarchyForm').addEventListener('submit', e => { e.preventDefault(); this.createItem(); });
+    this.setupEventListeners();
   }
 
   loadHierarchy() {
-    const data = JSON.parse(localStorage.getItem('hierarchyData') || '{}');
-    this.items = data.items || [];
-    this.mainSceneId = data.mainSceneId || null;
+    const saved = localStorage.getItem('hierarchy');
+    this.items = saved ? JSON.parse(saved) : [];
+    this.renderHierarchy();
+  }
+ // Busca um item por nome ou ID
+    findItemInHierarchy(identifier) {
+        if (typeof identifier === 'string') {
+            return this.items.find(item => item.name === identifier);
+        }
+        if (typeof identifier === 'number') {
+            return this.items.find(item => item.id === identifier);
+        }
+        console.error('Invalid identifier type. Use a string (name) or number (ID).');
+        return null;
+    }
+
+    // Busca um item recursivamente em hierarquias aninhadas
+    findItemRecursively(identifier, items = this.items) {
+        for (const item of items) {
+            if (typeof identifier === 'string' && item.name === identifier) {
+                return item;
+            }
+            if (typeof identifier === 'number' && item.id === identifier) {
+                return item;
+            }
+
+            if (item.children) {
+                const found = this.findItemRecursively(identifier, item.children);
+                if (found) return found;
+            }
+        }
+        return null;
+    }
+  setupEventListeners() {
+    document.getElementById('hierarchyForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      this.createItem();
+    });
+
+    const treeView = document.querySelector('.tree-view');
+    treeView.addEventListener('dragstart', this.handleDragStart.bind(this));
+    treeView.addEventListener('dragover', this.handleDragOver.bind(this));
+    treeView.addEventListener('drop', this.handleDrop.bind(this));
+  }
+
+  showItemModal(id) {
+    this.selectedItemId = id;
+    const modal = document.getElementById('hierarchyItemModal');
+    const item = this.findItem(id, this.items);
+  
+   
+
+    // Update modal content with new layout and check for both .html and .nans files
+    modal.querySelector('.modal-content').innerHTML = `
+      <h2 style="margin-bottom: 20px;">Item Options</h2>
+      <div class="crud-buttons">
+        ${!item.name.toLowerCase().endsWith('.html') && !item.name.toLowerCase().endsWith('.nans') ? ''  :
+          `<button onclick="hierarchyManager.setMainScene()" 
+          style="background: var(--accent-color);">
+            <span style="margin-right: 6px;">🎮</span>
+            Set as Main Scene
+          </button>`
+        }
+        <button onclick="hierarchyManager.editItemContent()" 
+         style="background: var(--accent-color);">
+          <span style="margin-right: 6px;">📝</span>
+          Edit Content
+        </button>
+        <button onclick="hierarchyManager.exportGame(${id})"
+         style="background: var(--success-color);">
+          <span style="margin-right: 6px;">📤</span>
+          Export Game
+        </button>
+        <button onclick="hierarchyManager.deleteItem(${id})"
+         style="background: #e74c3c;">
+          <span style="margin-right: 6px;">🗑️</span>
+          Delete Item
+        </button>
+        <button onclick="closeModal('hierarchyItemModal')"
+         style="background: var(--mid-gray);">
+          Cancel
+        </button>
+      </div>
+    `;
+
+    modal.style.display = 'block';
+  }
+  setMainScene() {
+    const item = this.findItem(this.selectedItemId, this.items);
+    if (item) {
+      // Check if file is HTML or NANS
+      if (!item.name.toLowerCase().endsWith('.html') && !item.name.toLowerCase().endsWith('.nans')) {
+        console.warn('Only HTML and NANS files can be set as main scene');
+        return;
+      }
+
+      // Store the main scene ID
+      this.mainSceneId = item.id;
+
+      // Re-render hierarchy to update UI
+      this.renderHierarchy();
+
+      // Update scene title if it exists
+      const sceneTitle = document.querySelector('.scene-title');
+      if (sceneTitle) {
+        sceneTitle.textContent = `Scene: ${item.name}`;
+      }
+
+      closeModal('hierarchyItemModal');
+    }
+  }
+
+  exportGame(id) {
+    const item = this.findItem(id, this.items);
+    if (!item) return;
+
+    // Create file content based on type
+    let content = item.content;
+    let filename = item.name;
+
+    // If it's a NANS file, wrap it in the standard HTML template
+    if (item.name.toLowerCase().endsWith('.nans')) {
+      const cdnUrl = document.querySelector('script[src*="nandraki"]').src;
+      content = `
+<html>
+  <head>
+    <style>
+      body {
+        background-color: white;
+      }
+    </style>
+    <script src="${cdnUrl}"><\/script>
+  </head>
+  <body>
+    <script>
+      myjogo = {
+        start: function() {
+          ${item.content}
+        },
+      };
+
+      fps = 60;
+      game.update(myjogo.start, fps);
+    <\/script>
+  </body>
+</html>`;
+      filename = filename.replace('.nans', '.html');
+    }
+
+    // Create and trigger download
+    const blob = new Blob([content], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  }
+
+  createItem() {
+    const name = document.getElementById('itemName').value;
+    const type = document.getElementById('itemType').value;
+
+    const newItem = {
+      id: Date.now(),
+      name: name.endsWith('.' + type) ? name : name + '.' + type,
+      type,
+      children: []
+    };
+
+    this.items.push(newItem);
+    this.saveHierarchy();
+    this.renderHierarchy();
+
+    const successMsg = document.getElementById('hierarchySuccess');
+    successMsg.style.display = 'block';
+    setTimeout(() => {
+      successMsg.style.display = 'none';
+      closeModal('hierarchyModal');
+    }, 1500);
+  }
+
+  addFileToHierarchy(asset) {
+    const fileExt = asset.name.split('.').pop().toLowerCase();
+    const newItem = {
+      id: asset.id,
+      name: asset.name,
+      type: fileExt,
+      content: asset.content,
+      children: []
+    };
+
+    this.items.push(newItem);
+    this.saveHierarchy();
     this.renderHierarchy();
   }
 
-  saveHierarchy() {
-      const data = { items: this.items, mainSceneId: this.mainSceneId };
-      localStorage.setItem('hierarchyData', JSON.stringify(data));
+  deleteItem(id) {
+    showDialog(
+      'Confirm Delete',
+      'Are you sure you want to delete this item?',
+      () => {
+        this.items = this.removeItem(id, this.items);
+        this.saveHierarchy();
+        this.renderHierarchy();
+      }
+    );
   }
 
-  findItemInHierarchy(name) { return this.items.find(item => item.name === name); }
+editItemContent() {
+    const item = this.findItem(this.selectedItemId, this.items);
+    if (item) {
+      const editor = document.getElementById('codeEditor');
+      const fileName = document.getElementById('editorFileName');
+      
+      fileName.innerHTML = `
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <span style="font-size: 24px;">📝</span>
+          <span>Editing: ${item.name}</span>
+        </div>
+      `;
+      
+      // Update the save and close buttons
+      document.querySelector('.editor-actions').innerHTML = `
+        <button id="saveCode">Save Changes</button>
+        <button onclick="closeModal('codeEditorModal')">Close Editor</button>
+      `;
+      
+      editor.value = item.content || '';
+      
+      // Apply syntax highlighting based on file type
+      this.applySyntaxHighlighting(item.type);
+      
+      // Update line numbers
+      this.updateLineNumbers();
+      
+      // Setup save handler
+      document.getElementById('saveCode').onclick = () => this.saveItemContent(item.id, editor.value);
+      
+      document.getElementById('codeEditorModal').style.display = 'block';
+      
+      // Add editor event listeners
+      editor.addEventListener('input', () => {
+        this.updateLineNumbers();
+        this.applySyntaxHighlighting(item.type);
+      });
+      
+      editor.addEventListener('keydown', (e) => {
+        if (e.key === 'Tab') {
+          e.preventDefault();
+          const start = editor.selectionStart;
+          const end = editor.selectionEnd;
+          editor.value = editor.value.substring(0, start) + '  ' + editor.value.substring(end);
+          editor.selectionStart = editor.selectionEnd = start + 2;
+        }
+      });
+
+      // Set initial cursor position
+      editor.focus();
+      editor.selectionStart = 0;
+      editor.selectionEnd = 0;
+    }
+  }
+
+  saveItemContent(id, newContent) {
+    const item = this.findItem(id, this.items);
+    if (item) {
+      item.content = newContent;
+      this.saveHierarchy();
+      console.log('Content saved for:', item.name);
+      
+      // Show success message
+      const fileName = document.getElementById('editorFileName');
+      const originalText = fileName.innerHTML;
+      fileName.innerHTML = `
+        <div style="display: flex; align-items: center; gap: 8px; color: #4CAF50;">
+          <span style="font-size: 24px;">✓</span>
+          <span>Changes saved!</span>
+        </div>
+      `;
+      
+      // Reset back to original text after 2 seconds
+      setTimeout(() => {
+        fileName.innerHTML = originalText;
+      }, 2000);
+      
+      closeModal('codeEditorModal');
+    }
+  }
+
+  applySyntaxHighlighting(fileType) {
+    const editor = document.getElementById('codeEditor');
+    const content = editor.value;
+    let highlighted = content;
+
+    switch(fileType) {
+      case 'js':
+        highlighted = this.highlightJS(content);
+        break;
+      case 'html':
+        highlighted = this.highlightHTML(content);
+        break;
+      case 'css':
+        highlighted = this.highlightCSS(content);
+        break;
+      case 'nans':
+        highlighted = this.highlightNANS(content);
+        break;
+    }
+
+    const wrapper = document.createElement('div');
+    wrapper.className = 'editor-highlight';
+    wrapper.innerHTML = highlighted;
+    
+    // Preserve cursor position
+    const cursorPos = editor.selectionStart;
+    editor.value = content;
+    editor.selectionStart = cursorPos;
+    editor.selectionEnd = cursorPos;
+  }
+
+  highlightJS(code) {
+    return code
+      .replace(/(["'`])(.*?)\1/g, '<span class="string">$&</span>')
+      .replace(/\b(function|return|var|let|const|if|else|for|while|class|import|export|from|default|async|await)\b/g, '<span class="keyword">$&</span>')
+      .replace(/\b(\d+)\b/g, '<span class="number">$&</span>')
+      .replace(/(\/\/.*$)/gm, '<span class="comment">$&</span>')
+      .replace(/\b(console|window|document|Math|Array|Object|String|Number)\b/g, '<span class="built-in">$&</span>');
+  }
+
+  highlightHTML(code) {
+    return code
+      .replace(/(<[^&]*>)/g, '<span class="tag">$&</span>')
+      .replace(/(\w+)=/g, '<span class="attribute">$&</span>')
+      .replace(/(["'])(.*?)\1/g, '<span class="string">$&</span>')
+      .replace(/(<!--.*?-->)/g, '<span class="comment">$&</span>');
+  }
+
+  highlightCSS(code) {
+    return code
+      .replace(/([^{}]*)({[^}]*})/g, '<span class="selector">$1</span><span class="block">$2</span>')
+      .replace(/([\w-]+):/g, '<span class="property">$&</span>')
+      .replace(/(#[a-f\d]{3,6})\b/gi, '<span class="color">$&</span>')
+      .replace(/(\/\*.*?\*\/)/g, '<span class="comment">$&</span>')
+      .replace(/(@\w+)/g, '<span class="at-rule">$&</span>');
+  }
+
+  highlightNANS(code) {
+    return code; // Basic handling, could be expanded for specific highlighing rules later
+  }
+
+  updateLineNumbers() {
+    const editor = document.getElementById('codeEditor');
+    const lineNumbers = document.querySelector('.line-numbers');
+    const content = editor.value;
+    const lines = content.split('\n').length;
+    
+    lineNumbers.innerHTML = Array(lines).fill(0)
+      .map((_, i) => `<div>${i + 1}</div>`)
+      .join('');
+
+    // Sync scroll position
+    editor.addEventListener('scroll', () => {
+      lineNumbers.scrollTop = editor.scrollTop;
+    });
+  }
+
+  createItem() {
+    const name = document.getElementById('itemName').value;
+    const type = document.getElementById('itemType').value;
+
+    const newItem = {
+      id: Date.now(),
+      name: name.endsWith('.' + type) ? name : name + '.' + type,
+      type,
+      children: []
+    };
+
+    this.items.push(newItem);
+    this.saveHierarchy();
+    this.renderHierarchy();
+
+    const successMsg = document.getElementById('hierarchySuccess');
+    successMsg.style.display = 'block';
+    setTimeout(() => {
+      successMsg.style.display = 'none';
+      closeModal('hierarchyModal');
+    }, 1500);
+  }
+
+  addFileToHierarchy(asset) {
+    const fileExt = asset.name.split('.').pop().toLowerCase();
+    const newItem = {
+      id: asset.id,
+      name: asset.name,
+      type: fileExt,
+      content: asset.content,
+      children: []
+    };
+
+    this.items.push(newItem);
+    this.saveHierarchy();
+    this.renderHierarchy();
+  }
+
+  deleteItem(id) {
+    showDialog(
+      'Confirm Delete',
+      'Are you sure you want to delete this item?',
+      () => {
+        this.items = this.removeItem(id, this.items);
+        this.saveHierarchy();
+        this.renderHierarchy();
+      }
+    );
+  }
+
+  handleDragStart(e) {
+    if (e.target.classList.contains('asset-item')) {
+      e.dataTransfer.setData('text/plain', e.target.dataset.id);
+    }
+  }
+
+  handleDragOver(e) {
+    e.preventDefault();
+    const target = e.target.closest('.tree-item');
+    if (target) {
+      target.classList.add('dragover');
+    }
+  }
+
+  handleDrop(e) {
+    e.preventDefault();
+    const target = e.target.closest('.tree-item');
+    if (target) {
+      const assetId = e.dataTransfer.getData('text/plain');
+      const asset = window.assetManager.assets.find(a => a.id === parseInt(assetId));
+      if (asset) {
+        this.addFileToHierarchy(asset);
+      }
+      target.classList.remove('dragover');
+    }
+  }
+
   findItem(id, items) {
     for (let item of items) {
-      if (item.id === id) return item;
-      if (item.children) {
+      if (item.id === id) {
+        return item;
+      }
+      if (item.children && item.children.length) {
         const found = this.findItem(id, item.children);
         if (found) return found;
       }
@@ -1159,138 +3037,295 @@ class HierarchyManager {
     return null;
   }
 
-  showItemModal(id) {
-    this.selectedItemId = id;
-    const item = this.findItem(id, this.items);
-    if (!item) return;
-
-    document.getElementById('itemOptionsTitle').textContent = `Options: ${item.name}`;
-    const buttonsContainer = document.getElementById('itemOptionsButtons');
-    
-    let buttonsHTML = `<button onclick="hierarchyManager.editItemContent()" class="btn-primary"><span>📝</span> Edit</button>`;
-    if (item.type === 'html' || item.type === 'nans') {
-        buttonsHTML += `<button onclick="hierarchyManager.setMainScene()" class="btn-primary"><span>🎮</span> Set Main</button>`;
-    }
-    buttonsHTML += `<button onclick="hierarchyManager.exportGame()" class="btn-success"><span>📤</span> Export</button>`;
-    buttonsHTML += `<button onclick="hierarchyManager.deleteItem()" class="btn-danger"><span>🗑️</span> Delete</button>`;
-    buttonsHTML += `<button onclick="closeModal('hierarchyItemModal')" class="btn-secondary">Cancel</button>`;
-    
-    buttonsContainer.innerHTML = buttonsHTML;
-    openModal('hierarchyItemModal');
-  }
-  
-  setMainScene() {
-    this.mainSceneId = this.selectedItemId;
-    this.saveHierarchy();
-    this.renderHierarchy();
-    closeModal('hierarchyItemModal');
-  }
-
-  exportGame() {
-    const item = this.findItem(this.selectedItemId, this.items);
-    if (!item) return;
-    let content = item.content, filename = item.name, mimeType = 'text/plain';
-
-    if (item.name.toLowerCase().endsWith('.nans')) {
-      const cdnUrl = document.querySelector('script[src*="nandraki"]').src;
-      content = `<html><head><script src="${cdnUrl}"><\/script></head><body><script>myjogo={start:function(){${item.content}}};game.update(myjogo.start,60);<\/script></body></html>`;
-      filename = filename.replace('.nans', '.html');
-      mimeType = 'text/html';
-    } else { mimeType = `text/${item.type}`; }
-
-    const a = document.createElement('a');
-    a.href = URL.createObjectURL(new Blob([content], { type: mimeType }));
-    a.download = filename;
-    a.click();
-    URL.revokeObjectURL(a.href);
-    closeModal('hierarchyItemModal');
-  }
-
-  createItem() {
-    const nameInput = document.getElementById('itemName');
-    const type = document.getElementById('itemType').value;
-    let name = nameInput.value;
-    if (!name.endsWith(`.${type}`)) name += `.${type}`;
-
-    const newItem = { id: Date.now(), name, type, content: '', children: [] };
-    this.items.push(newItem);
-    this.saveHierarchy();
-    this.renderHierarchy();
-    closeModal('hierarchyModal');
-    nameInput.value = '';
-  }
-
-  addFileToHierarchy(asset) {
-    const fileExt = asset.name.split('.').pop().toLowerCase();
-    const newItem = { id: asset.id, name: asset.name, type: fileExt, content: asset.content };
-    if (!this.items.some(i => i.id === newItem.id)) {
-        this.items.push(newItem);
-        this.saveHierarchy();
-        this.renderHierarchy();
-    }
-  }
-
-  deleteItem() {
-    showDialog('Confirm Delete', 'Are you sure? This cannot be undone.', () => {
-        this.items = this.items.filter(item => item.id !== this.selectedItemId);
-        if (this.mainSceneId === this.selectedItemId) this.mainSceneId = null;
-        this.saveHierarchy();
-        this.renderHierarchy();
-        closeModal('hierarchyItemModal');
+  removeItem(id, items) {
+    return items.filter(item => {
+      if (item.id === id) {
+        return false;
+      }
+      if (item.children && item.children.length) {
+        item.children = this.removeItem(id, item.children);
+      }
+      return true;
     });
   }
 
-  editItemContent() {
-    const item = this.findItem(this.selectedItemId, this.items);
-    if (!item) return;
-    closeModal('hierarchyItemModal');
-    const editor = document.getElementById('codeEditor');
-    document.getElementById('editorFileName').innerHTML = `📝 ${item.name}`;
-    editor.value = item.content || '';
-    document.getElementById('saveCode').onclick = () => this.saveItemContent(item.id, editor.value);
-    openModal('codeEditorModal');
-    editor.focus();
-  }
-
-  saveItemContent(id, newContent) {
-    const item = this.findItem(id, this.items);
-    if (item) { item.content = newContent; this.saveHierarchy(); }
-    closeModal('codeEditorModal');
+  saveHierarchy() {
+    localStorage.setItem('hierarchy', JSON.stringify(this.items));
   }
 
   renderHierarchy() {
     const treeView = document.querySelector('.tree-view');
-    const iconMap = { js: '📜', html: '🌐', css: '🎨', nans: '✨', default: '📄' };
-    treeView.innerHTML = this.items.map(item => `
-        <div class="tree-item ${item.id === this.mainSceneId ? 'main-scene' : ''}" data-id="${item.id}" onclick="hierarchyManager.showItemModal(${item.id})">
-          <span class="icon">${iconMap[item.type] || iconMap.default}</span>
+    treeView.innerHTML = this.renderItems(this.items);
+  }
+
+  renderItems(items, level = 0) {
+    return items.map(item => {
+      let fileIcon = '📄';
+      switch(item.type) {
+        case 'js':
+          fileIcon = '📜'; 
+          break;
+        case 'html':
+          fileIcon = '🌐';
+          break;
+        case 'css':
+          fileIcon = '🎨';
+          break;
+        case 'nans':
+          fileIcon = 'ꙮ';
+          break;
+      }
+
+      const isMainScene = item.id === this.mainSceneId;
+      const mainSceneClass = isMainScene ? 'main-scene' : '';
+
+      return `
+        <div class="tree-item ${mainSceneClass}" data-id="${item.id}" draggable="true" 
+             style="padding-left: ${level * 20}px"
+             onclick="hierarchyManager.showItemModal(${item.id})">
+          <span class="icon file-icon">${fileIcon}</span>
           ${item.name}
-        </div>`).join('');
+          <div class="crud-buttons" onclick="event.stopPropagation()">
+            <button onclick="hierarchyManager.deleteItem(${item.id})">Delete</button>
+          </div>
+          ${item.children ? this.renderItems(item.children, level + 1) : ''}
+        </div>
+      `;
+    }).join('');
   }
 }
 
-function openHierarchyModal() { openModal('hierarchyModal'); }
-
-// --- Code Editor ---
-function indentCode() {
-  const editor = document.getElementById('codeEditor');
-  const fileType = document.getElementById('editorFileName').textContent.split('.').pop().toLowerCase();
-  try {
-      if (fileType === 'js' && js_beautify) editor.value = js_beautify(editor.value, { indent_size: 2 });
-      else if (fileType === 'html' && html_beautify) editor.value = html_beautify(editor.value, { indent_size: 2 });
-      else if (fileType === 'css' && css_beautify) editor.value = css_beautify(editor.value, { indent_size: 2 });
-  } catch(e) { console.error('Formatting error:', e); }
-}
-
-document.getElementById('codeEditor').addEventListener('keydown', e => {
-    if (e.ctrlKey && e.key === 's') { e.preventDefault(); document.getElementById('saveCode').click(); }
-});
-
-// --- Initialization ---
+// Initialize in DOMContentLoaded
 document.addEventListener('DOMContentLoaded', () => {
   window.engine = new GameEngine();
   window.assetManager = new AssetManager();
-  window.dependencyManager = new DependencyManager();
+  window.dependencyManager = new DependencyManager(); // Initialize dependency manager globally
   window.hierarchyManager = new HierarchyManager();
 });
-</script></body></html>
+
+function toggleSection(sectionId) {
+  const content = document.getElementById(`${sectionId}-content`);
+  const header = content.previousElementSibling;
+  const arrow = header.querySelector('.dropdown-arrow');
+
+  if (content && header) {
+    // Toggle classes for content and header
+    content.classList.toggle('collapsed');
+    header.classList.toggle('collapsed');
+    
+    // Animate arrow rotation
+    if (content.classList.contains('collapsed')) {
+      arrow.style.transform = 'rotate(-90deg)';
+      content.style.maxHeight = '0';
+      content.style.opacity = '0';
+    } else {
+      arrow.style.transform = 'rotate(0deg)';
+      content.style.maxHeight = content.scrollHeight + 'px';
+      content.style.opacity = '1';
+    }
+  }
+}
+
+function addDependency() {
+  const input = document.getElementById('newDependencyInput');
+  const value = input.value.trim();
+
+  if (value.startsWith('<script')) {
+    const tempDiv = document.createElement('div');
+    tempDiv.innerHTML = value;
+    const scriptTag = tempDiv.querySelector('script');
+
+    if (scriptTag) {
+      const src = scriptTag.getAttribute('src');
+      const integrity = scriptTag.getAttribute('integrity');
+      const crossorigin = scriptTag.getAttribute('crossorigin');
+
+      window.dependencyManager.addDependency(src, integrity, crossorigin);
+    }
+  } else {
+    window.dependencyManager.addDependency(value);
+  }
+
+  input.value = '';
+}
+
+function updateCDN() {
+  const cdnUrl = document.getElementById('cdnInput').value;
+  const scriptElement = document.querySelector('script[src*="nandraki"]');
+  if (scriptElement) {
+    scriptElement.src = cdnUrl;
+  }
+  window.dependencyManager.saveDependencies();
+  closeModal('cdnModal');
+}
+
+function openCreateModal() {
+  document.getElementById('createModal').style.display = 'block';
+}
+
+function openMixModal() {
+  document.getElementById('mixModal').style.display = 'block';
+}
+
+function closeModal(modalId) {
+  document.getElementById(modalId).style.display = 'none';
+}
+
+function deleteAsset(id) {
+  window.assetManager.deleteAsset(id);
+}
+
+function openHierarchyModal() {
+  document.getElementById('hierarchyModal').style.display = 'block';
+}
+
+function openCdnModal() {
+  document.getElementById('cdnModal').style.display = 'block';
+}
+
+function handleConsoleInput(event) {
+  if (event.key === 'Enter') {
+    const input = event.target.value.trim();
+    if (!input) return;
+
+    console.log(`> ${input}`);
+
+    try {
+      // Handle special commands
+      if (input === 'clear' || input === 'console.clear()') {
+        console.clear();
+      } else if (input === 'reset' || input === 'console.reset()') {
+        console.clear();
+        console.info('Console reset. Type JavaScript code below to execute.');
+      } else {
+        const result = eval(input);
+        if (result !== undefined) {
+          console.log(result);
+        }
+      }
+    } catch (error) {
+      console.error(error.message);
+    }
+
+    event.target.value = '';
+  }
+}
+
+function showDialog(title, message, onConfirm) {
+  const modal = document.getElementById('dialogModal');
+  document.getElementById('dialogTitle').textContent = title;
+  document.getElementById('dialogMessage').textContent = message;
+
+  const confirmBtn = document.getElementById('dialogConfirm');
+  confirmBtn.onclick = () => {
+    onConfirm();
+    closeModal('dialogModal');
+  };
+
+  modal.style.display = 'block';
+}
+
+function indentCode() {
+  const editor = document.getElementById('codeEditor');
+  const content = editor.value;
+  
+  // Get file type from editor filename
+  const fileName = document.getElementById('editorFileName').textContent;
+  const fileType = fileName.split('.').pop().toLowerCase();
+  
+  let formattedCode = content;
+  
+  try {
+    switch(fileType) {
+      case 'js':
+        // Basic JS formatting
+        formattedCode = js_beautify(content, {
+          indent_size: 2,
+          space_in_empty_paren: true
+        });
+        break;
+        
+      case 'html':
+        // Basic HTML formatting
+        formattedCode = html_beautify(content, {
+          indent_size: 2,
+          max_preserve_newlines: 2,
+          wrap_line_length: 0
+        });
+        break;
+        
+      case 'css':
+        // Basic CSS formatting
+        formattedCode = css_beautify(content, {
+          indent_size: 2
+        });
+        break;
+        
+      default:
+        // Basic indentation for other files
+        formattedCode = content.split('\n').map(line => {
+          return line.trim();
+        }).join('\n');
+    }
+    
+    editor.value = formattedCode;
+    window.hierarchyManager.updateLineNumbers();
+    window.hierarchyManager.applySyntaxHighlighting(fileType);
+  } catch(e) {
+    console.error('Error formatting code:', e);
+  }
+}
+
+function searchInCode() {
+  const searchTerm = prompt('Enter search term:');
+  if (!searchTerm) return;
+  
+  const editor = document.getElementById('codeEditor');
+  const content = editor.value;
+  const searchRegex = new RegExp(searchTerm, 'gi');
+  
+  let match;
+  let matches = [];
+  while ((match = searchRegex.exec(content)) !== null) {
+    matches.push(match.index);
+  }
+  
+  if (matches.length > 0) {
+    // Highlight first match
+    editor.focus();
+    editor.setSelectionRange(matches[0], matches[0] + searchTerm.length);
+    
+    // Store matches for future navigation
+    editor.dataset.searchMatches = JSON.stringify(matches);
+    editor.dataset.currentMatch = 0;
+    
+    alert(`Found ${matches.length} matches`);
+  } else {
+    alert('No matches found');
+  }
+}
+
+function replaceInCode() {
+  const searchTerm = prompt('Enter search term:');
+  if (!searchTerm) return;
+  
+  const replaceTerm = prompt('Enter replacement:');
+  if (replaceTerm === null) return;
+  
+  const editor = document.getElementById('codeEditor');
+  const content = editor.value;
+  
+  const searchRegex = new RegExp(searchTerm, 'g');
+  const newContent = content.replace(searchRegex, replaceTerm);
+  
+  editor.value = newContent;
+  window.hierarchyManager.updateLineNumbers();
+  
+  // Get file type and reapply syntax highlighting
+  const fileName = document.getElementById('editorFileName').textContent;
+  const fileType = fileName.split('.').pop().toLowerCase();
+  window.hierarchyManager.applySyntaxHighlighting(fileType);
+}
+</script>
+</body>
+</html>
