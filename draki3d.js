@@ -320,9 +320,23 @@ class HUD {
     document.body.appendChild(this.canvas);
 
     this.items = new Map();
+    this.images = [];
 
     this.resize();
     window.addEventListener("resize", () => this.resize());
+  }
+
+  // Acesso rápido ao canvas e contexto
+  get context() {
+    return this.ctx;
+  }
+
+  get element() {
+    return this.canvas;
+  }
+
+  style(options = {}) {
+    Object.assign(this.canvas.style, options);
   }
 
   resize() {
@@ -330,22 +344,53 @@ class HUD {
     this.canvas.height = window.innerHeight;
   }
 
-  // Adiciona nova interface HUD
+  // Adiciona texto ao HUD
   add(key, value, x = 10, y = 10, color = "#ffffff", font = "16px monospace") {
     this.items.set(key, { value, x, y, color, font });
   }
 
-  // Atualiza valor já existente
+  // Atualiza texto existente
   update(key, newValue) {
     if (this.items.has(key)) {
       this.items.get(key).value = newValue;
     }
   }
 
-  // Desenha tudo na tela
+  // Adiciona uma imagem ao HUD
+  img(src, x, y, width, height) {
+    const image = new Image();
+    image.onload = () => {
+      this.images.push({ image, x, y, width, height });
+      this.draw(); // redesenha ao carregar
+    };
+    image.src = src;
+  }
+
+  // Acesso com preferência de estilo de item
+  ctx(key) {
+    const item = this.items.get(key);
+    if (!item) return this.ctx;
+
+    this.ctx.fillStyle = item.color;
+    this.ctx.font = item.font;
+    return this.ctx;
+  }
+  applyStyle(key) {
+	  const item = this.items.get(key);
+	  if (!item) return;
+	  this.ctx.fillStyle = item.color;
+	  this.ctx.font = item.font;
+	}
+  // Desenha tudo no HUD
   draw() {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
+    // Imagens primeiro
+    for (const { image, x, y, width, height } of this.images) {
+      this.ctx.drawImage(image, x, y, width, height);
+    }
+
+    // Textos
     for (const [key, { value, x, y, color, font }] of this.items) {
       this.ctx.fillStyle = color;
       this.ctx.font = font;
@@ -353,4 +398,5 @@ class HUD {
     }
   }
 }
+
 
