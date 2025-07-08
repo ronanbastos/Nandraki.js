@@ -163,139 +163,240 @@ class Game {
   }
 }
 
-function drak(objectName = null) {
+const drak = (function () {
   const core = new ThreeCore();
+  const _cache = {}; // cache privado
 
-  // Se não passar nome, retornar objeto com só o método byTag
-  if (!objectName) {
-    return {
-      byTag(tag) {
-        const found = [];
-        core.scene.traverse(obj => {
-          if (obj.userData.tags?.has(tag)) {
-            found.push(drak(obj.name));  // Retorna wrapper drak
+  function wrapper(objectName = null) {
+    if (!objectName) {
+      return {
+        cache: {
+          set(key, value) {
+            _cache[key] = value;
+          },
+          get(key) {
+            return _cache[key];
           }
-        });
-        return found;
+        },
+        byTag(tag) {
+          const found = [];
+          core.scene.traverse(obj => {
+            if (obj.userData.tags?.has(tag)) {
+              found.push(wrapper(obj.name));
+            }
+          });
+          return found;
+        }
+      };
+    }
+
+    const target = core.scene.getObjectByName(objectName);
+    if (!target) {
+      console.warn(`Objeto "${objectName}" não encontrado`);
+      return null;
+    }
+
+    return {
+      set(path, value) {
+        const parts = path.split('.');
+        let obj = target;
+        while (parts.length > 1) obj = obj[parts.shift()];
+        obj[parts[0]] = value;
+      },
+
+      get(path) {
+        const parts = path.split('.');
+        let obj = target;
+        for (let part of parts) obj = obj[part];
+        return obj;
+      },
+
+      script(fn) {
+        if (!target.userData.scripts) target.userData.scripts = [];
+        target.userData.scripts.push(fn);
+      },
+
+      component(name) {
+        return target.userData?.components?.[name] ?? null;
+      },
+
+      addComponent(name, instance) {
+        if (!target.userData.components) target.userData.components = {};
+        target.userData.components[name] = instance;
+      },
+
+      removeComponent(name) {
+        if (target.userData.components) delete target.userData.components[name];
+      },
+
+      addTag(tag) {
+        if (!target.userData.tags) target.userData.tags = new Set();
+        target.userData.tags.add(tag);
+      },
+
+      removeTag(tag) {
+        target.userData.tags?.delete(tag);
+      },
+
+      hasTag(tag) {
+        return target.userData.tags?.has(tag) ?? false;
+      },
+
+      echo() {
+        console.log(target);
+      },
+
+      eye() {
+        if (target.material?.color) {
+          if (!target.userData.originalColor) {
+            target.userData.originalColor = target.material.color.clone();
+          }
+          target.material.color.set(0xffff00);
+          setTimeout(() => {
+            if (target.material && target.userData.originalColor) {
+              target.material.color.copy(target.userData.originalColor);
+            }
+          }, 1000);
+        }
+      },
+
+      callTo(name) {
+        const obj = core.scene.getObjectByName(name);
+        if (obj) console.log(`Chamado:`, obj);
+      },
+
+      touch(name) {
+        const obj = core.scene.getObjectByName(name);
+        if (obj?.userData.scripts) {
+          obj.userData.scripts.forEach(fn => fn(obj));
+        }
+      },
+
+      ref(key) {
+        return target.userData?.[key] ?? null;
+      },
+
+      link(name) {
+        const obj = core.scene.getObjectByName(name);
+        if (obj) obj.add(target);
+      },
+
+      pointTo(name) {
+        const obj = core.scene.getObjectByName(name);
+        if (obj?.position) {
+          target.lookAt(obj.position);
+        }
+      },
+
+      hook(fn) {
+        if (typeof fn !== 'function') {
+          console.warn(`hook: argumento não é uma função válida`);
+          return;
+        }
+        try {
+          return fn(target);
+        } catch (e) {
+          console.error(`hook: erro ao executar função para "${target.name}"`, e);
+        }
       }
     };
   }
 
-  const target = core.scene.getObjectByName(objectName);
-  if (!target) {
-    console.warn(`Objeto "${objectName}" não encontrado`);
-    return null;
+  return wrapper;
+})();
+
+class HUD {
+  constructor() {
+    this.canvas = document.createElement("canvas");
+    this.ctx = this.canvas.getContext("2d");
+
+    this.canvas.style.position = "absolute";
+    this.canvas.style.top = "0";
+    this.canvas.style.left = "0";
+    this.canvas.style.pointerEvents = "none";
+    this.canvas.style.zIndex = "1000";
+    this.canvas.style.background = "transparent";
+
+    document.body.appendChild(this.canvas);
+
+    this.items = new Map();
+    this.images = [];
+
+    this.resize();
+    window.addEventListener("resize", () => this.resize());
   }
 
-  return {
-    set(path, value) {
-      const parts = path.split('.');
-      let obj = target;
-      while (parts.length > 1) obj = obj[parts.shift()];
-      obj[parts[0]] = value;
-    },
+  // Acesso rápido ao canvas e contexto
+  get context() {
+    return this.ctx;
+  }
 
-    get(path) {
-      const parts = path.split('.');
-      let obj = target;
-      for (let part of parts) obj = obj[part];
-      return obj;
-    },
+  get element() {
+    return this.canvas;
+  }
 
-    script(fn) {
-      if (!target.userData.scripts) {
-        target.userData.scripts = [];
-      }
-      target.userData.scripts.push(fn);
-    },
+  style(options = {}) {
+    Object.assign(this.canvas.style, options);
+  }
 
-    component(name) {
-      return target.userData?.components?.[name] ?? null;
-    },
+  resize() {
+    this.canvas.width = window.innerWidth;
+    this.canvas.height = window.innerHeight;
+  }
 
-    addComponent(name, instance) {
-      if (!target.userData.components) {
-        target.userData.components = {};
-      }
-      target.userData.components[name] = instance;
-    },
+  // Adiciona texto ao HUD
+  add(key, value, x = 10, y = 10, color = "#ffffff", font = "16px monospace") {
+    this.items.set(key, { value, x, y, color, font });
+  }
 
-    removeComponent(name) {
-      if (target.userData.components) {
-        delete target.userData.components[name];
-      }
-    },
-
-    addTag(tag) {
-      if (!target.userData.tags) target.userData.tags = new Set();
-      target.userData.tags.add(tag);
-    },
-
-    removeTag(tag) {
-      target.userData.tags?.delete(tag);
-    },
-
-    hasTag(tag) {
-      return target.userData.tags?.has(tag) ?? false;
-    },
-
-    echo() {
-      console.log(target);
-    },
-
-    eye() {
-      if (target.material && target.material.color) {
-        if (!target.userData.originalColor) {
-          target.userData.originalColor = target.material.color.clone();
-        }
-        target.material.color.set(0xffff00);
-        setTimeout(() => {
-          if (target.material && target.userData.originalColor) {
-            target.material.color.copy(target.userData.originalColor);
-          }
-        }, 1000);
-      }
-    },
-
-    callTo(name) {
-      const obj = core.scene.getObjectByName(name);
-      if (obj) console.log(`Chamado:`, obj);
-    },
-
-    touch(name) {
-      const obj = core.scene.getObjectByName(name);
-      if (obj?.userData.scripts) {
-        obj.userData.scripts.forEach(fn => fn(obj));
-      }
-    },
-
-    ref(key) {
-      return target.userData?.[key] ?? null;
-    },
-
-    link(name) {
-      const obj = core.scene.getObjectByName(name);
-      if (obj) obj.add(target);
-    },
-
-    pointTo(name) {
-      const obj = core.scene.getObjectByName(name);
-      if (obj && typeof target.lookAt === 'function') {
-        target.lookAt(obj.position);
-      }
-    },
-
-    hook(fn) {
-      if (typeof fn !== 'function') {
-        console.warn(`hook: argumento não é uma função válida`);
-        return;
-      }
-      try {
-        return fn(target);
-      } catch (e) {
-        console.error(`hook: erro ao executar função para "${target.name}"`, e);
-      }
+  // Atualiza texto existente
+  update(key, newValue) {
+    if (this.items.has(key)) {
+      this.items.get(key).value = newValue;
     }
-  };
+  }
+
+  // Adiciona uma imagem ao HUD
+  img(src, x, y, width, height) {
+    const image = new Image();
+    image.onload = () => {
+      this.images.push({ image, x, y, width, height });
+      this.draw(); // redesenha ao carregar
+    };
+    image.src = src;
+  }
+
+  // Acesso com preferência de estilo de item
+  ctx(key) {
+    const item = this.items.get(key);
+    if (!item) return this.ctx;
+
+    this.ctx.fillStyle = item.color;
+    this.ctx.font = item.font;
+    return this.ctx;
+  }
+  applyStyle(key) {
+	  const item = this.items.get(key);
+	  if (!item) return;
+	  this.ctx.fillStyle = item.color;
+	  this.ctx.font = item.font;
+	}
+  // Desenha tudo no HUD
+  draw() {
+    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+
+    // Imagens primeiro
+    for (const { image, x, y, width, height } of this.images) {
+      this.ctx.drawImage(image, x, y, width, height);
+    }
+
+    // Textos
+    for (const [key, { value, x, y, color, font }] of this.items) {
+      this.ctx.fillStyle = color;
+      this.ctx.font = font;
+      this.ctx.fillText(`${key}: ${value}`, x, y);
+    }
+  }
 }
+
 
