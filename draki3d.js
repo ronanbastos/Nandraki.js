@@ -322,21 +322,16 @@ class HUD {
     this.items = new Map();
     this.images = [];
 
+    this.buttons = new Map();
+    this.downMap = new Map();  // onDown
+    this.upMap = new Map();    // onUp
+    this.activeTouches = new Set();
+
     this.resize();
     window.addEventListener("resize", () => this.resize());
-  }
 
-  // Acesso rápido ao canvas e contexto
-  get context() {
-    return this.ctx;
-  }
-
-  get element() {
-    return this.canvas;
-  }
-
-  style(options = {}) {
-    Object.assign(this.canvas.style, options);
+    this.canvas.addEventListener("pointerdown", (e) => this.handleDown(e));
+    this.canvas.addEventListener("pointerup", (e) => this.handleUp(e));
   }
 
   resize() {
@@ -344,59 +339,114 @@ class HUD {
     this.canvas.height = window.innerHeight;
   }
 
-  // Adiciona texto ao HUD
+  // Texto HUD
   add(key, value, x = 10, y = 10, color = "#ffffff", font = "16px monospace") {
     this.items.set(key, { value, x, y, color, font });
   }
 
-  // Atualiza texto existente
   update(key, newValue) {
     if (this.items.has(key)) {
       this.items.get(key).value = newValue;
     }
   }
 
-  // Adiciona uma imagem ao HUD
   img(src, x, y, width, height) {
     const image = new Image();
     image.onload = () => {
       this.images.push({ image, x, y, width, height });
-      this.draw(); // redesenha ao carregar
+      this.draw();
     };
     image.src = src;
   }
 
-  // Acesso com preferência de estilo de item
-  ctx(key) {
+  // Botão
+  touch(name, x, y, width, height, style = {}) {
+    this.buttons.set(name, {
+      name, x, y, width, height,
+      color: style.color || "#ffffff22",
+      border: style.border || "#ffffff55"
+    });
+    this.canvas.style.pointerEvents = "auto";
+    return this;
+  }
+
+  onDown(name, fn) {
+    if (typeof fn === "function") this.downMap.set(name, fn);
+    return this;
+  }
+
+  onUp(name, fn) {
+    if (typeof fn === "function") this.upMap.set(name, fn);
+    return this;
+  }
+
+  handleDown(e) {
+    const x = e.clientX;
+    const y = e.clientY;
+
+    for (const btn of this.buttons.values()) {
+      if (
+        x >= btn.x && x <= btn.x + btn.width &&
+        y >= btn.y && y <= btn.y + btn.height
+      ) {
+        this.activeTouches.add(btn.name);
+
+        const downFn = this.downMap.get(btn.name);
+        if (downFn) downFn();
+        break;
+      }
+    }
+  }
+
+  handleUp(e) {
+    const x = e.clientX;
+    const y = e.clientY;
+
+    for (const btn of this.buttons.values()) {
+      if (
+        x >= btn.x && x <= btn.x + btn.width &&
+        y >= btn.y && y <= btn.y + btn.height &&
+        this.activeTouches.has(btn.name)
+      ) {
+        const upFn = this.upMap.get(btn.name);
+        if (upFn) upFn();
+        break;
+      }
+    }
+
+    this.activeTouches.clear();
+  }
+
+  style(css = {}) {
+    Object.assign(this.canvas.style, css);
+  }
+
+  ctxStyle(key) {
     const item = this.items.get(key);
     if (!item) return this.ctx;
-
     this.ctx.fillStyle = item.color;
     this.ctx.font = item.font;
     return this.ctx;
   }
-  applyStyle(key) {
-	  const item = this.items.get(key);
-	  if (!item) return;
-	  this.ctx.fillStyle = item.color;
-	  this.ctx.font = item.font;
-	}
-  // Desenha tudo no HUD
+
   draw() {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
-    // Imagens primeiro
     for (const { image, x, y, width, height } of this.images) {
       this.ctx.drawImage(image, x, y, width, height);
     }
 
-    // Textos
     for (const [key, { value, x, y, color, font }] of this.items) {
       this.ctx.fillStyle = color;
       this.ctx.font = font;
       this.ctx.fillText(`${key}: ${value}`, x, y);
     }
+
+    for (const btn of this.buttons.values()) {
+      this.ctx.fillStyle = btn.color;
+      this.ctx.fillRect(btn.x, btn.y, btn.width, btn.height);
+      this.ctx.strokeStyle = btn.border;
+      this.ctx.strokeRect(btn.x, btn.y, btn.width, btn.height);
+    }
   }
 }
-
-
