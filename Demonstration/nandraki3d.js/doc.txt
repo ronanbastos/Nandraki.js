@@ -32,3 +32,87 @@ link() — Liga o script a um objeto
 pointTo() — Aponta para um objeto na hierarquia
 
 hook() — Ganchos para manipulação de outros objetos
+
+// Exemplo de como o usuário pode interagir diretamente
+const draki = new ThreeCore();
+draki.init(document.body);
+
+// Criação de objetos
+let cubo = Game.create("cube", "Player");
+let luz = Game.create("light", "Sol");
+let camera = Game.create("camera", "MainCam");
+move=0;
+
+// Posições
+cubo.position.set(5, 0, 0);
+luz.position.set(0, 5, 10);
+camera.position.set(5, 0, 5);
+
+// Adiciona à cena
+draki.scene.add(cubo);
+draki.scene.add(luz);
+draki.scene.add(camera);
+
+// Define câmera principal
+draki.camera = camera;
+
+drak("Player").addTag("inimigo");
+// Buscar todos com tag "inimigo"
+const inimigos = drak().byTag("inimigo");
+
+console.log(inimigos[0])
+// Rotacionar todos eles
+inimigos.forEach(o => {
+  o.set("rotation.y", o.get("rotation.y") + 0.75);
+});
+
+
+drak("Player").set("position.x", pos.x);
+
+if (drak("Player").get("position.x") > 10) {
+  drak().cache.set("vida", drak().cache.get("vida") - 1);
+  hud.update("vida", drak().cache.get("vida"));
+}
+
+drak().cache.set("vida", 100);
+drak().cache.set("mana", 50);
+
+// Atualiza no HUD
+
+
+hud = new HUD();
+drak().cache.set("vida", 100);
+drak().cache.set("mana", 75);
+
+
+updateMovement();
+
+
+hud.img('bane.png',5, 10, 110, 30);
+
+
+hud.add("vida", drak().cache.get("vida"), 10, 30, "#00ff00", "20px monospace");
+hud.add("mana", drak().cache.get("mana"), 10, 60, "#00ccff");
+
+
+hud.touch("btnLeft", 20, 100, 80, 40, {
+  color: "#ffcc00aa",
+  border: "#000000"
+});
+
+hud.onDown("btnLeft", () => {
+ touchL=true;
+ 
+});
+
+hud.onUp("btnLeft", () => {
+   touchL=false;
+});
+
+
+hud.draw();
+
+hud.update("X", pos.x.toFixed(2));
+hud.update("Y", pos.y.toFixed(2));
+hud.update("Z", pos.z.toFixed(2));
+hud.draw();
