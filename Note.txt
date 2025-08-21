@@ -1,86 +1,198 @@
-_________________________________________3d notas da ideias
+Os pilares da engine são:
+ThreeCore: O núcleo que gerencia a cena, câmera e renderizador.
+drak(): Uma "fachada" (facade) que é a principal ferramenta para interagir com objetos na cena de forma simples.
+Sistema de Componentes: Adiciona funcionalidades aos objetos, como o controlador Animax.
+Animax: Um controlador de animação centralizado e poderoso.
+HUD: Um sistema para criar interfaces de usuário (Heads-Up Display) de forma rápida.
+Padrão de Uso Essencial (Receita de Bolo)
+Este é o fluxo de trabalho mais comum para criar uma cena e adicionar um personagem animado.
+code
+JavaScript
+// 1. INICIALIZAR A ENGINE
+// Cria a cena, câmera e renderizador e os anexa à página.
+const draki = new ThreeCore();
+draki.init(document.body);
 
-(Próximo) Integração real do salvamento/carregamento em localStorage
+// Inicia o controlador de animação (só precisa ser feito uma vez)
+const animax = new Animax();
+animax.start();
 
-(Próximo) Painel de Console & Diagnóstico embutido na interface
+// 2. CONFIGURAR O LOOP DE RENDERIZAÇÃO
+// Integra o renderizador da sua engine com o loop de atualização do Animax.
+Animax.prototype._update = function() {
+    requestAnimationFrame(() => this._update());
+    const deltaTime = this.clock.getDelta();
+    
+    // Atualiza todas as animações
+    for (const mixer of this.mixers.values()) {
+        mixer.update(deltaTime);
+    }
+    
+    // Renderiza a cena a cada frame
+    draki.renderer.render(draki.scene, draki.camera);
+}
 
-(Próximo) Filtro e tags dinâmicas nos scripts da Cena
+// 3. CARREGAR UM MODELO 3D
+const loader = new THREE.GLTFLoader();
+loader.load('caminho/para/seu/modelo.glb', (gltf) => {
+    const meuModelo = gltf.scene;
+    
+    // 4. DAR UM NOME ÚNICO AO MODELO
+    meuModelo.name = "Player"; // Essencial para o drak() e Animax
+    
+    // 5. ADICIONAR À CENA E AO ANIMAX
+    draki.scene.add(meuModelo);
+    animax.add(meuModelo, gltf.animations);
+    
+    // 6. CONTROLAR A ANIMAÇÃO
+    // Agora você pode controlar o modelo de qualquer lugar do código!
+    animax.play("Player", "Idle");
+});
+Referência da API
+drak(nomeDoObjeto) - A Ferramenta Principal
+Esta é a função que você mais vai usar. Ela serve como um atalho para encontrar e manipular objetos na cena.
+Selecionando um Objeto
+drak("Player") encontra o objeto com name = "Player" na cena e retorna um controlador para ele.
+Modificando Propriedades: .set()
+Altera uma propriedade de um objeto. O caminho usa . para acessar sub-propriedades.
+code
+JavaScript
+// Sintaxe: drak("nome").set("caminho.da.propriedade", valor);
 
-(Próximo) Persistência automática dos scripts entre recarregamentos
+// Move o jogador na posição x
+drak("Player").set("position.x", 10);
 
-(Próximo) Criar módulo de física básica (colisores, gravidade simples)
+// Muda a cor do material (se existir)
+drak("Player").set("material.color", new THREE.Color(0xff0000));
 
-(Próximo) Desenvolver sistema de câmera com controle de movimento
+// Aumenta a escala do jogador
+drak("Player").set("scale.y", 1.2);
+Lendo Propriedades: .get()
+Lê o valor de uma propriedade de um objeto.
+code
+JavaScript
+// Sintaxe: drak("nome").get("caminho.da.propriedade");
 
-( ) Adicionar suporte a importação de modelos externos (GLTF/OBJ)
+const posicaoX = drak("Player").get("position.x");
+console.log("O jogador está em x =", posicaoX);
+Adicionando Comportamento: .script()
+Anexa uma função simples que será executada a cada frame para aquele objeto.
+code
+JavaScript
+drak("Player").script((obj) => {
+    // Este código vai rodar a cada frame, `obj` é o próprio jogador
+    obj.rotation.y += 0.01;
+});
+Sistema de Componentes
+.addComponent(nome, instancia): Anexa um componente (uma classe com funcionalidades) a um objeto.
+.component(nome): Retorna o componente anexado para que você possa usar seus métodos.
+code
+JavaScript
+// Supondo que você tenha o Animax como componente
+const animaxComponent = new Animax(player, animations);
+drak("Player").addComponent('animax', animaxComponent);
 
-( ) Implementar sistema de materiais personalizados
+// Em outro lugar, para usar o componente:
+drak("Player").component('animax').play('Run');
+Sistema de Tags
+.addTag(tag): Adiciona uma etiqueta a um objeto.
+.hasTag(tag): Verifica se um objeto tem uma etiqueta.
+.removeTag(tag): Remove uma etiqueta.
+drak().byTag(tag): Encontra TODOS os objetos na cena com uma determinada etiqueta.
+code
+JavaScript
+drak("Orc_1").addTag("inimigo");
+drak("Orc_2").addTag("inimigo");
+drak("Esqueleto_1").addTag("inimigo");
 
-( ) Criar GUI mínima para visualização e depuração da cena
+const todosOsInimigos = drak().byTag("inimigo");
+todosOsInimigos.forEach(inimigo => {
+    inimigo.set("position.z", inimigo.get("position.z") + 1);
+});
+Animax - O Controlador de Animações
+Animax é um singleton. Você só precisa criar uma instância const animax = new Animax(); e usá-la para o jogo todo.
+animax.start()
+O que faz: Inicia o loop de atualização de todas as animações.
+Como usar: Chame isso uma única vez no início do seu jogo.
+animax.add(modelo, animacoes)
+O que faz: Registra um modelo e suas animações no controlador.
+Como usar: Chame isso logo após carregar um modelo 3D. O modelo precisa ter um nome.
+code
+JavaScript
+loader.load('personagem.glb', (gltf) => {
+    const personagem = gltf.scene;
+    personagem.name = "Heroi";
+    animax.add(personagem, gltf.animations);
+});
+animax.play(nomeDoModelo, nomeDaAnimacao, [transicao])
+O que faz: Toca uma animação em loop contínuo, com uma transição suave.
+Como usar:
+code
+JavaScript
+// Faz o jogador andar
+animax.play("Player", "Walk");
 
-( ) Sistema de exportação da cena como JSON
+// Faz o inimigo correr, com uma transição mais lenta
+animax.play("Orc_1", "Run", 0.5);
+animax.playOnce(nomeDoModelo, nomeDaAnimacao, [callback])
+O que faz: Toca uma animação uma única vez e para no último frame. Opcionalmente, chama uma função (callback) quando termina.
+Como usar:
+code
+JavaScript
+// Faz o jogador atacar e, quando terminar, voltar a ficar parado
+animax.playOnce("Player", "Attack", () => {
+    animax.play("Player", "Idle");
+});
+animax.stop(nomeDoModelo, [transicao])
+O que faz: Para a animação atual do modelo com uma transição suave.
+Como usar:```javascript
+animax.stop("Player");
+code
+Code
+---
 
-( ) Criar sistema de carregamento de cenas (load/save)
+### `HUD` - A Interface do Usuário
 
-( ) Adicionar sistema de input (teclado, mouse, toque)
+#### `const hud = new HUD()`
+**O que faz:** Cria um canvas sobre a sua cena para desenhar textos, imagens e botões.
 
-( ) Implementar módulo de áudio 3D
+#### `hud.add(chave, valor, x, y, [cor], [fonte])`
+**O que faz:** Adiciona um texto na tela.
+**Como usar:**
+```javascript
+hud.add("vida", 100, 10, 30, "#00ff00"); // Exibe "vida: 100"
+hud.update(chave, novoValor)
+O que faz: Atualiza o valor de um texto que já existe.
+Como usar:
+code
+JavaScript
+let vidaAtual = 100;
+// ... no loop do jogo ...
+vidaAtual -= 1;
+hud.update("vida", vidaAtual);
+hud.draw()
+O que faz: Redesenha toda a interface. Chame isso sempre que fizer uma alteração.
+hud.touch(nome, x, y, w, h)
+O que faz: Cria uma área de toque (botão) na tela.
+hud.onDown(nome, funcao) e hud.onUp(nome, funcao)
+O que faz: Define o que acontece quando o botão é pressionado (onDown) ou solto (onUp).
+code
+JavaScript
+// Cria um botão
+hud.touch("botaoPular", 50, 200, 100, 50);
 
-( ) Adicionar sistema de animações básicas (keyframes)
+// Define a ação do botão
+hud.onDown("botaoPular", () => {
+    animax.playOnce("Player", "Jump");
+});
 
-( ) Criar módulo de iluminação avançada (ambient, direcional, sombras)
+hud.draw(); // Não esqueça de desenhar
+Dicas Finais
+Nomes são Chave: Sempre dê nomes únicos aos seus objetos (player.name = "...") para que o drak() e o Animax possam encontrá-los.
+Formato .glb: É o melhor formato. Ele já vem com o modelo, texturas e todas as animações em um só arquivo.
+Debug: Use drak("nomeDoObjeto").echo() para imprimir o objeto 3D no console e ver todas as suas propriedades. É ótimo para descobrir caminhos para o .set() e .get().
 
-( ) Integrar com Nandraki.js para sobreposição de UI 2D
 
-( ) Sistema de entidades baseadas em componentes (ECS simplificado)
-
-( ) Modo de build/exportação para Web (embed fácil)
-
-( ) Criar módulo de física básica (colisores, gravidade simples)
-
-( ) Desenvolver sistema de câmera com controle de movimento
-
-( ) Adicionar suporte a importação de modelos externos (GLTF/OBJ)
-
-( ) Implementar sistema de materiais personalizados
-
-( ) Criar GUI mínima para visualização e depuração da cena
-
-( ) Sistema de exportação da cena como JSON
-
-( ) Criar sistema de carregamento de cenas (load/save)
-
-( ) Adicionar sistema de input (teclado, mouse, toque)
-
-( ) Implementar módulo de áudio 3D
-
-( ) Adicionar sistema de animações básicas (keyframes)
-
-( ) Criar módulo de iluminação avançada (ambient, direcional, sombras)
-
-( ) Integrar com Nandraki.js para sobreposição de UI 2D
-
-( ) Sistema de entidades baseadas em componentes (ECS simplificado)
-
-( ) Modo de build/exportação para Web (embed fácil)
-
-() echo — Puxa e ecoa os dados do objeto
-
-() eye — "Olha" para um objeto
-
-() callTo — Chama outro objeto da cena
-
-()  touch Toca/interage com outro objeto
-
-() ref — Puxa uma referência (tipo "referência cruzada")
-
-()  link— Liga o script a um objeto
-
-() pointTo — Aponta para um objeto na hierarquia
-
-() hook — Ganchos para manipulação de outros objetos
-
-_________________________________________2d notas sobre coisa ja feitas
 ThreeCore (Singleton) – configuração de cena, câmera, renderer e loop principal que executa scripts e componentes
 
  ThreeFactory (Abstract Factory) – métodos createLight(), createCube(), createCamera()
