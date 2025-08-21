@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jogador Animado com Controles Corrigidos</title>
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+    <style>
+        body { margin: 0; overflow: hidden; }
+        canvas { display: block; }
+    </style>
+    <script src="draki3d.js"></script>
+</head>
+<body>
+
+  
+    
+    <script>
+
+    const draki = new ThreeCore();
+    draki.init(document.body);
+    
+    // Inicia o loop do Animax (ele também vai renderizar a cena)
+    animax.start();
+    Animax.prototype._update = function() {
+        requestAnimationFrame(() => this._update());
+        const deltaTime = this.clock.getDelta();
+        for (const mixer of this.mixers.values()) { mixer.update(deltaTime); }
+        draki.renderer.render(draki.scene, draki.camera); // Renderiza a cena aqui
+    }
+
+    // --- CRIAÇÃO DOS OBJETOS ---
+    let player = null; // Variável para segurar nosso modelo quando carregar
+    let luz = Game.create("light", "Sol");
+    let camera = Game.create("camera", "MainCam");
+
+    // Posições
+    luz.position.set(0, 5, 5);
+    camera.position.set(0, 3, 8); // Ajustei a câmera para ver melhor
+
+    // Adiciona à cena
+    draki.scene.add(luz);
+    draki.scene.add(camera);
+    draki.scene.background = new THREE.Color(0x77aaff); // Céu azul
+
+    // Define câmera principal
+    draki.camera = camera;
+    
+    // --- CARREGANDO O JOGADOR ---
+    const loader = new THREE.GLTFLoader();
+    loader.load('https://threejs.org/examples/models/gltf/Soldier.glb', (gltf) => {
+        player = gltf.scene; // Atribui o modelo carregado à nossa variável
+        player.name = "Player"; // MUITO IMPORTANTE: nomeia o modelo
+        
+        // Adiciona e registra no Animax
+        draki.scene.add(player);
+        animax.add(player, gltf.animations);
+        animax.play("Player", "Idle"); // Animação inicial
+    });
+
+    // --- SISTEMA DE MOVIMENTO ---
+    let pos = { x: 0, y: 0, z: 0 };
+    let velocity = { x: 0, y: 0, z: 0 };
+    let speed = 0.05;
+    let friction = 0.9;
+    let isMoving = false; // Controla se a animação de andar está tocando
+
+    let keys = { left: false, right: false, forward: false, back: false, up: false, down: false };
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "ArrowLeft" || e.key === "a") keys.left = true;
+      if (e.key === "ArrowRight" || e.key === "d") keys.right = true;
+      if (e.key === "ArrowUp" || e.key === "w") keys.forward = true;
+      if (e.key === "ArrowDown" || e.key === "s") keys.back = true;
+    });
+
+    document.addEventListener("keyup", (e) => {
+      if (e.key === "ArrowLeft" || e.key === "a") keys.left = false;
+      if (e.key === "ArrowRight" || e.key === "d") keys.right = false;
+      if (e.key === "ArrowUp" || e.key === "w") keys.forward = false;
+      if (e.key === "ArrowDown" || e.key === "s") keys.back = false;
+    });
+
+    function updateMovement() {
+      // Só executa a lógica se o 'player' já foi carregado
+      if (player) {
+          // ====================================================
+          //  CÓDIGO CORRIGIDO - INVERTENDO OS CONTROLES
+          // ====================================================
+          if (keys.left) velocity.x -= speed;    // <<< MUDANÇA AQUI
+          if (keys.right) velocity.x += speed;   // <<< MUDANÇA AQUI
+          if (keys.forward) velocity.z -= speed; // <<< MUDANÇA AQUI
+          if (keys.back) velocity.z += speed;    // <<< MUDANÇA AQUI
+          // ====================================================
+
+          // Aplica atrito
+          velocity.x *= friction;
+          velocity.z *= friction;
+
+          // Atualiza posição
+          pos.x += velocity.x;
+          pos.z += velocity.z;
+
+          // Envia posição para o objeto
+          player.position.x = pos.x;
+          player.position.z = pos.z;
+
+          // --- LÓGICA DE ANIMAÇÃO E ROTAÇÃO ---
+          const moveSpeed = Math.abs(velocity.x) + Math.abs(velocity.z);
+
+          if (moveSpeed > 0.01 && !isMoving) {
+              animax.play("Player", "Walk");
+              isMoving = true;
+          } else if (moveSpeed <= 0.01 && isMoving) {
+              animax.play("Player", "Idle");
+              isMoving = false;
+          }
+
+          // Gira o personagem na direção do movimento
+          if (moveSpeed > 0.01) {
+              // Invertemos o sinal do X para a rotação ficar correta com os novos controles
+              const angle = Math.atan2(-velocity.x, -velocity.z); // <<< MUDANÇA AQUI
+              player.rotation.y = angle;
+          }
+          
+          // A câmera segue o jogador
+          camera.position.x = player.position.x;
+          camera.position.z = player.position.z + 5; // Fica um pouco atrás
+          camera.lookAt(player.position);
+      }
+      
+      // O HUD e o requestAnimationFrame continuam fora do if
+      hud.update("X", pos.x.toFixed(1));
+      hud.update("Y", pos.y.toFixed(1));
+      hud.update("Z", pos.z.toFixed(1));
+      hud.draw();
+      
+      requestAnimationFrame(updateMovement);
+    }
+    
+    // --- HUD ---
+    const hud = new HUD();
+    hud.add("X", 0, 170, 30, "#00ff00", "16px monospace");
+    hud.add("Y", 0, 170, 50, "#00ff00", "16px monospace");
+    hud.add("Z", 0, 170, 70, "#00ff00", "16px monospace");
+    
+    updateMovement();
+    </script>
+</body>
+</html>
