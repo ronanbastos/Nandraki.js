@@ -2,7 +2,7 @@
 
 <br>
 <h1 align="center"><img src="https://img.shields.io/badge/Lincense-MIT-green" alt="index-html" border="0"> 
-<img src="https://img.shields.io/badge/3.0.0-blue" alt="index-html" >     
+<img src="https://img.shields.io/badge/3.1.0-blue" alt="index-html" >     
  <img src="https://img.shields.io/badge/Projeto-Ativo-success" alt="index-html" border="0"><img src="https://img.shields.io/badge/Ultima%20Att-19/06/2025-green" alt="index-html" >     
 
 <br>
@@ -214,6 +214,7 @@ https://www.npmjs.com/package/nandraki
 	
 # Documentation.md
  Aqui:https://ronanbastos.github.io/Documentation-Nandraki.js/ 
+
 
 
 
