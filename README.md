@@ -35,7 +35,7 @@ In the engine folder contains demo test file]
 # Playground
 
 <p>
-  Playground 3D Draki.js : [https://drakijs.on.websim.com/](https://draki3beta.on.websim.com/)
+  Playground 3D Draki.js : https://draki3beta.on.websim.com/
 <p>
 
   Js Inteface :  https://ronanbastos.github.io/Nandraki-Inteface/
@@ -214,6 +214,7 @@ https://www.npmjs.com/package/nandraki
 	
 # Documentation.md
  Aqui:https://ronanbastos.github.io/Documentation-Nandraki.js/ 
+
 
 
 
