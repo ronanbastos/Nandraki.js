@@ -1,0 +1,408 @@
+// ... existing code ...
+    async _loadAsset(descriptor) {
+// ... existing code ...
+// ... existing code ...
+                 object.traverse((child) => {
+                    if (child.isMesh && !child.material) {
+                        child.material = new THREE.MeshStandardMaterial({ color: 0xcccccc });
+                    }
+                 });
+                 return object;
+            } else if (mimeType.includes('image/')) {
+                 // Handle images as THREE.Texture
+                 const textureLoader = new THREE.TextureLoader();
+                 const texture = await new Promise((res, rej) => textureLoader.load(blobUrl, res, undefined, rej));
+                 texture.name = assetId;
+                 texture.userData.assetId = assetId; // Store assetId on the texture itself
+                 return texture;
+            } 
+
+            throw new Error(`Unsupported MIME type: ${mimeType}`);
+        } finally {
+            URL.revokeObjectURL(blobUrl);
+        }
+    }
+}
+// ... existing code ...
+// Renamed Editor to DrakiEditor and updated to use ThreeCore and other utilities
+export class DrakiEditor {
+// ... existing code ...
+        // Initial render, the main loop is handled by ThreeCore.
+        this.render();
+    }
+
+    initSceneDefaults() {
+// ... existing code ...
+        const ground = Game.create('plane', 'Ground');
+        ground.scale.set(20, 20, 20); // Make it larger
+        ground.rotation.x = -Math.PI / 2;
+        ground.userData.isSelectable = false; // Make ground not selectable
+        this.scene.add(ground);
+    }
+
+    initListeners() {
+// ... existing code ...
+// ... existing code ...
+// ... existing code ...
+    // --- Scene Persistence Methods ---
+
+    /**
+     * Converts an HTML Image element to a Blob and registers it as an asset.
+     * @param {HTMLImageElement} image
+     * @param {THREE.Texture} texture
+     * @returns {Promise<{assetId: string}>} A promise that resolves to the asset registration details.
+     */
+    async _registerTexture(image, texture) {
+        // If texture already has an assetId, ensure it's in the index before proceeding.
+        if (texture.userData.assetId) {
+            const hash = Array.from(this.assetManager.assetIndex.values()).find(d => d.assetId === texture.userData.assetId)?.hash;
+            if (hash && this.assetManager.assetIndex.has(hash)) {
+                return this.assetManager.assetIndex.get(hash);
+            }
+        }
+        
+        // Function to perform canvas conversion and registration
+        const performRegistration = (mimeType, extension) => new Promise((resolve, reject) => {
+            try {
+                const canvas = document.createElement('canvas');
+                // Use natural dimensions if available, fallback to default
+                canvas.width = image.naturalWidth || 512;
+                canvas.height = image.naturalHeight || 512;
+                const ctx = canvas.getContext('2d');
+                ctx.drawImage(image, 0, 0);
+
+                // Use the inferred mimeType
+                canvas.toBlob(async (blob) => {
+                    if (!blob) return reject(new Error("Failed to create texture blob."));
+                    
+                    const buffer = await blob.arrayBuffer();
+                    const assetRegistration = await this.assetManager.registerAssetFromBuffer(
+                        blob.type, 
+                        buffer, 
+                        null, 
+                        `texture_${THREE.MathUtils.generateUUID()}.${extension}`
+                    );
+                    
+                    texture.userData.assetId = assetRegistration.assetId; 
+                    resolve(assetRegistration);
+                }, mimeType);
+
+            } catch (e) {
+                reject(e);
+            }
+        });
+
+        if (image.src.startsWith('blob:') || image.src.startsWith('data:')) {
+            // Determine MimeType based on file extension heuristic for saving purposes
+            let mimeType = 'image/png'; 
+            let extension = 'png';
+            return performRegistration(mimeType, extension);
+        } else {
+            // External textures (non-blob/data URL sources) are not serialized as base64.
+            return null;
+        }
+    }
+
+
+    /**
+     * Converts the current scene and its assets into a serializable JSON object.
+     * @param {{sceneName: string, author: string, trusted: boolean}} options 
+     * @returns {Promise<Blob>} A promise that resolves to a Blob containing the serialized scene data.
+     */
+    async saveScene(options = {}) {
+        const sceneData = {
+            manifest: {
+                sceneId: THREE.MathUtils.generateUUID(),
+                name: options.sceneName || "Untitled Scene",
+                engineVersion: ENGINE_VERSION,
+                timestamp: new Date().toISOString(),
+                author: options.author || "Draki User",
+                trusted: options.trusted ?? true,
+                compress: false, 
+            },
+            assets: [], 
+            objects: [],
+            uiComponents: [],
+            globalScripts: {
+                load: this.loadScript,
+                update: this.updateScript,
+            },
+        };
+
+        const textureRegistrationPromises = []; 
+
+        // 1. Serialize 3D Objects 
+        this.scene.traverse(obj => {
+            // Exclude editor helpers like TransformControls, GridHelper, BoxHelper
+            if (obj instanceof TransformControls || obj instanceof THREE.BoxHelper) return;
+            // Exclude non-user-editable scene defaults
+            if (obj.userData.isSelectable === false && obj.name !== "Ground" && obj.name !== "Grid" && 
+                obj.name !== "Ambient Light" && obj.name !== "Directional Light") return; 
+
+            const { serializedObj, texturePromise } = this._serializeObject(obj);
+            if (serializedObj) {
+                sceneData.objects.push(serializedObj);
+                if (texturePromise) {
+                     textureRegistrationPromises.push(texturePromise);
+                }
+            }
+        });
+        
+        // Wait for all texture conversions and registrations to complete
+        await Promise.all(textureRegistrationPromises);
+        
+        // 2. Serialize UI Components
+        for (const component of this.uiComponents.values()) {
+             sceneData.uiComponents.push(this._serializeUIComponent(component));
+        }
+        
+        // 3. Collect assets list (if any were registered during model loading OR texture serialization)
+        sceneData.assets = Array.from(this.assetManager.assetIndex.values()).map(desc => ({
+            assetId: desc.assetId,
+            mimeType: desc.mimeType,
+            hash: desc.hash,
+            size: desc.size,
+            encoding: desc.data ? 'base64' : undefined,
+            data: desc.data,
+            external: desc.url,
+        }));
+
+        const jsonString = JSON.stringify(sceneData, null, 2);
+        return new Blob([jsonString], { type: 'application/json' });
+    }
+    
+    /**
+     * Helper to create the required object schema for serialization.
+     * @param {THREE.Object3D} object
+     * @returns {{serializedObj: object, texturePromise: Promise<any>|null}}
+     */
+    _serializeObject(object) {
+        if (!object.name || object.name.includes("Helper")) return { serializedObj: null, texturePromise: null };
+        
+        const transform = {
+            pos: object.position.toArray(),
+            // THREE.Euler order is XYZ. We serialize only the first three components.
+            rot: object.rotation.toArray().slice(0, 3).map(r => THREE.MathUtils.radToDeg(r)), 
+            scale: object.scale.toArray(),
+        };
+
+        const serializedObj = {
+            id: object.uuid,
+            name: object.name,
+            type: object.type,
+            assetRef: object.userData.assetRefId || null, // Reference to external asset if present
+            transform: transform,
+            components: {},
+            props: {},
+        };
+        
+        let texturePromise = null;
+        
+        // 1. Determine Object Type and Props & Handle Textures
+        if (object.isMesh) {
+            const geometry = object.geometry;
+            
+            // --- Geometry Properties ---
+            if (geometry instanceof THREE.BoxGeometry) {
+                serializedObj.type = 'Box';
+                serializedObj.props.width = geometry.parameters.width;
+                serializedObj.props.height = geometry.parameters.height;
+                serializedObj.props.depth = geometry.parameters.depth;
+            } else if (geometry instanceof THREE.SphereGeometry) {
+                serializedObj.type = 'Sphere';
+                serializedObj.props.radius = geometry.parameters.radius;
+            } else if (geometry instanceof THREE.PlaneGeometry) {
+                serializedObj.type = 'Plane';
+                serializedObj.props.width = geometry.parameters.width;
+                serializedObj.props.height = geometry.parameters.height;
+            } else if (geometry instanceof THREE.CylinderGeometry) {
+                serializedObj.type = 'Cylinder';
+                serializedObj.props.radiusTop = geometry.parameters.radiusTop;
+                serializedObj.props.radiusBottom = geometry.parameters.radiusBottom;
+                serializedObj.props.height = geometry.parameters.height;
+                serializedObj.props.radialSegments = geometry.parameters.radialSegments;
+            } else if (geometry instanceof THREE.ConeGeometry) {
+                serializedObj.type = 'Cone';
+                serializedObj.props.radius = geometry.parameters.radius;
+                serializedObj.props.height = geometry.parameters.height;
+                serializedObj.props.radialSegments = geometry.parameters.radialSegments;
+            } else if (geometry instanceof THREE.TorusGeometry) {
+                serializedObj.type = 'Torus';
+                serializedObj.props.radius = geometry.parameters.radius;
+                serializedObj.props.tube = geometry.parameters.tube;
+                serializedObj.props.radialSegments = geometry.parameters.radialSegments;
+                serializedObj.props.tubularSegments = geometry.parameters.tubularSegments;
+            } else if (geometry instanceof THREE.RingGeometry) {
+                serializedObj.type = 'Ring';
+                serializedObj.props.innerRadius = geometry.parameters.innerRadius;
+                serializedObj.props.outerRadius = geometry.parameters.outerRadius;
+                serializedObj.props.thetaSegments = geometry.parameters.thetaSegments;
+            } else {
+                serializedObj.type = 'Mesh';
+            }
+            
+            // Serialize Material Color and Textures (focusing on map)
+            const materials = Array.isArray(object.material) ? object.material : [object.material];
+            const material = materials.find(m => m instanceof THREE.MeshStandardMaterial || m instanceof THREE.MeshBasicMaterial);
+            
+            if (material) {
+                
+                const materialData = {
+                    type: material.type.replace('Material', ''), // e.g., 'MeshStandard'
+                    color: material.color?.getHexString(),
+                    textureMapId: null
+                };
+
+                // Check for Texture Map (Albedo)
+                if (material.map && material.map.image) {
+                     // Register texture asynchronously, but continue synchronous serialization using a placeholder
+                     texturePromise = this._registerTexture(material.map.image, material.map)
+                         .then(registration => {
+                             if (registration) {
+                                 // Update the serialized object's components definition in place (side effect)
+                                 const currentMaterialData = serializedObj.components.material;
+                                 if (currentMaterialData) {
+                                     currentMaterialData.textureMapId = registration.assetId;
+                                 }
+                             }
+                             return registration;
+                         })
+                         .catch(err => {
+                             console.error("Texture registration failed:", err);
+                             return null;
+                         });
+                    
+                }
+                serializedObj.components.material = materialData;
+            }
+
+        } else if (object instanceof THREE.DirectionalLight) {
+            serializedObj.type = 'DirectionalLight';
+            serializedObj.props.color = object.color.getHexString();
+            serializedObj.props.intensity = object.intensity;
+        } else if (object instanceof THREE.AmbientLight) {
+            serializedObj.type = 'AmbientLight';
+            serializedObj.props.color = object.color.getHexString();
+            serializedObj.props.intensity = object.intensity;
+        } else if (object instanceof THREE.PerspectiveCamera) {
+            serializedObj.type = 'Camera';
+        } else if (object.userData.animationNames) {
+            // Object is a root of an animated model
+            serializedObj.type = 'ModelRoot';
+            serializedObj.props.animationNames = object.userData.animationNames;
+        } else if (object.type === 'Object3D') {
+             serializedObj.type = 'Object3D';
+        }
+        
+        // 2. Serialize Components (ScriptComponent)
+        if (object.userData.components?.script instanceof ScriptComponent) {
+            serializedObj.components.logic = { 
+                type: 'Script',
+                scriptText: object.userData.components.script.scriptText,
+            };
+        }
+        
+        // 3. Serialize Tags (if any)
+        if (object.userData.tags) {
+             serializedObj.props.tags = Array.from(object.userData.tags);
+        }
+
+        return { serializedObj, texturePromise };
+    }
+    
+    /**
+// ... existing code ...
+    /** 
+     * Internal helper to create a THREE object from serialized data.
+     */
+    _createObject(data) {
+        let object = null;
+        let material = null;
+        
+        // Material Handling (only MeshStandard is currently supported in serialization)
+        if (data.components?.material?.type === 'Standard' || data.components?.material?.type === 'MeshStandard') {
+            material = new THREE.MeshStandardMaterial({ 
+                color: parseInt(data.components.material.color || 'ffffff', 16) 
+            });
+        }
+        
+        // Geometry/Type Handling
+        if (data.type === 'Box') {
+            const w = data.props?.width || 1;
+            const h = data.props?.height || 1;
+            const d = data.props?.depth || 1;
+            object = new THREE.Mesh(new THREE.BoxGeometry(w, h, d), material || Game.create('cube').material);
+        } else if (data.type === 'Sphere') {
+            const radius = data.props?.radius || 0.5;
+            object = new THREE.Mesh(new THREE.SphereGeometry(radius, 32, 32), material || Game.create('sphere').material);
+        } else if (data.type === 'Plane') {
+            const width = data.props?.width || 5;
+            const height = data.props?.height || 5;
+            object = new THREE.Mesh(new THREE.PlaneGeometry(width, height), material || Game.create('plane').material);
+        } else if (data.type === 'Cylinder') {
+            const rt = data.props?.radiusTop || 0.5;
+            const rb = data.props?.radiusBottom || 0.5;
+            const h = data.props?.height || 1;
+            const rs = data.props?.radialSegments || 16;
+            object = new THREE.Mesh(new THREE.CylinderGeometry(rt, rb, h, rs), material || Game.create('cylinder').material);
+        } else if (data.type === 'Cone') {
+            const r = data.props?.radius || 0.5;
+            const h = data.props?.height || 1;
+            const rs = data.props?.radialSegments || 16;
+            object = new THREE.Mesh(new THREE.ConeGeometry(r, h, rs), material || Game.create('cone').material);
+        } else if (data.type === 'Torus') {
+            const r = data.props?.radius || 0.8;
+            const t = data.props?.tube || 0.3;
+            const rs = data.props?.radialSegments || 16;
+            const ts = data.props?.tubularSegments || 100;
+            object = new THREE.Mesh(new THREE.TorusGeometry(r, t, rs, ts), material || Game.create('torus').material);
+        } else if (data.type === 'Ring') {
+            const ir = data.props?.innerRadius || 0.5;
+            const or = data.props?.outerRadius || 1;
+            const ts = data.props?.thetaSegments || 8;
+            object = new THREE.Mesh(new THREE.RingGeometry(ir, or, ts), material || Game.create('ring').material);
+        } else if (data.type === 'AmbientLight') {
+            object = new THREE.AmbientLight(
+                parseInt(data.props?.color || 'ffffff', 16), 
+                data.props?.intensity || 0.5
+            );
+        } else if (data.type === 'DirectionalLight') {
+// ... existing code ...
+            );
+            object.scale.set(data.transform.scale[0], data.transform.scale[1], data.transform.scale[2]);
+
+            // Load and apply Texture if reference exists
+            const textureMapId = data.components?.material?.textureMapId;
+            if (textureMapId && object.isMesh) {
+                const assetDesc = Array.from(this.assetManager.assetIndex.values()).find(a => a.assetId === textureMapId);
+
+                if (assetDesc) {
+                    this.assetManager.queueAssetLoad(assetDesc)
+                        .then(texture => {
+                            if (texture instanceof THREE.Texture) {
+                                const materials = Array.isArray(object.material) ? object.material : [object.material];
+                                materials.forEach(m => { 
+                                    if (m instanceof THREE.MeshStandardMaterial || m instanceof THREE.MeshBasicMaterial) {
+                                        m.map = texture; 
+                                        m.needsUpdate = true;
+                                    }
+                                });
+                                this.render();
+                                // If the object is currently selected, refresh inspector to show texture data
+                                if (this.selectedObject === object) {
+                                     UI.updateInspector(object);
+                                }
+                            } else {
+                                throw new Error("Loaded asset was not a THREE.Texture.");
+                            }
+                        })
+                        .catch(err => {
+                            console.error(`Failed to load/apply texture ${textureMapId}:`, err);
+                        });
+                }
+            }
+
+
+            // Apply Components (Scripts)
+// ... existing code ...
+

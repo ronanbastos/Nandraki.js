@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Draki 3D Engine</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="style.css">
+    <!-- CodeMirror CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/codemirror.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/theme/dracula.min.css"> <!-- Example theme -->
+</head>
+<body>
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Draki3D</a>
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="fileMenu" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            File
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="fileMenu">
+                            <li><a class="dropdown-item" id="new-scene-menu" href="#">New Scene</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" id="save-scene-menu" href="#">Save Scene (.draki.json)</a></li>
+                            <li><a class="dropdown-item" id="load-scene-menu" href="#">Load Scene (.draki.json)...</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="editMenu" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Edit
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="editMenu">
+                            <li><a class="dropdown-item" href="#">Undo</a></li>
+                            <li><a class="dropdown-item" href="#">Redo</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="gameObjectMenu" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            GameObject
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="gameObjectMenu">
+                            <li><a class="dropdown-item" id="add-cube-menu" href="#">Cube</a></li>
+                            <li><a class="dropdown-item" id="add-sphere-menu" href="#">Sphere</a></li>
+                            <li><a class="dropdown-item" id="add-plane-menu" href="#">Plane</a></li>
+                            <li><a class="dropdown-item" id="add-cylinder-menu" href="#">Cylinder</a></li>
+                            <li><a class="dropdown-item" id="add-cone-menu" href="#">Cone</a></li>
+                            <li><a class="dropdown-item" id="add-torus-menu" href="#">Torus</a></li>
+                            <li><a class="dropdown-item" id="add-ring-menu" href="#">Ring</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" id="add-joystick-menu" href="#">Joystick</a></li>
+                            <li><a class="dropdown-item" id="add-touch-button-menu" href="#">Touch Button</a></li>
+                            <li><a class="dropdown-item" id="add-click-button-menu" href="#">Click Button</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" id="add-glb-menu" href="#">GLB Model...</a></li>
+                            <li><a class="dropdown-item" id="add-obj-menu" href="#">OBJ Model...</a></li>
+                        </ul>
+                    </li>
+                    <!-- New Scripts Dropdown -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="scriptMenu" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Scripts
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="scriptMenu">
+                            <li><a class="dropdown-item" id="open-load-script-editor" href="#" data-bs-toggle="modal" data-bs-target="#loadScriptModal">Load Script Editor</a></li>
+                            <li><a class="dropdown-item" id="open-update-script-editor" href="#" data-bs-toggle="modal" data-bs-target="#updateScriptModal">Update Script Editor</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Controls and Mobile togglers (Always visible on the right) -->
+            <div class="d-flex align-items-center ms-auto ms-md-2">
+                <!-- Play/Stop Buttons -->
+                <button class="btn btn-dark p-2 border-0" id="play-button" title="Play Game">
+                    <i class="bi bi-play-fill fs-4"></i>
+                </button>
+                <button class="btn btn-dark p-2 border-0 me-3" id="stop-button" title="Stop Game" disabled>
+                    <i class="bi bi-stop-fill fs-4"></i>
+                </button>
+                
+                 <button class="navbar-toggler d-md-none me-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#hierarchy-offcanvas" aria-controls="hierarchy-offcanvas">
+                    <i class="bi bi-list-nested fs-4"></i>
+                </button>
+                 <button class="navbar-toggler d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#inspector-offcanvas" aria-controls="inspector-offcanvas">
+                    <i class="bi bi-sliders fs-4"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <div id="main-container" class="container-fluid h-100">
+        <div class="row editor-row h-100">
+            <!-- Hierarchy Panel (Desktop) -->
+            <div id="hierarchy-panel" class="col-md-2 d-none d-md-flex p-0 editor-panel flex-column">
+                <h5 class="panel-header">Hierarchy</h5>
+                <ul id="scene-graph" class="flex-grow-1 list-unstyled p-2"></ul>
+            </div>
+            
+            <!-- Viewport -->
+            <div id="viewport" class="col-12 col-md-7 p-0 position-relative h-100"></div>
+
+            <!-- Inspector Panel (Desktop) -->
+            <div id="inspector-panel" class="col-md-3 d-none d-md-flex p-0 editor-panel flex-column">
+                <h5 class="panel-header">Inspector</h5>
+                <div id="inspector-content" class="flex-grow-1 p-2">
+                    <p class="text-secondary p-2">Select an object to inspect its properties.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hierarchy Offcanvas (Mobile) -->
+    <div class="offcanvas offcanvas-start text-bg-dark" tabindex="-1" id="hierarchy-offcanvas" aria-labelledby="hierarchy-offcanvas-label">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="hierarchy-offcanvas-label">Hierarchy</h5>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            <ul id="scene-graph-mobile" class="list-unstyled"></ul>
+        </div>
+    </div>
+    
+    <!-- Inspector Offcanvas (Mobile) -->
+    <div class="offcanvas offcanvas-end text-bg-dark" tabindex="-1" id="inspector-offcanvas" aria-labelledby="inspector-offcanvas-label">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="inspector-offcanvas-label">Inspector</h5>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div id="inspector-content-mobile" class="offcanvas-body">
+            <p class="text-secondary p-2">Select an object to inspect its properties.</p>
+        </div>
+    </div>
+
+    <!-- Load Script Modal -->
+    <div class="modal fade" id="loadScriptModal" tabindex="-1" aria-labelledby="loadScriptModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content text-bg-dark">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="loadScriptModalLabel">Load Script Editor</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- CodeMirror editor will be initialized here -->
+                    <div id="load-script-editor" class="script-editor"></div>
+                    <small class="form-text text-muted mt-2">This script runs once when the game starts.</small>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="save-load-script-button">Save Script</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Update Script Modal -->
+    <div class="modal fade" id="updateScriptModal" tabindex="-1" aria-labelledby="updateScriptModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content text-bg-dark">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="updateScriptModalLabel">Update Script Editor</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- CodeMirror editor will be initialized here -->
+                    <div id="update-script-editor" class="script-editor"></div>
+                    <small class="form-text text-muted mt-2">This script runs every frame while the game is playing.</small>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="save-update-script-button">Save Script</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Object Script Modal -->
+    <div class="modal fade" id="objectScriptModal" tabindex="-1" aria-labelledby="objectScriptModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content text-bg-dark">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="objectScriptModalLabel">Object Script Editor</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- CodeMirror editor will be initialized here -->
+                    <div id="object-script-editor" class="script-editor"></div>
+                    <small class="form-text text-muted mt-2">This script runs every frame on the selected object.</small>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" id="save-object-script-button">Save Script</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hidden file input for model loading -->
+    <input type="file" id="model-file-input" style="display: none;" accept=".glb,.gltf,.obj">
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <!-- CodeMirror JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/mode/javascript/javascript.min.js"></script>
+
+    <script type="importmap">
+    {
+        "imports": {
+            "three": "https://unpkg.com/three@0.128.0/build/three.module.js",
+            "three/examples/jsm/controls/OrbitControls.js": "https://unpkg.com/three@0.128.0/examples/jsm/controls/OrbitControls.js",
+            "three/examples/jsm/controls/TransformControls.js": "https://unpkg.com/three@0.128.0/examples/jsm/controls/TransformControls.js",
+            "three/examples/jsm/loaders/GLTFLoader.js": "https://unpkg.com/three@0.128.0/examples/jsm/loaders/GLTFLoader.js",
+            "three/examples/jsm/loaders/OBJLoader.js": "https://unpkg.com/three@0.128.0/examples/jsm/loaders/OBJLoader.js"
+        }
+    }
+    </script>
+    <script type="module" src="main.js"></script>
+</body>
+</html>

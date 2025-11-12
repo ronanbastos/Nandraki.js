@@ -1,0 +1,271 @@
+:root {
+    --bg: #000000;           /* Primary background: pure black for minimalism */
+    --panel: #050606;        /* Slightly lighter black for panels */
+    --panel-2: #0b1220;      /* Subtle blue-tinted dark for headers */
+    --muted: #9aa9bf;        /* Muted, cool gray-blue for secondary text */
+    --accent: #0a84ff;       /* Clean, saturated blue accent */
+    --edge: rgba(255,255,255,0.04);
+    --glass: rgba(255,255,255,0.02);
+}
+
+html, body {
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+    background: var(--bg);
+    color: var(--muted);
+    font-family: "Cal Sans", "Noto Sans", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+    padding-top: 56px; /* Height of the navbar */
+}
+
+/* Navbar */
+.navbar-dark {
+    background: linear-gradient(180deg, rgba(10,10,10,1) 0%, var(--panel) 100%);
+    border-bottom: 1px solid var(--edge);
+}
+.navbar-brand {
+    color: var(--accent) !important;
+    font-weight: 700;
+    letter-spacing: 0.4px;
+}
+.navbar .nav-link {
+    color: var(--muted) !important;
+    transition: color .12s ease;
+}
+.navbar .nav-link:hover, .navbar .nav-link:focus {
+    color: #ffffff !important;
+}
+
+/* Main layout */
+#main-container {
+    height: calc(100vh - 56px);
+    padding: 0;
+}
+
+.editor-row { --bs-gutter-x: 0; }
+
+/* Panels */
+.editor-panel {
+    background: linear-gradient(180deg, var(--panel) 0%, rgba(6,15,28,1) 100%);
+    height: 100%;
+    overflow-y: auto;
+    border-left: 1px solid var(--edge);
+    border-right: 1px solid var(--edge);
+    box-shadow: none;
+}
+
+.panel-header {
+    padding: 0.6rem 0.8rem;
+    margin: 0;
+    font-size: 0.95rem;
+    font-weight: 600;
+    background: linear-gradient(90deg, var(--panel-2), rgba(6,12,24,1));
+    color: #dbeeff;
+    border-bottom: 1px solid rgba(10,10,10,0.35);
+}
+
+/* Viewport */
+#viewport {
+    background: linear-gradient(180deg, #040608 0%, #071022 60%);
+    position: relative;
+    height: 100%;
+}
+
+/* Canvas fit */
+canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+/* Hierarchy list */
+#scene-graph, #scene-graph-mobile {
+    list-style: none;
+    padding: 0.6rem;
+    margin: 0;
+}
+
+#scene-graph li, #scene-graph-mobile li {
+    padding: 8px 10px;
+    cursor: pointer;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--muted);
+    transition: background-color .12s ease, color .12s ease, transform .06s ease;
+}
+
+#scene-graph li:hover, #scene-graph-mobile li:hover {
+    background: var(--glass);
+    color: #ffffff;
+    transform: translateX(2px);
+}
+
+#scene-graph li.selected, #scene-graph-mobile li.selected {
+    background: linear-gradient(90deg, rgba(10,132,255,0.12), rgba(10,132,255,0.06));
+    color: #e9f2ff;
+    box-shadow: inset 0 0 0 1px rgba(10,132,255,0.06);
+}
+
+/* Inspector */
+#inspector-content, #inspector-content-mobile {
+    padding: 0.75rem;
+    color: var(--muted);
+    font-size: 0.95rem;
+}
+
+.property-group {
+    margin-bottom: 0.8rem;
+}
+
+/* Component header */
+.component-header {
+    background: transparent;
+    padding: 10px 8px;
+    cursor: pointer;
+    border-radius: 6px;
+    color: #dbeeff;
+    font-weight: 600;
+    margin-bottom: 6px;
+}
+.component-header:hover {
+    background: var(--glass);
+}
+
+/* Inputs */
+input[type="text"], input[type="number"], .vector3-input input, textarea {
+    width: 100%;
+    background: transparent;
+    border: 1px solid var(--edge);
+    color: #e6f2ff;
+    padding: 6px 8px;
+    border-radius: 6px;
+    box-sizing: border-box;
+    font-size: 0.95rem;
+}
+input:focus, textarea:focus {
+    outline: none;
+    border-color: rgba(10,132,255,0.9);
+    box-shadow: 0 0 0 4px rgba(10,132,255,0.06);
+}
+
+/* Vector inputs layout */
+.vector3-input {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 6px;
+}
+.vector3-input > div {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+    background: rgba(255,255,255,0.02);
+    border-radius: 6px;
+    padding: 4px 6px;
+}
+.vector3-input span {
+    width: 22px;
+    display: inline-block;
+    text-align: center;
+    color: var(--accent);
+    font-weight: 700;
+}
+
+/* Buttons (reduced chrome, no rising hover) */
+button {
+    border-radius: 8px;
+    border: 1px solid rgba(255,255,255,0.04);
+    background: linear-gradient(180deg, rgba(255,255,255,0.02), transparent);
+    color: #dfefff;
+    padding: 6px 10px;
+    transition: background .12s ease, transform .06s ease;
+}
+button:hover {
+    background: linear-gradient(180deg, rgba(10,132,255,0.08), rgba(255,255,255,0.02));
+    transform: none;
+}
+
+/* Primary/Accent buttons */
+.btn-primary, .btn-outline-primary {
+    background: transparent;
+    border-color: rgba(10,132,255,0.18);
+    color: var(--accent);
+}
+.btn-primary:hover, .btn-outline-primary:hover {
+    color: white;
+    background: linear-gradient(90deg, rgba(10,132,255,0.12), rgba(10,132,255,0.06));
+}
+
+/* Danger buttons */
+.btn-danger {
+    background: transparent;
+    border-color: rgba(255,80,80,0.12);
+    color: #ff7b7b;
+}
+
+/* Small utility */
+.alert {
+    background: rgba(255,80,80,0.06);
+    color: #ffb6b6;
+    border: 1px solid rgba(255,80,80,0.06);
+    padding: 8px;
+    border-radius: 6px;
+}
+
+/* Script preview */
+textarea.script-preview {
+    background: rgba(255,255,255,0.02);
+    border: 1px solid var(--edge);
+    color: #dfefff;
+    min-height: 80px;
+    padding: 8px;
+    border-radius: 6px;
+    font-family: "Space Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono", monospace;
+}
+
+/* CodeMirror sizing */
+.script-editor {
+    height: 420px;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid var(--edge);
+}
+
+/* Offcanvas */
+.offcanvas.text-bg-dark {
+    background: var(--panel);
+}
+.offcanvas-header {
+    border-bottom: 1px solid var(--edge);
+}
+
+/* HUD canvas pointer hints */
+#viewport canvas[style] {
+    touch-action: none;
+}
+
+/* Tiny accessibility improvements */
+[role="button"], button {
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* Reduce visual noise for lists and dividers */
+.dropdown-divider, hr {
+    border-color: rgba(255,255,255,0.03);
+    margin: 8px 0;
+}
+
+/* Misc: small screens adjust */
+@media (max-width: 768px) {
+    .panel-header { font-size: 0.95rem; padding: 0.6rem; }
+    #scene-graph-mobile li { padding: 14px 12px; font-size: 1rem; }
+}
