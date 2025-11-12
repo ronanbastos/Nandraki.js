@@ -1,0 +1,1389 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    font-family: Arial, sans-serif;
+    color: #e0e0e0;
+    background: #1a1a1a;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+#editor {
+    display: grid;
+    /* grid-template-columns: 1fr 300px; */ /* Defer to layout classes */
+    /* grid-template-rows: 1fr 200px; */ /* Defer to layout classes */
+    width: 100vw;
+    height: calc(100vh - 30px); /* Adjust for menu bar */
+    background: #1a1a1a;
+    color: #fff;
+    flex-grow: 1;
+}
+
+#menu-bar {
+    height: 30px;
+    background: #2a2a2a;
+    border-bottom: 1px solid #111;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 10px;
+    z-index: 2000;
+    flex-shrink: 0;
+    user-select: none;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.menu-group {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+}
+
+.menu-right-group {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+}
+
+.menu-item {
+    position: relative;
+}
+
+.menu-button {
+    background: transparent;
+    border: 1px solid transparent;
+    color: #e0e0e0;
+    padding: 4px 10px;
+    cursor: pointer;
+    font-size: 14px;
+    border-radius: 4px;
+    margin: 0 1px;
+    transition: background-color 0.2s, border-color 0.2s;
+}
+
+.menu-button:hover, .menu-item.open .menu-button {
+    background: #444;
+    border-color: #555;
+}
+
+.menu-dropdown {
+    display: none;
+    position: absolute;
+    top: calc(100% + 5px);
+    left: 0;
+    background: #333;
+    border: 1px solid #555;
+    min-width: 220px;
+    z-index: 2001;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    border-radius: 4px;
+    padding: 5px 0;
+    overflow: hidden;
+}
+
+.menu-item.open .menu-dropdown {
+    display: block;
+}
+
+.dropdown-item {
+    display: block;
+    width: 100%;
+    text-align: left;
+    background: none;
+    border: none;
+    color: #e0e0e0;
+    padding: 8px 16px;
+    cursor: pointer;
+    font-size: 14px;
+    margin: 0;
+    border-radius: 0;
+    transition: background-color 0.2s;
+}
+
+.dropdown-item:hover {
+    background: #0d89e5;
+}
+
+.dropdown-item:disabled,
+.dropdown-item[disabled] {
+    color: #888;
+    cursor: not-allowed;
+}
+
+.dropdown-item:disabled:hover,
+.dropdown-item[disabled]:hover {
+    background: none;
+}
+
+.menu-dropdown hr {
+    border: none;
+    border-top: 1px solid #444;
+    margin: 4px 0;
+}
+
+.dropdown-item-non-interactive {
+    padding: 8px 16px;
+    color: #e0e0e0;
+    font-size: 14px;
+    display: flex; /* Make it a flex container */
+    flex-direction: column; /* Stack label, select, and description */
+    align-items: flex-start; /* Align items to the start */
+    gap: 5px; /* Space between elements */
+}
+
+.dropdown-select {
+    background: #2a2a2a;
+    color: #e0e0e0;
+    border: 1px solid #555;
+    border-radius: 4px;
+    padding: 4px 6px;
+    width: calc(100% - 12px); /* Adjust width to fit padding */
+}
+
+.setting-description {
+    font-size: 11px;
+    color: #b0b0b0;
+    margin: 0;
+    padding: 0;
+    line-height: 1.4;
+}
+
+#viewport {
+    /* grid-column: 1; */ /* Defer to layout classes */
+    /* grid-row: 1; */ /* Defer to layout classes */
+    background: #252525;
+    position: relative;
+}
+
+#viewport canvas {
+    display: block;
+    width: 100% !important; /* Ensure Three.js canvas fills the viewport */
+    height: 100% !important;
+}
+
+#sidebar {
+    /* grid-column: 2; */ /* Defer to layout classes */
+    /* grid-row: 1 / span 2; */ /* Defer to layout classes */
+    background: #1f1f1f;
+    /* border-left: 1px solid #444; */ /* Defer to layout classes */
+    display: flex;
+    flex-direction: column;
+}
+
+#bottom-panel {
+    /* grid-column: 1; */ /* Defer to layout classes */
+    /* grid-row: 2; */ /* Defer to layout classes */
+    background: #1f1f1f;
+    /* border-top: 1px solid #444; */ /* Defer to layout classes */
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Split bottom panel into two equal columns */
+}
+
+.project-panel, .scripts-panel {
+    display: flex;
+    flex-direction: column;
+    height: 100%; /* Full height of bottom panel */
+    min-height: 200px; /* Minimum height */
+}
+
+.project-panel {
+    grid-column: 1; /* Occupy first column */
+}
+
+.scripts-panel {
+    grid-column: 2;
+    border-left: 1px solid #444;
+}
+
+#project-content {
+    flex: 1;
+    overflow-y: auto;
+    background: #252525;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px; /* Space between project items */
+}
+
+.project-item {
+    display: flex;
+    align-items: center;
+    padding: 10px; /* More padding */
+    cursor: pointer;
+    transition: background-color 0.2s;
+    border-radius: 4px;
+    background: #2a2a2a; /* Slightly different background */
+    border: 1px solid #444;
+}
+
+.project-item:hover {
+    background-color: #3c3c3c;
+}
+
+.project-item .item-icon {
+    margin-right: 15px; /* More space between icon and name */
+    font-size: 20px; /* Larger icons */
+}
+
+.project-item .item-name {
+    flex-grow: 1;
+    font-size: 14px;
+}
+
+.project-controls {
+    display: flex;
+    gap: 10px; /* More space between control buttons */
+}
+
+.nested-items {
+    margin-left: 30px; /* More indentation for nested items */
+    border-left: 2px solid #444;
+    padding-left: 10px;
+}
+
+.panel {
+    display: flex;
+    flex-direction: column;
+    height: 50%;
+}
+
+.panel-header {
+    cursor: move;  /* Indicate panels can be moved */
+    user-select: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px;
+    background: #3a3a3a;
+    border-bottom: 1px solid #222;
+    font-weight: bold;
+    color: #f0f0f0;
+    font-size: 14px;
+}
+
+.panel-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 8px;
+    background: #252525;
+    border: 1px solid #444;
+}
+
+.panel.dragging {
+    opacity: 0.7;
+    transition: opacity 0.2s;
+}
+
+.panel-drop-highlight {
+    outline: 2px solid #0d89e5;
+    transition: outline 0.2s;
+}
+
+.panel-moved {
+    animation: panel-move-animation 0.5s ease;
+}
+
+@keyframes panel-move-animation {
+    0% { transform: scale(0.95); opacity: 0.7; }
+    50% { transform: scale(1.05); opacity: 0.9; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+.dragging {
+    opacity: 0.6;
+    transform: scale(0.98);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    transition: all 0.2s ease;
+}
+
+#toolbar-center-group {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    /* This group is now a flex item within the menu-bar, no longer positioned absolutely */
+}
+
+#toolbar {
+    position: static;
+    transform: none;
+    background: transparent;
+    padding: 0;
+    border-radius: 0;
+    z-index: auto;
+    backdrop-filter: none;
+    box-shadow: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+}
+
+#engine-title {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    font-size: 20px;
+    font-weight: bold;
+    color: #fff;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+    z-index: 1000;
+    font-family: 'Arial Black', sans-serif;
+    background: rgba(0,0,0,0.7);
+    padding: 5px 15px;
+    margin: 0 2px;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+button {
+    background: #444;
+    color: white;
+    border: none;
+    padding: 5px 15px;
+    margin: 0 5px;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #555;
+}
+
+.small-button {
+    padding: 2px 6px;
+    float: right;
+    font-size: 12px;
+}
+
+.toolbar-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    padding: 4px;
+    background: transparent;
+    border: 1px solid transparent;
+    border-radius: 3px;
+    transition: background-color 0.2s, border-color 0.2s;
+}
+
+.toolbar-button:hover {
+    background: #555;
+}
+
+.toolbar-button.active {
+    background: #0d89e5;
+    border-color: #0d89e5;
+}
+
+.object-item {
+    padding: 6px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-radius: 4px;
+    margin: 2px 0;
+    transition: background-color 0.2s ease;
+    margin-left: 0;
+    display: flex;
+    gap: 2px;
+    background: transparent;
+    padding: 0;
+    border-radius: 0;
+    z-index: auto;
+}
+
+.object-item:hover {
+    background: #3c3c3c;
+}
+
+.object-item.selected {
+    background: rgba(9, 71, 113, 0.7);
+    outline: 1px solid #0d89e5;
+}
+
+.object-item .rename-input {
+    background: #3a3a3a;
+    border: 1px solid #0d89e5;
+    color: #e0e0e0;
+    padding: 2px 4px;
+    border-radius: 3px;
+    font-family: inherit;
+    font-size: inherit;
+    flex-grow: 1;
+    margin: 0;
+    outline: none;
+}
+
+.object-name {
+    flex: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.object-controls {
+    display: flex;
+    gap: 4px;
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+
+.object-item:hover .object-controls {
+    opacity: 1;
+}
+
+#scripts-content {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.script-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #2a2a2a;
+    padding: 8px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    cursor: move;  /* Indicate draggability */
+}
+
+.script-item:hover {
+    background: #3c3c3c;
+}
+
+.script-item.dragging {
+    opacity: 0.5;
+}
+
+.object-item.drag-over {
+    outline: 2px dashed #0d89e5;
+    background-color: rgba(13, 137, 229, 0.1);
+}
+
+.script-item[draggable="true"] {
+    user-select: none;
+}
+
+.script-item-actions {
+    display: flex;
+    gap: 5px;
+}
+
+.script-editor {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%;
+    height: 80%;
+    background: #1f1f1f;
+    border: 1px solid #444;
+    z-index: 1000;
+    display: none;
+}
+
+.script-editor.active {
+    display: block;
+}
+
+.script-editor-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #333;
+    padding: 10px;
+}
+
+.script-editor-content {
+    height: calc(100% - 50px);
+    padding: 10px;
+}
+
+.script-editor textarea {
+    width: 100%;
+    height: 100%;
+    background: #252525;
+    color: #e0e0e0;
+    border: none;
+    padding: 10px;
+    resize: none;
+    font-family: monospace;
+}
+
+.script-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px;
+    background: #2a2a2a;
+    margin: 5px 0;
+    border-radius: 4px;
+}
+
+.script-row .remove-script {
+    background: #6b0f0f;
+    color: white;
+    border: none;
+    padding: 3px 8px;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.script-row .remove-script:hover {
+    background: #8b0000;
+}
+
+.script-management-section {
+    background: #2a2a2a;
+    border-radius: 4px;
+    padding: 15px;
+    margin-top: 10px;
+}
+
+.script-actions-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.script-quick-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.script-quick-actions button {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: #444;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.script-quick-actions button:hover {
+    background: #555;
+}
+
+.script-quick-actions .btn-icon {
+    font-size: 16px;
+}
+
+.script-list-container h4 {
+    margin: 10px 0;
+    color: #ccc;
+}
+
+.attached-scripts-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.script-list-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #333;
+    padding: 10px;
+    border-radius: 4px;
+}
+
+.script-list-item .script-name {
+    flex-grow: 1;
+    margin-right: 10px;
+}
+
+.script-list-item .script-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.script-list-item .script-actions button {
+    background: transparent;
+    border: 1px solid #555;
+    color: #ccc;
+    padding: 4px 8px;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.script-list-item .script-actions button:hover {
+    background: #444;
+    color: white;
+}
+
+.no-scripts-msg {
+    color: #888;
+    text-align: center;
+    padding: 10px;
+}
+
+.script-selection-menu {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #1f1f1f;
+    border: 1px solid #444;
+    border-radius: 8px;
+    width: 300px;
+    z-index: 1000;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+}
+
+.script-selection-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    background: #333;
+    border-bottom: 1px solid #444;
+    border-radius: 8px 8px 0 0;
+}
+
+.script-selection-header h4 {
+    margin: 0;
+}
+
+.close-script-menu {
+    background: none;
+    border: none;
+    color: #ccc;
+    font-size: 18px;
+    cursor: pointer;
+    padding: 0 8px;
+    line-height: 1;
+}
+
+.close-script-menu:hover {
+    color: white;
+    background: #555;
+    border-radius: 4px;
+}
+
+.script-selection-list {
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.script-selection-item {
+    width: 100%;
+    text-align: left;
+    background: none;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.script-selection-item:hover {
+    background-color: #2a2a2a;
+}
+
+.transform-mode-buttons {
+    display: flex;
+    background: transparent;
+    padding: 0;
+    border-radius: 0;
+    margin-left: 5px;
+    gap: 2px;
+}
+
+.transform-mode {
+    background: transparent;
+    color: #e0e0e0;
+    border: none;
+    padding: 4px 8px;
+    margin: 0 1px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    border-radius: 3px;
+}
+
+.transform-mode:hover {
+    background: rgba(100, 100, 100, 0.5);
+}
+
+.transform-mode.active {
+    background: rgba(13, 137, 229, 0.7);
+}
+
+.reset-transform {
+    background: #6b0f0f;
+    color: white;
+    border: none;
+    padding: 4px 8px;
+    margin-left: 5px;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.reset-transform:hover {
+    background: #8b0000;
+}
+
+#layout-switcher {
+    margin-left: 0;
+    display: flex;
+    gap: 2px;
+    background: transparent;
+    padding: 0;
+    border-radius: 0;
+    z-index: auto;
+}
+
+.layout-btn {
+    background: #444;
+    border: 1px solid #555;
+    color: white;
+    padding: 4px 8px;
+    cursor: pointer;
+    border-radius: 3px;
+    font-family: monospace;
+    font-size: 11px;
+    min-width: auto;
+    text-align: center;
+    transition: background-color 0.2s;
+}
+
+.layout-btn:hover {
+    background: #555;
+}
+
+.layout-btn.active {
+    background: #0d89e5;
+    border-color: #0d89e5;
+}
+
+.apply-script-btn {
+    align-self: flex-start; /* Aligns button to the left in its container */
+    margin-top: 5px; /* Adds some space above the button */
+    background: #0d89e5;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.2s, opacity 0.2s;
+}
+
+.apply-script-btn:hover {
+    background: #0b73c4;
+}
+
+.apply-script-btn:disabled {
+    background: #095a9a;
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+#preload-script-editor {
+    width: 100%;
+    flex-grow: 1;
+    margin-bottom: 10px;
+}
+
+.codemirror-container {
+    flex-grow: 1;
+    margin-bottom: 10px;
+    position: relative;
+    min-height: 200px; /* Ensure it has a minimum height */
+}
+
+.CodeMirror {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 100% !important;
+    font-size: 14px;
+    border: 1px solid #3a3a3a;
+    border-radius: 4px;
+}
+
+/* --- Custom Scrollbar --- */
+::-webkit-scrollbar {
+    width: 12px;
+    height: 12px;
+}
+
+::-webkit-scrollbar-track {
+    background: #1a1a1a;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #0d89e5;
+    border-radius: 20px;
+    border: 3px solid #1a1a1a;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: #0b73c4;
+}
+
+::-webkit-scrollbar-corner {
+    background: transparent;
+}
+
+/* --- Media Queries for Responsiveness --- */
+
+/* General adjustments for screens up to 1024px (tablets and smaller laptops) */
+@media (max-width: 1024px) {
+    .menu-button, .dropdown-item {
+        font-size: 13px;
+        padding: 6px 10px;
+    }
+    .dropdown-item {
+        padding: 7px 14px;
+    }
+    .panel-header {
+        font-size: 13px;
+        padding: 6px;
+    }
+    .panel-content {
+        padding: 6px;
+    }
+    .small-button {
+        padding: 1px 5px;
+        font-size: 11px;
+    }
+    .toolbar-button {
+        width: 26px;
+        height: 26px;
+        padding: 3px;
+    }
+    .layout-btn {
+        padding: 3px 6px;
+        font-size: 10px;
+    }
+    .modal-content {
+        width: 90%;
+        height: 85vh;
+    }
+    .CodeMirror {
+        font-size: 13px;
+    }
+}
+
+/* Mobile-specific layout (phones, smaller tablets) */
+@media (max-width: 768px) {
+    #menu-bar {
+        height: 40px; /* Taller for easier touch */
+        padding: 0 5px;
+    }
+    .menu-button {
+        padding: 8px 10px; /* Larger touch area */
+        font-size: 14px;
+    }
+    .menu-dropdown {
+        min-width: 180px; /* Adjusted width */
+    }
+    .dropdown-item {
+        padding: 10px 15px; /* Larger touch area */
+        font-size: 14px;
+    }
+    .dropdown-item-non-interactive label, .dropdown-select, .setting-description {
+        font-size: 13px;
+    }
+    .lang-option {
+        padding: 6px 10px;
+        font-size: 12px;
+    }
+
+    #toolbar-center-group {
+        gap: 10px; /* Reduce spacing */
+    }
+    .toolbar-button {
+        width: 36px; /* Even larger touch area */
+        height: 36px;
+    }
+    #layout-switcher {
+        display: none; /* Hide layout switcher on small screens, rely on media queries */
+    }
+
+    /* Main editor grid for mobile */
+    #editor {
+        grid-template-columns: 1fr; /* Single column */
+        /* Viewport takes 1fr (remaining space), sidebar takes 35vh, bottom panel takes 35vh */
+        grid-template-rows: 1fr minmax(200px, 35vh) minmax(200px, 35vh);
+        height: calc(100vh - 40px); /* Adjust for taller menu bar */
+    }
+    #editor #viewport {
+        grid-area: 1 / 1 / 2 / 2;
+    }
+    #editor #sidebar {
+        grid-area: 2 / 1 / 3 / 2;
+        border-left: none; /* Remove border */
+        border-top: 1px solid #444; /* Add top border for separation */
+        overflow-y: auto; /* Allow scrolling if content overflows */
+        height: 100%; /* Fill the grid area */
+    }
+    #editor #bottom-panel {
+        grid-area: 3 / 1 / 4 / 2;
+        border-top: 1px solid #444; /* Add top border for separation */
+        border-left: none; /* Remove border */
+        display: flex; /* Change to flex for vertical stacking of project/scripts */
+        flex-direction: column;
+        overflow-y: auto; /* Allow scrolling if content overflows */
+        height: 100%; /* Fill the grid area */
+    }
+
+    /* Adjust panels within sidebar for mobile */
+    #sidebar .panel {
+        height: auto; /* Let content dictate height, will scroll if needed due to parent overflow-y */
+        min-height: unset; /* Remove min-height constraint */
+    }
+
+    /* Adjust panels within bottom-panel for mobile */
+    .project-panel, .scripts-panel {
+        width: 100%; /* Take full width of parent */
+        min-height: unset; /* Remove min-height constraint */
+        border-left: none; /* Remove border */
+    }
+    .scripts-panel {
+        border-top: 1px solid #444; /* Add separator between project and scripts */
+    }
+
+    /* Adjust specific elements for touch targets */
+    .object-item, .script-item, .project-item {
+        padding: 10px;
+        font-size: 15px;
+    }
+    .property-row label {
+        font-size: 13px;
+    }
+    .property-row input[type="number"], .property-row input[type="color"] {
+        padding: 8px;
+        font-size: 14px;
+    }
+    .reset-property-btn {
+        padding: 6px 10px;
+        font-size: 14px;
+    }
+    .apply-script-btn {
+        padding: 10px 18px;
+        font-size: 15px;
+    }
+    .modal-header h3 {
+        font-size: 18px;
+    }
+    .modal-close-btn {
+        font-size: 28px;
+    }
+    .tab-btn {
+        padding: 12px 15px;
+        font-size: 14px;
+    }
+    #viewer-search {
+        padding: 10px;
+        font-size: 15px;
+    }
+    #game-terminal {
+        height: 50vh; /* Takes half screen height from top when open */
+        top: -50vh; /* Adjust initial hidden position */
+    }
+    #game-terminal.open {
+        top: 0;
+    }
+    #terminal-header {
+        padding: 8px 10px;
+    }
+    #terminal-input-container {
+        height: 40px;
+        font-size: 16px;
+    }
+}
+
+/* --- Layouts --- */
+
+/* Default Layout */
+#editor.layout-default {
+    grid-template-columns: 1fr 300px;
+    grid-template-rows: 1fr 200px;
+}
+#editor.layout-default #viewport { grid-area: 1 / 1 / 2 / 2; }
+#editor.layout-default #sidebar {
+    grid-area: 1 / 2 / 3 / 3;
+    flex-direction: column;
+    border-left: 1px solid #444;
+    border-top: none;
+    border-bottom: none;
+}
+#editor.layout-default #sidebar .panel { height: 50%; }
+#editor.layout-default #bottom-panel {
+    grid-area: 2 / 1 / 3 / 2;
+    display: grid;
+    border-top: 1px solid #444;
+    border-left: none;
+}
+
+/* Focus Layout */
+#editor.layout-focus {
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+}
+#editor.layout-focus #viewport { grid-area: 1 / 1 / -1 / -1; }
+#editor.layout-focus #sidebar,
+#editor.layout-focus #bottom-panel {
+    display: none;
+}
+
+/* --- Language Checklist Styles (reused by viewer-modal, scripting-api-modal) --- */
+.language-checklist {
+    display: flex;
+    gap: 5px; /* Space between language buttons */
+    margin-top: 5px; /* Space from label */
+    width: 100%;
+}
+
+.lang-option {
+    background: #2a2a2a;
+    color: #e0e0e0;
+    border: 1px solid #555;
+    border-radius: 4px;
+    padding: 4px 8px;
+    cursor: pointer;
+    font-size: 13px;
+    transition: background-color 0.2s, border-color 0.2s;
+    flex-grow: 1; /* Make them fill available space */
+    text-align: center;
+}
+
+.lang-option:hover {
+    background: #3c3c3c;
+}
+
+.lang-option.active {
+    background: #0d89e5;
+    border-color: #0d89e5;
+    color: white;
+    font-weight: bold;
+}
+
+/* --- Modal Base Styles (reused by viewer-modal, scripting-api-modal) --- */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 3000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-content {
+    background: #1f1f1f;
+    border: 1px solid #444;
+    border-radius: 8px;
+    width: 80%;
+    max-width: 900px;
+    height: 80vh;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.5);
+    animation: modal-fade-in 0.3s ease;
+}
+
+@keyframes modal-fade-in {
+    from { opacity: 0; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background: #333;
+    border-bottom: 1px solid #444;
+    border-radius: 8px 8px 0 0;
+}
+
+.modal-header h3 {
+    margin: 0;
+    color: #e0e0e0;
+}
+
+.modal-close-btn {
+    background: none;
+    border: none;
+    color: #ccc;
+    font-size: 24px;
+    cursor: pointer;
+    padding: 0 8px;
+    line-height: 1;
+}
+
+.modal-close-btn:hover {
+    color: white;
+    background: #555;
+    border-radius: 4px;
+}
+
+.modal-body {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    overflow: hidden; /* To contain the list panel */
+    /* Add scroll for scripting-api-content specifically if needed */
+}
+
+/* For scripting-api-content, allow scrolling if content overflows */
+#scripting-api-content {
+    overflow-y: auto; 
+}
+
+#scripting-api-content h3 {
+    color: #0d89e5;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+#scripting-api-content h3:first-of-type {
+    margin-top: 0;
+}
+
+#scripting-api-content p {
+    margin-bottom: 10px;
+    line-height: 1.5;
+}
+
+#scripting-api-content ul {
+    list-style-type: disc;
+    margin-left: 25px;
+    margin-bottom: 15px;
+    padding: 0;
+}
+
+#scripting-api-content ul li {
+    margin-bottom: 5px;
+    line-height: 1.4;
+    color: #c0c0c0;
+}
+
+#scripting-api-content ul li code {
+    background-color: #2a2a2a;
+    padding: 2px 4px;
+    border-radius: 3px;
+    font-family: 'Courier New', Courier, monospace;
+    color: #f0f0f0;
+}
+
+.modal-tabs {
+    display: flex;
+    border-bottom: 1px solid #444;
+    margin-bottom: 15px;
+}
+
+.tab-btn {
+    padding: 10px 20px;
+    cursor: pointer;
+    background: none;
+    border: none;
+    color: #ccc;
+    font-size: 16px;
+    border-bottom: 3px solid transparent;
+    transition: all 0.2s ease;
+    margin: 0;
+    border-radius: 4px 4px 0 0;
+}
+
+.tab-btn:hover {
+    background: #2a2a2a;
+    color: white;
+}
+
+.tab-btn.active {
+    color: #0d89e5;
+    border-bottom-color: #0d89e5;
+}
+
+.tab-content {
+    display: none;
+    flex-grow: 1;
+    overflow: hidden; /* To contain the list panel */
+    flex-direction: column; /* To make search and list stack */
+}
+
+.tab-content.active {
+    display: flex;
+}
+
+/* --- Game Terminal --- */
+#game-terminal {
+    position: fixed;
+    top: -300px; /* Hidden by default */
+    left: 0;
+    width: 100%;
+    height: 300px;
+    background: rgba(17, 17, 17, 0.95); /* #111 with slight transparency */
+    border-bottom: 2px solid #0d89e5;
+    z-index: 4000;
+    display: flex;
+    flex-direction: column;
+    font-family: 'Courier New', Courier, monospace;
+    color: #4CAF50; /* Light green */
+    box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+    transition: top 0.3s ease-in-out;
+}
+
+#game-terminal.open {
+    top: 0;
+}
+
+#terminal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 10px;
+    background: #222;
+    border-bottom: 1px solid #333;
+    flex-shrink: 0;
+}
+
+#terminal-header .terminal-control-btn {
+    background: transparent;
+    border: none;
+    color: #ccc;
+    font-size: 20px;
+    cursor: pointer;
+    padding: 0 5px;
+    line-height: 1;
+}
+
+#terminal-header .terminal-control-btn:hover {
+    color: white;
+    background: #555;
+    border-radius: 4px;
+}
+
+#terminal-header .terminal-title {
+    flex-grow: 1; /* Pushes button to the left if needed */
+    color: #e0e0e0;
+    font-size: 16px;
+    font-weight: bold;
+    user-select: none;
+}
+
+#terminal-output {
+    flex-grow: 1;
+    overflow-y: auto;
+    padding: 10px;
+    font-size: 14px;
+    line-height: 1.4;
+}
+
+#terminal-output .log-entry {
+    margin-bottom: 5px;
+    white-space: pre-wrap; /* Allow wrapping of long lines */
+    word-break: break-all;
+}
+
+#terminal-output .log-input {
+    color: #aae0ac; /* Lighter green for input */
+}
+
+#terminal-output .log-output {
+    color: #7fdd84; /* Slightly different for output */
+    padding-left: 15px;
+}
+
+#terminal-output .log-error {
+    color: #ff6b6b; /* Red for errors */
+}
+
+#terminal-input-container {
+    display: flex;
+    align-items: center;
+    height: 30px;
+    background: #222;
+    padding: 0 10px;
+    flex-shrink: 0;
+    border-top: 1px solid #333;
+}
+
+#terminal-input-container span {
+    margin-right: 8px;
+}
+
+#terminal-input {
+    flex-grow: 1;
+    background: transparent;
+    border: none;
+    color: #4CAF50;
+    font-family: inherit;
+    font-size: inherit;
+    outline: none;
+}
+
+#tab-content-fixload-cache {
+    flex-direction: column;
+}
+
+.property-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+    gap: 5px; /* Space between label, input, and reset button */
+}
+
+.property-row label {
+    flex-basis: 30px; /* Small fixed width for labels */
+    min-width: 30px;
+}
+
+.property-row input[type="number"],
+.property-row input[type="color"] {
+    flex-grow: 1;
+    background: #333;
+    border: 1px solid #555;
+    color: #e0e0e0;
+    padding: 4px;
+    border-radius: 3px;
+    font-size: 13px;
+}
+
+.property-row input[type="color"] {
+    height: 28px; /* Standardize height with number input */
+    padding: 0;
+    cursor: pointer;
+}
+
+.reset-property-btn {
+    background: #555;
+    color: white;
+    border: none;
+    padding: 4px 8px;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 12px;
+    flex-shrink: 0; /* Prevent button from shrinking */
+}
+
+.reset-property-btn:hover {
+    background: #777;
+}
