@@ -166,10 +166,10 @@ In the engine folder contains demo test file]
 - [x] Finalizar sistema de Scene Singleton (ThreeCore)<br>
 - [x] Implementar sistema de hierarquia de objetos na cena<br>
 - [x] Adicionar suporte completo a componentes via script (drak().set/get/script)<br>
-- [ ] Criar módulo de física básica (colisores, gravidade simples)<br>
-- [ ] Desenvolver sistema de câmera com controle de movimento<br>
-- [ ] Adicionar suporte a importação de modelos externos (GLTF/OBJ)<br>
-- [ ] Implementar sistema de materiais personalizados<br>
+- [x] Criar módulo de física básica (colisores, gravidade simples)<br>
+- [x] Desenvolver sistema de câmera com controle de movimento<br>
+- [x] Adicionar suporte a importação de modelos externos (GLTF/OBJ)<br>
+- [x] Implementar sistema de materiais personalizados<br>
 - [ ] Criar GUI mínima para visualização e depuração da cena<br>
 - [ ] Sistema de exportação da cena como JSON<br>
 - [ ] Criar sistema de carregamento de cenas (load/save)<br>
@@ -214,6 +214,7 @@ https://www.npmjs.com/package/nandraki
 	
 # Documentation.md
  Aqui:https://ronanbastos.github.io/Documentation-Nandraki.js/ 
+
 
 
 
