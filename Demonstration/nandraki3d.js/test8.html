@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Draki Engine - Final e Corrigido</title>
+    <title>Draki Engine - Física 3D Completa</title>
     <link rel="icon" href="data:;base64,iVBORw0KGgo=">
     <style> body { margin: 0; overflow: hidden; } canvas { display: block; } </style>
 </head>
@@ -12,11 +12,11 @@
     <script src="https://unpkg.com/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
     
     <script>
+   
     const draki = new ThreeCore();
     draki.init(document.body);
-    
-    // Inicia Engine
     animax.start();
+    
     Animax.prototype._update = function() {
         requestAnimationFrame(() => this._update());
         const deltaTime = this.clock.getDelta();
@@ -24,15 +24,18 @@
         draki.renderer.render(draki.scene, draki.camera);
     }
 
-    // Cenário
+    // ==========================================================
+    // CENÁRIO
+    // ==========================================================
     let luz = Game.create("light", "Sol");
-    let camera = Game.create("camera", "MainCam");
     luz.position.set(5, 10, 5);
-    camera.position.set(0, 5, 10);
     draki.scene.add(luz);
+
+    let camera = Game.create("camera", "MainCam");
+    camera.position.set(0, 5, 10);
     draki.scene.add(camera);
-    draki.scene.background = new THREE.Color(0x77aaff);
     draki.camera = camera;
+    draki.scene.background = new THREE.Color(0x77aaff);
 
     const ground = new THREE.Mesh(
         new THREE.PlaneGeometry(100, 100),
@@ -41,15 +44,23 @@
     ground.rotation.x = -Math.PI / 2;
     draki.scene.add(ground);
 
-    // Parede
-    let cubo = Game.create("cube", "P");
-    cubo.position.set(2, 1, 2);
-    cubo.scale.set(2, 2, 2);
-    cubo.material.color.set(0xff0000);
-    draki.scene.add(cubo);
+    // --- PAREDE NO CHÃO ---
+    let parede = Game.create("cube", "P");
+    parede.position.set(2, 1, 2);
+    parede.scale.set(2, 2, 2);
+    parede.material.color.set(0xff0000);
+    draki.scene.add(parede);
     drak("P").addTag("solido");
 
-    // Player load 
+    // --- PLATAFORMA FLUTUANTE (NOVIDADE!) ---
+    let plat = Game.create("cube", "Plataforma");
+    plat.position.set(-2, 1.5, 0); // Está no ar!
+    plat.scale.set(3, 0.5, 3);     // Larga e fina
+    plat.material.color.set(0x0000ff);
+    draki.scene.add(plat);
+    drak("Plataforma").addTag("solido"); // Importante: tem a tag solido
+
+    // --- PLAYER ---
     let player = null;
     const loader = new THREE.GLTFLoader();
     loader.load('https://threejs.org/examples/models/gltf/Soldier.glb', (gltf) => {
@@ -60,90 +71,86 @@
         animax.play("Player", "Idle");
     });
 
-    // Controles
+    // ==========================================================
+    // CONTROLES
+    // ==========================================================
     let velocity = { x: 0, y: 0, z: 0 };
     let speed = 0.02;
     let friction = 0.90;
     let isMoving = false;
-    let keys = { left: false, right: false, forward: false, back: false };
+    let keys = { left: false, right: false, forward: false, back: false, space: false };
 
     document.addEventListener("keydown", (e) => {
-	 
       if (e.key === "ArrowLeft" || e.key === "a") keys.left = true;
       if (e.key === "ArrowRight" || e.key === "d") keys.right = true;
       if (e.key === "ArrowUp" || e.key === "w") keys.forward = true;
       if (e.key === "ArrowDown" || e.key === "s") keys.back = true;
-	  animax.play("Player", "Run");
+      if (e.key === " " || e.code === "Space") keys.space = true;
     });
     document.addEventListener("keyup", (e) => {
       if (e.key === "ArrowLeft" || e.key === "a") keys.left = false;
       if (e.key === "ArrowRight" || e.key === "d") keys.right = false;
       if (e.key === "ArrowUp" || e.key === "w") keys.forward = false;
       if (e.key === "ArrowDown" || e.key === "s") keys.back = false;
-	
+      if (e.key === " " || e.code === "Space") keys.space = false;
     });
 
     function updateMovement() {
       if (player) {
-          // 1. INPUTS (Coordenadas da tela)
-          // Direita = +X, Esquerda = -X
-          // Baixo (S) = +Z, Cima (W) = -Z
+          // 1. INPUTS
           if (keys.left) velocity.x -= speed;
           if (keys.right) velocity.x += speed;
           if (keys.forward) velocity.z -= speed;
           if (keys.back) velocity.z += speed;
 
-          // 2. ATRITO
           velocity.x *= friction;
           velocity.z *= friction;
           if (Math.abs(velocity.x) < 0.001) velocity.x = 0;
           if (Math.abs(velocity.z) < 0.001) velocity.z = 0;
 
-          // 3. COLISÃO INTELIGENTE (Deslizar)
+          // 2. GRAVIDADE (Gravix agora checa Y)
+          gravix.update("Player", keys.space, 0.40);
+
+          // 3. COLISÃO HORIZONTAL (Physix)
           let moveX = velocity.x;
           let moveZ = velocity.z;
 
-          // Se tentar mover X e bater, zera SÓ O X. 
-          // O Z continua livre, permitindo deslizar.
-          if (moveX !== 0 && physix.check("Player", moveX, 0, "solido")) {
-              moveX = 0;
-			 animax.play("Player", "Idle");
-			 			  
-          }
+          // Note que passamos 0 no Y, pois o Gravix já cuidou do Y.
+          // Aqui só queremos saber se bate nas laterais.
+          if (moveX !== 0 && physix.check("Player", moveX, 0, 0, "solido")) moveX = 0;
+          if (moveZ !== 0 && physix.check("Player", 0, 0, moveZ, "solido")) moveZ = 0;
 
-          if (moveZ !== 0 && physix.check("Player", 0, moveZ, "solido")) {
-              moveZ = 0;  
-			  animax.play("Player", "Idle");
-			
-          }
-
-          // 4. APLICAR MOVIMENTO
+          // 4. APLICA MOVIMENTO
           player.position.x += moveX;
           player.position.z += moveZ;
 
-          // 5. ANIMAÇÃO E ROTAÇÃO
+          // 5. ANIMAÇÃO
           const totalSpeed = Math.sqrt(velocity.x**2 + velocity.z**2);
 
-          if (totalSpeed > 0.1) {
-              if (!isMoving) {
-                  animax.play("Player", "Run");
-                  isMoving = true;
+          if (gravix.isGrounded) {
+              if (totalSpeed > 0.01) {
+                  if (!isMoving) {
+                      animax.play("Player", "Walk");
+                      isMoving = true;
+                  }
+                  player.rotation.y = Math.atan2(-velocity.x, -velocity.z);
+              } else if (isMoving) {
+                  animax.play("Player", "Idle");
+                  isMoving = false;
               }
-              // CORREÇÃO DA ROTAÇÃO:
-              // Removi os sinais negativos. Math.atan2(x, z) é o padrão correto aqui.
-              // Isso deve fazer ele olhar para onde está indo.
-              player.rotation.y = Math.atan2(-velocity.x, -velocity.z);
-          } else if (isMoving) {
-              animax.play("Player", "Idle");
-              isMoving = false;
+          } else {
+              // Se tiver animação de pulo, pode colocar aqui
+              // animax.play("Player", "Jump"); 
           }
 
-          // Câmera Suave
+          // 6. CÂMERA
           camera.position.x += (player.position.x - camera.position.x) * 0.1;
           camera.position.z += ((player.position.z + 6) - camera.position.z) * 0.1;
+          camera.position.y += ((player.position.y + 4) - camera.position.y) * 0.1;
           camera.lookAt(player.position.x, player.position.y + 1, player.position.z);
           
           hud.update("X", player.position.x.toFixed(1));
+          hud.update("Y", player.position.y.toFixed(1));
           hud.update("Z", player.position.z.toFixed(1));
           hud.draw();
       }
@@ -152,7 +159,8 @@
     
     const hud = new HUD();
     hud.add("X", 0, 10, 30, "#00ff00");
-    hud.add("Z", 0, 10, 50, "#00ff00");
+    hud.add("Y", 0, 10, 50, "#00ff00");
+    hud.add("Z", 0, 10, 70, "#00ff00");
     
     updateMovement();
     </script>
