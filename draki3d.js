@@ -639,5 +639,51 @@ class Physix {
     }
 }
 
-
 const physix = new Physix();
+
+class Gravix {
+    constructor() {
+        if (Gravix.instance) return Gravix.instance;
+        this.gravity = 0.015;   // Força da gravidade
+        this.floorY = 0;        // Altura do chão
+        this.velocityY = 0;     // Velocidade vertical atual
+        this.isGrounded = false; // Está no chão?
+        Gravix.instance = this;
+    }
+
+    /**
+     * Atualiza a gravidade para um objeto
+     * @param {string} objectName - Nome do objeto (ex: "Player")
+     * @param {boolean} jumpInput - Se o botão de pulo está apertado (keys.space)
+     * @param {number} jumpForce - Força do pulo (padrão 0.35)
+     */
+    update(objectName, jumpInput, jumpForce = 0.35) {
+        const core = ThreeCore.instance;
+        const obj = core.scene.getObjectByName(objectName);
+        if (!obj) return;
+
+        // 1. Aplica Gravidade (puxa para baixo)
+        this.velocityY -= this.gravity;
+
+        // 2. Tenta Pular (só se estiver no chão)
+        if (jumpInput && this.isGrounded) {
+            this.velocityY = jumpForce;
+            this.isGrounded = false;
+        }
+
+        // 3. Aplica a velocidade no objeto
+        obj.position.y += this.velocityY;
+
+        // 4. Colisão com o Chão (Simples)
+        if (obj.position.y <= this.floorY) {
+            obj.position.y = this.floorY; // Corrige posição
+            this.velocityY = 0;           // Zera velocidade
+            this.isGrounded = true;       // Marca que pisou
+        } else {
+            this.isGrounded = false;
+        }
+    }
+}
+
+// Instancia globalmente
+const gravix = new Gravix();
