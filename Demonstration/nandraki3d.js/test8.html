@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Draki Engine - Final e Corrigido</title>
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+    <style> body { margin: 0; overflow: hidden; } canvas { display: block; } </style>
+</head>
+<body>
+    <script src="draki3d.js"></script>
+    <script src="https://unpkg.com/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+    
+    <script>
+    const draki = new ThreeCore();
+    draki.init(document.body);
+    
+    // Inicia Engine
+    animax.start();
+    Animax.prototype._update = function() {
+        requestAnimationFrame(() => this._update());
+        const deltaTime = this.clock.getDelta();
+        for (const mixer of this.mixers.values()) { mixer.update(deltaTime); }
+        draki.renderer.render(draki.scene, draki.camera);
+    }
+
+    // Cenário
+    let luz = Game.create("light", "Sol");
+    let camera = Game.create("camera", "MainCam");
+    luz.position.set(5, 10, 5);
+    camera.position.set(0, 5, 10);
+    draki.scene.add(luz);
+    draki.scene.add(camera);
+    draki.scene.background = new THREE.Color(0x77aaff);
+    draki.camera = camera;
+
+    const ground = new THREE.Mesh(
+        new THREE.PlaneGeometry(100, 100),
+        new THREE.MeshPhongMaterial({ color: 0x999999, depthWrite: false })
+    );
+    ground.rotation.x = -Math.PI / 2;
+    draki.scene.add(ground);
+
+    // Parede
+    let cubo = Game.create("cube", "P");
+    cubo.position.set(2, 1, 2);
+    cubo.scale.set(2, 2, 2);
+    cubo.material.color.set(0xff0000);
+    draki.scene.add(cubo);
+    drak("P").addTag("solido");
+
+    // Player load 
+    let player = null;
+    const loader = new THREE.GLTFLoader();
+    loader.load('https://threejs.org/examples/models/gltf/Soldier.glb', (gltf) => {
+        player = gltf.scene;
+        player.name = "Player";
+        draki.scene.add(player);
+        animax.add(player, gltf.animations);
+        animax.play("Player", "Idle");
+    });
+
+    // Controles
+    let velocity = { x: 0, y: 0, z: 0 };
+    let speed = 0.02;
+    let friction = 0.90;
+    let isMoving = false;
+    let keys = { left: false, right: false, forward: false, back: false };
+
+    document.addEventListener("keydown", (e) => {
+	 
+      if (e.key === "ArrowLeft" || e.key === "a") keys.left = true;
+      if (e.key === "ArrowRight" || e.key === "d") keys.right = true;
+      if (e.key === "ArrowUp" || e.key === "w") keys.forward = true;
+      if (e.key === "ArrowDown" || e.key === "s") keys.back = true;
+	  animax.play("Player", "Run");
+    });
+    document.addEventListener("keyup", (e) => {
+      if (e.key === "ArrowLeft" || e.key === "a") keys.left = false;
+      if (e.key === "ArrowRight" || e.key === "d") keys.right = false;
+      if (e.key === "ArrowUp" || e.key === "w") keys.forward = false;
+      if (e.key === "ArrowDown" || e.key === "s") keys.back = false;
+	
+    });
+
+    function updateMovement() {
+      if (player) {
+          // 1. INPUTS (Coordenadas da tela)
+          // Direita = +X, Esquerda = -X
+          // Baixo (S) = +Z, Cima (W) = -Z
+          if (keys.left) velocity.x -= speed;
+          if (keys.right) velocity.x += speed;
+          if (keys.forward) velocity.z -= speed;
+          if (keys.back) velocity.z += speed;
+
+          // 2. ATRITO
+          velocity.x *= friction;
+          velocity.z *= friction;
+          if (Math.abs(velocity.x) < 0.001) velocity.x = 0;
+          if (Math.abs(velocity.z) < 0.001) velocity.z = 0;
+
+          // 3. COLISÃO INTELIGENTE (Deslizar)
+          let moveX = velocity.x;
+          let moveZ = velocity.z;
+
+          // Se tentar mover X e bater, zera SÓ O X. 
+          // O Z continua livre, permitindo deslizar.
+          if (moveX !== 0 && physix.check("Player", moveX, 0, "solido")) {
+              moveX = 0;
+			 animax.play("Player", "Idle");
+			 			  
+          }
+
+          if (moveZ !== 0 && physix.check("Player", 0, moveZ, "solido")) {
+              moveZ = 0;  
+			  animax.play("Player", "Idle");
+			
+          }
+
+          // 4. APLICAR MOVIMENTO
+          player.position.x += moveX;
+          player.position.z += moveZ;
+
+          // 5. ANIMAÇÃO E ROTAÇÃO
+          const totalSpeed = Math.sqrt(velocity.x**2 + velocity.z**2);
+
+          if (totalSpeed > 0.1) {
+              if (!isMoving) {
+                  animax.play("Player", "Run");
+                  isMoving = true;
+              }
+              // CORREÇÃO DA ROTAÇÃO:
+              // Removi os sinais negativos. Math.atan2(x, z) é o padrão correto aqui.
+              // Isso deve fazer ele olhar para onde está indo.
+              player.rotation.y = Math.atan2(-velocity.x, -velocity.z);
+          } else if (isMoving) {
+              animax.play("Player", "Idle");
+              isMoving = false;
+          }
+
+          // Câmera Suave
+          camera.position.x += (player.position.x - camera.position.x) * 0.1;
+          camera.position.z += ((player.position.z + 6) - camera.position.z) * 0.1;
+          camera.lookAt(player.position.x, player.position.y + 1, player.position.z);
+          
+          hud.update("X", player.position.x.toFixed(1));
+          hud.update("Z", player.position.z.toFixed(1));
+          hud.draw();
+      }
+      requestAnimationFrame(updateMovement);
+    }
+    
+    const hud = new HUD();
+    hud.add("X", 0, 10, 30, "#00ff00");
+    hud.add("Z", 0, 10, 50, "#00ff00");
+    
+    updateMovement();
+    </script>
+</body>
+</html>
