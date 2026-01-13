@@ -170,15 +170,14 @@ In the engine folder contains demo test file]
 - [x] Desenvolver sistema de câmera com controle de movimento<br>
 - [x] Adicionar suporte a importação de modelos externos (GLTF/OBJ)<br>
 - [x] Implementar sistema de materiais personalizados<br>
-- [ ] Criar GUI mínima para visualização e depuração da cena<br>
-- [ ] Sistema de exportação da cena como JSON<br>
-- [ ] Criar sistema de carregamento de cenas (load/save)<br>
-- [ ] Adicionar sistema de input (teclado, mouse, toque)<br>
+- [x] Criar GUI mínima para visualização e depuração da cena<br>
+- [x] Sistema de exportação da cena como JSON<br>
+- [x] Criar sistema de carregamento de cenas (load/save)<br>
+- [x] Adicionar sistema de input (teclado, mouse, toque)<br>
+- [x] Adicionar sistema de animações básicas (keyframes)<br>
+- [x] Sistema de entidades baseadas em componentes (ECS simplificado)<br>
 - [ ] Implementar módulo de áudio 3D<br>
-- [ ] Adicionar sistema de animações básicas (keyframes)<br>
 - [ ] Criar módulo de iluminação avançada (ambient, direcional, sombras)<br>
-- [ ] Integrar com Nandraki.js para sobreposição de UI 2D<br>
-- [ ] Sistema de entidades baseadas em componentes (ECS simplificado)<br>
 - [ ] Modo de build/exportação para Web (embed fácil)<br>
 - [ ] Criar documentação básica da engine<br>
 - [ ] Subir repositório com exemplo de jogo funcional<br>
@@ -191,9 +190,9 @@ In the engine folder contains demo test file]
 # Metas da Engine Draki3D<br>
 
 ✅ Fase 1 — Núcleo funcional<br>
-🚧 Fase 2 — Scripting e lógica de jogo<br>
-🚧 Fase 3 — Estrutura de projeto<br>
-🚧 Fase 4 — Assets e importação<br>
+✅ Fase 2 — Scripting e lógica de jogo<br>
+✅ Fase 3 — Estrutura de projeto<br>
+✅ Fase 4 — Assets e importação<br>
 🚧 Fase 5 — Exportação e build<br>
 🚧 Fase 6 — Suporte a gameplay<br>
 🚧 Fase 7 — Ferramentas extras<br>
@@ -214,6 +213,7 @@ https://www.npmjs.com/package/nandraki
 	
 # Documentation.md
  Aqui:https://ronanbastos.github.io/Documentation-Nandraki.js/ 
+
 
 
 
