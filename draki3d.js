@@ -588,3 +588,56 @@ class Animax {
 }
 
 const animax = new Animax();
+
+/**
+ * Sistema de Colisão Simples usando Box3 do Three.js
+ */
+
+class Physix {
+    constructor() {
+        if (Physix.instance) return Physix.instance;
+        this.playerBox = new THREE.Box3();
+        this.wallBox = new THREE.Box3();
+        Physix.instance = this;
+    }
+
+    check(playerName, moveX, moveZ, tagObstaculo) {
+        // 1. Pega a instância do ThreeCore diretamente (independente do nome da variável no HTML)
+        const core = ThreeCore.instance;
+        if (!core) return false;
+
+        // 2. Busca o objeto real do jogador
+        const playerObj = core.scene.getObjectByName(playerName);
+        if (!playerObj) return false;
+
+        // 3. Previsão do movimento
+        this.playerBox.setFromObject(playerObj);
+        this.playerBox.min.x += moveX; 
+        this.playerBox.max.x += moveX;
+        this.playerBox.min.z += moveZ; 
+        this.playerBox.max.z += moveZ;
+
+        // 4. Busca os obstáculos REAIS (Object3D) na cena
+        const targets = [];
+        core.scene.traverse(obj => {
+            // Verifica se tem a tag e se é um objeto real (Mesh/Group)
+            if (obj.isObject3D && obj.userData.tags && obj.userData.tags.has(tagObstaculo)) {
+                targets.push(obj);
+            }
+        });
+
+        // 5. Verifica colisão
+        for (let wall of targets) {
+            // Agora 'wall' é garantidamente um objeto 3D, então setFromObject funciona
+            this.wallBox.setFromObject(wall);
+            
+            if (this.playerBox.intersectsBox(this.wallBox)) {
+                return true; // Colidiu
+            }
+        }
+        return false; // Caminho livre
+    }
+}
+
+
+const physix = new Physix();
