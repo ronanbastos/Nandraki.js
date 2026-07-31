@@ -588,3 +588,99 @@ class Animax {
 }
 
 const animax = new Animax();
+
+class Physix {
+        constructor() {
+            if (Physix.instance) return Physix.instance;
+            this.playerBox = new THREE.Box3();
+            this.wallBox = new THREE.Box3();
+            this.tempVec = new THREE.Vector3();
+            Physix.instance = this;
+        }
+
+        // AGORA ACEITA 4 PARÂMETROS DE MOVIMENTO: X, Y, Z
+        check(playerName, moveX, moveY, moveZ, tagObstaculo) {
+            const core = ThreeCore.instance;
+            const playerObj = core.scene.getObjectByName(playerName);
+            if (!playerObj) return false;
+
+            this.playerBox.setFromObject(playerObj);
+            // Truque do deslize (diminui a caixa um pouquinho)
+            this.playerBox.expandByScalar(-0.05);
+
+            // Simula o movimento nos 3 eixos
+            this.playerBox.min.x += moveX; this.playerBox.max.x += moveX;
+            this.playerBox.min.y += moveY; this.playerBox.max.y += moveY; // Y Agora conta!
+            this.playerBox.min.z += moveZ; this.playerBox.max.z += moveZ;
+
+            const targets = [];
+            core.scene.traverse(obj => {
+                if (obj.isObject3D && obj.userData.tags && obj.userData.tags.has(tagObstaculo)) {
+                    targets.push(obj);
+                }
+            });
+
+            for (let wall of targets) {
+                this.wallBox.setFromObject(wall);
+                if (this.playerBox.intersectsBox(this.wallBox)) return true;
+            }
+            return false;
+        }
+    }
+    const physix = new Physix();
+
+
+class Gravix {
+        constructor() {
+            if (Gravix.instance) return Gravix.instance;
+            this.gravity = 0.015;
+            this.velocityY = 0;
+            this.isGrounded = false;
+            Gravix.instance = this;
+        }
+
+        update(objectName, jumpInput, jumpForce = 0.35) {
+            const core = ThreeCore.instance;
+            const obj = core.scene.getObjectByName(objectName);
+            if (!obj) return;
+
+            // 1. Aplica gravidade na velocidade
+            this.velocityY -= this.gravity;
+
+            // 2. Tenta Pular
+            if (jumpInput && this.isGrounded) {
+                this.velocityY = jumpForce;
+                this.isGrounded = false;
+            }
+
+            // 3. VERIFICA COLISÃO VERTICAL (Y) COM OBJETOS
+            // Pergunta ao Physix: "Se eu mover verticalmente, bato em algo solido?"
+            if (physix.check(objectName, 0, this.velocityY, 0, "solido")) {
+                
+                // Se estava caindo (velocidade negativa) -> Pousou em cima de algo
+                if (this.velocityY < 0) {
+                    this.isGrounded = true;
+                }
+                // Se estava subindo (velocidade positiva) -> Bateu a cabeça
+                else {
+                    // Opcional: Efeito sonoro de bater cabeça
+                }
+
+                this.velocityY = 0; // Para o movimento vertical
+            } else {
+                // Se não bateu em nada, continua caindo/subindo
+                this.isGrounded = false;
+            }
+
+            // 4. Aplica a velocidade Y no objeto
+            obj.position.y += this.velocityY;
+
+            // 5. Segurança do Chão Zero (Para não cair no infinito se errar a plataforma)
+            if (obj.position.y <= 0) {
+                obj.position.y = 0;
+                this.velocityY = 0;
+                this.isGrounded = true;
+            }
+        }
+    }
+    const gravix = new Gravix();
