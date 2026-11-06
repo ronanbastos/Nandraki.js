@@ -1,4 +1,3 @@
-![URL_ou_Caminho_da_Imagem](https://github.com/ronanbastos/Nandraki.js/blob/main/logo.png)
 <img src="https://github.com/ronanbastos/Nandraki.js/blob/main/logo.png" alt="Nandraki.js">
 <h1 align="center"><img src="https://img.shields.io/badge/Lincense-MIT-green" alt="index-html" border="0"> 
 <img src="https://img.shields.io/badge/3.1.5-blue" alt="index-html" >     
